@@ -56,7 +56,6 @@ class Database {
             callback(logsRec)
         }, (e) => {console.log(e)})
     }
-
     static listeningForStats(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/workoutLogs";
@@ -95,8 +94,8 @@ class Database {
 
     }
 
-    static getUserProgram(uid, callback) {
-  
+    static getUserProgram(callback) {
+        let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
         
         firebase.database().ref(path).on('value', (snap) => {
@@ -106,8 +105,21 @@ class Database {
             }
             callback(programName);
     })
-    
-    }
+ 
+}
+
+ static userHasProgram(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/ownProgram";
+        
+        firebase.database().ref(path).on('value', (snap) => {
+            let hasProgram = false;
+            if (snap.val()) {
+                hasProgram = snap.val().hasProgram
+            }
+            callback(hasProgram);
+    })
+ }
     static enrollIntoProgram(passedProgram) {
             let uid = firebase.auth().currentUser.uid;
             let path = "/user/" + uid + "/ownProgram";
@@ -258,13 +270,6 @@ class Database {
         firebase.database().ref(path).update({
             day1: newMuscles
         });
-    }
-    static userHasProgram(uid) {
-        let path = "/user/" + uid + "/ownProgram";
-        firebase.database().ref(path).on('value', (snap) => {
-            if (snap.val().hasProgram === true) { return true }
-            else {return false};
-        }, (e) => {console.log(e)})
     }
     static getId() {
 

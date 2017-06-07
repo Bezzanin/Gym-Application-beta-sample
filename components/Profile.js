@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity, Image, Alert } from "react-native";
 import {Grid, Row, Col} from 'react-native-elements';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
@@ -15,11 +15,13 @@ class Profile extends Component {
     this.state = {
     allLogs: "",
     totalWorkouts: "",
-    totalExercises: ""
+    totalExercises: "",
+    programName: "Not enrolled",
+    hasProgram: false,
   }
 }
 
-    componentDidMount() {
+componentDidMount() {
     Database.listeningForStats((log) => {
     this.setState({
           allLogs: log,
@@ -27,14 +29,54 @@ class Profile extends Component {
           totalExercises: _.sumBy(log, 'amountOfExercisesCompleted')
       });
     });
+    Database.getUserProgram( (programName) => {
+          this.setState({
+              programName
+          })
+      })
+    Database.getUserProgram( (hasProgram) => {
+          this.setState({
+              hasProgram
+          })
+      })
   }
+_displayLeaveButton() {
+    leaveProgram = () => {
+        Alert.alert(
+            'Leave Program',
+            'You are about to leave your program, are you sure?',
+            [   { text: 'Cancel', onPress: () => {console.log('Cancelled')}, style: 'cancel' },
+                { text: 'Leave Program', onPress: () => {
+                     AsyncStorage.setItem('ownProgramId', '');
+                    AsyncStorage.setItem('ownProgramKey', '');
+                    this.setState({isLeavingProgram: true}, Database.leaveProgram(this.props.route.params.uid, 'ProgramDashboardScreen.js'))
+                    this._retrieveFilteredItems();
+                    this.setOwnPropertyTo(false);
+                   
+                    this.setState({programName: 'leaving program'},
+                        Database.leaveProgram(this.props.route.params.uid)
+                    )
+                    
+                } }
+            ]
+        );
+    }
+    if (this.state.hasProgram) {
+    return(
+                <View>
+                    <TouchableOpacity onPress={leaveProgram}><Text style={Common.textButton}>LEAVE PROGRAM</Text></TouchableOpacity>
+                </View>
+            );  
+    }
 
+}
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[Common.container, Common.sectionBorder]}>
           <Image source={require('../assets/images/CTA.png')} style={styles.avatar}/>
     <Grid>
-        <Col>
+        <Col size={1}/>
+        <Col size={4}>
             <Row>
                 <BigTag
                     title={'Workouts Finished'}
@@ -49,9 +91,9 @@ class Profile extends Component {
                     color={'#000'}
                 />
             </Row>
-            <Row><Text>CHANGE</Text></Row>
+            <Row><Text style={Common.textButton}>CHANGE</Text></Row>
         </Col>
-        <Col>
+        <Col size={4}>
             <Row>
                 <BigTag
                     title={'Exercise Finished'}
@@ -62,14 +104,15 @@ class Profile extends Component {
             <Row>
                 <BigTag
                     title={'Current Program'}
-                    content={'3'}
+                    content={this.state.programName}
                     color={'#000'}
                 />
             </Row>
-            <Row><Text>View Statistics</Text></Row>
+            <Row>{this._displayLeaveButton()}</Row>
         </Col>
+        <Col size={1}/>
         </Grid>
-        <View style={[Common.container, Common.sectionBorder]}>
+        {/*<View style={[Common.container, Common.sectionBorder]}>
             <BigTag
                     title={'Current Program'}
                     content={'3'}
@@ -82,7 +125,7 @@ class Profile extends Component {
                     content={'3'}
                     color={'#000'}
                 />
-            </View>
+            </View>*/}
       </View>
     );
   }

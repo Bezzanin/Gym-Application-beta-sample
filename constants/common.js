@@ -131,6 +131,12 @@ const Common = {
         color: Colors.lightTitleTextColor,
         fontWeight: '500',
     },
+    brightActionTitle: {
+        fontSize: 16,
+        lineHeight: 18,
+        color: Colors.tintColor,
+        fontWeight: '500',
+    },
     colored: {
         color: 'red',
         fontSize: 14
@@ -225,7 +231,7 @@ const Common = {
     },
     promotionCard: {
         width: Layout.window.width - (2 * Layout.gutter.l),
-        height: Layout.width.m,
+        height: Layout.width.m * 1.3,
         borderRadius: 5,
         paddingTop: Layout.gutter.s,
         backgroundColor: 'transparent',
@@ -233,6 +239,7 @@ const Common = {
         justifyContent: 'center',
         alignItems:'center'
     },
+
     promotionProgramContainer: {
         width: Layout.width.m * 1.25,
         borderRadius: 5,
@@ -279,8 +286,17 @@ const Common = {
         borderRadius: 3,
     },
     imageCover: {
-        flex: 1,
         resizeMode: 'cover',
+        flex: 1,
+    },
+    imageCardCover: {
+        width: Layout.window.width - (2 * Layout.gutter.l),
+        resizeMode: 'cover',
+        flex: 1,
+        borderRadius: 5,
+        justifyContent: 'space-around',
+        paddingVertical: Layout.gutter.m,
+        marginBottom: Layout.gutter.l
     },
     /**
      * Buttons style
@@ -296,6 +312,22 @@ const Common = {
         justifyContent: 'center',
         alignSelf: 'center'
     },
+    textButton: {
+        color: Colors.tintColor,
+        fontWeight: '500',
+    },
+    brightButtonRounded: {
+        borderRadius: 100,
+        backgroundColor: Colors.tintColor,
+        width: Layout.width.m + Layout.width.s,
+        borderColor: Colors.tintColor,
+        borderWidth: 1,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+
     /**
      * Shadows
      */
@@ -323,10 +355,21 @@ const Common = {
             height: 3,
             width: 0
         },
-    }
+    },
     /**
-     * 
+     * Functional
      */
+    loading: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,.2)"
+
+    }
 
 };
 

@@ -117,9 +117,9 @@ export default class LinksScreen extends React.Component {
       
       let log = _.filter(this.state.exercises, {'_key': item.id})
     
-      log[0].weight = item.weight;
-      log[0].sets = item.sets;
-      log[0].reps = item.reps;
+      // log[0].weight = item.weight || '';
+      // log[0].sets = item.sets || '';
+      // log[0].reps = item.reps || '';
       console.log('Check the log');
       console.log(log);
       return( log )
@@ -161,7 +161,12 @@ export default class LinksScreen extends React.Component {
     )
 
     const randomTips = (
-                <Text>Try to eat more protein today to recover</Text>
+      <View style={Common.centered}>
+          <View style={[Common.brightStats, Common.shadowBright]}>
+              <Text style={Common.lightTagTitle}>random advice</Text>
+                <Text style={Common.lightTitleH3}>Try to eat more protein today to recover</Text>
+          </View>
+      </View>
     )
     
     return (
@@ -170,7 +175,7 @@ export default class LinksScreen extends React.Component {
         contentContainerStyle={this.props.route.getContentContainerStyle()}>
                  <CalendarStrip
                     daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#CE0707', zIndex: 10}}
-                    style={{paddingTop: 20, paddingBottom: 20}}
+                    style={[{paddingTop: 20, paddingBottom: 20}, Common.sectionBorder]}
                     calendarHeaderStyle={{color: 'black'}}
                     calendarColor={'#F5F5F5'}
                     dateNumberStyle={{color: 'black', fontSize: 15}}

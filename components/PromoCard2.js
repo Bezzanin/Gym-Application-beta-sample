@@ -5,7 +5,7 @@ import Common from '../constants/common';
 import { withNavigation } from '@expo/ex-navigation';
 
 @withNavigation
-export default class PromoCard extends Component {
+export default class PromoCard2 extends Component {
     render() {
     return (
       <View style={[Common.promotionCard,Common.shadowMedium]}>
@@ -13,17 +13,17 @@ export default class PromoCard extends Component {
         style={[Common.centered, Common.imageCardCover, Common.shadowMedium]}>
 
 
-              <Text style={Common.lightTitleH2}>Gain Faster with Diary</Text>
+              <Text style={Common.lightTitleH2}>Exercises library</Text>
            
-              <Text style={[Common.lightBodyText, Common.centeredText]}>Get your workouts statistics day by day, week by week. Take personal notes and record outdoor activities.
+              <Text style={[Common.lightBodyText, Common.centeredText]}>Discover exercises sorted by muscles and type. Most of the exercises come with videos, which will help you to grow.
               </Text>
 
               
 
               <TouchableOpacity onPress={ () => {
-                this.props.navigator.push('diary') } }
+                this.props.navigator.push('exercises') } }
                 style={Common.lightButtonRounded}>
-                <Text style={Common.lightActionTitle}>Check Diary</Text>
+                <Text style={Common.lightActionTitle}>Explore Exercises</Text>
               </TouchableOpacity>
           </Image>
       </View>

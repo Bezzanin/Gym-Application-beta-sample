@@ -45,7 +45,7 @@ export default class ExerciseScreen extends React.Component {
   componentDidMount() {
     this.renderExercises();
       let uid = this.props.route.params.uid;
-      Database.getUserProgram(uid, (programName) => {
+      Database.getUserProgram( (programName) => {
           this.setState({
               programName
           })
@@ -151,7 +151,6 @@ getOwnExercises() {
             isLeaving = {this.state.isLeavingProgram}
             style={{flex: 1}}
             />
-        {this._displayLeaveButton()}
         <View style={[Common.container, Common.sectionBorder]}>
         <Text style={styles.textBlackTitle}>Workouts</Text>
         </View>
@@ -261,42 +260,6 @@ handleContinue() {
         }
     }, 1000)
     
-}
-
-_displayLeaveButton() {
-    leaveProgram = () => {
-        Alert.alert(
-            'Leave Program',
-            'You are about to leave your program, are you sure?',
-            [   { text: 'Cancel', onPress: () => {console.log('Cancelled')}, style: 'cancel' },
-                { text: 'Leave Program', onPress: () => {
-                     AsyncStorage.setItem('ownProgramId', '');
-                    AsyncStorage.setItem('ownProgramKey', '');
-                    this.setState({isLeavingProgram: true}, Database.leaveProgram(this.props.route.params.uid, 'ProgramDashboardScreen.js'))
-                    this._retrieveFilteredItems();
-                    this.setOwnPropertyTo(false);
-                   
-                    this.setState({programName: 'leaving program'},
-                        Database.leaveProgram(this.props.route.params.uid)
-                    )
-                    
-                } }
-            ]
-        );
-    }
-    switch (this.state.programName) {
-
-        case this.props.route.params.program._key:
-            return(
-                <View>
-                    <TouchableOpacity onPress={leaveProgram}><Text>LEAVE PROGRAM</Text></TouchableOpacity>
-                </View>
-            );
-        default: 
-            return(
-                <View/>
-            );
-    }
 }
 
 compare = (property) => {

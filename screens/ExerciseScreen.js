@@ -99,12 +99,15 @@ export default class ExerciseScreen extends React.Component {
      
      if (this.props.route.params.insideWorkout) {
        return(
+         <View style ={[Common.container, Common.centered, Common.sectionBorder]}>
          <TouchableOpacity
+          style={[Common.brightButtonRounded, Common.shadowBright]}
           onPress={goToNext}>
-           <Text>
+           <Text style={Common.lightActionTitle}>
              Go to next exercise
            </Text>
          </TouchableOpacity>
+         </View>
        )
      }
    }
@@ -189,7 +192,7 @@ export default class ExerciseScreen extends React.Component {
           </TouchableWithoutFeedback>
 
         </View>
-
+        {this.renderNextButton()}
         <View style={[Common.container, Common.sectionBorder]}>
           <Text style={Common.darkTitleH1}>{this.props.route.params.exercise.name}</Text>
           <View style = {Common.inlineContainer}>
@@ -239,17 +242,6 @@ export default class ExerciseScreen extends React.Component {
                   <Picker.Item label="5 sets" value="5" />
               </Picker>
             </View>
-            <TouchableOpacity onPress={ this.sendData.bind(this) }>
-              <Text>SEND INFORMATION TO FIREBASE</Text>
-            </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          this.setModalVisible(true)
-        }}>
-        <View style={styles.button}>
-          {this.renderNextButton()}
-        <Text style={styles.textWhite}>Input data</Text>
-        </View>
-        </TouchableOpacity>
        
       </ScrollView>
     );

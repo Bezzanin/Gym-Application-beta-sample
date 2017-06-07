@@ -87,7 +87,7 @@ const LineData = [
             <Text style={[Common.darkBodyText, Common.centeredText]}>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.</Text>
         </View>
         <Text style={Common.darkTitleDisplay}>Components</Text>
-        <View style={[Common.containerLeft, Common.sectionBorder]}>
+        <View style={[ Common.sectionBorder]}>
             <ExerciseItem
             item={exerciseExample1}
             imageLink={exerciseExample1.photo}

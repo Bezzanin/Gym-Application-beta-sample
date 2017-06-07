@@ -126,7 +126,7 @@ export default class LoginScreen extends Component {
             >
                 <View style={styles.containerCentered}>
                     <View style={styles.textGroup}>
-                        <Text style={styles.title}>Atlite</Text>
+                        <Text style={styles.title}>Rational Gym</Text>
                         <Text style={styles.description}>The best way to get right instructional videos, lorem ipsum dolor sit amet, in vina veritas per aspera et astra</Text>
                     </View>
                     
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         textAlign: "center",
         color: "#fff",
-        fontSize: 45,
+        fontSize: 25,
         fontWeight: "bold",
         justifyContent:'center',
         alignSelf: 'center'

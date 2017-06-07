@@ -3,32 +3,36 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import Layout from '../constants/Layout'
 import {Grid, Col, Row} from 'react-native-elements';
-
+import Common from '../constants/common';
+import BigTag from '../components/BigTag';
 class LogItem extends Component {
   render() {
     return (
-      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
-        <Grid>
-            <Col>
-                <Row size={1}><Text style={styles.title}>{this.props.titleText} Weight</Text></Row>
-                <Row size={3}><Text style={styles.number}>{this.props.title} kg</Text></Row>
-            </Col>
-            <Col>
-                <Row size={1}><Text style={styles.title}>{this.props.titleText} Reps</Text></Row>
-                <Row size={3}><Text style={styles.number}>{this.props.weight}</Text></Row>
-            </Col>
-            <Col>
-                <Row size={1}><Text style={styles.title}>{this.props.titleText} Sets</Text></Row>
-                <Row size={3}><Text style={styles.number}>{this.props.title}</Text></Row>
-            </Col>
-        </Grid>
-
-      {/*<Text style={styles.title}>{this.props.title}</Text>
-      <Text style={styles.title}>{this.props.weight}</Text>
-      <Text style={styles.title}>{this.props.metric}</Text>
-      <Text style={styles.title}>{this.props.date}</Text>*/}
-      
-    </TouchableOpacity>
+      <View style={[Common.container, Common.sectionBorder]}>
+      <View style={[Common.inlineContainer, Common.brightStats, Common.centered, Common.shadowBright]}>
+                   <Grid>
+                        <Col>
+                            <BigTag
+                                title='total exercises'
+                                content={'34'}
+                                color='#fff'
+                                />
+                        </Col>
+                        <Col>
+                            <BigTag
+                            title='workouts done'
+                            content='22'
+                            color='#fff'/>
+                        </Col>
+                        <Col>
+                            <BigTag
+                                title='workouts done'
+                                content='22'
+                                color='#fff'/>
+                        </Col>
+                    </Grid> 
+                </View>
+                </View>
     );
   }
 }

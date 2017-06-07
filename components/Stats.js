@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLabel, VictoryLine } from "victory-native";
+import {Grid, Col, Row} from 'react-native-elements';
 import Layout from '../constants/Layout';
+import BigTag from '../components/BigTag';
 import moment from 'moment';
+import Theme from '../constants/Theme';
+import Common from '../constants/common'
 import Database from '../api/database';
 var _ = require('lodash');
 
@@ -68,82 +72,107 @@ nextWeek = () => {
   render() {
     return (
       <View>
-      <View style={styles.container}>
-      <View style={styles.chartContainer}>
-        <Text style={styles.title}>Exercises Done:</Text>
-        <VictoryChart
-        width={300}
-        height={200}
-        domainPadding={20}
-        width={0.8 * Layout.window.width}
-  >
+      <View>
 
-    <VictoryAxis
-      tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
-      tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
-      offsetX={0}
-    />
-    <VictoryAxis
-      dependentAxis
-      tickFormat={(x) => (Math.round(x))}
-    />
-    <VictoryBar
-      style={{
-        data: {fill: "#CE0606", width: 20}
-      }}
-      data={this.state.weekLogs}
-      x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
-      y={(d) => d.amountOfExercisesCompleted}
-    />
-  </VictoryChart>
-  <TouchableOpacity onPress={this.prevWeek}><Text>Prev Week</Text></TouchableOpacity>
-  <TouchableOpacity onPress={this.nextWeek}><Text>Next Week</Text></TouchableOpacity>
-  {this.state.noDataHere && <View style={styles.loading}>
-            <Text>No DATA HERE</Text>
-        </View>}
-  </View>
-    <View style={styles.TextContainer}>
-    <Text>Total Exercises</Text>
-    <Text style={styles.number}>{this.state.totalExercises}</Text>
-    <Text>Total Weight</Text>
-    <Text style={styles.number}>{this.state.totalWeight}</Text>
-    </View>
-    </View>
+      <Grid>
+        <Col size ={2}>
+            <View style ={[Common.minusHorizontal, Common.paddingVertical]}>
+              <VictoryChart
+                theme={Theme}
+                width={Layout.width.l}
+                height={Layout.width.m}
+                domainPadding={Layout.gutter.l}
+                >
+                  <VictoryAxis
+                    tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
+                    tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
+                    offsetX={0}
+                    style={{
+                        grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
+                    }}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    tickFormat={(x) => (Math.round(x))}
+                  />
+                  <VictoryBar
+                    style={{
+                        data: {fill: "#CE0606", width: Layout.gutter.m+ Layout.gutter.xs},
+                    }}
+                    data={this.state.weekLogs}
+                    x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
+                    y={(d) => d.amountOfExercisesCompleted}
+                  />
+              </VictoryChart>
+              <View style={{flexDirection: 'row', marginLeft: 38}}>
+              <TouchableOpacity onPress={this.prevWeek}><Text style={Common.darkNameTag}>Prev |</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.nextWeek}><Text style={Common.darkNameTag}>Next week</Text></TouchableOpacity>
+              </View>
+              {this.state.noDataHere && <View style={styles.loading}>
+                        <Text>No DATA HERE</Text>
+                    </View>}
+            </View>
+        </Col>
+        <Col size={1}>
+          <View style={[Common.containerLeft, Common.paddingVertical]}>
+            <BigTag
+              title={'Total exercise'}
+              content={this.state.totalExercises}
+              color={'#000'}
+              />
+              <BigTag
+              title={'Total weight'}
+              content={this.state.totalWeight}
+              color={'#000'}/>
+              <BigTag
+              title={'Workouts done'}
+              content={this.state.workoutsDone}
+              color={'#000'}
+              />
+          </View>
+        </Col>
+    </Grid>
+    
+      {/*
+      <Grid>
+        <Col size ={2}>
+            <View style ={[Common.minusHorizontal, Common.paddingVertical]}>
+              <VictoryChart
+                theme={Theme}
+                width={Layout.width.l}
+                height={Layout.width.m}
+                domainPadding={Layout.gutter.l}
+                >
+                  <VictoryAxis
+                    tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
+                    tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
+                    offsetX={0}
+                    style={{
+                        grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
+                    }}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    tickFormat={(x) => (Math.round(x))}
+                  />
+                  <VictoryBar
+                    style={{
+                        data: {fill: "#CE0606", width: Layout.gutter.m+ Layout.gutter.xs},
+                    }}
+                    data={this.state.weekLogs}
+                    x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
+                    y={(d) => d.totalWeight}
+                  />
+              </VictoryChart>
+            </View>
+        </Col>
+        <Col size={1}>
+          <View style={[Common.containerLeft, Common.paddingVertical]}>
+            
+          </View>
+        </Col>
+    </Grid> */}
 
-    <View style={styles.container}>
-    <View style={styles.chartContainer}>
-        <Text style={styles.title}>Lifted Weight:</Text>
-       <VictoryChart
-        width={300}
-        height={200}
-        domainPadding={20}
-        width={0.8 * Layout.window.width}
-  >
-    <VictoryAxis
-      tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
-      tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
-      offsetX={0}
-    />
-    <VictoryAxis
-      dependentAxis
-      tickFormat={(x) => (Math.round(x))}
-    />
-    <VictoryBar
-      style={{
-        data: {fill: "#CE0606", width: 20}
-      }}
-      data={this.state.weekLogs}
-      x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
-      y={(d) => d.totalWeight}
-    />
-  </VictoryChart>
-  </View>
-    <View style={styles.TextContainer}>
-    <Text>Workouts Done:</Text>
-    <Text style={styles.number}>{this.state.workoutsDone}</Text>
-    <Text>Time Spent</Text>
-    <Text style={styles.number}>1h</Text>
-    </View>
       </View>
       
       </View>

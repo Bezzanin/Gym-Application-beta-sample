@@ -6,7 +6,7 @@ const ActionButton = require('../components/ActionButton');
 import CommonStyle from "../constants/common";
 import Stats from '../components/Stats';
 import Profile from '../components/Profile';
-
+import Common from '../constants/common';
 
 export default class SettingsScreen extends React.Component {
   
@@ -48,10 +48,13 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <ScrollView
-        style={styles.container}>
+        style={Common.containerBasic}>
         <Profile />
+        <View style={Common.container}>
+          <Text style={Common.darkTitleH1}>Exercises this week</Text>
+        </View>
         <Stats loadingOFF={this.loadingOFF}/>
-        {this.state.loading && <View style={styles.loading}>
+        {this.state.loading && <View style={Common.loading}>
             <ActivityIndicator
                 animating
                 size="large"
@@ -64,20 +67,3 @@ export default class SettingsScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loading: {
-        position: "absolute",
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0,0,0,.2)"
-
-    }
-});
