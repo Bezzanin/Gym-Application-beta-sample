@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { ActivityIndicator, View, Text, StyleSheet, Image } from "react-native";
 import { Button } from 'react-native-elements';
 import { withNavigation } from '@expo/ex-navigation';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 @withNavigation
 class CTACard extends Component {
@@ -19,14 +24,13 @@ class CTACard extends Component {
       onLoadEnd={()=> { this.setState({ loading: false })}} 
         style={styles.header}>
        	 <View>
-            <Text style={styles.title}>Why not start rightnow?</Text>
-            <Text style={styles.paragraph}>We will select programs adjusted to your personal parameters, needs and timetable.
-                All Programs made by professionals
+            <Text style={styles.title}>{I18n.t('Doyouwanttostartrightnow')}</Text>
+            <Text style={styles.paragraph}>{I18n.t('WePrepared')}
             </Text>
             <Button
             buttonStyle={styles.ActionButton}
             onPress={this.goToSomewhere}
-  title='Choose Program' />
+  title={I18n.t('ChooseProgram')} />
 
   		</View>
 {this.state.loading && <View style={styles.loading}>

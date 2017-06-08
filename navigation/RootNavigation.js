@@ -14,6 +14,16 @@ import Common from '../constants/common';
 import AddActivity from '../components/AddActivity'
 import registerForPushNotificationsAsync
   from '../api/registerForPushNotificationsAsync';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
+
+const Home = I18n.t('Home');
+const Exercises = I18n.t('Exercises');
+const Diary = I18n.t('Diary');
+const Profile = I18n.t('Profile');
 
 export default class RootNavigation extends React.Component {
 
@@ -30,12 +40,12 @@ export default class RootNavigation extends React.Component {
       <TabNavigation tabBarHeight={56} initialTab="home" navigatorUID="main">
         <TabNavigationItem
           id="home"
-          renderIcon={isSelected => this._renderIcon('Home','ios-home', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Home,'ios-home', isSelected)}>
           <StackNavigation initialRoute="home" />
         </TabNavigationItem>
         <TabNavigationItem
           id="exercises"
-          renderIcon={isSelected => this._renderIcon('Exercises','ios-clipboard', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Exercises,'ios-clipboard', isSelected)}>
           <StackNavigation initialRoute="exercises" />
         </TabNavigationItem>
         
@@ -47,13 +57,13 @@ export default class RootNavigation extends React.Component {
 
         <TabNavigationItem
           id="diary"
-          renderIcon={isSelected => this._renderIcon('Diary','ios-bookmarks', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Diary,'ios-bookmarks', isSelected)}>
           <StackNavigation initialRoute="diary" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="settings"
-          renderIcon={isSelected => this._renderIcon('Options','ios-options', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Profile,'ios-contact', isSelected)}>
           <StackNavigation initialRoute="settings" />
         </TabNavigationItem>
       </TabNavigation>

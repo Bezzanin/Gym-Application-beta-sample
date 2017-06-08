@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 class Filters extends Component {
   render() {
@@ -8,13 +13,13 @@ class Filters extends Component {
       <View style={styles.container}>
         <View style={styles.filters}>
           <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
-            <Text style={[styles.filterText, filter ==="ALL" && styles.selectedText]}>All</Text>
+            <Text style={[styles.filterText, filter ==="ALL" && styles.selectedText]}>{I18n.t('All')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.filter, styles.filterMiddle, filter === "ISOLATION" && styles.selected]} onPress={() => this.props.onFilter("ISOLATION")}>
-            <Text style={[styles.filterText, filter ==="ISOLATION" && styles.selectedText]}>Isolation</Text>
+            <Text style={[styles.filterText, filter ==="ISOLATION" && styles.selectedText]}>{I18n.t('isolation')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.filter, filter === "MUSCLES" && styles.selected]} onPress={() => this.props.onFilter("MUSCLES")}>
-            <Text style={[styles.filterText, filter === "MUSCLES" && styles.selectedText]}>Muscles</Text>
+            <Text style={[styles.filterText, filter === "MUSCLES" && styles.selectedText]}>{I18n.t('basic')}</Text>
           </TouchableOpacity>
         </View>
       </View>

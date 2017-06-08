@@ -5,6 +5,12 @@ import Layout from '../constants/Layout'
 import {Grid, Col, Row} from 'react-native-elements';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
+
 class LogItem extends Component {
   render() {
     return (
@@ -13,20 +19,20 @@ class LogItem extends Component {
                    <Grid>
                         <Col>
                             <BigTag
-                                title='total exercises'
-                                content={'34'}
+                                title={this.props.titleText}
+                                content={this.props.weight}
                                 color='#fff'
                                 />
                         </Col>
                         <Col>
                             <BigTag
-                            title='workouts done'
-                            content='22'
+                            title={I18n.t('workoutsFinished')}
+                            content={this.props.title}
                             color='#fff'/>
                         </Col>
                         <Col>
                             <BigTag
-                                title='workouts done'
+                                title={I18n.t('workoutsFinished')}
                                 content='22'
                                 color='#fff'/>
                         </Col>

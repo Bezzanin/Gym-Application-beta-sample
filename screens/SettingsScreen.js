@@ -7,6 +7,11 @@ import CommonStyle from "../constants/common";
 import Stats from '../components/Stats';
 import Profile from '../components/Profile';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class SettingsScreen extends React.Component {
   
@@ -20,7 +25,7 @@ export default class SettingsScreen extends React.Component {
   }
   static route = {
     navigationBar: {
-      title: 'exp.json',
+      title: I18n.t('Profile'),
     },
   };
   
@@ -51,7 +56,7 @@ export default class SettingsScreen extends React.Component {
         style={Common.containerBasic}>
         <Profile />
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>Exercises this week</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('ExercisesThisWeek')}</Text>
         </View>
         <Stats loadingOFF={this.loadingOFF}/>
         {this.state.loading && <View style={Common.loading}>
@@ -61,7 +66,7 @@ export default class SettingsScreen extends React.Component {
             />
         </View>}
         <View>
-          <ActionButton onPress={this.logout} title="Logout" />
+          <ActionButton onPress={this.logout} title={I18n.t('Logout')} />
         </View>
       </ScrollView>
     );

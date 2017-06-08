@@ -9,13 +9,18 @@ import LogItem from '../components/LogItem';
 import ExerciseItem from '../components/ExerciseItem';
 import StatItem from '../components/StatItem'
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 var _ = require('lodash');
 
 export default class LinksScreen extends React.Component {
   static route = {
     navigationBar: {
-      title: 'Diary',
+      title: I18n.t('Diary'),
     },
   };
 
@@ -154,7 +159,7 @@ export default class LinksScreen extends React.Component {
 
     const emptyList = (
                 <LogItem
-                    titleText={'Total'}
+                    titleText={I18n.t('TotalExercises')}
                     title={'50'}
                     weight={120}
                 />
@@ -163,8 +168,8 @@ export default class LinksScreen extends React.Component {
     const randomTips = (
       <View style={Common.centered}>
           <View style={[Common.brightStats, Common.shadowBright]}>
-              <Text style={Common.lightTagTitle}>random advice</Text>
-                <Text style={Common.lightTitleH3}>Try to eat more protein today to recover</Text>
+              <Text style={Common.lightTagTitle}>{I18n.t('DailyAdvice')}</Text>
+                <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
           </View>
       </View>
     )

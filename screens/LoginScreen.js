@@ -25,6 +25,11 @@ import React, {Component} from "react";
 import * as firebase from "firebase";
 import Database from '../api/database';
 import QuestionsScreen from './QuestionsScreen';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -127,7 +132,7 @@ export default class LoginScreen extends Component {
                 <View style={styles.containerCentered}>
                     <View style={styles.textGroup}>
                         <Text style={styles.title}>Rational Gym</Text>
-                        <Text style={styles.description}>The best way to get right instructional videos, lorem ipsum dolor sit amet, in vina veritas per aspera et astra</Text>
+                        <Text style={styles.description}>{I18n.t('LoginPromo')}</Text>
                     </View>
                     
                     <View style={styles.form}>
