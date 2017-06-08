@@ -1,9 +1,9 @@
 export default {
-  Home: 'Kotisivi' ,
+  Home: 'Kotisivu' ,
   Profile: 'Profiili' ,
-  Login: 'Kirjaudu sisään',
+  LogIn: 'Kirjaudu sisään',
   Register: "Rekisteröidy",
-  LogInwithFacebook: "Kirjaudu Facebook tunnuksilla",
+  LogInWithFacebook: "Kirjaudu Facebook tunnuksilla",
   LogInwithGoogle:	"Kirjaudu Google tunnuksilla",
   ForgotYourPassword: "Unohditko salasanasi?",
   Doyouwanttostartrightnow:	"Haluatko aloittaa heti?",
@@ -61,7 +61,7 @@ export default {
 
   TotalExercises: "Kokonais Liike",
   Discover: "Kokeile",
-  WePrepared: 'We prepared programs',
+  WePrepared: 'Valitse sinun tavoitteisiin ja tarpeisiin sopiva ohjelma',
   DoneThisWeek: "Viikon harjoitukset",
   ContinueProgram: "Jatka ohjelmaa",
   NoData: "No Data Here",
@@ -79,5 +79,18 @@ export default {
   RandomAdvice: "Muista venytellä. Halvin tapa huoltaa lihaksia!",
   DailyAdvice: "Päivän vinkki",
   LoginPromo: "Opi käyttämään kehoa ja lihaksiasi. Videoiden avulla opit harjoittamaan lihaksiasi, etkä rasita niveliä.",
-
+  Email: "sähköposti",
+  Password: "Salasana",
+  EnterYourEmail: "Kirjoita sähköposti",
+  EnterPassword: "Kirjoita Salasana",
+  EnterName: "Kirjoita nimesi",
+  Male: "Mies",
+  Female: "Nainen",
+  Next: "Seuraava",
+  Measurements: "Kirjoita painosi",
+  HowManyWeeks: "Kuinka monta kertaa viikossa haluat harjoitella?",
+  FillBasic: "Hienoa! Täytä perustiedot ja olet valmis aloittamaan",
+  Done: "Tehty",
+  Height: "korkeus",
+  Name: "Nimesi"
 };

@@ -17,6 +17,12 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Common from '../constants/common';
 import Database from '../api/database';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
+
 export default class AddActivity extends Component {
   constructor(props) {
     super(props);
@@ -65,12 +71,12 @@ export default class AddActivity extends Component {
             </TouchableWithoutFeedback>
             <View style={[styles.paragraph, Common.shadowLight]}>
               <View style={[Common.centered, Common.paddingVertical]}>
-                <Text style={Common.darkTitleH2}>Add own activity</Text>
+                <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
               </View>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{I18n.t('Name')}</FormLabel>
               <FormInput
                 onChangeText={text => this.setState({ text })}
-                placeholder={"Type Exercise Name Here"}
+                placeholder={I18n.t('EnterName')}
               />
               <View style={styles.inlineContainer}>
                 <Picker
@@ -123,7 +129,7 @@ export default class AddActivity extends Component {
                   Common.marginVerticalSmall
                 ]}
               >
-                <Text style={Common.lightActionTitle}>Add activity</Text>
+                <Text style={Common.lightActionTitle}>{I18n.t('Add')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -135,7 +141,7 @@ export default class AddActivity extends Component {
                   Common.marginVerticalSmall
                 ]}
               >
-                <Text style={Common.lightActionTitle}>Cancel</Text>
+                <Text style={Common.lightActionTitle}>{I18n.t('Cancel')}</Text>
               </TouchableOpacity>
             </View>
             <TouchableWithoutFeedback

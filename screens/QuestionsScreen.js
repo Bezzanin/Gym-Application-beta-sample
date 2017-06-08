@@ -7,6 +7,11 @@ import Database from '../api/database';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import * as firebase from "firebase";
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 class QuestionsScreen extends Component {
 
@@ -16,8 +21,8 @@ class QuestionsScreen extends Component {
           modalVisible: false,
             level: 1,
             DaysPerWeek: 3,
-            email: 'Email',
-            password: 'Password',
+            email: I18n.t('Email'),
+            password: I18n.t('Password'),
             gender: 'none',
             height: 0,
             weight: 0,
@@ -83,7 +88,7 @@ setModalVisible(visible) {
             onPress={() => {
               this.setModalVisible(true);
             }}
-            title="Register"
+            title={I18n.t('Register')}
           />
           <Modal
             animationType={"slide"}
@@ -99,7 +104,7 @@ setModalVisible(visible) {
             }}
             
           >
-            <Text style={Common.brightActionTitle}>Cancel</Text>
+            <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
           </TouchableOpacity>
           </View>
 
@@ -118,7 +123,7 @@ setModalVisible(visible) {
                     Common.marginVerticalSmall
                   ]}
                 >
-                  <Text style={Common.lightActionTitle}>Next</Text>
+                  <Text style={Common.lightActionTitle}>{I18n.t('Next')}</Text>
                 </View>
               }
               buttonWrapperStyle={styles.nextButton}
@@ -126,10 +131,10 @@ setModalVisible(visible) {
             >
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  Our app will offer you program based on your gym experience level
+                  {I18n.t('WePrepared')}
                 </Text>
                 <View style={styles.divider} />
-                <Text style={styles.text}>Choose your gender{this.state.level}</Text>
+                <Text style={styles.text}>{I18n.t('Gender')}</Text>
 
                 <View style={styles.Radio}>
                   <RadioGroup
@@ -139,11 +144,11 @@ setModalVisible(visible) {
                     onSelect={(index, value) => this.setState({ gender: value })}
                   >
                     <RadioButton value={"male"} color="#B2B2B2">
-                      <Text style={styles.labelText}>Male</Text>
+                      <Text style={styles.labelText}>{I18n.t('Male')}</Text>
                     </RadioButton>
 
                     <RadioButton value={"female"} color="#B2B2B2">
-                      <Text style={styles.labelText}>Female</Text>
+                      <Text style={styles.labelText}>{I18n.t('Female')}</Text>
                     </RadioButton>
                   </RadioGroup>
                   
@@ -153,11 +158,11 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  Our app will offer you program based on your gym experience level
+                  {I18n.t('WePrepared')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>
-                  How many days per week you want to train?
+                  {I18n.t('HowManyWeeks')}
                 </Text>
                 <View style={styles.Radio}>
                   <View style={{ flex: 1, width: Layout.window.width / 2 }}>
@@ -171,7 +176,7 @@ setModalVisible(visible) {
                       onValueChange={val => this.setState({ DaysPerWeek: val })}
                     />
                     <Text style={styles.staticText}>
-                      Value: {this.state.DaysPerWeek}
+                      {I18n.t('perweek')}: {this.state.DaysPerWeek}
                     </Text>
                   </View>
 
@@ -180,10 +185,10 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  Our app will offer you program based on your gym experience level
+                  {I18n.t('WePrepared')}
                 </Text>
                 <View style={styles.divider} />
-                <Text style={styles.text}>Your Measurements</Text>
+                <Text style={styles.text}>{I18n.t('Measurements')}</Text>
                 <View
                   style={{
                     flexDirection: "row",
@@ -193,14 +198,14 @@ setModalVisible(visible) {
                   }}
                 >
                   <View>
-                    <FormLabel>Height</FormLabel>
+                    <FormLabel>{I18n.t('Height')}</FormLabel>
                     <FormInput
                       onChangeText={text => this.setState({ text })}
                       placeholder={"cm"}
                     />
                   </View>
                   <View>
-                    <FormLabel>Weight</FormLabel>
+                    <FormLabel>{I18n.t('Weight')}</FormLabel>
                     <FormInput
                       onChangeText={text => this.setState({ text })}
                       placeholder={"kg"}
@@ -212,11 +217,11 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  Our app will offer you program based on your gym experience level
+                  {I18n.t('WePrepared')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>
-                  Great! Just fill the basic info and you are ready
+                  {I18n.t('FillBasic')}
                 </Text>
                 <View
                   style={{
@@ -225,21 +230,21 @@ setModalVisible(visible) {
                     justifyContent: "space-around"
                   }}
                 >
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{I18n.t('Name')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ text })}
-                    placeholder={"Your Name"}
+                    placeholder={I18n.t('EnterName')}
                   />
-                  <FormLabel>{this.state.email}</FormLabel>
+                  <FormLabel>{I18n.t('EnterYourEmail')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ email: text })}
-                    placeholder={"Valid Email Address"}
+                    placeholder={I18n.t('Email')}
                     keyboardType="email-address"
                   />
-                  <FormLabel>{this.state.password}</FormLabel>
+                  <FormLabel>{I18n.t('EnterPassword')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ password: text })}
-                    placeholder={"Your Password"}
+                    placeholder={I18n.t('EnterPassword')}
                     keyboardType="password"
                   />
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
@@ -251,7 +256,7 @@ setModalVisible(visible) {
                   }}
                 >
                   <View style={styles.button}>
-                    <Text style={styles.buttonText}>Done</Text>
+                    <Text style={styles.buttonText}>{I18n.t('Done')}</Text>
                   </View>
                 </TouchableHighlight>
               </View>

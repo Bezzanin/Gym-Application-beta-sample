@@ -144,18 +144,18 @@ export default class LoginScreen extends Component {
                     </View>
                     
                     <View style={styles.form}>
-                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>Email</FormLabel>
+                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>{I18n.t('Email')}</FormLabel>
                         <FormInput
-                            placeholder={"Enter your email"}
+                            placeholder={I18n.t('EnterYourEmail')}
                             placeholderTextColor={"#CCC"}
                             style={styles.inputContainerStyle}
                             inputStyle = {{ color: '#fff' }} 
                             keyboardType="email-address"
                             onChangeText = {(email) => this.setState({email})}/>
                         
-                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>Password</FormLabel>
+                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>{I18n.t('Password')}</FormLabel>
                         <FormInput 
-                            placeholder={"Enter your password"}
+                            placeholder={I18n.t('EnterPassword')}
                             placeholderTextColor={"#CCC"}
                             style={styles.inputContainerStyle}
                             secureTextEntry={true}
@@ -167,14 +167,14 @@ export default class LoginScreen extends Component {
                         <Button
                             buttonStyle={styles.loginButton}
                             onPress={this.login}
-                            title='Sign in' />
-                        <Button
+                            title={I18n.t('LogIn')} />
+                        {/*<Button
                             buttonStyle={styles.loginButton}
                             onPress={this.signup}
-                            title='Sign up' />
+                            title='Sign up' />*/}
                     </View>
                     <SocialIcon
-                        title='Sign In With Facebook'
+                        title={I18n.t('LogInWithFacebook')}
                         onPress={this.loginWithFacebook}
                         style={{width: 250}}
                         button
