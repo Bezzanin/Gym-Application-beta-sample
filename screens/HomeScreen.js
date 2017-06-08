@@ -159,7 +159,7 @@ retrieveUserId() {
 
        </View>
        <ProgramsList style={Common.sectionBorder}/>
-       
+       <TouchableOpacity onPress={() => {this.props.navigator.push('finishWorkout')}}><Text>Press</Text></TouchableOpacity>
          {this.renderBoard()}
         {this.state.isLoading && <View style={styles.loading}>
             <ActivityIndicator

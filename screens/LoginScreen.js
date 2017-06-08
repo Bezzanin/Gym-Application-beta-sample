@@ -26,6 +26,7 @@ import React, {Component} from "react";
 import * as firebase from "firebase";
 import Database from '../api/database';
 import QuestionsScreen from './QuestionsScreen';
+import Common from '../constants/common';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 I18n.locale = "fi";
@@ -136,9 +137,9 @@ export default class LoginScreen extends Component {
             >
                 <View style={styles.containerCentered}>
                     <View style={styles.textGroup}>
-                        <Text style={styles.title}>Rational Gym</Text>
+                        <Text style={[Common.centeredText, Common.lightTitleH1]}>Rational Gym</Text>
 
-                        <Text style={styles.description}>{I18n.t('LoginPromo')}</Text>
+                        <Text style={[Common.centeredText, Common.lightBodyText]}>{I18n.t('LoginPromo')}</Text>
 
                     </View>
                     

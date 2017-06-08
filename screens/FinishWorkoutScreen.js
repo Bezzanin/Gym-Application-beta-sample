@@ -4,7 +4,9 @@ import Tag from '../components/Tag';
 import {Grid, Row, Col} from 'react-native-elements';
 import Database from '../api/database';
 import Colors from '../constants/Colors';
-import Common from '../constants/common'
+import Common from '../constants/common';
+import BigTag from '../components/BigTag';
+
 export default class FinishWorkoutScreen extends React.Component {
   constructor(props){
     super(props);
@@ -40,19 +42,58 @@ export default class FinishWorkoutScreen extends React.Component {
   }
   render() {
     return (
-
+    
         <Grid>
-          <Row containerStyle={styles.centered}><Text>Workout is completed</Text></Row>
-          <Row containerStyle={styles.centered}>
-            <Col>
-            <Text>6 exercises finished</Text>
-            </Col>
-            <Col>
-            <Text>{this.calculateWorkoutTime()} time spent</Text>
-            </Col>
+          
+          <Row size={1}>
+            <View style={[Common.centered, {flex: 1}]}>
+              <Text style={[Common.centeredText, Common.darkTitleH1]}>Workout is completed</Text>
+            </View>
           </Row>
-          <Row><View><Text style={Common.darkTitleText}>Please, rate workout difficulty, so that we make it more suitable for you</Text></View></Row>
-          <Row>
+          <View style={[Common.sectionBorder, {flex: 1, maxHeight: 30, marginBottom: 10}]}/>
+          <Row size={3} containerStyle={Common.sectionBorder}>
+            
+            <Col size={1}/>
+            <Col size={2}>
+            <View style={{justifyContent: 'center', flex: 1}}>
+              <BigTag
+                title={'exercises finished'}
+                content={'6'}
+                color={'#000'}
+              />
+              <BigTag
+                title={'average sets'}
+                content={'3'}
+                color={'#000'}
+              />
+              </View>
+            </Col>
+            <Col size={2}>
+            <View style={{justifyContent: 'center', flex: 1}}>
+              <BigTag
+                title={'time spent'}
+                content={'10'}
+                color={'#000'}
+              />
+              <BigTag
+                title={'average weight'}
+                content={'70'}
+                color={'#000'}
+              />
+              </View>
+            {/*<Text>{this.calculateWorkoutTime()} time spent</Text>*/}
+            </Col>
+            <Col size={1}/>
+           <View style={[Common.sectionBorder]}/>
+           
+          </Row>
+          <View style={[Common.sectionBorder]}/>
+          <Row size={1} containerStyle={Common.centered}>
+            <View style={[Common.centered, {flex: 1}]}>
+              <Text style={[Common.darkBodyText, Common.centeredText]}>Please, rate workout difficulty, so that we make it more suitable for you</Text>
+            </View>
+            </Row>
+          <Row size={1}>
             <Col>
               <TouchableOpacity  style={styles.centered} onPress={() => {console.log(1); Database.rateWorkout(1); this.finishWorkout()}}><Text style={styles.colorBlack}>Bad</Text></TouchableOpacity>
             </Col>
@@ -63,8 +104,10 @@ export default class FinishWorkoutScreen extends React.Component {
               <TouchableOpacity  style={styles.centered} onPress={() => {console.log(3); Database.rateWorkout(3); this.finishWorkout()}}><Text style={styles.colorBlack}>Very nice</Text></TouchableOpacity>
             </Col>
           </Row>
+          <Row/>
+          
         </Grid>
-
+        
     );
   }
 }
@@ -81,6 +124,5 @@ const styles = StyleSheet.create({
   centered: {
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
   }
 });

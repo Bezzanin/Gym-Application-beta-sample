@@ -226,6 +226,15 @@ const Common = {
         alignItems: 'center',
         flex: 1,
     },
+    pseudoNavigation: {
+        height: 60,
+        paddingLeft: Layout.gutter.s,
+        justifyContent: 'center',
+        backgroundColor: '#F5F5F5',
+        borderBottomColor: Colors.borderColor,
+        borderBottomWidth: 0.5,
+        paddingTop: 10,
+    },
     transparentContainer: {
         paddingHorizontal: Layout.gutter.l,
         paddingVertical: Layout.gutter.l,

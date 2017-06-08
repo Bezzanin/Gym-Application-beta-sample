@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableHighlight, Modal } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, Modal, StatusBar } from "react-native";
 import Swiper from 'react-native-swiper';
 import Layout from '../constants/Layout';
 import {Slider, CheckBox, Button, FormInput, FormLabel, FormValidationMessage} from 'react-native-elements';
 import Database from '../api/database';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import * as firebase from "firebase";
+import Common from '../constants/common';
 
 class QuestionsScreen extends Component {
 
@@ -73,150 +74,190 @@ setModalVisible(visible) {
 
   render() {
     return (
-      <View>
-      <Button
-          buttonStyle={styles.loginButton}
-          onPress={() => {
-            this.setModalVisible(true);
-          }}
-          title="Register"
-        />
-      <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={this.state.modalVisible}>
-      <Swiper 
-        style={styles.wrapper} showsButtons scrollEnabled={false} showsPagination={true}
-        prevButton={<Text style={styles.buttonText}></Text>}
-        nextButton={<View style={styles.button}><Text style={styles.buttonText}>Next</Text></View>}
-        buttonWrapperStyle={styles.nextButton}
-        loop={false}>
-    <View style={styles.slide}>
-        <Text style={styles.staticText}>Our app will offer you program based on your gym experience level</Text>
-        <View style={styles.divider}/>
-        <Text style={styles.text}>Choose your gender{this.state.level}</Text>
-        <Button
-            onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-            style={styles.hideButton}
-            title="Cancel"
+        <View>
+          <StatusBar
+          barStyle={ this.state.modalVisible ? 'dark-content' : 'light-content'}
           />
-        <View style={styles.Radio}>
-        <RadioGroup
-          size={20}
-  thickness={2}
-  color='#B2B2B2'
-  onSelect = {(index, value) => this.setState({gender: value})}
-      >
-        <RadioButton value={'male'} color='#B2B2B2'>
-          <Text style={styles.labelText}>Male</Text>
-        </RadioButton>
-
-        <RadioButton value={'female'} color='#B2B2B2'>
-          <Text style={styles.labelText}>Female</Text>
-        </RadioButton>
-      </RadioGroup>
-      
-  </View>
-  
-  </View>
-
-
-  <View style={styles.slide}>
-    <Text style={styles.staticText}>Our app will offer you program based on your gym experience level</Text>
-    <View style={styles.divider}/>
-    <Text style={styles.text}>How many days per week you want to train?</Text>
-    <View style={styles.Radio}>
-      <View style={{flex: 1, width: Layout.window.width/2}}>
-  <Slider
-    value={this.state.DaysPerWeek}
-    minimumValue={1}
-    maximumValue={7}
-    step={1}
-    thumbTintColor={'#CE0707'}
-    minimumTrackTintColor={'#B2B2B2'}
-    onValueChange={(val) => this.setState({DaysPerWeek: val})} />
-  <Text style={styles.staticText}>Value: {this.state.DaysPerWeek}</Text>
-  <Button
-            onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-            style={styles.hideButton}
-            title="Cancel"
-          />
-</View>
-
-  </View>
-  </View>
-
-  <View style={styles.slide}>
-    <Text style={styles.staticText}>Our app will offer you program based on your gym experience level</Text>
-    <View style={styles.divider}/>
-    <Text style={styles.text}>Your Measurements</Text>
-    <View style={{flexDirection: 'row', width: Layout.window.width, flexWrap: 'wrap', justifyContent: 'space-around'}}>
-      <View><FormLabel>Height</FormLabel>
-        <FormInput
-          onChangeText={text =>
-                this.setState({ text })}
-          placeholder={'cm'}
-        /></View>
-        <View><FormLabel>Weight</FormLabel>
-        <FormInput
-          onChangeText={text =>
-                this.setState({ text })}
-          placeholder={'kg'}
-        /></View>
-  </View>
           <Button
+            buttonStyle={styles.loginButton}
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+            title="Register"
+          />
+          <Modal
+            animationType={"slide"}
+            transparent={false}
+            visible={this.state.modalVisible}
+          >
+          <View style={
+              Common.pseudoNavigation
+            }>
+          <TouchableOpacity
             onPress={() => {
               this.setModalVisible(!this.state.modalVisible);
             }}
-            style={styles.hideButton}
-            title="Cancel"
-          />
-  </View>
+            
+          >
+            <Text style={Common.brightActionTitle}>Cancel</Text>
+          </TouchableOpacity>
+          </View>
 
-  <View style={styles.slide}>
-    <Text style={styles.staticText}>Our app will offer you program based on your gym experience level</Text>
-    <View style={styles.divider}/>
-    <Text style={styles.text}>Great! Just fill the basic info and you are ready</Text>
-    <View style={{width: Layout.window.width, flexWrap: 'wrap', justifyContent: 'space-around'}}>
-      <FormLabel>Name</FormLabel>
-        <FormInput
-          onChangeText={text =>
-                this.setState({ text })}
-          placeholder={'Your Name'}
-        />
-      <FormLabel>{this.state.email}</FormLabel>
-        <FormInput
-          onChangeText={text =>
-                this.setState({ email: text })}
-          placeholder={'Valid Email Address'}
-          keyboardType="email-address"
-        />
-        <FormLabel>{this.state.password}</FormLabel>
-        <FormInput
-          onChangeText={text =>
-                this.setState({ password: text })}
-          placeholder={'Your Password'}
-          keyboardType="password"
-        />
-        <FormValidationMessage>{this.state.response}</FormValidationMessage>
-  </View>
-    <TouchableHighlight 
-    style={styles.doneButton}
-    onPress={() => {
-              this.signup();
-              
 
-            }}>
-    <View style={styles.button}><Text style={styles.buttonText}>Done</Text></View>
-    </TouchableHighlight>
-  </View>
-</Swiper>
-</Modal>
-</View>
+            <Swiper
+              style={styles.wrapper}
+              showsButtons
+              scrollEnabled={false}
+              showsPagination={true}
+              prevButton={<Text style={styles.buttonText} />}
+              nextButton={
+                <View
+                  style={[
+                    Common.brightButtonRounded,
+                    Common.shadowBright,
+                    Common.marginVerticalSmall
+                  ]}
+                >
+                  <Text style={Common.lightActionTitle}>Next</Text>
+                </View>
+              }
+              buttonWrapperStyle={styles.nextButton}
+              loop={false}
+            >
+              <View style={styles.slide}>
+                <Text style={styles.staticText}>
+                  Our app will offer you program based on your gym experience level
+                </Text>
+                <View style={styles.divider} />
+                <Text style={styles.text}>Choose your gender{this.state.level}</Text>
+
+                <View style={styles.Radio}>
+                  <RadioGroup
+                    size={20}
+                    thickness={2}
+                    color="#B2B2B2"
+                    onSelect={(index, value) => this.setState({ gender: value })}
+                  >
+                    <RadioButton value={"male"} color="#B2B2B2">
+                      <Text style={styles.labelText}>Male</Text>
+                    </RadioButton>
+
+                    <RadioButton value={"female"} color="#B2B2B2">
+                      <Text style={styles.labelText}>Female</Text>
+                    </RadioButton>
+                  </RadioGroup>
+                  
+                </View>
+                
+              </View>
+
+              <View style={styles.slide}>
+                <Text style={styles.staticText}>
+                  Our app will offer you program based on your gym experience level
+                </Text>
+                <View style={styles.divider} />
+                <Text style={styles.text}>
+                  How many days per week you want to train?
+                </Text>
+                <View style={styles.Radio}>
+                  <View style={{ flex: 1, width: Layout.window.width / 2 }}>
+                    <Slider
+                      value={this.state.DaysPerWeek}
+                      minimumValue={1}
+                      maximumValue={7}
+                      step={1}
+                      thumbTintColor={"#CE0707"}
+                      minimumTrackTintColor={"#B2B2B2"}
+                      onValueChange={val => this.setState({ DaysPerWeek: val })}
+                    />
+                    <Text style={styles.staticText}>
+                      Value: {this.state.DaysPerWeek}
+                    </Text>
+                  </View>
+
+                </View>
+              </View>
+
+              <View style={styles.slide}>
+                <Text style={styles.staticText}>
+                  Our app will offer you program based on your gym experience level
+                </Text>
+                <View style={styles.divider} />
+                <Text style={styles.text}>Your Measurements</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: Layout.window.width,
+                    flexWrap: "wrap",
+                    justifyContent: "space-around"
+                  }}
+                >
+                  <View>
+                    <FormLabel>Height</FormLabel>
+                    <FormInput
+                      onChangeText={text => this.setState({ text })}
+                      placeholder={"cm"}
+                    />
+                  </View>
+                  <View>
+                    <FormLabel>Weight</FormLabel>
+                    <FormInput
+                      onChangeText={text => this.setState({ text })}
+                      placeholder={"kg"}
+                    />
+                  </View>
+                </View>
+
+              </View>
+
+              <View style={styles.slide}>
+                <Text style={styles.staticText}>
+                  Our app will offer you program based on your gym experience level
+                </Text>
+                <View style={styles.divider} />
+                <Text style={styles.text}>
+                  Great! Just fill the basic info and you are ready
+                </Text>
+                <View
+                  style={{
+                    width: Layout.window.width,
+                    flexWrap: "wrap",
+                    justifyContent: "space-around"
+                  }}
+                >
+                  <FormLabel>Name</FormLabel>
+                  <FormInput
+                    onChangeText={text => this.setState({ text })}
+                    placeholder={"Your Name"}
+                  />
+                  <FormLabel>{this.state.email}</FormLabel>
+                  <FormInput
+                    onChangeText={text => this.setState({ email: text })}
+                    placeholder={"Valid Email Address"}
+                    keyboardType="email-address"
+                  />
+                  <FormLabel>{this.state.password}</FormLabel>
+                  <FormInput
+                    onChangeText={text => this.setState({ password: text })}
+                    placeholder={"Your Password"}
+                    keyboardType="password"
+                  />
+                  <FormValidationMessage>{this.state.response}</FormValidationMessage>
+                </View>
+                <TouchableHighlight
+                  style={styles.doneButton}
+                  onPress={() => {
+                    this.signup();
+                  }}
+                >
+                  <View style={styles.button}>
+                    <Text style={styles.buttonText}>Done</Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+            </Swiper>
+          </Modal>
+        </View>
     );
   }
 }

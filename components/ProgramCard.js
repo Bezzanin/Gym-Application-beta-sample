@@ -6,6 +6,8 @@ import {withNavigation} from '@expo/ex-navigation';
 import ExerciseItem from '../components/ExerciseItem';
 import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
+import BigTag from '../components/BigTag';
+import Common from '../constants/common';
 
 const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity } = ReactNative;
 
@@ -73,7 +75,7 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Program key: {this.props.item._key}</Text>
+              <Text style={Common.lightTitleH2}>Program key: {this.props.item._key}</Text>
             </View>
             <View style={styles.infoContainer}>
               <Tag title={'days overall'} content={'30 days'} color='#fff'/>
