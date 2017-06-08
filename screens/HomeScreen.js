@@ -154,12 +154,11 @@ retrieveUserId() {
      <ScrollView>
        {this.renderCard()}
 
-        <View style={Common.containerLeft}>
+        <View style={Common.container}>
             <Text style={Common.darkTitleH1}>{I18n.t('PopularPrograms')}</Text>
-
        </View>
        <ProgramsList style={Common.sectionBorder}/>
-       <TouchableOpacity onPress={() => {this.props.navigator.push('finishWorkout')}}><Text>Press</Text></TouchableOpacity>
+
          {this.renderBoard()}
         {this.state.isLoading && <View style={styles.loading}>
             <ActivityIndicator

@@ -36,7 +36,7 @@ const filterExercises = (filter, exercises) => {
 return exercises.filter((item) => {
   if (filter === 'ALL') return true;
   if (filter === 'ISOLATION') return item.type === 'isolation';
-  if (filter === 'ARMS') return item.arms;
+  if (filter === 'BASIC') return item.type === 'basic';
 })
 }
 

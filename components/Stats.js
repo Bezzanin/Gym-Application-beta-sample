@@ -111,9 +111,7 @@ nextWeek = () => {
               <TouchableOpacity onPress={this.prevWeek}><Text style={Common.darkNameTag}>{I18n.t('Previous')} |</Text></TouchableOpacity>
               <TouchableOpacity onPress={this.nextWeek}><Text style={Common.darkNameTag}>{I18n.t('NextWeek')}</Text></TouchableOpacity>
               </View>
-              {this.state.noDataHere && <View style={styles.loading}>
-                        <Text>{I18n.t('NoData')}</Text>
-                    </View>}
+
             </View>
         </Col>
         <Col size={1}>
