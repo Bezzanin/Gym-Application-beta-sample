@@ -25,6 +25,11 @@ const StatusBar = require('../components/StatusBar');
 const ExerciseItem = require('../components/ExerciseItem');
 const styles = require('../constants/styles.js');
 import Database from '../api/database';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 
 const filterExercises = (filter, exercises) => {
@@ -57,7 +62,7 @@ export default class ExercisesScreen extends Component {
   static route = {
     navigationBar: {
       visible: true,
-      title: 'Library',
+      title: I18n.t('ExercisesLibrary'),
     },
   };
 
@@ -90,7 +95,7 @@ export default class ExercisesScreen extends Component {
     return (
       <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading1}>Search Exercises</Text>
+        <Text style={styles.heading1}>{I18n.t('SearchExercises')}</Text>
         <Filters
           onFilter={this.handleFilter}
           filter={this.state.filter}/>

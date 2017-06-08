@@ -9,8 +9,11 @@ import Theme from '../constants/Theme';
 import Common from '../constants/common'
 import Database from '../api/database';
 var _ = require('lodash');
-
-
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 
 class Stats extends Component {
@@ -85,7 +88,7 @@ nextWeek = () => {
                 >
                   <VictoryAxis
                     tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
-                    tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
+                    tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
                     offsetX={0}
                     style={{
                         grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
@@ -105,27 +108,27 @@ nextWeek = () => {
                   />
               </VictoryChart>
               <View style={{flexDirection: 'row', marginLeft: 38}}>
-              <TouchableOpacity onPress={this.prevWeek}><Text style={Common.darkNameTag}>Prev |</Text></TouchableOpacity>
-              <TouchableOpacity onPress={this.nextWeek}><Text style={Common.darkNameTag}>Next week</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.prevWeek}><Text style={Common.darkNameTag}>{I18n.t('Previous')} |</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.nextWeek}><Text style={Common.darkNameTag}>{I18n.t('NextWeek')}</Text></TouchableOpacity>
               </View>
               {this.state.noDataHere && <View style={styles.loading}>
-                        <Text>No DATA HERE</Text>
+                        <Text>{I18n.t('NoData')}</Text>
                     </View>}
             </View>
         </Col>
         <Col size={1}>
           <View style={[Common.containerLeft, Common.paddingVertical]}>
             <BigTag
-              title={'Total exercise'}
+              title={I18n.t('TotalExercises')}
               content={this.state.totalExercises}
               color={'#000'}
               />
               <BigTag
-              title={'Total weight'}
+              title={I18n.t('TotalWeight')}
               content={this.state.totalWeight}
               color={'#000'}/>
               <BigTag
-              title={'Workouts done'}
+              title={I18n.t('workoutsFinished')}
               content={this.state.workoutsDone}
               color={'#000'}
               />

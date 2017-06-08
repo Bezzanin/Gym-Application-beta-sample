@@ -6,7 +6,11 @@ import BigTag from '../components/BigTag';
 import Layout from '../constants/Layout';
 import Database from '../api/database';
 var _ = require('lodash');
-
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 
 class Profile extends Component {
@@ -43,10 +47,10 @@ componentDidMount() {
 _displayLeaveButton() {
     leaveProgram = () => {
         Alert.alert(
-            'Leave Program',
-            'You are about to leave your program, are you sure?',
+            I18n.t('LeaveProgram'),
+            I18n.t('LeaveProgramAlert'),
             [   { text: 'Cancel', onPress: () => {console.log('Cancelled')}, style: 'cancel' },
-                { text: 'Leave Program', onPress: () => {
+                { text: I18n.t('LeaveProgram'), onPress: () => {
                      AsyncStorage.setItem('ownProgramId', '');
                     AsyncStorage.setItem('ownProgramKey', '');
                    Database.leaveProgram()
@@ -58,7 +62,7 @@ _displayLeaveButton() {
     if (this.state.hasProgram) {
     return(
                 <View>
-                    <TouchableOpacity onPress={leaveProgram}><Text style={Common.textButton}>LEAVE PROGRAM</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={leaveProgram}><Text style={Common.textButton}>{I18n.t('LeaveProgram')}</Text></TouchableOpacity>
                 </View>
             );  
     }
@@ -73,31 +77,31 @@ _displayLeaveButton() {
         <Col size={4}>
             <Row>
                 <BigTag
-                    title={'Workouts Finished'}
+                    title={I18n.t('workoutsFinished')}
                     content={this.state.totalWorkouts}
                     color={'#000'}
                 />
             </Row>
             <Row>
                 <BigTag
-                    title={'Current Weight'}
+                    title={I18n.t('maximumWeight')}
                     content={'80'}
                     color={'#000'}
                 />
             </Row>
-            <Row><Text style={Common.textButton}>CHANGE</Text></Row>
+            <Row><Text style={Common.textButton}>{I18n.t('ChangeWeight')}</Text></Row>
         </Col>
         <Col size={4}>
             <Row>
                 <BigTag
-                    title={'Exercise Finished'}
+                    title={I18n.t('exersiscesFinished')}
                     content={this.state.totalExercises}
                     color={'#000'}
                 />
             </Row>
             <Row>
                 <BigTag
-                    title={'Current Program'}
+                    title={I18n.t('currentProgram')}
                     content={this.state.programName}
                     color={'#000'}
                 />

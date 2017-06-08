@@ -24,6 +24,11 @@ import * as firebase from 'firebase';
 import Stats from '../components/Stats';
 import Database from '../api/database';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -39,7 +44,7 @@ export default class HomeScreen extends Component {
   static route = {
     navigationBar: {
       visible: true,
-      title: 'Dashboard',
+      title: I18n.t('Home'),
     },
   };
   loadingOFF() {
@@ -93,7 +98,7 @@ renderBoard = () => {
     return(
       <View style={Common.sectionBorder}>
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>Exercises this week</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('ExercisesThisWeek')}</Text>
         </View>
         <Stats
           loadingOFF={this.loadingOFF}
@@ -105,7 +110,7 @@ renderBoard = () => {
     return (
       <View>
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>Discover the Rational</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('Discover')}</Text>
         </View>
         <View style={Common.centered}>
           <PromoCard2/>
@@ -145,13 +150,13 @@ retrieveUserId() {
 
 }
   render() {
-    let actionCard = (<Text>Privet</Text>)
     return (
      <ScrollView>
        {this.renderCard()}
-       
-        <View style={Common.container}>
-            <Text style={Common.darkTitleH1}>Seasonal products</Text>
+
+        <View style={Common.containerLeft}>
+            <Text style={Common.darkTitleH1}>{I18n.t('PopularPrograms')}</Text>
+
        </View>
        <ProgramsList style={Common.sectionBorder}/>
        

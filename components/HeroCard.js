@@ -6,6 +6,11 @@ import Layout from '../constants/Layout';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
 import {Grid, Col, Row} from 'react-native-elements';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 @withNavigation
 class HeroCard extends Component {
@@ -21,8 +26,8 @@ class HeroCard extends Component {
               <Row size={1}>
                
                     <View>
-                      <Text style={[Common.lightTitleH4, Common.removeMarginBetweenTitles]}>YOUR PROGRAM</Text>
-                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles]}>Basic shoulders gain  
+                      <Text style={[Common.lightTitleH4, Common.removeMarginBetweenTitles]}>{I18n.t('YourProgram')}</Text>
+                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles]}>Perusohjelma  
                       </Text>
                     </View>
               </Row>
@@ -31,7 +36,7 @@ class HeroCard extends Component {
                       <Col>
                         <View style={{justifyContent: 'center'}}>
                         <BigTag
-                        title={'Done this week'}
+                        title={I18n.t('DoneThisWeek')}
                         content={'3'}
                         color={'#fff'}
                         />
@@ -40,7 +45,7 @@ class HeroCard extends Component {
                       <Col>
                       <View style={{justifyContent: 'center'}}>
                         <BigTag
-                        title={'Exercises left'}
+                        title={I18n.t('ExercisesThisWeek')}
                         content={'12'}
                         color={'#fff'}
                         />
@@ -53,7 +58,7 @@ class HeroCard extends Component {
                       <TouchableOpacity
                         style={[Common.lightButtonRounded, Common.shadowMedium]}
                         onPress={() => {this.goToAllPrograms()}}>
-                        <Text style={Common.lightActionTitle}>Continue Program</Text>
+                        <Text style={Common.lightActionTitle}>{I18n.t('ContinueProgram')}</Text>
                       </TouchableOpacity>
                       {/*<TouchableOpacity style={styles.transparent} onPress={() => {this.goToAllPrograms()}}><Text style={styles.textWhite}>All programs</Text></TouchableOpacity>*/}
                     </View>
