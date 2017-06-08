@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   View,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  StatusBar
 } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
@@ -148,10 +149,8 @@ retrieveUserId() {
     return (
      <ScrollView>
        {this.renderCard()}
-       <TouchableOpacity onPress={() => {this.props.navigator.push('styles')}}>
-         <Text style={{opacity: 0.3}}>View styles</Text>
-       </TouchableOpacity>
-        <View style={Common.containerLeft}>
+       
+        <View style={Common.container}>
             <Text style={Common.darkTitleH1}>Seasonal products</Text>
        </View>
        <ProgramsList style={Common.sectionBorder}/>

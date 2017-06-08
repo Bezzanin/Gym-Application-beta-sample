@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Keyboard,
-    Image
+    Image,
+    StatusBar
 } from "react-native";
 
 import Expo from 'expo';
@@ -119,6 +120,10 @@ export default class LoginScreen extends Component {
         return (
 
         <View style={styles.containerCentered}>
+            <StatusBar
+                backgroundColor="transparent"
+                barStyle="light-content"
+            />
             <Image
                 style={styles.backgroundImage}
                 resizeMode={Image.resizeMode.fill}
@@ -127,7 +132,7 @@ export default class LoginScreen extends Component {
                 <View style={styles.containerCentered}>
                     <View style={styles.textGroup}>
                         <Text style={styles.title}>Rational Gym</Text>
-                        <Text style={styles.description}>The best way to get right instructional videos, lorem ipsum dolor sit amet, in vina veritas per aspera et astra</Text>
+                        <Text style={styles.description}>The best way to get right instructional videos to gain muscles as soon as possible</Text>
                     </View>
                     
                     <View style={styles.form}>

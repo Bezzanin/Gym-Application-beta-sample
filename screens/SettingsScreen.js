@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity, AsyncStorage, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, AsyncStorage, ActivityIndicator } from 'react-native';
 import * as firebase from "firebase";
 import { ExpoConfigView } from '@expo/samples';
 const ActionButton = require('../components/ActionButton');

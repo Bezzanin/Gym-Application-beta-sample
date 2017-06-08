@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet,TouchableOpacity, Image, Alert } from "react-native";
+import { View, Text, AsyncStorage, TouchableOpacity, Image, Alert } from "react-native";
 import {Grid, Row, Col} from 'react-native-elements';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
@@ -49,13 +49,7 @@ _displayLeaveButton() {
                 { text: 'Leave Program', onPress: () => {
                      AsyncStorage.setItem('ownProgramId', '');
                     AsyncStorage.setItem('ownProgramKey', '');
-                    this.setState({isLeavingProgram: true}, Database.leaveProgram(this.props.route.params.uid, 'ProgramDashboardScreen.js'))
-                    this._retrieveFilteredItems();
-                    this.setOwnPropertyTo(false);
-                   
-                    this.setState({programName: 'leaving program'},
-                        Database.leaveProgram(this.props.route.params.uid)
-                    )
+                   Database.leaveProgram()
                     
                 } }
             ]
@@ -73,7 +67,7 @@ _displayLeaveButton() {
   render() {
     return (
       <View style={[Common.container, Common.sectionBorder]}>
-          <Image source={require('../assets/images/CTA.png')} style={styles.avatar}/>
+          <Image source={require('../assets/images/CTA.png')} style={Common.avatar}/>
     <Grid>
         <Col size={1}/>
         <Col size={4}>
@@ -112,46 +106,9 @@ _displayLeaveButton() {
         </Col>
         <Col size={1}/>
         </Grid>
-        {/*<View style={[Common.container, Common.sectionBorder]}>
-            <BigTag
-                    title={'Current Program'}
-                    content={'3'}
-                    color={'#000'}
-                />
-            </View>
-        <View style={[Common.container, Common.sectionBorder]}>
-            <BigTag
-                    title={'Current Program'}
-                    content={'3'}
-                    color={'#000'}
-                />
-            </View>*/}
+       
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    alignSelf: 'center',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    width: Layout.window.width * 0.9,
-},
-  avatar: {
-    alignSelf: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginVertical: 16,
- },
-  h2: {
-    fontWeight: '300',
-    fontSize: 12,
-    lineHeight: 12,
-    color: '#000',
-    opacity: 0.5,
-    marginBottom: 4
-  },
- });
-
 export default Profile;

@@ -41,6 +41,14 @@ const Common = {
         lineHeight: 21,
         fontWeight: 'bold'
     },
+    darkTitleH4: {
+        color: Colors.darkTitleTextColor,
+        marginBottom: Layout.gutter.s,
+        fontSize: 16,
+        lineHeight: 19,
+        fontWeight: '500',
+        opacity: 0.8
+    },
     darkBodyText: {
         color: Colors.darkBodyTextColor,
         marginVertical: Layout.gutter.xs,
@@ -104,6 +112,7 @@ const Common = {
         fontWeight: '500',
         opacity: 0.7,
     },
+    
     lightBodyText: {
         color: Colors.lightBodyTextColor,
         marginVertical: Layout.gutter.xs,
@@ -172,11 +181,17 @@ const Common = {
     paddingVerticalSmall: {
         paddingVertical: Layout.gutter.s,
     },
+    marginVerticalSmall: {
+        marginVertical: Layout.gutter.s
+    },
     marginBottom: {
         marginBottom: Layout.gutter.s
     },
     marginRight: {
         marginRight: Layout.gutter.l
+    },
+    marginRightM: {
+        marginRight: Layout.gutter.m
     },
     sectionBorder: {
         borderBottomWidth: 0.5,
@@ -210,6 +225,13 @@ const Common = {
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
+    },
+    transparentContainer: {
+        paddingHorizontal: Layout.gutter.l,
+        paddingVertical: Layout.gutter.l,
+        backgroundColor: '#fff',
+        flex: 1,
+        justifyContent: 'center'
     },
     buttonContainer: {
         width: Layout.width.xs,
@@ -260,6 +282,13 @@ const Common = {
     containerBasic: {
         flex: 1,
     },
+    avatar: {
+    alignSelf: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginVertical: 16,
+ },
     /**
      * Exercise component styles
      */
@@ -321,6 +350,17 @@ const Common = {
         backgroundColor: Colors.tintColor,
         width: Layout.width.m + Layout.width.s,
         borderColor: Colors.tintColor,
+        borderWidth: 1,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+    greyButtonRounded: {
+        borderRadius: 100,
+        backgroundColor: Colors.borderColor,
+        width: Layout.width.m + Layout.width.s,
+        borderColor: Colors.borderColor,
         borderWidth: 1,
         height: 45,
         alignItems: 'center',

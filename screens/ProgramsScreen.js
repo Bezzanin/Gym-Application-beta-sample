@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View, Text, ListView, TouchableOpacity, AsyncSt
 import * as firebase from 'firebase';
 import ProgramCard from '../components/ProgramCard';
 const styles = require('../constants/styles.js');
+import Common from '../constants/common';
 
 export default class SettingsScreen extends React.Component {
   constructor(props) {
@@ -80,10 +81,11 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
+     
       <View
-        style={styles.container}
+        style={[Common.containerBasic]}
         contentContainerStyle={this.props.route.getContentContainerStyle()}>
-<View><Text>Welcome to programs, </Text></View>
+<View style={[Common.centered, {paddingTop:16}]}><Text style={Common.darkTitleH1}>Welcome to programs</Text><Text style = {[Common.darkBodyText, Common. centeredText]}>Explore programs ranged by number of days. Our programs focus on muscles you train instead of exercises</Text></View>
 
         <ListView
           horizontal
@@ -94,6 +96,7 @@ export default class SettingsScreen extends React.Component {
           enableEmptySections={true}
           style={styles.programsContainer}/>
       </View>
+     
     );
   }
 

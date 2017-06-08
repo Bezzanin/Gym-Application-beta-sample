@@ -5,6 +5,8 @@ import {
   View,
   StyleSheet,
   Picker,
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { Constants } from 'expo';
 import {
@@ -13,6 +15,7 @@ import {
   Button,
 } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import Common from '../constants/common';
 import Database from '../api/database';
 export default class AddActivity extends Component {
   constructor(props) {
@@ -50,7 +53,13 @@ export default class AddActivity extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.modalVisible}>
-          <View style={styles.paragraph}>
+         
+          <View style={Common.transparentContainer}>
+             <TouchableWithoutFeedback onPress={() => {
+                this.setModalVisible(!this.state.modalVisible);
+              }}><View style={Common.containerBasic}/></TouchableWithoutFeedback>
+          <View style={[styles.paragraph, Common.shadowLight]}>
+            <View style={[Common.centered, Common.paddingVertical]}><Text style={Common.darkTitleH2}>Add own activity</Text></View>
             <FormLabel>Name</FormLabel>
             <FormInput
               onChangeText={text =>
@@ -93,22 +102,27 @@ export default class AddActivity extends Component {
                   <Picker.Item label="5 sets" value="5" />
               </Picker>
   </View>
-            <Button
-            style={styles.doneButton}
-            onPress={this.sendData}
-            title="Add"
-          />
-          </View>
           
-          
-          <Button
+          <TouchableOpacity 
+          onPress={() => {
+            this.sendData();
+            this.setModalVisible(!this.state.modalVisible)}}
+          style={[Common.brightButtonRounded, Common.shadowBright, Common.marginVerticalSmall]}>
+            <Text style={Common.lightActionTitle}>Add activity</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
             onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-            style={styles.hideButton}
-            title="Cancel"
-          />
-
+                this.setModalVisible(!this.state.modalVisible);
+              }}
+            style={[Common.greyButtonRounded, Common.shadowMedium, Common.marginVerticalSmall]}>
+              <Text style={Common.lightActionTitle}>Cancel</Text>
+          </TouchableOpacity>
+          </View>
+          <TouchableWithoutFeedback onPress={() => {
+                this.setModalVisible(!this.state.modalVisible);
+              }}><View style={Common.containerBasic}/></TouchableWithoutFeedback>
+          </View>
+    
         </Modal>
         
       </View>
@@ -123,7 +137,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   paragraph: {
-    marginTop: 50,
+    paddingTop: 10,
+    backgroundColor: 'white',
+    paddingBottom: 30,
+    borderRadius: 5,
   },
   hideButton: {
     position: 'absolute',

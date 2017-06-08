@@ -39,9 +39,11 @@ class StatItem extends Component {
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
               <Text style={Common.darkTitleH3}>{this.props.item.name || ''}</Text>
-              <Text>{this.props.item.weight}</Text>
-              <Text>{this.props.item.sets}</Text>
-              <Text>{this.props.item.reps}</Text>
+              <View style={Common.inlineContainer}>
+                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.weight} kg</Text>
+                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.sets} sets</Text>
+                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.reps} reps</Text>
+              </View>
             </View>
           </View>
         </View>

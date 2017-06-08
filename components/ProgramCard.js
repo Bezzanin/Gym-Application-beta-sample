@@ -63,7 +63,7 @@ class ProgramCard extends Component {
     return (
       
       <TouchableHighlight 
-        underlayColor={'#920707'}
+        underlayColor={'transparent'}
         onPress={this.goToRoute}
         style={styles.container}>
         <Image 
@@ -103,7 +103,7 @@ _getMuscles() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: Layout.window.width * 0.8,
+    width: Layout.window.width * 0.7,
     marginHorizontal: 20,
     borderRadius: 6,
     shadowOffset: {
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: '500',
     color: '#fff',
-    fontSize: 24
   },
   text: {
     color: '#fff'

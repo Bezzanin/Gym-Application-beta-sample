@@ -117,9 +117,9 @@ export default class LinksScreen extends React.Component {
       
       let log = _.filter(this.state.exercises, {'_key': item.id})
     
-      // log[0].weight = item.weight || '';
-      // log[0].sets = item.sets || '';
-      // log[0].reps = item.reps || '';
+      log[0].weight = item.weight || '';
+      log[0].sets = item.sets || '';
+      log[0].reps = item.reps || '';
       console.log('Check the log');
       console.log(log);
       return( log )
@@ -142,26 +142,30 @@ export default class LinksScreen extends React.Component {
   render() {
 
     const workoutList = (
-
-      <ListView
+      <View style={Common.containerBasic}>
+        <Text style={[Common.darkTitleH1, Common.paddingLeft, Common.paddingVertical]}>This day exercises</Text>
+        <ListView
           dataSource={this.state.exercisesSource}
           initialListSize = {4}
           renderRow={this._renderItem.bind(this)}
           enableEmptySections={true}
         />
+      </View>
 
     )
 
     const emptyList = (
+      <ScrollView>
                 <LogItem
                     titleText={'Total'}
                     title={'50'}
                     weight={120}
                 />
+      </ScrollView>
     )
 
     const randomTips = (
-      <View style={Common.centered}>
+      <View style={[Common.centered, Common.paddingVertical]}>
           <View style={[Common.brightStats, Common.shadowBright]}>
               <Text style={Common.lightTagTitle}>random advice</Text>
                 <Text style={Common.lightTitleH3}>Try to eat more protein today to recover</Text>
@@ -174,7 +178,7 @@ export default class LinksScreen extends React.Component {
         style={styles.container}
         contentContainerStyle={this.props.route.getContentContainerStyle()}>
                  <CalendarStrip
-                    daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#CE0707', zIndex: 10}}
+                    daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#CE0707', zIndex: 100}}
                     style={[{paddingTop: 20, paddingBottom: 20}, Common.sectionBorder]}
                     calendarHeaderStyle={{color: 'black'}}
                     calendarColor={'#F5F5F5'}
@@ -182,7 +186,7 @@ export default class LinksScreen extends React.Component {
                     dateNameStyle={{color: 'black'}}
                     highlightDateNumberStyle={{color: 'white', fontSize: 15}}
                     highlightDateNameStyle={{color: 'white'}}
-                    iconContainer={{flex: 0.1}}
+                    iconContainer={{flex: 0.1, backgroundColor: 'transparent', zIndex: 10}}
                     onDateSelected={(i) => this.onDateChange(i)}
                     styleWeekend={false}
                 />
