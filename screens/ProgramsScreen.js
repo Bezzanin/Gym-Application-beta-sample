@@ -4,6 +4,11 @@ import * as firebase from 'firebase';
 import ProgramCard from '../components/ProgramCard';
 const styles = require('../constants/styles.js');
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class SettingsScreen extends React.Component {
   constructor(props) {
@@ -85,7 +90,9 @@ export default class SettingsScreen extends React.Component {
       <View
         style={[Common.containerBasic]}
         contentContainerStyle={this.props.route.getContentContainerStyle()}>
-<View style={[Common.centered, {paddingTop:16}]}><Text style={Common.darkTitleH1}>Welcome to programs</Text><Text style = {[Common.darkBodyText, Common. centeredText]}>Explore programs ranged by number of days. Our programs focus on muscles you train instead of exercises</Text></View>
+<View style={[Common.centered, {paddingTop:16}]}>
+  <Text style={Common.darkTitleH1}>{I18n.t('SelectYourprogram')}</Text>
+<Text style = {[Common.darkBodyText, Common. centeredText]}>{I18n.t('ProgramsPromo')}</Text></View>
 
         <ListView
           horizontal

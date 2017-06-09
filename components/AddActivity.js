@@ -15,6 +15,7 @@ import {
   Button,
 } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import ExerciseInput from './ExerciseInput'
 import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
@@ -41,10 +42,44 @@ export default class AddActivity extends Component {
   }
 
   sendData() {
-    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps, this.state.metric);
+    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
   }
 
   render() {
+          let allReps = [];
+          let allWeight = [];
+      let inputs = [];
+
+        for(var i=0; i<this.state.sets; i++){
+            let currSet = 'set' + i;
+            let counter = i;
+            allReps[counter] = "10";
+            allWeight[counter] = "30";
+        inputs.push(
+            (
+    <View key={i} style={styles.InputContainer}>
+        
+        <View style={{width: 100}}>
+            <TouchableOpacity onPress={() => {console.log(allReps)}}><Text style={{marginTop: 20}}>c</Text></TouchableOpacity>
+        </View>
+        <View style={{width: 100}}>
+            <FormInput
+            onChangeText={reps => {allReps[counter] = reps }}
+            placeholder={"reps"}
+            defaultValue={"10"}
+            />
+        </View>
+        <View style={{width: 100}}>
+            <FormInput
+            onChangeText={weight => {allWeight[counter] = weight}}
+            placeholder={"weight"}
+            defaultValue={"30"}
+        />
+        </View>
+    </View>
+            )
+        );  
+    }
     return (
       <View style={styles.container}>
         <Ionicons
@@ -73,55 +108,36 @@ export default class AddActivity extends Component {
               <View style={[Common.centered, Common.paddingVertical]}>
                 <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
               </View>
+            <View style={styles.InputContainer}>
+            <View style={{width: 200}}>
               <FormLabel>{I18n.t('Name')}</FormLabel>
               <FormInput
                 onChangeText={text => this.setState({ text })}
                 placeholder={I18n.t('EnterName')}
               />
-              <View style={styles.inlineContainer}>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.weight}
-                  onValueChange={number => this.setState({ weight: number })}
-                >
-                  <Picker.Item label="50kg" value="50" />
-                  <Picker.Item label="60kg" value="60" />
-                  <Picker.Item label="70kg" value="70" />
-                  <Picker.Item label="80kg" value="80" />
-                  <Picker.Item label="90kg" value="90" />
-                  <Picker.Item label="100kg" value="100" />
-                </Picker>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.sets}
-                  onValueChange={sets => this.setState({ sets })}
-                >
-                  <Picker.Item label="1 rep" value="1" />
-                  <Picker.Item label="2 reps" value="2" />
-                  <Picker.Item label="3 reps" value="3" />
-                  <Picker.Item label="4 reps" value="4" />
-                  <Picker.Item label="5 reps" value="5" />
-                </Picker>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.reps}
-                  onValueChange={reps => this.setState({ reps })}
-                >
-                  <Picker.Item label="1 set" value="1" />
-                  <Picker.Item label="2 sets" value="2" />
-                  <Picker.Item label="3 sets" value="3" />
-                  <Picker.Item label="4 sets" value="4" />
-                  <Picker.Item label="5 sets" value="5" />
-                </Picker>
-              </View>
+            </View>
+            <View style={{width: 100}}>
+            <FormLabel>Sets</FormLabel>
+            <FormInput
+             onChangeText={sets => this.setState({ sets })}
+             placeholder={""}
+            />
+            </View>
+            </View>
+            {inputs}
+              
+              
 
               <TouchableOpacity
                 onPress={() => {
-                  this.sendData();
-                  this.setModalVisible(!this.state.modalVisible);
+                  //this.sendData();
+                  //this.setModalVisible(!this.state.modalVisible);
+                  this.setState({
+                    weight: allWeight,
+                    reps: allReps,
+                  }, () => {
+                    this.sendData();
+                  })
                 }}
                 style={[
                   Common.brightButtonRounded,
@@ -200,5 +216,10 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginTop: 30,
       backgroundColor: 'green'
-    }
+    },
+    InputContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around"
+  },
 });
