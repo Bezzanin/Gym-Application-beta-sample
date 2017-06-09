@@ -94,14 +94,8 @@ console.log('Fetching')
 getOwnExercises() {
     console.log('Getting own exercises');
     Database.getOwnExercises((exercises) => {
-        let ownExercises = exercises.forEach((exercise) => {
-            return {
-                ...exercise,
-                own: true
-            }
-        })
         this.setState({
-            sequence2: ownExercises
+            sequence2: exercises
         }, () => {
             console.log('Here is the sequence')
             console.log(this.state.sequence2)
