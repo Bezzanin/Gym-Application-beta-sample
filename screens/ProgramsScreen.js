@@ -30,7 +30,7 @@ export default class SettingsScreen extends React.Component {
 
   static route = {
     navigationBar: {
-      title: 'Programs',
+      title: I18n.t('Programs'),
     },
   };
 /**
@@ -73,6 +73,8 @@ export default class SettingsScreen extends React.Component {
           _key: child.key,
           gender: child.val().gender,
           level: child.val().level,
+          name: child.val().name,
+          totalDays: child.val().totalDays,
         });
       });
       this.setState({

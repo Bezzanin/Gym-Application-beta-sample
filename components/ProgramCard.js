@@ -8,6 +8,11 @@ import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import BigTag from '../components/BigTag';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity } = ReactNative;
 
@@ -75,14 +80,14 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Text style={Common.lightTitleH2}>Program key: {this.props.item._key}</Text>
+              <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
-              <Tag title={'days overall'} content={'30 days'} color='#fff'/>
-              <Tag title={'per week'} content={this.props.item.days} color='#fff'/>
-              <Tag title={'muscles'} content={this._getMuscles()} color='#fff'/>
-              <Tag title={'gender'} content={'Both'} color='#fff'/>
-              <Tag title={'level'} content={'Beginner'} color='#fff'/>
+              <Tag title={I18n.t('Total')} content={this.props.item.totalDays} color='#fff'/>
+              <Tag title={I18n.t('PerWeek')} content={this.props.item.days} color='#fff'/>
+              <Tag title={I18n.t('muscleGroup')} content={this._getMuscles()} color='#fff'/>
+              <Tag title={I18n.t('Gender')} content={this.props.item.gender} color='#fff'/>
+              <Tag title={I18n.t('Level')} content={this.props.item.level} color='#fff'/>
             </View>
           </View>
         </Image>

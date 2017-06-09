@@ -16,7 +16,7 @@ export default {
   MakeOwnProgram:	"Tee oma ohjelma",
   Gender:	"Sukupuoli",
   Level:	"Taso", 
-  perweek:	"per viikko",
+  PerWeek:	"per viikko",
   focus:	"Tavoite",
   Diary:	"Päiväkirja",
   Weight:	"Paino",
@@ -24,7 +24,7 @@ export default {
   AverageWeight:	"Keskiarvopaino",
   Sets:	"Sarjat",
   Reps: "Toistot",
-  Total: "yhteensä",
+  Total: "Yhteensä",
   YouhaveworkoutToday:	"Sinulla on harjoitus tänään",
   YouHaveRestDay: "Sinulla on lepopäivä tänään",
   Advice: "ohje",
@@ -46,6 +46,7 @@ export default {
   legs:	"Jalat",
   glutes:	"Pakarat",
   calves:	"Pohkeet",
+  Workouts: "Treenit",
   workoutsFinished:	"Tehdyt treenit",
   exersiscesFinished:	"Tehdyt liikkeet",
   currentProgram:	"Nykyinen ohjelma",
@@ -95,5 +96,16 @@ export default {
   Done: "Tehty",
   Height: "korkeus",
   Name: "Nimesi",
-  ProgramsPromo: "Kaikki ohjelmat ovat ammattilaisten suunnittelemia"
+  ProgramsPromo: "Kaikki ohjelmat ovat ammattilaisten suunnittelemia",
+  First: "Ensimmäinen",
+  Second: "Toinen",
+  Third: "Kolmas",
+  Fourth: "Neljäs",
+  Fifth: "Viides",
+  Sixth: "Kuudes",
+  Seventh: "Seitsemäs",
+  Day: "Päivä",
+
+  EnrollToProgram: "Enroll",
+  EditProgram: "Edit"
 };

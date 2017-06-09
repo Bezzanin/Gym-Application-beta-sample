@@ -9,6 +9,12 @@ import { Font } from 'expo';
 import Database from '../api/database';
 import Common from '../constants/common';
 import moment from 'moment';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
+
 @withNavigation
 export default class ProgramBadge extends Component {
     constructor(props) {
@@ -66,10 +72,10 @@ export default class ProgramBadge extends Component {
               source={require('../assets/images/program_dashboard.png')}
               style={{flex: 1, width: null, height: null}}>
                 <View style={styles.heroContainer}>
-                    <Text style={styles.programState}>YOUR PROGRAM</Text>
+                    <Text style={styles.programState}>{I18n.t('YourProgram')}</Text>
                     <View style={styles.inlineTagContainer}>
-                        <BigTag title={'days per week'} content={this.props.days}/>
-                        <BigTag title={'days overall'} content={'30'}/>
+                        <BigTag title={I18n.t('PerWeek')} content={this.props.days}/>
+                        <BigTag title={I18n.t('Total')} content={'30'}/>
                     </View>
                     {this._displayEnrollButton()}
                 </View>
@@ -93,7 +99,7 @@ export default class ProgramBadge extends Component {
                 
                     {/*<ExerciseItem showSeparator={false} onPress={() => {continueProgram()}} item = {this.props.sequence[day][index]} own={false}/>*/}
                         <TouchableOpacity onPress={() => {continueProgram()}}>
-                            <Text style={Common.darkTitleH1}>Continue your workout</Text>
+                            <Text style={Common.darkTitleH1}>{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {console.log(this.props.sequence)}}><Text>Get props sequence</Text></TouchableOpacity>
                         <TouchableOpacity onPress={() => {console.log(this.state.sequence)}}><Text>Get state sequence</Text></TouchableOpacity>
@@ -138,7 +144,7 @@ export default class ProgramBadge extends Component {
             return (
                 <View style={[Common.container, Common.sectionBorder]}>
                     <TouchableOpacity onPress={() => {continueProgram()}}>
-                            <Text style={Common.darkTitleH1}>Continue your workout</Text>
+                            <Text style={Common.darkTitleH1}>{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
                     {/*<ExerciseItem showSeparator={false} onPress={() => {continueProgram()}} item = {this.props.sequence[day][index]} own={false}/>*/}
                 </View>
@@ -198,13 +204,13 @@ _displayEnrollButton() {
         case '':
             return(
                     <TouchableOpacity style={Common.lightButtonRounded} onPress={enrollProgram}>
-                        <Text style={Common.lightActionTitle}>Enroll into program</Text>
+                        <Text style={Common.lightActionTitle}>{I18n.t('EnrollToProgram')}</Text>
                     </TouchableOpacity>
             );
         case this.props.program._key:
             return(
                     <TouchableOpacity style={Common.lightButtonRounded} onPress={goToRoute}>
-                        <Text style={Common.lightActionTitle}>Edit the program</Text>
+                        <Text style={Common.lightActionTitle}>{I18n.t('EditProgram')}</Text>
                     </TouchableOpacity>
             );
         default: 
@@ -279,6 +285,8 @@ imageContainer: {
     marginVertical: 7,
   },
   inlineTagContainer: {
-      flexDirection: 'row'
+      flexDirection: 'row',
+      justifyContent: 'space-around'
+
   }
 })

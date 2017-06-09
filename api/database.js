@@ -128,7 +128,7 @@ class Database {
             let path = "/user/" + uid + "/ownProgram";
            
             firebase.database().ref(path).update({
-                programName: passedProgram._key,
+                programName: passedProgram.name,
                 gender: passedProgram.gender,
                 days: passedProgram.days,
                 day1: passedProgram.day1 || '',
