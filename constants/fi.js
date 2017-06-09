@@ -58,11 +58,13 @@ export default {
   upcomingExercise:	"Tuleva liike",
   Previous: "Edellinen",
   NextWeek: "Seuraava Vikko",
-
+  Delete: "Poistaa",
   TotalExercises: "Kokonais Liike",
   Discover: "Kokeile",
   WePrepared: 'Valitse sinun tavoitteisiin ja tarpeisiin sopiva ohjelma',
   DoneThisWeek: "Viikon harjoitukset",
+  DoneThisDay: "Päivän harjoitukset",
+  CustomExercises: "Oma Liike",
   ContinueProgram: "Jatka ohjelmaa",
   NoData: "No Data Here",
   Logout: "Kirjaudu ulos",
@@ -92,5 +94,6 @@ export default {
   FillBasic: "Hienoa! Täytä perustiedot ja olet valmis aloittamaan",
   Done: "Tehty",
   Height: "korkeus",
-  Name: "Nimesi"
+  Name: "Nimesi",
+  ProgramsPromo: "Kaikki ohjelmat ovat ammattilaisten suunnittelemia"
 };

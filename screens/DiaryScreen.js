@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, ListView, AsyncStorage, ActivityIndicator, View } from 'react-native';
 
-
+import Swipeout from 'react-native-swipeout'
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import Database from '../api/database';
@@ -16,7 +16,14 @@ I18n.fallbacks = true;
 I18n.translations = {fi};
 
 var _ = require('lodash');
-
+var swipeoutBtns = [
+  {
+    text: I18n.t('Delete'),
+    onPress: (() => console.log("SwipeButton")),
+    backgroundColor: "#cb0f18",
+    color: "#FFF"
+  }
+]
 export default class LinksScreen extends React.Component {
   static route = {
     navigationBar: {
@@ -46,7 +53,19 @@ export default class LinksScreen extends React.Component {
       }, function dateLogUpdated () {
          this.filterExercises();
       })
-      if (this.state.dataSource.getRowCount() !== 0) {
+      
+    });
+
+    this._getCustomLogs();
+  }
+    _getCustomLogs() {
+    Database.listeningForCustomLogs(this.state.currentDay, (CustomLogs) => {
+        this.setState({
+          CustomLog: CustomLogs,
+          CustomLogList: this.state.dataSource.cloneWithRows(CustomLogs),
+      }, function dateLogUpdated () {
+        console.log(this.state.CustomLog)
+         if (this.state.CustomLogList.getRowCount() !== 0) {
           this.setState({
           hasData: true,
           loading: false
@@ -57,10 +76,11 @@ export default class LinksScreen extends React.Component {
           hasData: false,
           loading: false
       })
-        }
-    }); 
-  }
-
+        };
+      })
+    })
+    
+    }
   constructor(props){
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     super(props);
@@ -68,13 +88,16 @@ export default class LinksScreen extends React.Component {
     currentDay: moment().format('MM-DD-YY'),
     currentTime: moment().format('HH:mm'),
     dateLog: '',
+    CustomLog: [],
     dataSource: ds.cloneWithRows([]),
     exercisesSource: ds.cloneWithRows([]),
+    CustomLogList: ds.cloneWithRows([]),
     hasData: false,
     exercises: [],
     loading: true,
   }
-  this.filterExercises = this.filterExercises.bind();
+  this.filterExercises = this.filterExercises.bind(this);
+  this._getCustomLogs = this._getCustomLogs.bind(this);
   }
 
   onDateChange = (i) => {
@@ -113,7 +136,11 @@ export default class LinksScreen extends React.Component {
     })
   }
     return (
-      <StatItem item={item} imageLink={item.photo}/>
+      <Swipeout 
+      right={swipeoutBtns}
+      backgroundColor={"transparent"}
+      >
+      <StatItem item={item} imageLink={item.photo}/></Swipeout>
     );
   }
   
@@ -125,8 +152,7 @@ export default class LinksScreen extends React.Component {
       log[0].weight = item.weight || '';
       log[0].sets = item.sets || '';
       log[0].reps = item.reps || '';
-      console.log('Check the log');
-      console.log(log);
+
       return( log )
     });
     this.setState({
@@ -148,7 +174,15 @@ export default class LinksScreen extends React.Component {
 
     const workoutList = (
       <View style={Common.containerBasic}>
-        <Text style={[Common.darkTitleH1, Common.paddingLeft, Common.paddingVertical]}>This day exercises</Text>
+        {this.state.hasData && <View>
+        <Text style={[Common.darkTitleH1, Common.paddingLeft, Common.paddingVertical]}>{I18n.t('CustomExercises')}</Text>
+        <ListView
+          dataSource={this.state.CustomLogList}
+          initialListSize = {4}
+          renderRow={this._renderItem.bind(this)}
+          enableEmptySections={true}
+        /></View>}
+        <Text style={[Common.darkTitleH1, Common.paddingLeft, Common.paddingVertical]}>{I18n.t('DoneThisDay')}</Text>
         <ListView
           dataSource={this.state.exercisesSource}
           initialListSize = {4}
@@ -156,7 +190,7 @@ export default class LinksScreen extends React.Component {
           enableEmptySections={true}
         />
       </View>
-
+      
     )
 
     const emptyList = (
@@ -177,7 +211,7 @@ export default class LinksScreen extends React.Component {
           </View>
       </View>
     )
-    
+
     return (
       <ScrollView
         style={styles.container}
@@ -230,5 +264,8 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0,0,0,.2)"
 
     },
+    dateST: {
+      color: 'green'
+    }
     
 });
