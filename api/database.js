@@ -275,9 +275,11 @@ class Database {
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let CustomLogs = [];
+            if (logs !== null) {
             Object.keys(logs).forEach((date) => {
                 CustomLogs.push(logs[date])                
             })
+            }
             callback(CustomLogs);
         }, (e) => {console.log(e)})
         

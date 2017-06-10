@@ -176,7 +176,7 @@ setModalVisible(visible) {
                       onValueChange={val => this.setState({ DaysPerWeek: val })}
                     />
                     <Text style={styles.staticText}>
-                      {I18n.t('perweek')}: {this.state.DaysPerWeek}
+                      {I18n.t('PerWeek')}: {this.state.DaysPerWeek}
                     </Text>
                   </View>
 
