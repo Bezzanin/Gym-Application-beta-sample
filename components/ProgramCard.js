@@ -8,6 +8,11 @@ import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import BigTag from '../components/BigTag';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity } = ReactNative;
 
@@ -75,14 +80,14 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Text style={Common.lightTitleH2}>Program key: {this.props.item._key}</Text>
+              <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
-              <Tag title={'days overall'} content={'30 days'} color='#fff'/>
-              <Tag title={'per week'} content={this.props.item.days} color='#fff'/>
-              <Tag title={'muscles'} content={this._getMuscles()} color='#fff'/>
-              <Tag title={'gender'} content={'Both'} color='#fff'/>
-              <Tag title={'level'} content={'Beginner'} color='#fff'/>
+              <Tag title={I18n.t('totalDays').toLowerCase()} content={'30 paivaa'} color='#fff'/>
+              <Tag title={I18n.t('perweek').toLowerCase()} content={this.props.item.days} color='#fff'/>
+              <Tag title={I18n.t('muscles').toLowerCase()} content={this._getMuscles()} color='#fff'/>
+              <Tag title={I18n.t('Gender').toLowerCase()} content={'Molemmat'} color='#fff'/>
+              <Tag title={I18n.t('Level').toLowerCase()} content={'Beginner'} color='#fff'/>
             </View>
           </View>
         </Image>
@@ -97,7 +102,8 @@ _getMuscles() {
   const filteredMuscles = muscles.split(', ').filter((elem, index, self) => {
     return (index == self.indexOf(elem) && elem !== '');
   })
-  return filteredMuscles.join(', ');
+  const translatedMuscles = filteredMuscles.map((item) => {return I18n.t(item).toLowerCase()})
+  return translatedMuscles.join(', ');
 
 }
 

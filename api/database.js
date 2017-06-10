@@ -56,6 +56,9 @@ class Database {
             callback(logsRec)
         }, (e) => {console.log(e)})
     }
+
+    
+
     static listeningForStats(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/workoutLogs";
@@ -82,10 +85,7 @@ class Database {
     
     static getOwnExercises(callback) {
             let uid = firebase.auth().currentUser.uid;
-            let path = "/user/" + uid + "/details";
-           //console.log('Path is: ' + path);
-            
-            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').once('value').then((snap) => {
+            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').on('value', (snap) => {
                 let exercises = snap.val().exercises;
                 console.log('Snap.val().exercises is below');
                 console.log(snap.val().exercises);
@@ -234,18 +234,18 @@ class Database {
             currentWorkoutDay: dayNumber + 1
         })
     }
-    static addExerciseStats(exerciseId, weight, sets, reps, metric, ownExercise) {
+    static addExerciseStats(name, weight, sets, reps, ownExercise) {
         let uid = firebase.auth().currentUser.uid;
 
         let path = "/user/" + uid + "/statistics";
         let path2 = "/user/" + uid + "/exercisesLogs/" + Date.now();
         firebase.database().ref(path2).set({
-            exerciseId,
+            name,
             weight,
             sets,
             reps,
-            metric,
-            date: Date.now()
+            metric: "kg",
+            date: moment().format()
         });
 
         firebase.database().ref(path).transaction( (statistics) => {
@@ -264,6 +264,23 @@ class Database {
             });
         }
     }
+    static listeningForCustomLogs(currentDate, callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/exercisesLogs";
+        
+        let currDate = currentDate;
+        firebase.database().ref(path).on('value', (snap) => {
+            let logs = snap.val();
+            let CustomLogs = [];
+            Object.keys(logs).forEach((date) => {
+                CustomLogs.push(logs[date])                
+            })
+            callback(CustomLogs);
+        }, (e) => {console.log(e)})
+        
+        
+    }
+
     static updateProgram(newMuscles) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
@@ -292,6 +309,7 @@ class Database {
                 lastWorkoutDate: ''
             },
             workoutLogs: '',
+            exerciseLogs: '',
             details: {difficultyRate: 0, level: 0, programName: '', 
             gender: gender, 
             DaysPerWeek: DaysPerWeek,

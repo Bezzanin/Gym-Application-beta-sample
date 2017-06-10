@@ -16,6 +16,7 @@ class StatItem extends Component {
     this.state = {
       uriLink: 'not empty string',
       videoLink: 'not empty string',
+      hideLogs: true
     }
   }
   componentDidMount() {
@@ -30,22 +31,45 @@ class StatItem extends Component {
   }
 
   render() {
+    const logs = [];
+    for (let i = 0; i<this.props.item.sets; i++) {
+      let counter = i;
+      logs.push(
+        <View style={[Common.inlineLogContainer, Common.sectionBorder]}>
+          <View>
+            <Text style={[Common.darkLogTitleBold]}>{counter + 1} set</Text>
+          </View>
+          <View>
+            <Text style={Common.darkLogTitle}>{this.props.item.reps[counter] || ' '} reps</Text>
+          </View>
+          <View>
+            <Text style={Common.darkLogTitle}>{this.props.item.weight[counter] || ' '} kg</Text>
+          </View>
+        </View>
+      )
+    }
     return (
-     
-        <View style={[Common.inlineContainer, Common.paddingVerticalSmall, Common.sectionBorder]}>
+        <View>
+        <View style={[Common.inlineContainer, Common.paddingVerticalSmall]}>
           <View style={[Common.logThumbnail, Common.shadowMedium]}>
             <Image source={{uri: this.state.uriLink || require('../assets/images/CTA.png')}} style={Common.imageStyle}/>
           </View>
-          <View style={[Common.inlineContainer]}>
+          <View style={[Common.inlineContainer, {alignItems: 'center'}]}>
             <View style={Common.containerText}>
-              <Text style={Common.darkTitleH3}>{this.props.item.name || ''}</Text>
-              <View style={Common.inlineContainer}>
-                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.weight} kg</Text>
-                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.sets} sets</Text>
-                <Text style={[Common.darkTitleH4, Common.marginRightM]}>{this.props.item.reps} reps</Text>
+              <Text style={Common.darkTitleH2}>{this.props.item.name || ''}</Text>
+              <View style={[Common.inlineLogContainer, {alignItems: 'center', paddingRight: 25}]}>
+                  <Text style={Common.darkTitleH3}>{this.props.item.sets} sets done</Text>
+                  <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
+                    <Text style={Common.brightActionTitle}>
+                    {this.state.hideLogs ? 'Show' : 'Hide'}</Text>
+                  </TouchableOpacity>
               </View>
             </View>
           </View>
+        </View>
+        <View style={[Common.containerBasic, Common.sectionBorder]}>
+          {this.state.hideLogs ? <View/> : <View style={Common.containerHorizontal}>{logs}</View>}
+        </View>
         </View>
     );
   }

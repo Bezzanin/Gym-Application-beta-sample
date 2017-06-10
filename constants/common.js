@@ -49,6 +49,22 @@ const Common = {
         fontWeight: '500',
         opacity: 0.8
     },
+    darkLogTitle: {
+        color: Colors.darkTitleTextColor,
+        marginBottom: Layout.gutter.s,
+        fontWeight: '300',
+        fontSize: 16,
+        lineHeight: 19,
+        opacity: 0.8
+    },
+    darkLogTitleBold: {
+        color: Colors.darkTitleTextColor,
+        marginBottom: Layout.gutter.s,
+        fontWeight: '500',
+        fontSize: 16,
+        lineHeight: 17,
+        opacity: 0.8
+    },
     darkBodyText: {
         color: Colors.darkBodyTextColor,
         marginVertical: Layout.gutter.xs,
@@ -213,6 +229,11 @@ const Common = {
         paddingVertical: Layout.gutter.sxs,
         backgroundColor: 'transparent'
     },
+    containerHorizontal: {
+        flex: 1,
+        paddingHorizontal: Layout.gutter.l,
+        backgroundColor: 'transparent'
+    },
     containerText: {
         flex: 1,
         paddingLeft: Layout.gutter.m,
@@ -225,6 +246,14 @@ const Common = {
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
+    },
+    inlineLogContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        paddingBottom: 1,
+        paddingTop: 5,
+        justifyContent: 'space-between'
     },
     pseudoNavigation: {
         height: 60,

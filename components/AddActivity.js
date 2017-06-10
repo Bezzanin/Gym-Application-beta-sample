@@ -3,6 +3,7 @@ import {
   Modal,
   Text,
   View,
+  ScrollView,
   StyleSheet,
   Picker,
   TouchableOpacity,
@@ -15,10 +16,12 @@ import {
   Button,
 } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import ExerciseInput from './ExerciseInput'
 import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import {Grid, Col, Row} from 'react-native-elements';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -41,10 +44,50 @@ export default class AddActivity extends Component {
   }
 
   sendData() {
-    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps, this.state.metric);
+    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
   }
 
   render() {
+          let allReps = [];
+          let allWeight = [];
+      let inputs = [];
+
+        for(var i=0; (i<this.state.sets && i<7); i++){
+            let currSet = 'set' + i;
+            let counter = i;
+            allReps[counter] = "10";
+            allWeight[counter] = "30";
+        inputs.push(
+            (
+    <View key={i} style={styles.InputContainer}>
+        <Grid>
+          <Col>
+            <Text style={[{fontSize: 18, fontWeight: '500', color: '#7F7F7F', paddingTop: 9, paddingLeft: 20}]}>{counter + 1}</Text>
+          </Col>
+          <Col>
+            
+            <FormInput
+              maxLength={2}
+              style={{width: 20}}
+              keyboardType={'numeric'}
+              onChangeText={reps => {allReps[counter] = reps }}
+              defaultValue={"10"}
+              />
+
+          </Col>
+          <Col>
+          <FormInput
+            maxLength={3}
+            keyboardType={'numeric'}
+            onChangeText={weight => {allWeight[counter] = weight}}
+            placeholder={"weight"}
+            defaultValue={"30"}/>
+          </Col>
+          </Grid>
+    </View>
+            )
+        );  
+    }
     return (
       <View style={styles.container}>
         <Ionicons
@@ -61,7 +104,7 @@ export default class AddActivity extends Component {
           visible={this.state.modalVisible}
         >
 
-          <View style={Common.transparentContainer}>
+          <ScrollView contentContainerStyle={Common.transparentContainer}>
             <TouchableWithoutFeedback
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
@@ -70,58 +113,58 @@ export default class AddActivity extends Component {
               <View style={Common.containerBasic} />
             </TouchableWithoutFeedback>
             <View style={[styles.paragraph, Common.shadowLight]}>
+              
               <View style={[Common.centered, Common.paddingVertical]}>
                 <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
               </View>
-              <FormLabel>{I18n.t('Name')}</FormLabel>
-              <FormInput
-                onChangeText={text => this.setState({ text })}
-                placeholder={I18n.t('EnterName')}
-              />
-              <View style={styles.inlineContainer}>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.weight}
-                  onValueChange={number => this.setState({ weight: number })}
-                >
-                  <Picker.Item label="50kg" value="50" />
-                  <Picker.Item label="60kg" value="60" />
-                  <Picker.Item label="70kg" value="70" />
-                  <Picker.Item label="80kg" value="80" />
-                  <Picker.Item label="90kg" value="90" />
-                  <Picker.Item label="100kg" value="100" />
-                </Picker>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.sets}
-                  onValueChange={sets => this.setState({ sets })}
-                >
-                  <Picker.Item label="1 rep" value="1" />
-                  <Picker.Item label="2 reps" value="2" />
-                  <Picker.Item label="3 reps" value="3" />
-                  <Picker.Item label="4 reps" value="4" />
-                  <Picker.Item label="5 reps" value="5" />
-                </Picker>
-                <Picker
-                  itemStyle={{ fontSize: 16 }}
-                  style={{ flex: 1 }}
-                  selectedValue={this.state.reps}
-                  onValueChange={reps => this.setState({ reps })}
-                >
-                  <Picker.Item label="1 set" value="1" />
-                  <Picker.Item label="2 sets" value="2" />
-                  <Picker.Item label="3 sets" value="3" />
-                  <Picker.Item label="4 sets" value="4" />
-                  <Picker.Item label="5 sets" value="5" />
-                </Picker>
+             
+              <View>
+                <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Name')}</FormLabel>
+                <FormInput
+                  onChangeText={text => this.setState({ text })}
+                  placeholder={I18n.t('EnterName')}
+                  containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
+                />
               </View>
-
+              
+              <View style={{width: 120}}>
+              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>Sets</FormLabel>
+              <FormInput
+              maxLength={2}
+              onChangeText={sets => this.setState({ sets })}
+              placeholder={"Enter sets"}
+              containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
+              />
+              </View>
+           
+            <View key={i} style={styles.InputContainer}>
+              <Grid>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>set</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >reps done</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>weight</FormLabel>
+                </Col>
+              </Grid>
+            </View>
+            
+            {inputs}
+            <View style={{height: 24}}/>
+              
+            
               <TouchableOpacity
                 onPress={() => {
-                  this.sendData();
-                  this.setModalVisible(!this.state.modalVisible);
+                  //this.sendData();
+                  //this.setModalVisible(!this.state.modalVisible);
+                  this.setState({
+                    weight: allWeight,
+                    reps: allReps,
+                  }, () => {
+                    this.sendData();
+                  })
                 }}
                 style={[
                   Common.brightButtonRounded,
@@ -143,7 +186,10 @@ export default class AddActivity extends Component {
               >
                 <Text style={Common.lightActionTitle}>{I18n.t('Cancel')}</Text>
               </TouchableOpacity>
-            </View>
+
+              </View>
+
+            
             <TouchableWithoutFeedback
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
@@ -151,7 +197,7 @@ export default class AddActivity extends Component {
             >
               <View style={Common.containerBasic} />
             </TouchableWithoutFeedback>
-          </View>
+          </ScrollView>
 
         </Modal>
 
@@ -200,5 +246,10 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginTop: 30,
       backgroundColor: 'green'
-    }
+    },
+    InputContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around"
+  },
 });
