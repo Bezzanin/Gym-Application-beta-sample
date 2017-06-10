@@ -7,8 +7,21 @@ import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Components} from 'expo';
 import Common from '../constants/common';
-
+import AddActivity from '../components/AddActivity';
 import { NavigationStyles } from '@expo/ex-navigation';
+
+
+import {
+  FormLabel,
+  FormInput,
+  Button,
+} from 'react-native-elements';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+import {Grid, Col, Row} from 'react-native-elements';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 
 export default class ExerciseScreen extends React.Component {
@@ -55,11 +68,10 @@ export default class ExerciseScreen extends React.Component {
     Database.addExerciseStats(this.props.route.params.exercise._key, this.state.weight, this.state.sets, this.state.reps, this.state.metric);
   }
    
-   renderNextButton = () => {
+   renderNextButton = (allWeight, allReps) => {
+     console.log(allWeight)
      goToNext = () => {
-       if (!this.state.paused) {
-       this.setState({paused: !this.state.paused})
-       }
+      console.log(allWeight)
        Database.addExerciseStats(this.props.route.params.exercise._key, this.state.weight, this.state.sets, this.state.reps, this.state.metric, true);
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
@@ -102,7 +114,12 @@ export default class ExerciseScreen extends React.Component {
          <View style ={[Common.container, Common.centered, Common.sectionBorder]}>
          <TouchableOpacity
           style={[Common.brightButtonRounded, Common.shadowBright]}
-          onPress={goToNext}>
+          onPress={() => {
+            this.setState({
+                    weight: allWeight,
+                    reps: allReps,
+                  }, () => {goToNext()}
+            )}}>
            <Text style={Common.lightActionTitle}>
              Go to next exercise
            </Text>
@@ -161,9 +178,49 @@ export default class ExerciseScreen extends React.Component {
     }
 
   render() {
-            let {onClosePressed, video, volume} = this.props;
+        let {onClosePressed, video, volume} = this.props;
         let {currentTime, duration, paused} = this.state;
         const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
+        let allReps = [];
+          let allWeight = [];
+      let inputs = [];
+
+        for(var i=0; (i<this.state.sets && i<7); i++){
+            let currSet = 'set' + i;
+            let counter = i;
+            allReps[counter] = "10";
+            allWeight[counter] = "30";
+        inputs.push(
+            (
+    <View key={i} style={styles.InputContainer}>
+        <Grid>
+          <Col>
+            <Text style={[{fontSize: 18, fontWeight: '500', color: '#7F7F7F', paddingTop: 9, paddingLeft: 20}]}>{counter + 1}</Text>
+          </Col>
+          <Col>
+            
+            <FormInput
+              maxLength={2}
+              style={{width: 20}}
+              keyboardType={'numeric'}
+              onChangeText={reps => {allReps[counter] = reps }}
+              defaultValue={"10"}
+              />
+
+          </Col>
+          <Col>
+          <FormInput
+            maxLength={3}
+            keyboardType={'numeric'}
+            onChangeText={weight => {allWeight[counter] = weight}}
+            placeholder={"weight"}
+            defaultValue={"30"}/>
+          </Col>
+          </Grid>
+    </View>
+            )
+        );  
+    }
     return (
       <ScrollView>
          
@@ -180,7 +237,7 @@ export default class ExerciseScreen extends React.Component {
               isNetwork = {true}
               rate={this.state.videoRate}
               volume={1.0}
-              muted={false}
+              muted={true}
               onEnd={this.onVideoEnd.bind(this)}
                           onLoad={this.onVideoLoad.bind(this)}
               onProgress={this.onProgress.bind(this)}
@@ -192,56 +249,57 @@ export default class ExerciseScreen extends React.Component {
           </TouchableWithoutFeedback>
 
         </View>
-        {this.renderNextButton()}
+        {this.renderNextButton(allWeight, allReps)}
         <View style={[Common.container, Common.sectionBorder]}>
           <Text style={Common.darkTitleH1}>{this.props.route.params.exercise.name}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
               title={'muscle group'}
               content={this.props.route.params.exercise.muscles}
-              color={'#000'}/>
+              color={'#000'}
+                />
             <Tag 
               title={'exercise type'}
               content={this.props.route.params.exercise.type}
               color={'#000'}/>
           </View>
         </View>
-        <View style={Common.inlineContainer}>
-              <Picker
-                itemStyle={{fontSize: 16}}
-                style={{flex: 1}}
-                selectedValue={this.state.weight}
-                onValueChange={(number) => this.setState({weight: number})}>
-                  <Picker.Item label="50kg" value="50" />
-                  <Picker.Item label="60kg" value="60" />
-                  <Picker.Item label="70kg" value="70" />
-                  <Picker.Item label="80kg" value="80" />
-                  <Picker.Item label="90kg" value="90" />
-                  <Picker.Item label="100kg" value="100" />
-              </Picker>
-              <Picker
-                itemStyle={{fontSize: 16}}
-                style={{flex: 1}}
-                selectedValue={this.state.sets}
-                onValueChange={(sets) => this.setState({sets})}>
-                  <Picker.Item label="1 rep" value="1" />
-                  <Picker.Item label="2 reps" value="2" />
-                  <Picker.Item label="3 reps" value="3" />
-                  <Picker.Item label="4 reps" value="4" />
-                  <Picker.Item label="5 reps" value="5" />
-              </Picker>
-              <Picker
-                itemStyle={{fontSize: 16}}
-                style={{flex: 1}}
-                selectedValue={this.state.reps}
-                onValueChange={(reps) => this.setState({reps})}>
-                  <Picker.Item label="1 set" value="1" />
-                  <Picker.Item label="2 sets" value="2" />
-                  <Picker.Item label="3 sets" value="3" />
-                  <Picker.Item label="4 sets" value="4" />
-                  <Picker.Item label="5 sets" value="5" />
-              </Picker>
+
+             <View style={[styles.paragraph]}>
+              
+              <View style={[Common.containerLeft, {paddingTop: 16}]}>
+                <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
+              </View>
+              
+              <View style={{width: 120}}>
+              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>Sets</FormLabel>
+              <FormInput
+              maxLength={2}
+              onChangeText={sets => this.setState({ sets })}
+              placeholder={"Enter sets"}
+              containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
+              />
+              </View>
+           
+            <View key={i} style={styles.InputContainer}>
+              <Grid>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>set</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >reps done</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>weight</FormLabel>
+                </Col>
+              </Grid>
             </View>
+            
+            {inputs}
+            <View style={{height: Layout.gutter.l * 5}}/>
+              
+
+              </View>
        
       </ScrollView>
     );
