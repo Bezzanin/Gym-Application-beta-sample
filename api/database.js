@@ -85,10 +85,7 @@ class Database {
     
     static getOwnExercises(callback) {
             let uid = firebase.auth().currentUser.uid;
-            let path = "/user/" + uid + "/details";
-           //console.log('Path is: ' + path);
-            
-            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').once('value').then((snap) => {
+            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').on('value', (snap) => {
                 let exercises = snap.val().exercises;
                 console.log('Snap.val().exercises is below');
                 console.log(snap.val().exercises);
@@ -312,6 +309,7 @@ class Database {
                 lastWorkoutDate: ''
             },
             workoutLogs: '',
+            exerciseLogs: '',
             details: {difficultyRate: 0, level: 0, programName: '', 
             gender: gender, 
             DaysPerWeek: DaysPerWeek,

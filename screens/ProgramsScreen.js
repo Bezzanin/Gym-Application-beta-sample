@@ -71,6 +71,7 @@ export default class SettingsScreen extends React.Component {
           day5: child.val().day5,
           day6: child.val().day6,
           _key: child.key,
+          name: child.val().name,
           gender: child.val().gender,
           level: child.val().level,
         });

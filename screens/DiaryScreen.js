@@ -19,6 +19,7 @@ var _ = require('lodash');
 var swipeoutBtns = [
   {
     text: I18n.t('Delete'),
+    type: 'delete',
     onPress: (() => console.log("SwipeButton")),
     backgroundColor: "#cb0f18",
     color: "#FFF"
@@ -136,11 +137,8 @@ export default class LinksScreen extends React.Component {
     })
   }
     return (
-      <Swipeout 
-      right={swipeoutBtns}
-      backgroundColor={"transparent"}
-      >
-      <StatItem item={item} imageLink={item.photo}/></Swipeout>
+
+      <StatItem item={item} imageLink={item.photo}/>
     );
   }
   
@@ -148,11 +146,16 @@ export default class LinksScreen extends React.Component {
     var logsId = this.state.dateLog.map((item) => {
       
       let log = _.filter(this.state.exercises, {'_key': item.id})
-    
-      log[0].weight = item.weight || '';
-      log[0].sets = item.sets || '';
-      log[0].reps = item.reps || '';
-
+      // console.log('Item below')
+      // console.log(item);
+      // console.log('Log before push')
+      // console.log(log);
+      // log[0].weight = item.weight;
+      // log[0].sets = item.sets || '';
+      // log[0].reps = item.reps || '';
+      // console.log('Log below')
+      // console.log(log);
+      
       return( log )
     });
     this.setState({

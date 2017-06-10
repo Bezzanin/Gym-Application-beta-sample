@@ -3,6 +3,7 @@ import {
   Modal,
   Text,
   View,
+  ScrollView,
   StyleSheet,
   Picker,
   TouchableOpacity,
@@ -20,6 +21,7 @@ import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import {Grid, Col, Row} from 'react-native-elements';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -50,7 +52,7 @@ export default class AddActivity extends Component {
           let allWeight = [];
       let inputs = [];
 
-        for(var i=0; i<this.state.sets; i++){
+        for(var i=0; (i<this.state.sets && i<7); i++){
             let currSet = 'set' + i;
             let counter = i;
             allReps[counter] = "10";
@@ -58,24 +60,37 @@ export default class AddActivity extends Component {
         inputs.push(
             (
     <View key={i} style={styles.InputContainer}>
-        
-        <View style={{width: 100}}>
-            <TouchableOpacity onPress={() => {console.log(allReps)}}><Text style={{marginTop: 20}}>c</Text></TouchableOpacity>
-        </View>
-        <View style={{width: 100}}>
+        <Grid>
+          <Col>
+            <Text style={[{fontSize: 18, fontWeight: '500', color: '#7F7F7F', paddingTop: 9, paddingLeft: 20}]}>{counter + 1}</Text>
+          </Col>
+          <Col>
+            <Col>
             <FormInput
-            onChangeText={reps => {allReps[counter] = reps }}
-            placeholder={"reps"}
-            defaultValue={"10"}
-            />
-        </View>
-        <View style={{width: 100}}>
+              maxLength={2}
+              style={{width: 20}}
+              keyboardType={'numeric'}
+              onChangeText={reps => {allReps[counter] = reps }}
+              defaultValue={"10"}
+              />
+              </Col>
+              <Col>
             <FormInput
+            style={{width: 20}}
+              editable={false}
+              defaultValue={"reps"}
+              />
+          </Col>
+          </Col>
+          <Col>
+          <FormInput
+            maxLength={3}
+            keyboardType={'numeric'}
             onChangeText={weight => {allWeight[counter] = weight}}
             placeholder={"weight"}
-            defaultValue={"30"}
-        />
-        </View>
+            defaultValue={"30"}/>
+          </Col>
+          </Grid>
     </View>
             )
         );  
@@ -96,7 +111,7 @@ export default class AddActivity extends Component {
           visible={this.state.modalVisible}
         >
 
-          <View style={Common.transparentContainer}>
+          <ScrollView contentContainerStyle={Common.transparentContainer}>
             <TouchableWithoutFeedback
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
@@ -105,29 +120,47 @@ export default class AddActivity extends Component {
               <View style={Common.containerBasic} />
             </TouchableWithoutFeedback>
             <View style={[styles.paragraph, Common.shadowLight]}>
+              
               <View style={[Common.centered, Common.paddingVertical]}>
                 <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
               </View>
-            <View style={styles.InputContainer}>
-            <View style={{width: 200}}>
-              <FormLabel>{I18n.t('Name')}</FormLabel>
+             
+              <View>
+                <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Name')}</FormLabel>
+                <FormInput
+                  onChangeText={text => this.setState({ text })}
+                  placeholder={I18n.t('EnterName')}
+                  containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
+                />
+              </View>
+              
+              <View style={{width: 120}}>
+              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>Sets</FormLabel>
               <FormInput
-                onChangeText={text => this.setState({ text })}
-                placeholder={I18n.t('EnterName')}
+              onChangeText={sets => this.setState({ sets })}
+              placeholder={"Enter sets"}
+              containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
               />
+              </View>
+           
+            <View key={i} style={styles.InputContainer}>
+              <Grid>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>set</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >reps done</FormLabel>
+                </Col>
+                <Col>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>weight</FormLabel>
+                </Col>
+              </Grid>
             </View>
-            <View style={{width: 100}}>
-            <FormLabel>Sets</FormLabel>
-            <FormInput
-             onChangeText={sets => this.setState({ sets })}
-             placeholder={""}
-            />
-            </View>
-            </View>
+            
             {inputs}
+            <View style={{height: 24}}/>
               
-              
-
+            
               <TouchableOpacity
                 onPress={() => {
                   //this.sendData();
@@ -159,7 +192,10 @@ export default class AddActivity extends Component {
               >
                 <Text style={Common.lightActionTitle}>{I18n.t('Cancel')}</Text>
               </TouchableOpacity>
-            </View>
+
+              </View>
+
+            
             <TouchableWithoutFeedback
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
@@ -167,7 +203,7 @@ export default class AddActivity extends Component {
             >
               <View style={Common.containerBasic} />
             </TouchableWithoutFeedback>
-          </View>
+          </ScrollView>
 
         </Modal>
 

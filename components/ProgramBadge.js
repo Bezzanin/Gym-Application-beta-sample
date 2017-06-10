@@ -181,6 +181,8 @@ _displayEnrollButton() {
         let emptyArr = [];
         Database.enrollIntoProgram(this.props.program);
         Database.saveExerciseSequence(this.props.sequence);
+        console.log('Saving')
+        console.log(this.props.sequence);
         AsyncStorage.setItem('ownProgramKey', JSON.stringify(this.props.program._key));
         AsyncStorage.setItem('logs', JSON.stringify(emptyArr));
         this.props.handleClick(true);

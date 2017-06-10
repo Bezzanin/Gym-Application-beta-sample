@@ -75,7 +75,7 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Text style={Common.lightTitleH2}>Program key: {this.props.item._key}</Text>
+              <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
               <Tag title={'days overall'} content={'30 days'} color='#fff'/>
