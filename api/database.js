@@ -125,7 +125,7 @@ class Database {
             let path = "/user/" + uid + "/ownProgram";
            
             firebase.database().ref(path).update({
-                programName: passedProgram._key,
+                programName: passedProgram.name,
                 gender: passedProgram.gender,
                 days: passedProgram.days,
                 day1: passedProgram.day1 || '',
@@ -272,9 +272,11 @@ class Database {
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let CustomLogs = [];
+            if (logs !== null) {
             Object.keys(logs).forEach((date) => {
                 CustomLogs.push(logs[date])                
             })
+            }
             callback(CustomLogs);
         }, (e) => {console.log(e)})
         

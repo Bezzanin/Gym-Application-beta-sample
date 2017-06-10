@@ -7,6 +7,11 @@ import WorkoutExercises from '../components/WorkoutExercises';
 import Database from '../api/database';
 import * as firebase from 'firebase';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class ExerciseScreen extends React.Component {
   constructor(props) {
@@ -27,7 +32,7 @@ export default class ExerciseScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params){
-        return `Do ${params.program._key}`
+        return params.program.name
       }
     },
   };
@@ -152,7 +157,7 @@ getOwnExercises() {
             style={{flex: 1}}
             />
         <View style={[Common.container, Common.sectionBorder]}>
-        <Text style={styles.textBlackTitle}>Workouts</Text>
+        <Text style={styles.textBlackTitle}>{I18n.t('Workouts')}</Text>
         </View>
         {this.displayWorkoutDays()}
         <Divider/>

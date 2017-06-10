@@ -7,7 +7,16 @@ import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Components} from 'expo';
 import Common from '../constants/common';
+<<<<<<< HEAD
 import AddActivity from '../components/AddActivity';
+=======
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
+
+>>>>>>> 4b7c62adf866ac53c9524ccf97aaaded20d540f4
 import { NavigationStyles } from '@expo/ex-navigation';
 
 
@@ -40,7 +49,7 @@ export default class ExerciseScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params){
-        return `Do ${params.exercise.name}`
+        return `${I18n.t(params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))}`
       }
     },
     styles: {
@@ -178,7 +187,9 @@ export default class ExerciseScreen extends React.Component {
     }
 
   render() {
-        let {onClosePressed, video, volume} = this.props;
+
+    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
+            let {onClosePressed, video, volume} = this.props;
         let {currentTime, duration, paused} = this.state;
         const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
         let allReps = [];
@@ -251,16 +262,15 @@ export default class ExerciseScreen extends React.Component {
         </View>
         {this.renderNextButton(allWeight, allReps)}
         <View style={[Common.container, Common.sectionBorder]}>
-          <Text style={Common.darkTitleH1}>{this.props.route.params.exercise.name}</Text>
+          <Text style={Common.darkTitleH1}>{exerciseName}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
-              title={'muscle group'}
-              content={this.props.route.params.exercise.muscles}
-              color={'#000'}
-                />
+              title={I18n.t('muscleGroup')}
+              content={I18n.t(this.props.route.params.exercise.muscles)}
+              color={'#000'}/>
             <Tag 
-              title={'exercise type'}
-              content={this.props.route.params.exercise.type}
+              title={I18n.t('Exercises')}
+              content={I18n.t(this.props.route.params.exercise.type)}
               color={'#000'}/>
           </View>
         </View>

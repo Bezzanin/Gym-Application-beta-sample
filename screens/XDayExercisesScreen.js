@@ -13,6 +13,11 @@ import {
 import Database from '../api/database';
 import ExerciseItem from '../components/ExerciseItem';
 import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class XDAYExercisesScreen extends Component {
   constructor(props) {
@@ -29,7 +34,7 @@ export default class XDAYExercisesScreen extends Component {
     navigationBar: {
       visible: true,
       title(params){ 
-        return `Day ${params.dayNumber} exercises`
+        return ` ${params.dayNumber} ${I18n.t('Day')}`
       }
     },
   };
@@ -44,8 +49,8 @@ async componentDidMount() {
      <ScrollView>
        
        <View style={[Common.paddingLeft, Common.paddingVertical, Common.sectionBorder]}>
-       <Text style={Common.darkTitleH1}>Most Popular Programs</Text>
-       <Text style={Common.darkBodyText}>Exercises for {this.props.route.params.dayNumber} day. Lorem ipsum dolor sit amet consecutur</Text>
+       <Text style={Common.darkTitleH1}>{I18n.t('Exercises')}</Text>
+       <Text style={Common.darkBodyText}>{I18n.t('Exercises')} {this.props.route.params.dayNumber} {I18n.t('Day')}</Text>
        </View>
         <ListView
                     dataSource={this.state.dataSource}

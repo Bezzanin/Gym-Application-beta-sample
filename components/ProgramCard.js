@@ -83,11 +83,13 @@ class ProgramCard extends Component {
               <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
-              <Tag title={I18n.t('totalDays').toLowerCase()} content={'30 paivaa'} color='#fff'/>
-              <Tag title={I18n.t('perweek').toLowerCase()} content={this.props.item.days} color='#fff'/>
-              <Tag title={I18n.t('muscles').toLowerCase()} content={this._getMuscles()} color='#fff'/>
-              <Tag title={I18n.t('Gender').toLowerCase()} content={'Molemmat'} color='#fff'/>
-              <Tag title={I18n.t('Level').toLowerCase()} content={'Beginner'} color='#fff'/>
+
+              <Tag title={I18n.t('Total').toLowerCase()} content={this.props.item.totalDays} color='#fff'/>
+              <Tag title={I18n.t('PerWeek').toLowerCase()} content={this.props.item.days} color='#fff'/>
+              <Tag title={I18n.t('muscleGroup').toLowerCase()} content={this._getMuscles()} color='#fff'/>
+              <Tag title={I18n.t('Gender').toLowerCase()} content={this.props.item.gender} color='#fff'/>
+              <Tag title={I18n.t('Level').toLowerCase()} content={this.props.item.level} color='#fff'/>
+
             </View>
           </View>
         </Image>

@@ -102,7 +102,7 @@ _displayLeaveButton() {
             <Row>
                 <BigTag
                     title={I18n.t('currentProgram')}
-                    content={this.state.programName}
+                    label={this.state.programName}
                     color={'#000'}
                 />
             </Row>
