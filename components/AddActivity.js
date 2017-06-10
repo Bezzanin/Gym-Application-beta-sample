@@ -65,7 +65,7 @@ export default class AddActivity extends Component {
             <Text style={[{fontSize: 18, fontWeight: '500', color: '#7F7F7F', paddingTop: 9, paddingLeft: 20}]}>{counter + 1}</Text>
           </Col>
           <Col>
-            <Col>
+            
             <FormInput
               maxLength={2}
               style={{width: 20}}
@@ -73,14 +73,7 @@ export default class AddActivity extends Component {
               onChangeText={reps => {allReps[counter] = reps }}
               defaultValue={"10"}
               />
-              </Col>
-              <Col>
-            <FormInput
-            style={{width: 20}}
-              editable={false}
-              defaultValue={"reps"}
-              />
-          </Col>
+
           </Col>
           <Col>
           <FormInput
@@ -137,6 +130,7 @@ export default class AddActivity extends Component {
               <View style={{width: 120}}>
               <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>Sets</FormLabel>
               <FormInput
+              maxLength={2}
               onChangeText={sets => this.setState({ sets })}
               placeholder={"Enter sets"}
               containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}

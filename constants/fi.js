@@ -35,6 +35,8 @@ export default {
   ExercisesLibrary:	"Liikekirjasto",
   SearchExercises:	"Etsi liike",
   All: "Kaikki",
+  totalDays: "Yhteensä päiviä",
+  muscles: "lihakset",
   isolation:	"Eristävä",
   basic:	"Perus",
   chest:	"Rinta",
