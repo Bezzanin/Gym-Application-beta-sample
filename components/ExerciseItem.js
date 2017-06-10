@@ -50,6 +50,7 @@ class ExerciseItem extends Component {
   }
   
   render() {
+    let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
       <TouchableHighlight 
         underlayColor={'#920707'}
@@ -60,7 +61,7 @@ class ExerciseItem extends Component {
           </View>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
-              <Text style={Common.darkTitleH3}>{this.props.item.name || ''}</Text>
+              <Text style={Common.darkTitleH3}>{exerciseName || ''}</Text>
               <Text style={Common.darkNameTag}>{I18n.t(this.props.item.muscles)}</Text>
               <Text style={Common.darkNameTag}>{I18n.t(this.props.item.type)}</Text>
             </View>
