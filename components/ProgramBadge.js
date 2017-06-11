@@ -118,7 +118,7 @@ export default class ProgramBadge extends Component {
       else if (this.state.lastWorkoutDate === today) {
         return (
             <View style={Common.container}>
-                <Text style={Common.darkTitleH2}>You have already completed workout today</Text>
+                <Text style={Common.darkTitleH2}>{I18n.t('DoneWorkoutToday')}</Text>
             </View>
         )
       }

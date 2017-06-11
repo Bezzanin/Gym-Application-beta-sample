@@ -6,6 +6,11 @@ import {withNavigation} from '@expo/ex-navigation';
 import Common from '../constants/common';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 const { View, Text, Image, TouchableOpacity } = ReactNative;
 
@@ -37,10 +42,10 @@ class StatItem extends Component {
       logs.push(
         <View style={[Common.inlineLogContainer, Common.sectionBorder]}>
           <View>
-            <Text style={[Common.darkLogTitleBold]}>{counter + 1} set</Text>
+            <Text style={[Common.darkLogTitleBold]}>{counter + 1}</Text>
           </View>
           <View>
-            <Text style={Common.darkLogTitle}>{this.props.item.reps[counter] || ' '} reps</Text>
+            <Text style={Common.darkLogTitle}>{this.props.item.reps[counter] || ' '} {I18n.t('Reps')}</Text>
           </View>
           <View>
             <Text style={Common.darkLogTitle}>{this.props.item.weight[counter] || ' '} kg</Text>
@@ -48,6 +53,7 @@ class StatItem extends Component {
         </View>
       )
     }
+    let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
         <View>
         <View style={[Common.inlineContainer, Common.paddingVerticalSmall]}>
@@ -56,9 +62,11 @@ class StatItem extends Component {
           </View>
           <View style={[Common.inlineContainer, {alignItems: 'center'}]}>
             <View style={Common.containerText}>
-              <Text style={Common.darkTitleH2}>{this.props.item.name || ''}</Text>
+              <Text style={Common.darkTitleH2}>
+                {this.props.own ? this.props.item.name || '' : exerciseName || ''}
+              </Text>
               <View style={[Common.inlineLogContainer, {alignItems: 'center', paddingRight: 25}]}>
-                  <Text style={Common.darkTitleH3}>{this.props.item.sets} sets done</Text>
+                  <Text style={Common.darkTitleH3}>{this.props.item.sets} {I18n.t('Sets')}</Text>
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
                     <Text style={Common.brightActionTitle}>
                     {this.state.hideLogs ? 'Show' : 'Hide'}</Text>

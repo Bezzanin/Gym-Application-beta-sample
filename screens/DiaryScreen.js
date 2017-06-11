@@ -38,6 +38,8 @@ export default class LinksScreen extends React.Component {
         const exercises = JSON.parse(json);
         this.setState({
           exercises
+        }, () => {
+          this.filterExercises()
         });
       } catch(e) {
         console.log(e);
@@ -51,8 +53,6 @@ export default class LinksScreen extends React.Component {
         this.setState({
           dateLog: log,
           dataSource: this.state.dataSource.cloneWithRows(log),
-      }, function dateLogUpdated () {
-         this.filterExercises();
       })
       
     });
@@ -137,40 +137,32 @@ export default class LinksScreen extends React.Component {
     })
   }
     return (
-
-      <StatItem item={item} imageLink={item.photo}/>
+      <StatItem own={item._key ? false : true} item={item} imageLink={item.photo}/>
     );
   }
   
-  filterExercises = () => {
-    var logsId = this.state.dateLog.map((item) => {
-      
-      let log = _.filter(this.state.exercises, {'_key': item.id})
-      // console.log('Item below')
-      // console.log(item);
-      // console.log('Log before push')
-      // console.log(log);
-      // log[0].weight = item.weight;
-      // log[0].sets = item.sets || '';
-      // log[0].reps = item.reps || '';
-      // console.log('Log below')
-      // console.log(log);
-      
-      return( log )
-    });
-    this.setState({
-          exercisesSource: this.state.exercisesSource.cloneWithRows(_.flatten(logsId))
-      });
-      if (this.state.exercisesSource.getRowCount() > 0) {
-          this.setState({
-          hasData: true,
-      });
-        }
-        else {
-          this.setState({
-          hasData: false,
+  filterExercises = async () => {
+
+    var logsId = await this.state.dateLog.map((item) => {
+
+      let newlog;
+      let log =   this.state.exercises.filter((exercise) => {
+        return exercise._key === item.id
       })
-        }
+
+      
+      newlog = {
+        ...log[0],
+        ...item,
+      }
+   
+      return newlog;
+    });
+   
+    this.setState({
+          exercisesSource: this.state.exercisesSource.cloneWithRows(logsId)
+      });
+   
 }
 
   render() {
