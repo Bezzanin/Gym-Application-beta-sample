@@ -249,16 +249,17 @@ setModalVisible(visible) {
                   />
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>
-                <TouchableHighlight
-                  style={styles.doneButton}
+                <TouchableOpacity
                   onPress={() => {
-                    this.signup();
-                  }}
-                >
-                  <View style={styles.button}>
-                    <Text style={styles.buttonText}>{I18n.t('Done')}</Text>
-                  </View>
-                </TouchableHighlight>
+                      this.setModalVisible(true);
+                    }}
+                  style={[
+                          Common.brightButtonRounded,
+                          Common.shadowBright,
+                          Common.marginVerticalSmall
+                        ]}>
+                  <Text style={Common.lightActionTitle} >{I18n.t('Done')}</Text>
+                </TouchableOpacity>
               </View>
             </Swiper>
           </Modal>
