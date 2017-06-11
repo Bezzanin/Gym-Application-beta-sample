@@ -7,16 +7,7 @@ import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Components} from 'expo';
 import Common from '../constants/common';
-<<<<<<< HEAD
-import AddActivity from '../components/AddActivity';
-=======
-import I18n from 'react-native-i18n';
-import fi from '../constants/fi';
-I18n.locale = "fi";
-I18n.fallbacks = true;
-I18n.translations = {fi};
 
->>>>>>> 4b7c62adf866ac53c9524ccf97aaaded20d540f4
 import { NavigationStyles } from '@expo/ex-navigation';
 
 
