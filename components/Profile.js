@@ -27,13 +27,13 @@ class Profile extends Component {
 
 componentDidMount() {
     Database.listeningForStats((log) => {
-    this.setState({
-          allLogs: log,
-          totalWorkouts: log.length,
-          totalExercises: _.sumBy(log, 'amountOfExercisesCompleted')
-      });
+        this.setState({
+            allLogs: log,
+            totalWorkouts: log.length,
+            totalExercises: _.sumBy(log, 'amountOfExercisesCompleted')
+        });
     });
-    Database.getUserProgram( (programName) => {
+    Database.getUserProgramName( (programName) => {
           this.setState({
               programName
           })
@@ -89,7 +89,6 @@ _displayLeaveButton() {
                     color={'#000'}
                 />
             </Row>
-            <Row><Text style={Common.textButton}>{I18n.t('ChangeWeight')}</Text></Row>
         </Col>
         <Col size={4}>
             <Row>
@@ -102,15 +101,30 @@ _displayLeaveButton() {
             <Row>
                 <BigTag
                     title={I18n.t('currentProgram')}
-                    label={this.state.programName}
+                    content={30}
                     color={'#000'}
                 />
+                <Row><Text style={Common.textButton}> </Text></Row>
             </Row>
-            <Row>{this._displayLeaveButton()}</Row>
+            
         </Col>
         <Col size={1}/>
         </Grid>
-       
+        <View style={{height: 30}}/>
+        <Grid>
+            <Col size={1}/>
+            <Col size={8}>
+                <Row>
+                    <BigTag
+                    title={I18n.t('currentProgram')}
+                    label={this.state.programName}
+                    color={'#000'}
+                />
+                </Row>
+                <Row>{this._displayLeaveButton()}</Row>
+            </Col>
+            <Col size={1}/>
+        </Grid>       
       </View>
     );
   }

@@ -31,7 +31,7 @@ const Common = {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,
         fontSize: 20,
-        lineHeight: 26,
+        lineHeight: 22,
         fontWeight: 'bold'
     },
     darkTitleH3: {
@@ -110,7 +110,7 @@ const Common = {
         color: Colors.lightTitleTextColor,
         marginBottom: Layout.gutter.s,
         fontSize: 20,
-        lineHeight: 26,
+        lineHeight: 22,
         fontWeight: 'bold'
     },
     lightTitleH3: {

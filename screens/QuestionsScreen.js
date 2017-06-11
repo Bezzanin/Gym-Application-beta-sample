@@ -250,9 +250,7 @@ setModalVisible(visible) {
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>
                 <TouchableOpacity
-                  onPress={() => {
-                      this.setModalVisible(true);
-                    }}
+                  onPress={() => { this.signup() }}
                   style={[
                           Common.brightButtonRounded,
                           Common.shadowBright,

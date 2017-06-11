@@ -62,11 +62,11 @@ class StatItem extends Component {
           </View>
           <View style={[Common.inlineContainer, {alignItems: 'center'}]}>
             <View style={Common.containerText}>
-              <Text style={Common.darkTitleH2}>
+              <Text style={Common.darkTitleH3}>
                 {this.props.own ? this.props.item.name || '' : exerciseName || ''}
               </Text>
               <View style={[Common.inlineLogContainer, {alignItems: 'center', paddingRight: 25}]}>
-                  <Text style={Common.darkTitleH3}>{this.props.item.sets} {I18n.t('Sets')}</Text>
+                  <Text style={Common.darkTitleH4}>{this.props.item.sets} {I18n.t('Sets')}</Text>
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
                     <Text style={Common.brightActionTitle}>
                     {this.state.hideLogs ? 'Show' : 'Hide'}</Text>

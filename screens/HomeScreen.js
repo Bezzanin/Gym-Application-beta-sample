@@ -51,7 +51,8 @@ export default class HomeScreen extends Component {
       this.setState({
       loading: false,
     })
-    }
+  }
+
 componentDidMount() {
     this.retrieveUserId();
     this.listenForExercises();

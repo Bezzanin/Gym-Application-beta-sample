@@ -34,7 +34,7 @@ export default class SettingsScreen extends React.Component {
         try {
 
             await firebase.auth().signOut();
-            await AsyncStorage.setItem('ownProgram', '');
+            await AsyncStorage.multiRemove(['ownProgram', 'ownProgramId', 'ownProgramKey', 'logs'])
             this.props.navigator.push('login')
 
         } catch (error) {

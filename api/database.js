@@ -105,10 +105,22 @@ class Database {
             }
             callback(programName);
     })
-    
  
 }
 
+static getUserProgramName(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/ownProgram";
+        
+        firebase.database().ref(path).on('value', (snap) => {
+            let programName = "";
+            if (snap.val()) {
+                programName = snap.val().programRealName
+            }
+            callback(programName);
+    })
+
+}
 
  static userHasProgram(callback) {
         let uid = firebase.auth().currentUser.uid;
@@ -128,6 +140,7 @@ class Database {
            
             firebase.database().ref(path).update({
                 programName: passedProgram._key,
+                programRealName: passedProgram.name,
                 gender: passedProgram.gender,
                 days: passedProgram.days,
                 day1: passedProgram.day1 || '',
