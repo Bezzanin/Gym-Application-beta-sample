@@ -7,6 +7,12 @@ import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Components} from 'expo';
 import Common from '../constants/common';
+import {Grid, Col, Row} from 'react-native-elements';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 import { NavigationStyles } from '@expo/ex-navigation';
 
@@ -16,12 +22,6 @@ import {
   FormInput,
   Button,
 } from 'react-native-elements';
-import I18n from 'react-native-i18n';
-import fi from '../constants/fi';
-import {Grid, Col, Row} from 'react-native-elements';
-I18n.locale = "fi";
-I18n.fallbacks = true;
-I18n.translations = {fi};
 
 
 export default class ExerciseScreen extends React.Component {
@@ -121,7 +121,7 @@ export default class ExerciseScreen extends React.Component {
                   }, () => {goToNext()}
             )}}>
            <Text style={Common.lightActionTitle}>
-             Go to next exercise
+             {I18n.t('Next')} {I18n.t('Exercise')}
            </Text>
          </TouchableOpacity>
          </View>
@@ -273,7 +273,7 @@ export default class ExerciseScreen extends React.Component {
               </View>
               
               <View style={{width: 120}}>
-              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>Sets</FormLabel>
+              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
               <FormInput
               maxLength={2}
               onChangeText={sets => this.setState({ sets })}
@@ -285,13 +285,13 @@ export default class ExerciseScreen extends React.Component {
             <View key={i} style={styles.InputContainer}>
               <Grid>
                 <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>set</FormLabel>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
                 </Col>
                 <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >reps done</FormLabel>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >{I18n.t('Reps')}</FormLabel>
                 </Col>
                 <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>weight</FormLabel>
+                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Weight')}</FormLabel>
                 </Col>
               </Grid>
             </View>

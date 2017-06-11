@@ -137,8 +137,7 @@ export default class LinksScreen extends React.Component {
     })
   }
     return (
-
-      <StatItem item={item} imageLink={item.photo}/>
+      <StatItem own={item._key ? false : true} item={item} imageLink={item.photo}/>
     );
   }
   

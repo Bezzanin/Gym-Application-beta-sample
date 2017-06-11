@@ -31,6 +31,7 @@ export default {
   Addworkout:	"Lisää harjoitus",
   Addactivity:	"Lisää aktiviteetti",
   Exercises: 	"Liikkeet",
+  Exercise: "Liike",
   ExercisesThisWeek: "Viikon Liikkeet",
   ExercisesLibrary:	"Liikekirjasto",
   SearchExercises:	"Etsi liike",
@@ -108,8 +109,9 @@ export default {
   Seventh: "Seitsemäs",
   Day: "Päivä",
 
-  EnrollToProgram: "Enroll",
+  EnrollToProgram: "Valitse ohjelma",
   EditProgram: "Edit",
+  DoneWorkOutToday: "Olet tehnyt harjoituksen tänään",
 
   //Exercises
   BarbellBenchPress:	"Penkkipunnerrus",
