@@ -94,6 +94,7 @@ _displayLeaveButton() {
                     title={I18n.t('Weight')}
                     content={this.state.weight}
                     color={'#000'}
+                    label={'kg'}
                 />
             </Row>
         </Col>
@@ -109,7 +110,7 @@ _displayLeaveButton() {
                 <BigTag
                     title={I18n.t('Height')}
                     content={this.state.height}
-
+                    label={'cm'}
                     color={'#000'}
                 />
                 <Row><Text style={Common.textButton}> </Text></Row>

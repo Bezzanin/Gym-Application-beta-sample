@@ -4,7 +4,7 @@
   "slug": "rational-gym",
   "privacy": "unlisted",
   "sdkVersion": "14.0.0",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app-icon.png",

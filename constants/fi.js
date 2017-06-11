@@ -153,6 +153,8 @@ export default {
   BarbellLunges: "Askelkyykky",
   StandingCalfRaise:	"Pohjelaite seisten",
   SeatedCalfRaise:	"Pohjelaite istuen",
-  ClosedCableRow: "?"
+  ClosedCableRow: "?",
+
+  others: 'muuta',
 
 };

@@ -253,7 +253,9 @@ handleContinue() {
         
         Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
         Database.getCurrentWorkoutDay( (currentDay) => { dayNumber = currentDay});
-        
+        if ( dayNumber === this.props.route.params.program.days) {
+            dayNumber = 1;
+        }
         day = 'day' + dayNumber
         this.props.navigator.push('exercise', {
             exercise: this.state.sequence2[day][index],
