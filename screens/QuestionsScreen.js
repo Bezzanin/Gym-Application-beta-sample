@@ -200,14 +200,14 @@ setModalVisible(visible) {
                   <View>
                     <FormLabel>{I18n.t('Height')}</FormLabel>
                     <FormInput
-                      onChangeText={text => this.setState({ text })}
+                      onChangeText={height => this.setState({ height })}
                       placeholder={"cm"}
                     />
                   </View>
                   <View>
                     <FormLabel>{I18n.t('Weight')}</FormLabel>
                     <FormInput
-                      onChangeText={text => this.setState({ text })}
+                      onChangeText={weight => this.setState({ weight })}
                       placeholder={"kg"}
                     />
                   </View>
@@ -232,7 +232,7 @@ setModalVisible(visible) {
                 >
                   <FormLabel>{I18n.t('Name')}</FormLabel>
                   <FormInput
-                    onChangeText={text => this.setState({ text })}
+                    onChangeText={name => this.setState({ name })}
                     placeholder={I18n.t('EnterName')}
                   />
                   <FormLabel>{I18n.t('EnterYourEmail')}</FormLabel>
@@ -250,7 +250,11 @@ setModalVisible(visible) {
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>
                 <TouchableOpacity
-                  onPress={() => { this.signup() }}
+
+                  onPress={() => {
+                    this.signup();
+                  }}
+
                   style={[
                           Common.brightButtonRounded,
                           Common.shadowBright,

@@ -51,9 +51,12 @@ class Stats extends Component {
           totalWeight: _.sumBy(filtered, 'totalWeight'),
           workoutsDone: filtered.length,
           loading: false,
+      }, () => {
+        console.log(parseInt(moment(this.state.weekLogs.workoutCompleted).format('d')))
       });
       this.props.loadingOFF();
     });
+    
   }
 
  prevWeek = () => {
