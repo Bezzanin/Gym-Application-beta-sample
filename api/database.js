@@ -105,8 +105,10 @@ class Database {
             }
             callback(programName);
     })
+    
  
 }
+
 
  static userHasProgram(callback) {
         let uid = firebase.auth().currentUser.uid;
@@ -125,7 +127,7 @@ class Database {
             let path = "/user/" + uid + "/ownProgram";
            
             firebase.database().ref(path).update({
-                programName: passedProgram.name,
+                programName: passedProgram._key,
                 gender: passedProgram.gender,
                 days: passedProgram.days,
                 day1: passedProgram.day1 || '',

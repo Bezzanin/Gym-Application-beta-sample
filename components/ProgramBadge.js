@@ -87,7 +87,6 @@ export default class ProgramBadge extends Component {
     )
   }
   showContinueExercise2() {
-    console.log(this.props.ownProgram)
     if (this.props.ownProgram) {
         continueProgram = () => {
                 this.props.handleContinueProgram();
@@ -96,19 +95,25 @@ export default class ProgramBadge extends Component {
         let day = 'day1';
         return (
             <View>
-                
-                    {/*<ExerciseItem showSeparator={false} onPress={() => {continueProgram()}} item = {this.props.sequence[day][index]} own={false}/>*/}
-                        <TouchableOpacity onPress={() => {continueProgram()}}>
-                            <Text style={Common.darkTitleH1}>{I18n.t('ContinueProgram')}</Text>
+                        <TouchableOpacity
+                            onPress={() => {continueProgram()}}
+                            style={[
+                                    Common.brightButtonRounded,
+                                    Common.shadowBright,
+                                    Common.marginVerticalSmall
+                                    ]}>
+                            <Text style={Common.lightActionTitle} >{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {console.log(this.props.sequence)}}><Text>Get props sequence</Text></TouchableOpacity>
-                        <TouchableOpacity onPress={() => {console.log(this.state.sequence)}}><Text>Get state sequence</Text></TouchableOpacity>
             </View>
         )
     }
   }
   showContinueExercise() {
     let today = moment().format('MM-DD-YY');
+    console.log('Below name')
+    console.log(this.props.programName);
+     console.log('Below program')
+    console.log(this.props.program._key);
     if (this.state.isLoading) {
           return (
               <View><Text>Is loading...</Text>
@@ -133,8 +138,8 @@ export default class ProgramBadge extends Component {
             console.log('Program name is ' + this.props.programName + ' and program key is ' + this.props.program._key)
             console.log('About to trigger Database.js');
             
-                // Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
-                // Database.getCurrentWorkoutDay( (currentDay) => { dayNumber = currentDay});
+                Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
+                Database.getCurrentWorkoutDay( (currentDay) => { dayNumber = currentDay});
             
             day = 'day' + dayNumber;
             continueProgram = () => {
@@ -142,12 +147,17 @@ export default class ProgramBadge extends Component {
             }
            
             return (
-                <View style={[Common.container, Common.sectionBorder]}>
-                    <TouchableOpacity onPress={() => {continueProgram()}}>
-                            <Text style={Common.darkTitleH1}>{I18n.t('ContinueProgram')}</Text>
+                <View>
+                        <TouchableOpacity
+                            onPress={() => {continueProgram()}}
+                            style={[
+                                    Common.brightButtonRounded,
+                                    Common.shadowBright,
+                                    Common.marginVerticalSmall
+                                    ]}>
+                            <Text style={Common.lightActionTitle} >{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
-                    {/*<ExerciseItem showSeparator={false} onPress={() => {continueProgram()}} item = {this.props.sequence[day][index]} own={false}/>*/}
-                </View>
+            </View>
             )
         default: return( <View/> )
     } 
@@ -211,15 +221,12 @@ _displayEnrollButton() {
             );
         case this.props.program._key:
             return(
-                    <TouchableOpacity style={Common.lightButtonRounded} onPress={goToRoute}>
-                        <Text style={Common.lightActionTitle}>{I18n.t('EditProgram')}</Text>
-                    </TouchableOpacity>
+                    
+                    <View/>
             );
         default: 
             return(
-                <View>
-                    {/*<TouchableOpacity style={styles.actionButton} onPress={() => {console.log('clicked')}}><Text style={styles.buttonTitle}>DEFAULT CASE</Text></TouchableOpacity>*/}
-                </View>
+                <View/>
             );
     }
 }
