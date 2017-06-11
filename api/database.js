@@ -35,6 +35,24 @@ class Database {
         });
          
     }
+
+        static listenForDetails(callback) {
+        let details = [];
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/details";
+         firebase.database().ref(path).on('value', (snap) => {
+            // get children as an array
+            console.log(snap.val())
+            details.push({
+                height: snap.val().height,
+                weight: snap.val().weight,
+            });
+            console.log(uid)
+           callback(details)
+        });
+         
+    }
+
     static listeningForLogs(currentDate, callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/workoutLogs";

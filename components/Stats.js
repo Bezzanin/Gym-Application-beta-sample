@@ -51,9 +51,12 @@ class Stats extends Component {
           totalWeight: _.sumBy(filtered, 'totalWeight'),
           workoutsDone: filtered.length,
           loading: false,
+      }, () => {
+        console.log(parseInt(moment(this.state.weekLogs.workoutCompleted).format('d')))
       });
       this.props.loadingOFF();
     });
+    
   }
 
  prevWeek = () => {
@@ -87,7 +90,7 @@ nextWeek = () => {
                 domainPadding={Layout.gutter.l}
                 >
                   <VictoryAxis
-                    tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
+                    tickValues={[0, 1, 2 , 3, 4 ,5 ,6]}
                     tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
                     offsetX={0}
                     style={{

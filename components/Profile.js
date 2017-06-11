@@ -43,6 +43,13 @@ componentDidMount() {
               hasProgram
           })
       })
+    Database.listenForDetails((details) => {
+        console.log(details)
+        this.setState({
+              weight: details[0].weight,
+              height: details[0].height
+          })
+    })
   }
 _displayLeaveButton() {
     leaveProgram = () => {
@@ -84,12 +91,11 @@ _displayLeaveButton() {
             </Row>
             <Row>
                 <BigTag
-                    title={I18n.t('maximumWeight')}
-                    content={'80'}
+                    title={I18n.t('Weight')}
+                    content={this.state.weight}
                     color={'#000'}
                 />
             </Row>
-            <Row><Text style={Common.textButton}>{I18n.t('ChangeWeight')}</Text></Row>
         </Col>
         <Col size={4}>
             <Row>
@@ -101,12 +107,11 @@ _displayLeaveButton() {
             </Row>
             <Row>
                 <BigTag
-                    title={I18n.t('currentProgram')}
-                    label={this.state.programName}
+                    title={I18n.t('Height')}
+                    content={this.state.height}
                     color={'#000'}
                 />
             </Row>
-            <Row>{this._displayLeaveButton()}</Row>
         </Col>
         <Col size={1}/>
         </Grid>

@@ -97,7 +97,7 @@ export default {
   HowManyWeeks: "Kuinka monta kertaa viikossa haluat harjoitella?",
   FillBasic: "Hienoa! Täytä perustiedot ja olet valmis aloittamaan",
   Done: "Tehty",
-  Height: "korkeus",
+  Height: "Korkeus",
   Name: "Nimesi",
   ProgramsPromo: "Kaikki ohjelmat ovat ammattilaisten suunnittelemia",
   First: "Ensimmäinen",
@@ -111,7 +111,7 @@ export default {
 
   EnrollToProgram: "Valitse ohjelma",
   EditProgram: "Edit",
-  DoneWorkOutToday: "Olet tehnyt harjoituksen tänään",
+  DoneWorkoutToday: "Olet tehnyt harjoituksen tänään",
 
   //Exercises
   BarbellBenchPress:	"Penkkipunnerrus",
