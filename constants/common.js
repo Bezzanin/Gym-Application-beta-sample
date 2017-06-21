@@ -158,7 +158,7 @@ const Common = {
     },
     brightActionTitle: {
         fontSize: 16,
-        lineHeight: 18,
+        lineHeight: 19,
         color: Colors.tintColor,
         fontWeight: '500',
     },
@@ -250,7 +250,8 @@ const Common = {
     inlineLogContainer: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'flex-start',
+        width: Layout.window.width,
         paddingBottom: 1,
         paddingTop: 5,
         justifyContent: 'space-between'

@@ -4,6 +4,7 @@ import {withNavigation} from '@expo/ex-navigation';
 import Layout from '../constants/Layout';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
+import DashboardExercisesList from '../components/DashboardExercisesList'
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 I18n.locale = "fi";
@@ -44,11 +45,13 @@ render() {
         <View style={[Common.container, Common.sectionBorder]}>
             <TouchableOpacity onPress={() => {this.goToAllExercises()}}>
                 <View>
-                    <Text style={Common.darkTitleH2}>{this.getDayOrder()} {I18n.t('Day')}</Text>
-                    <Text style={Common.darkBodyText}>{this.props.muscles}</Text>
+                    <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
+                    <Text style={Common.darkTitleH2}>{this.props.muscles}</Text>
                     <Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text>
                 </View>
-                    </TouchableOpacity>
+            </TouchableOpacity>
+            <DashboardExercisesList
+                data={this.props.exercises}/>
         </View> 
     );
   }

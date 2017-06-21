@@ -60,7 +60,9 @@ export default class ExerciseScreen extends React.Component {
       console.log(error);
     });
   }
-
+componentDidMount() {
+  console.log(this.state.videoLink)
+}
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -69,9 +71,8 @@ export default class ExerciseScreen extends React.Component {
   }
    
    renderNextButton = (allWeight, allReps) => {
-     console.log(allWeight)
+     
      goToNext = () => {
-      console.log(allWeight)
        Database.addExerciseStats(this.props.route.params.exercise._key, this.state.weight, this.state.sets, this.state.reps, this.state.metric, true);
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
@@ -177,6 +178,39 @@ export default class ExerciseScreen extends React.Component {
         this.videoPlayer.seek(newTime);
     }
 
+    displayVideo() {
+      if (this.state.videoLink !== 'https://')  {
+        return(
+        <View style={styles.videoContainer}>
+          <TouchableWithoutFeedback 
+            onPress={() => {
+              if (this.state.videoRate === 1.0) { 
+                this.setState({videoRate: 0})}
+              else {this.setState({videoRate: 1.0})}
+            }}>
+            <Components.Video
+              ref={videoPlayer => this.videoPlayer = videoPlayer}
+              source={{ uri: this.state.videoLink }}
+              isNetwork = {true}
+              rate={this.state.videoRate}
+              volume={1.0}
+              muted={true}
+              onEnd={this.onVideoEnd.bind(this)}
+                          onLoad={this.onVideoLoad.bind(this)}
+              onProgress={this.onProgress.bind(this)}
+              resizeMode="cover"
+              repeat
+              useNativeControls
+              style={{width: Layout.window.width, height: Layout.window.width * 0.56}}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        )
+      }
+    else {
+      return (<View/>)
+    }
+    }
   render() {
 
     let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
@@ -226,31 +260,8 @@ export default class ExerciseScreen extends React.Component {
     return (
       <ScrollView>
          
-        <View style={styles.videoContainer}>
-          <TouchableWithoutFeedback 
-            onPress={() => {
-              if (this.state.videoRate === 1.0) { 
-                this.setState({videoRate: 0})}
-              else {this.setState({videoRate: 1.0})}
-            }}>
-            <Components.Video
-              ref={videoPlayer => this.videoPlayer = videoPlayer}
-              source={{ uri: this.state.videoLink }}
-              isNetwork = {true}
-              rate={this.state.videoRate}
-              volume={1.0}
-              muted={true}
-              onEnd={this.onVideoEnd.bind(this)}
-                          onLoad={this.onVideoLoad.bind(this)}
-              onProgress={this.onProgress.bind(this)}
-              resizeMode="cover"
-              repeat
-              useNativeControls
-              style={{width: Layout.window.width, height: Layout.window.width * 0.56}}
-            />
-          </TouchableWithoutFeedback>
-
-        </View>
+      
+          {this.displayVideo()}
         {this.renderNextButton(allWeight, allReps)}
         <View style={[Common.container, Common.sectionBorder]}>
           <Text style={Common.darkTitleH1}>{exerciseName}</Text>
@@ -315,7 +326,6 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     height: Layout.window.height * 0.35,
-    backgroundColor: '#920707'
   },
   textInVideo: {
     fontSize: 25,

@@ -4,6 +4,7 @@ import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
 import WorkoutExercises from '../components/WorkoutExercises';
+import DashboardExercisesList from '../components/DashboardExercisesList';
 import Database from '../api/database';
 import * as firebase from 'firebase';
 import Common from '../constants/common';
@@ -173,9 +174,11 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.props.route.params.program.days; i++) {
         let day = 'day' + i;
-        let length = 2;
+        let length =  3//this.state.sequence2[day].length;
+
         workoutExercises.push(
-            
+            <View>
+                <TouchableOpacity onPress={() => {console.log(this.state.sequence2[day])}}><Text>Get info</Text></TouchableOpacity>
             <WorkoutExercises 
                 key={i} 
                 dayNumber={i}
@@ -184,6 +187,10 @@ displayWorkoutDays() {
                 exercises={this.state.sequence2[day]}
                 program={this.props.route.params.program}
                 isLeaving={this.state.isLeavingProgram}/>
+                {/*<DashboardExercisesList
+                    data ={this.state.sequence2[day]}
+                />*/}
+                </View>
         );
     }
     

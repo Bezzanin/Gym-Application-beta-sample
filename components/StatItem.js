@@ -25,6 +25,7 @@ class StatItem extends Component {
     }
   }
   componentDidMount() {
+    console.log(this.state.uriLink)
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       this.setState({
@@ -34,7 +35,18 @@ class StatItem extends Component {
       console.log(error);
     });
   }
-
+  displayLogThumbnail() {
+    if (!this.props.item.photo) {
+      return(<View/>)
+    }
+    else {
+      return(
+         <View style={[Common.logThumbnail, Common.shadowMedium]}>
+            <Image source={{uri: this.state.uriLink || require('../assets/images/CTA.png')}} style={Common.imageStyle}/>
+         </View>
+      )
+    }
+  }
   render() {
     const logs = [];
     for (let i = 0; i<this.props.item.sets; i++) {
@@ -57,22 +69,20 @@ class StatItem extends Component {
     return (
         <View>
         <View style={[Common.inlineContainer, Common.paddingVerticalSmall]}>
-          <View style={[Common.logThumbnail, Common.shadowMedium]}>
-            <Image source={{uri: this.state.uriLink || require('../assets/images/CTA.png')}} style={Common.imageStyle}/>
-          </View>
-          <View style={[Common.inlineContainer, {alignItems: 'center'}]}>
-            <View style={Common.containerText}>
-              <Text style={Common.darkTitleH3}>
-                {this.props.own ? this.props.item.name || '' : exerciseName || ''}
+         {this.displayLogThumbnail()}
+          <View style={[Common.inlineLogContainer]}>
+           
+              <Text style={Common.darkTitleH4}>
+                {this.props.own ? this.props.item.name || '' : exerciseName || ''}, {this.props.item.sets} {I18n.t('Sets')}
+                
               </Text>
-              <View style={[Common.inlineLogContainer, {alignItems: 'center', paddingRight: 25}]}>
-                  <Text style={Common.darkTitleH4}>{this.props.item.sets} {I18n.t('Sets')}</Text>
+              
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
                     <Text style={Common.brightActionTitle}>
                     {this.state.hideLogs ? 'Show' : 'Hide'}</Text>
                   </TouchableOpacity>
-              </View>
-            </View>
+            
+          
           </View>
         </View>
         <View style={[Common.containerBasic, Common.sectionBorder]}>

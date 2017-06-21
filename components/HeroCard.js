@@ -5,6 +5,7 @@ import { withNavigation } from '@expo/ex-navigation';
 import Layout from '../constants/Layout';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
+import Database from '../api/database';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
@@ -14,7 +15,32 @@ I18n.translations = {fi};
 
 @withNavigation
 class HeroCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      programName: '',
+      program: ''
+    }
+  }
+  componentDidMount() {
+    this.retrieveUserProgram();
+    AsyncStorage.getItem("exercises").then((json) => {
+      try {
+        this.setState({
+          exercises: JSON.parse(json)
+        })
+      } catch(e) {
 
+      }
+    })
+  }
+  retrieveUserProgram() {
+    Database.getUserProgramName( (name) => {
+      this.setState({
+        programName: name
+      })
+    })
+  }
   render() {
     return (
 
@@ -27,28 +53,29 @@ class HeroCard extends Component {
                
                     <View>
                       <Text style={[Common.lightTitleH4, Common.removeMarginBetweenTitles]}>{I18n.t('YourProgram')}</Text>
-                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles]}>Perusohjelma  
+                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles]}>{this.state.programName} 
                       </Text>
                     </View>
               </Row>
+              <Row/>
               <Row size={1}>
 
                       <Col>
                         <View style={{justifyContent: 'center'}}>
                         <BigTag
-                        title={I18n.t('DoneThisWeek')}
-                        content={'3'}
-                        color={'#fff'}
-                        />
+                          title={I18n.t('DoneThisWeek')}
+                          content={this.props.doneThisWeek}
+                          color={'#fff'}
+                          />
                         </View>
                       </Col>
                       <Col>
                       <View style={{justifyContent: 'center'}}>
                         <BigTag
-                        title={I18n.t('ExercisesThisWeek')}
-                        content={'12'}
-                        color={'#fff'}
-                        />
+                          title={I18n.t('ExercisesThisWeek')}
+                          content={this.props.exercisesThisWeek}
+                          color={'#fff'}
+                          />
                         </View>
                       </Col>
 
@@ -57,7 +84,7 @@ class HeroCard extends Component {
                     <View style={{justifyContent: 'center'}}>
                       <TouchableOpacity
                         style={[Common.lightButtonRounded, Common.shadowMedium]}
-                        onPress={() => {this.goToAllPrograms()}}>
+                        onPress={() => {this.goToProgram()}}>
                         <Text style={Common.lightActionTitle}>{I18n.t('ContinueProgram')}</Text>
                       </TouchableOpacity>
                       {/*<TouchableOpacity style={styles.transparent} onPress={() => {this.goToAllPrograms()}}><Text style={styles.textWhite}>All programs</Text></TouchableOpacity>*/}
@@ -71,21 +98,25 @@ class HeroCard extends Component {
   goToProgram = async () => {
     let ownProgram;
     let exercises;
-    await AsyncStorage.getItem("exercises").then((json) => {
-      try {
-        exercises = JSON.parse(json);
-      } catch(e) {
-
+    
+    Database.getUserProgramAll((program) => {
+      this.setState({
+        program
+      }, () => {
+        console.log('What is below represents a program')
+        console.log(this.state.program)
+        this.props.navigator.push('programDashboard', {
+          program: this.state.program,
+          exercises: this.state.exercises,
+        })
       }
+      )
     })
-    await AsyncStorage.getItem("ownProgram").then(program => {
-      ownProgram = JSON.parse(program);
-    })
-      this.props.navigator.push('programDashboard', {
-        program: ownProgram,
-        exercises: exercises,
-      });
-    }
+    
+
+      
+  }
+  
   goToAllPrograms = () => {
     this.props.navigator.push('programs');
   }

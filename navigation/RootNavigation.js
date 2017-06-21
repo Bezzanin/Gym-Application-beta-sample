@@ -22,6 +22,7 @@ I18n.translations = {fi};
 
 const Home = I18n.t('Home');
 const Exercises = I18n.t('Exercises');
+const ExercisesLibrary = I18n.t('ExercisesLibrary');
 const Diary = I18n.t('Diary');
 const Profile = I18n.t('Profile');
 
@@ -45,7 +46,7 @@ export default class RootNavigation extends React.Component {
         </TabNavigationItem>
         <TabNavigationItem
           id="exercises"
-          renderIcon={isSelected => this._renderIcon(Exercises,'ios-clipboard', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}>
           <StackNavigation initialRoute="exercises" />
         </TabNavigationItem>
         

@@ -38,6 +38,7 @@ export default class HomeScreen extends Component {
       uid: '',
       hasProgram: false,
       ownProgram: '',
+      programName: '',
       isLoading: true,
     }
   }
@@ -57,6 +58,7 @@ componentDidMount() {
     this.retrieveUserId();
     this.listenForExercises();
 }
+
   listenForExercises() {
     firebase.database().ref().child('exercises').on('value', (snap) => {
       // get children as an array
@@ -81,7 +83,11 @@ renderCard = () => {
   if (this.state.hasProgram) {
     return(
       <View>
-        <HeroCard program={this.state.ownProgram}/>
+        <HeroCard 
+          program={this.state.ownProgram}
+          programName={this.state.programName}
+          doneThisWeek={6}
+          exercisesThisWeek={12}/>
       </View>
     );
   }
@@ -154,7 +160,7 @@ retrieveUserId() {
     return (
      <ScrollView>
        {this.renderCard()}
-
+       <TouchableOpacity onPress={() => {console.log(this.state.programName)}}><Text style={{fontSize:24, color:'red'}}>123</Text></TouchableOpacity>
         <View style={Common.container}>
             <Text style={Common.darkTitleH1}>{I18n.t('PopularPrograms')}</Text>
        </View>

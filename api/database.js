@@ -124,19 +124,40 @@ class Database {
             callback(programName);
     })
  
-}
+    }
 
-static getUserProgramName(callback) {
+    static getUserProgramAll(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
         
         firebase.database().ref(path).on('value', (snap) => {
-            let programName = "";
+            let program = "";
             if (snap.val()) {
-                programName = snap.val().programRealName
+                program = snap.val()
+                program._key = snap.val().programName
             }
-            callback(programName);
+            console.log(program);
+            callback(program);
     })
+ 
+    }
+
+
+static getUserProgramName(callback) {
+        (async () => {
+            let uid = await firebase.auth().currentUser.uid;
+            console.log(uid);
+            let path = "/user/" + uid + "/ownProgram";
+        
+                firebase.database().ref(path).on('value', (snap) => {
+                    let programName = "";
+                    if (snap.val()) {
+                        programName = snap.val().programRealName
+                    }
+                    callback(programName);
+            })
+        })();
+        
 
 }
 
@@ -177,7 +198,6 @@ static getUserProgramName(callback) {
     static leaveProgram() {
             let uid = firebase.auth().currentUser.uid;
             let path = "/user/" + uid + "/ownProgram";
-
             firebase.database().ref(path).set({
                 programName: ''
             })
@@ -187,15 +207,16 @@ static getUserProgramName(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
         console.log('Triggered from database.js');
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value').then((snap) => {
             let index = snap.val().currentExerciseIndex;
+            console.log('Index of exercise is ' + index);
             callback(index);
         })
     }
     static getCurrentWorkoutDay(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value').then((snap) => {
 
             let day = snap.val().currentWorkoutDay;
 
@@ -344,7 +365,7 @@ static getUserProgramName(callback) {
                 lastWorkoutDate: ''
             },
             workoutLogs: '',
-            exerciseLogs: '',
+            exercisesLogs: '',
             details: {difficultyRate: 0, level: 0, programName: '', 
             gender: gender, 
             DaysPerWeek: DaysPerWeek,

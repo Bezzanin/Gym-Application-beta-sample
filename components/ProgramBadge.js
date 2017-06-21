@@ -75,7 +75,7 @@ export default class ProgramBadge extends Component {
                     <Text style={styles.programState}>{I18n.t('YourProgram')}</Text>
                     <View style={styles.inlineTagContainer}>
                         <BigTag title={I18n.t('PerWeek')} content={this.props.days}/>
-                        <BigTag title={I18n.t('Total')} content={'30'}/>
+                        <BigTag title={I18n.t('HowLong')} content={'30'} label={' ' + I18n.t('days')}/>
                     </View>
                     {this._displayEnrollButton()}
                 </View>
@@ -172,8 +172,6 @@ _displayLeaveButton() {
                 { text: 'Leave Program', onPress: () => {
    
                     this.setState({isLeaving: true}, Database.leaveProgram())
-                    AsyncStorage.setItem('ownProgramId', '');
-                
                 } }
             ]
         );

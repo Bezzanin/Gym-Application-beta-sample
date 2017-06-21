@@ -56,7 +56,7 @@ export default class AddActivity extends Component {
             let currSet = 'set' + i;
             let counter = i;
             allReps[counter] = "10";
-            allWeight[counter] = "30";
+            allWeight[counter] = "";
         inputs.push(
             (
     <View key={i} style={styles.InputContainer}>
@@ -81,7 +81,7 @@ export default class AddActivity extends Component {
             keyboardType={'numeric'}
             onChangeText={weight => {allWeight[counter] = weight}}
             placeholder={"weight"}
-            defaultValue={"30"}/>
+            />
           </Col>
           </Grid>
     </View>
@@ -119,10 +119,10 @@ export default class AddActivity extends Component {
               </View>
              
               <View>
-                <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Name')}</FormLabel>
+                <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('ExerciseName')}</FormLabel>
                 <FormInput
                   onChangeText={text => this.setState({ text })}
-                  placeholder={I18n.t('EnterName')}
+                  placeholder={I18n.t('EnterExerciseName')}
                   containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
                 />
               </View>
