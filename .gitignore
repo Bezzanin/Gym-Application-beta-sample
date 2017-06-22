@@ -1,2 +1,7 @@
 node_modules/**/*
+<<<<<<< HEAD
 .expo/**/*
+=======
+.expo/*
+npm-debug.*
+>>>>>>> c1d58f2d413182b157beb1e24786146c1732611d
