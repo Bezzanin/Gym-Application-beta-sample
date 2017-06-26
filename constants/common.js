@@ -71,6 +71,13 @@ const Common = {
         fontSize: 14,
         lineHeight: 19
     },
+    darkBodyText2: {
+        color: Colors.darkTitleTextColor,
+        marginVertical: Layout.gutter.xs,
+        opacity: 1,
+        fontSize: 14,
+        lineHeight: 19
+    },
     darkNameTag: {
         color: Colors.darkBodyTextColor,
         fontSize: 14,

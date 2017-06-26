@@ -5,7 +5,8 @@ import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
 import * as firebase from 'firebase';
 import Database from '../api/database';
-import {Components} from 'expo';
+import {Constants, Video} from 'expo';
+import Expo from 'expo';
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -60,9 +61,6 @@ export default class ExerciseScreen extends React.Component {
       console.log(error);
     });
   }
-componentDidMount() {
-  console.log(this.state.videoLink)
-}
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -85,6 +83,9 @@ componentDidMount() {
          metric: this.state.metric,
        })
        AsyncStorage.setItem('logs', JSON.stringify(oldLog));
+       console.log('Index is ' + index + ', length is ' + this.props.route.params.sequence.length);
+       console.log('Below is the props.sequence');
+       console.log(this.props.route.params.sequence);
        if (index >= this.props.route.params.sequence.length) {
          console.log('Pushed if');
          let emptyArr = []
@@ -100,7 +101,7 @@ componentDidMount() {
        else {
           console.log('Pushed else');
         
-          this.props.navigator.replace('exercise', {
+          this.props.navigator.push('exercise', {
             exercise: this.props.route.params.sequence[index],
             insideWorkout: true,
             sequence: this.props.route.params.sequence,
@@ -182,28 +183,19 @@ componentDidMount() {
       if (this.state.videoLink !== 'https://')  {
         return(
         <View style={styles.videoContainer}>
-          <TouchableWithoutFeedback 
-            onPress={() => {
-              if (this.state.videoRate === 1.0) { 
-                this.setState({videoRate: 0})}
-              else {this.setState({videoRate: 1.0})}
-            }}>
-            <Components.Video
-              ref={videoPlayer => this.videoPlayer = videoPlayer}
-              source={{ uri: this.state.videoLink }}
-              isNetwork = {true}
-              rate={this.state.videoRate}
+
+            
+          
+            <Expo.Video
+              ref={this.state.videoLink}
+              //useNativeControls
               volume={1.0}
-              muted={true}
-              onEnd={this.onVideoEnd.bind(this)}
-                          onLoad={this.onVideoLoad.bind(this)}
-              onProgress={this.onProgress.bind(this)}
+              muted={false}
               resizeMode="cover"
-              repeat
-              useNativeControls
-              style={{width: Layout.window.width, height: Layout.window.width * 0.56}}
+              style={{ flex: 1 }}
+
             />
-          </TouchableWithoutFeedback>
+
         </View>
         )
       }

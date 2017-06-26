@@ -64,7 +64,8 @@ async componentDidMount() {
     goToReplace = () => {
       this.props.navigator.push('replaceExercise', {
         item: item,
-        sequence: this.props.route.params.exercises
+        sequence: this.props.route.params.exercises,
+        day: this.props.route.params.day
       })
     }
     goToRoute = () => {

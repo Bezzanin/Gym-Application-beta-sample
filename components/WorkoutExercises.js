@@ -25,7 +25,8 @@ goToAllExercises() {
     this.props.navigator.push('XDayExercises', {
         dayNumber: this.props.dayNumber,
         exercises: this.props.exercises,
-        program: this.props.program
+        program: this.props.program,
+        day: this.props.day
     })
 }
 getDayOrder() {
@@ -46,7 +47,7 @@ render() {
             <TouchableOpacity onPress={() => {this.goToAllExercises()}}>
                 <View>
                     <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
-                    <Text style={Common.darkTitleH2}>{this.props.muscles}</Text>
+                    <Text style={Common.darkTitleH2}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
                     <Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text>
                 </View>
             </TouchableOpacity>
@@ -55,6 +56,16 @@ render() {
         </View> 
     );
   }
+}
+
+breakIntoWords = (str) => {
+    return 
+}
+translate = (word) => {
+    return I18n.t(word).toLowerCase()
+}
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 export default WorkoutExercises;

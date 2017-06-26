@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ListView } from "react-native";
+import { View, Text, ListView, FlatList } from "react-native";
 import {Grid, Col, Row} from "react-native-elements";
 import Common from "../constants/common";
 import I18n from 'react-native-i18n';
@@ -16,19 +16,16 @@ class DashboardExercisesList extends Component {
         dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     }
   }
-  componentDidMount() {
-      this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.props.data)
-      })
-  }
+
   render() {
     return (
         <View>
-            <Text>Exercises</Text>
+            <View style={[Common.sectionBorder, {marginVertical: 7}]}/>
             <Grid>
-            <ListView
-                dataSource={this.state.dataSource}
-                renderRow={this._renderItem.bind(this)}
+           
+                <FlatList
+                data = {this.props.data}
+                renderItem={this._renderItem}
                 />
             </Grid>
         </View>
@@ -37,18 +34,16 @@ class DashboardExercisesList extends Component {
   goToSomewhere = () => {
     this.props.navigator.push('programs');
   }
-_renderItem(item) {
-    return (
+_renderItem = ({item}) => (
       
         <Row>
-            <Col><Text style={Common.darkBodyText}>{item.name}</Text></Col>
-            <Col><Text></Text></Col>
-            <Col><Text></Text></Col>
+            <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{item.name}</Text></View></Col>
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3 reps</Text></View></Col>
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>40 kg</Text></View></Col>
         </Row>
     );
-  }
+  
 }
-
 export default DashboardExercisesList;
 
 

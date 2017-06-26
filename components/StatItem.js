@@ -25,7 +25,6 @@ class StatItem extends Component {
     }
   }
   componentDidMount() {
-    console.log(this.state.uriLink)
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       this.setState({

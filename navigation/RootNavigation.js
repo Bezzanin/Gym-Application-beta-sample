@@ -45,9 +45,9 @@ export default class RootNavigation extends React.Component {
           <StackNavigation initialRoute="home" />
         </TabNavigationItem>
         <TabNavigationItem
-          id="exercises"
+          id="musclesScreen"
           renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}>
-          <StackNavigation initialRoute="exercises" />
+          <StackNavigation initialRoute="musclesScreen" />
         </TabNavigationItem>
         
         <TabNavigationItem

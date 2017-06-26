@@ -65,7 +65,6 @@ export default class LinksScreen extends React.Component {
           CustomLog: CustomLogs,
           CustomLogList: this.state.dataSource.cloneWithRows(CustomLogs),
       }, function dateLogUpdated () {
-        console.log(this.state.CustomLog)
          if (this.state.CustomLogList.getRowCount() !== 0) {
           this.setState({
           hasData: true,
