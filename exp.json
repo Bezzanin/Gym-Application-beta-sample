@@ -1,10 +1,10 @@
 {
-  "name": "rational-gym",
+  "name": "Rational Gym",
   "description": "No description",
-  "slug": "rational-gym",
+  "slug": "rational-app",
   "privacy": "public",
   "sdkVersion": "17.0.0",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app-icon.png",

@@ -16,6 +16,8 @@ import ReplaceExerciseScreen from '../screens/ReplaceExerciseScreen';
 import FinishWorkoutScreen from '../screens/FinishWorkoutScreen';
 import XDayExercisesScreen from '../screens/XDayExercisesScreen';
 import DiaryScreen from '../screens/DiaryScreen';
+
+import MusclesScreen from '../screens/MusclesScreen';
 import NewDiary from '../screens/NewDiary';
 
 export default createRouter(() => ({
@@ -34,6 +36,7 @@ export default createRouter(() => ({
   replaceExercise: () => ReplaceExerciseScreen,
   finishWorkout: () => FinishWorkoutScreen,
   XDayExercises: () => XDayExercisesScreen,
+  musclesScreen: () => MusclesScreen,
   diary: () => NewDiary,
   NewDiary: () => DiaryScreen,
 }));

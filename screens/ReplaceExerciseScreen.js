@@ -38,10 +38,17 @@ export default class ReplaceExerciseScreen extends Component {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
-        this.setState({exercises, dataSource: this.state.dataSource.cloneWithRows(exercises)});
+        const filteredExercises = this.filterExercises(exercises);
+        this.setState({exercises, dataSource: this.state.dataSource.cloneWithRows(filteredExercises)});
       } catch(e) {
 
       }
+    })
+  }
+
+  filterExercises(exercises){
+    return exercises.filter((exercise) => {
+      return exercise.type === this.props.route.params.item.type;
     })
   }
 
@@ -79,16 +86,18 @@ export default class ReplaceExerciseScreen extends Component {
   
   _renderItem(item) {
     replaceExerciseWithAlternative =  (replaceId, itemToReplaceWith) => {
-
+        console.log('The day is ' + this.props.route.params.day);
+        let day = this.props.route.params.day;
+        console.log(day);
         let replacePosition = this.props.route.params.sequence.map( (e) => { return e._key; }).indexOf(replaceId);
         this.props.route.params.sequence[replacePosition] = itemToReplaceWith;
         let uid = firebase.auth().currentUser.uid;
         
-        firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence/').update({
-            exercises: this.props.route.params.sequence
+        firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence/').child('exercises').update({
+            [day]: this.props.route.params.sequence
         });
         
-        this.props.navigator.pop();
+        //this.props.navigator.pop();
     }
     return (
       <ExerciseItem item={item} imageLink={item.photo} videoLink={item.video} onPress={ () => {replaceExerciseWithAlternative(this.props.route.params.item._key, item)} }/>

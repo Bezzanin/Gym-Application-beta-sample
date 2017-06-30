@@ -34,8 +34,15 @@ I18n.translations = {fi};
 
 const filterExercises = (filter, exercises) => {
 return exercises.filter((item) => {
-  if (filter === 'ALL') return true;
-  if (filter === 'ISOLATION') return item.type === 'isolation';
+  if (filter === 'ALL') {console.log('triceps triggered');return item.muscles === 'triceps'};
+  if (filter === 'triceps') {console.log('triceps triggered');return item.muscles === 'triceps'};
+  if (filter === 'biceps') return item.muscles === 'biceps';
+  if (filter === 'chest') return item.muscles === 'chest';
+  if (filter === 'abs') return item.muscles === 'abs';
+  if (filter === 'legs') return item.muscles === 'legs';
+  if (filter === 'glutes') return item.muscles === 'glutes';
+  if (filter === 'calves') return item.type === 'calves';
+  if (filter === 'back') return item.muscles === 'back';
   if (filter === 'BASIC') return item.type === 'basic';
 })
 }
@@ -70,7 +77,8 @@ export default class ExercisesScreen extends Component {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
-        this.setSource(exercises, exercises);
+        //this.setSource(exercises, exercises);
+        this.setSource(this.state.exercises, filterExercises(this.props.route.params.filter, exercises), { })
       } catch(e) {
 
       }
@@ -80,8 +88,7 @@ export default class ExercisesScreen extends Component {
   handleFilter(filter) {
     this.setSource(this.state.exercises, filterExercises(filter, this.state.exercises), { filter })
   }
-  
-  
+
   setSource(exercises, itemsDatasource, otherState = {}){
     this.setState({
       exercises,

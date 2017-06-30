@@ -5,7 +5,9 @@ import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
 import * as firebase from 'firebase';
 import Database from '../api/database';
-import {Video} from 'expo';
+import {Constants, Video} from 'expo';
+import Expo from 'expo';
+import ActivityPicker from '../components/ActivityPicker';
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -60,8 +62,7 @@ export default class ExerciseScreen extends React.Component {
       console.log(error);
     });
   }
-componentDidMount() {
-}
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -84,6 +85,9 @@ componentDidMount() {
          metric: this.state.metric,
        })
        AsyncStorage.setItem('logs', JSON.stringify(oldLog));
+       console.log('Index is ' + index + ', length is ' + this.props.route.params.sequence.length);
+       console.log('Below is the props.sequence');
+       console.log(this.props.route.params.sequence);
        if (index >= this.props.route.params.sequence.length) {
          console.log('Pushed if');
          let emptyArr = []
@@ -99,7 +103,7 @@ componentDidMount() {
        else {
           console.log('Pushed else');
         
-          this.props.navigator.replace('exercise', {
+          this.props.navigator.push('exercise', {
             exercise: this.props.route.params.sequence[index],
             insideWorkout: true,
             sequence: this.props.route.params.sequence,
@@ -178,36 +182,28 @@ componentDidMount() {
     }
 
     displayVideo() {
-      if (this.state.videoLink !== 'https://')  {
+      if ((this.state.videoLink === 'https://') || (this.props.insideWorkout))  {
         return(
-        <View style={styles.videoContainer}>
-          <TouchableWithoutFeedback 
-            onPress={() => {
-              if (this.state.videoRate === 1.0) { 
-                this.setState({videoRate: 0})}
-              else {this.setState({videoRate: 1.0})}
-            }}>
-            <Video
-              ref={videoPlayer => this.videoPlayer = videoPlayer}
-              source={{ uri: this.state.videoLink }}
-              isNetwork = {true}
-              rate={this.state.videoRate}
-              volume={1.0}
-              muted={true}
-              onEnd={this.onVideoEnd.bind(this)}
-                          onLoad={this.onVideoLoad.bind(this)}
-              onProgress={this.onProgress.bind(this)}
-              resizeMode="cover"
-              repeat
-              shouldPlay={true}
-              style={{width: Layout.window.width, height: Layout.window.width * 0.56}}
-            />
-          </TouchableWithoutFeedback>
-        </View>
+          <View/>
         )
       }
     else {
-      return (<View/>)
+      return (
+      <View style={styles.videoContainer}>
+
+            
+          
+            <Expo.Video
+              ref={this.state.videoLink}
+              //useNativeControls
+              volume={1.0}
+              muted={false}
+              resizeMode="cover"
+              style={{ flex: 1 }}
+
+            />
+
+        </View>)
     }
     }
   render() {
@@ -276,42 +272,14 @@ componentDidMount() {
           </View>
         </View>
 
-             <View style={[styles.paragraph]}>
-              
-              <View style={[Common.containerLeft, {paddingTop: 16}]}>
-                <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
-              </View>
-              
-              <View style={{width: 120}}>
-              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
-              <FormInput
-              maxLength={2}
-              onChangeText={sets => this.setState({ sets })}
-              placeholder={"Enter sets"}
-              containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
-              />
-              </View>
-           
-            <View key={i} style={styles.InputContainer}>
-              <Grid>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
-                </Col>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >{I18n.t('Reps')}</FormLabel>
-                </Col>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Weight')}</FormLabel>
-                </Col>
-              </Grid>
-            </View>
+
             
-            {inputs}
+              
+              <ActivityPicker/>
+
             <View style={{height: Layout.gutter.l * 5}}/>
               
 
-              </View>
-       
       </ScrollView>
     );
   }

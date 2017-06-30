@@ -66,10 +66,7 @@ export default class ExerciseScreen extends React.Component {
       }, 1000)
   }
   rerenderListView = () => {
-    NetInfo.fetch().done((reach) => {
-  console.log('Initial: ' + reach);
-});
-console.log('Fetching')
+    
 
     firebase.database().ref().child('user').child(this.props.route.params.uid).child('ownProgram').child('exerciseSequence').on('value', (snap)=>{
         var ownExercises = [];
@@ -103,14 +100,14 @@ getOwnExercises() {
         this.setState({
             sequence2: exercises
         }, () => {
-            console.log('Here is the sequence')
-            console.log(this.state.sequence2)
+            console.log('Getting own exercises...')
+            this.setOwnPropertyTo(true)
         })
     })
 }
   async renderExercises() {
     let ownProgramKey = '';
-    console.log('Exercises triggered');
+    console.log('PERFORMED RERENDER PERFORMED RERENDER PERFORMED RERENDER');
     await AsyncStorage.getItem('ownProgramKey').then( (key) => {
         ownProgramKey = JSON.parse(key); 
     })
@@ -122,10 +119,9 @@ getOwnExercises() {
          //this._retrieveFilteredItems();
          //this.rerenderListView();
          this.getOwnExercises();
-         this.setOwnPropertyTo(true);
     }
     else {
-        console.log("It's not your program")
+        console.log("It's not your program, else triggered")
         this._retrieveFilteredItems();
         this.setOwnPropertyTo(false);
        
@@ -174,23 +170,20 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.props.route.params.program.days; i++) {
         let day = 'day' + i;
-        let length =  3//this.state.sequence2[day].length;
+        let length =  this.state.sequence2[day].length;
 
         workoutExercises.push(
             <View>
-                <TouchableOpacity onPress={() => {console.log(this.state.sequence2[day])}}><Text>Get info</Text></TouchableOpacity>
-            <WorkoutExercises 
-                key={i} 
-                dayNumber={i}
-                numberOfExercises={length}
-                muscles={this.props.route.params.program[day]}
-                exercises={this.state.sequence2[day]}
-                program={this.props.route.params.program}
-                isLeaving={this.state.isLeavingProgram}/>
-                {/*<DashboardExercisesList
-                    data ={this.state.sequence2[day]}
-                />*/}
-                </View>
+                <WorkoutExercises 
+                    key={i} 
+                    dayNumber={i}
+                    numberOfExercises={length}
+                    muscles={this.props.route.params.program[day]}
+                    exercises={this.state.sequence2[day]}
+                    day={day}
+                    program={this.props.route.params.program}
+                    isLeaving={this.state.isLeavingProgram}/>
+            </View>
         );
     }
     
@@ -200,7 +193,10 @@ displayWorkoutDays() {
 
 setOwnPropertyTo(bool) {
     revertExercise = () => {
+        console.log('this.state.sequence2 below');
+        console.log(this.state.sequence2);
         Object.keys(this.state.sequence2).forEach((day) => {
+            console.log('Day is' + day);
             this.state.sequence2[day].forEach((exercise) => {
                 exercise.own = bool;
             })
@@ -247,6 +243,7 @@ filterByNumber = (arrayToFilter, n) => {
 }
 
 handleClick(bool) {
+    console.log('Triggered handleClick')
     this.setOwnPropertyTo(bool);
     this.rerenderListView;
 }
@@ -254,9 +251,7 @@ handleClick(bool) {
 handleContinue() {
     let timeout = setTimeout(() => {
         if (!this.state.isLeavingProgram) {
-        console.log('Heiho')
         let index, day, dayNumber;
-        console.log('Triggering db.js from dashboard')
         
         Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
         Database.getCurrentWorkoutDay( (currentDay) => { dayNumber = currentDay});
@@ -283,22 +278,7 @@ compare = (property) => {
         return 0;
     }
 }
-_renderItem(item) {
-    goToReplace = () => {
-    this.props.navigator.push('replaceExercise', {
-      item: item,
-      sequence: this.state.sequence
-    })
-  }
-  goToRoute = () => {
-    this.props.navigator.push('exercise', {
-      exercise: item,
-    })
-  }
-    return (
-      <ExerciseItem item={item} imageLink={item.photo} onPress={goToRoute} onReplace={goToReplace}/>
-    );
-  }
+
 }
 
 const styles = StyleSheet.create({

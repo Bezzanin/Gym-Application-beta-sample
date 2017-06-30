@@ -41,13 +41,10 @@ class Database {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/details";
          firebase.database().ref(path).on('value', (snap) => {
-            // get children as an array
-            console.log(snap.val())
             details.push({
                 height: snap.val().height,
                 weight: snap.val().weight,
             });
-            console.log(uid)
            callback(details)
         });
          
@@ -150,9 +147,14 @@ class Database {
     static saveExerciseSequence(exercises) {
             let uid = firebase.auth().currentUser.uid;
             let path = "/user/" + uid + "/ownProgram/exerciseSequence";
-           
-            firebase.database().ref(path).set({
-                exercises,
+            console.log(Object.keys(exercises));
+            Object.keys(exercises).forEach((day) => {
+                let x = day;
+                firebase.database().ref(path).child('exercises').update({
+                    [day]: exercises[day]
+                })
+            })
+            firebase.database().ref(path).update({
                 currentExerciseIndex: 0,
                 currentWorkoutDay: 1
             })
@@ -162,8 +164,6 @@ class Database {
             let uid = firebase.auth().currentUser.uid;
             let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').on('value', (snap) => {
                 let exercises = snap.val().exercises;
-                console.log('Snap.val().exercises is below');
-                console.log(snap.val().exercises);
                 callback(snap.val().exercises);
             });
 
@@ -193,7 +193,6 @@ class Database {
                 program = snap.val()
                 program._key = snap.val().programName
             }
-            console.log(program);
             callback(program);
     })
  
@@ -203,7 +202,6 @@ class Database {
 static getUserProgramName(callback) {
         (async () => {
             let uid = await firebase.auth().currentUser.uid;
-            console.log(uid);
             let path = "/user/" + uid + "/ownProgram";
         
                 firebase.database().ref(path).on('value', (snap) => {
@@ -263,10 +261,9 @@ static getUserProgramName(callback) {
     static getCurrentExerciseIndex(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
-        console.log('Triggered from database.js');
+
         firebase.database().ref(path).on('value', (snap) => {
             let index = snap.val().currentExerciseIndex;
-            console.log('Index of exercise is ' + index);
             callback(index);
         })
     }
@@ -301,7 +298,18 @@ static getUserProgramName(callback) {
     }
     static pushWorkoutLog(log){
         let uid = firebase.auth().currentUser.uid;
-        let path = '/user/' + uid + '/workoutLogs/' + Date.now();
+        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/0';
+        let totalWeight = 0;
+        log.forEach((logItem) => {
+            totalWeight+=parseInt(logItem.weight)
+        })
+        firebase.database().ref(path).set({
+            ...log
+        })
+    }
+    static pushWorkoutLog(log){
+        let uid = firebase.auth().currentUser.uid;
+        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/1';
         let totalWeight = 0;
         log.forEach((logItem) => {
             totalWeight+=parseInt(logItem.weight)

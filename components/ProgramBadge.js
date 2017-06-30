@@ -28,9 +28,6 @@ export default class ProgramBadge extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.isLeaving !== nextProps.isLeaving) {
-            console.log('HAS RECEIVED NEW PROPS')
-            console.log(nextProps.isLeaving);
-            console.log(nextProps.sequence)
             this.setState({
                 isLeaving: true
             })
@@ -42,10 +39,6 @@ export default class ProgramBadge extends Component {
                 lastWorkoutDate: date
             })
         })
-        console.log('Sequence of exercises is below');
-        console.log(this.state.sequence);
-        console.log('props')
-        console.log(this.props.sequence)
         this.loadProps().then((sequence) => {
             this.setState({
                 isLoading: false,
@@ -110,10 +103,6 @@ export default class ProgramBadge extends Component {
   }
   showContinueExercise() {
     let today = moment().format('MM-DD-YY');
-    console.log('Below name')
-    console.log(this.props.programName);
-     console.log('Below program')
-    console.log(this.props.program._key);
     if (this.state.isLoading) {
           return (
               <View><Text>Is loading...</Text>
@@ -134,9 +123,6 @@ export default class ProgramBadge extends Component {
             let index = 1;
             let dayNumber = '';
             let day = 'day1';
-            console.log('Are you leaving program? ' + this.state.isLeaving)
-            console.log('Program name is ' + this.props.programName + ' and program key is ' + this.props.program._key)
-            console.log('About to trigger Database.js');
             
                 Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
                 Database.getCurrentWorkoutDay( (currentDay) => { dayNumber = currentDay});
@@ -194,9 +180,9 @@ _displayEnrollButton() {
     enrollProgram = () => {
         let emptyArr = [];
         Database.enrollIntoProgram(this.props.program);
-        Database.saveExerciseSequence(this.props.sequence);
-        console.log('Saving')
+        console.log('props sequence');
         console.log(this.props.sequence);
+        Database.saveExerciseSequence(this.props.sequence);
         AsyncStorage.setItem('ownProgramKey', JSON.stringify(this.props.program._key));
         AsyncStorage.setItem('logs', JSON.stringify(emptyArr));
         this.props.handleClick(true);

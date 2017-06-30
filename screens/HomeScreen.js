@@ -120,6 +120,11 @@ renderBoard = () => {
         <View style={Common.container}>
           <Text style={Common.darkTitleH1}>{I18n.t('Discover')}</Text>
         </View>
+        {/*
+          <View style={Common.container}>
+              <Text style={Common.darkTitleH1}>{I18n.t('PopularPrograms')}</Text>
+        </View>
+          <ProgramsList style={Common.sectionBorder}/>*/}
         <View style={Common.centered}>
           <PromoCard2/>
           <PromoCard/>
@@ -162,12 +167,8 @@ retrieveUserId() {
      <ScrollView>
        {this.renderCard()}
        <TouchableOpacity onPress={() => {console.log(this.state.programName)}}><Text style={{fontSize:24, color:'red'}}>123</Text></TouchableOpacity>
-        <View style={Common.container}>
-            <Text style={Common.darkTitleH1}>{I18n.t('PopularPrograms')}</Text>
-       </View>
-       <ProgramsList style={Common.sectionBorder}/>
 
-         {this.renderBoard()}
+        {this.renderBoard()}
         {this.state.isLoading && <View style={styles.loading}>
             <ActivityIndicator
                 animating

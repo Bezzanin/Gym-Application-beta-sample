@@ -112,8 +112,6 @@ class HeroCard extends Component {
       this.setState({
         program
       }, () => {
-        console.log('What is below represents a program')
-        console.log(this.state.program)
         this.props.navigator.push('programDashboard', {
           program: this.state.program,
           exercises: this.state.exercises,
