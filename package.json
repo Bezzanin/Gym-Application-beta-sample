@@ -14,13 +14,8 @@
   "dependencies": {
     "@expo/ex-navigation": "~3.0.0",
     "@expo/samples": "~1.0.3",
-<<<<<<< HEAD
     "@expo/vector-icons": "^5.0.0",
     "expo": "17.0.0",
-    "firebase": "^3.7.1",
-=======
-    "expo": "17.0.0",
->>>>>>> 7c407426255e3cbe50629cb7d808828cb35c9837
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
     "react-native-calendar-strip": "^0.1.4",
