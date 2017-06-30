@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import moment from 'moment';
@@ -78,7 +79,9 @@ export default class NewDiary extends React.Component {
     };
     return (
       <View style={styles.container}>
+        <Text>Text</Text>
       {this.state.loading &&
+      
       <Agenda
         items={newItems}
         renderItem={this.renderItem}
@@ -110,6 +113,7 @@ export default class NewDiary extends React.Component {
 
     renderItem(item) {
       let log = "";
+      let newlog = []
       if (Array.isArray(item)) {
         console.log("IF")
         item.map((item) => {
@@ -117,17 +121,24 @@ export default class NewDiary extends React.Component {
         return exercise._key === item.id
       })  
          
-      let newlog = {
-        ...log,
+      newlog.push({
+        ...log[0],
         ...item,
-      }
-      console.log(newlog)
-      }) 
+      })
+      
+    })
+    console.log(newlog) 
       
       return (
       <View style={styles.item}>
-      <StatItem own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
+      <FlatList
+          data={newlog}
+          renderItem={({item}) => 
+            (<StatItem own={item._key ? false : true} item={item} imageLink={item.photo}/>)
+          }
+      />
       </View>
+      
     );
   } else {
     console.log("ELSE")
