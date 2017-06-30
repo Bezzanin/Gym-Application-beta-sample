@@ -87,8 +87,8 @@ class Database {
             // Total Weight Per Week
             let totalWeight = []
             weekLogDates.map((day) => {
-                weekTotalExercises.push(logs[day].length)
-                logs[day].map((exercises) => {
+                weekTotalExercises.push(logs[day][0].length)
+                logs[day][0].map((exercises) => {
                     exercises.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
@@ -116,8 +116,8 @@ class Database {
             let totalExercises = []
             let totalWeight = []
             Object.keys(logs).map((day) => {
-                totalExercises.push(logs[day].length)
-                logs[day].map((exercises) => {
+                totalExercises.push(logs[day][0].length)
+                logs[day][0].map((exercises) => {
                     exercises.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
