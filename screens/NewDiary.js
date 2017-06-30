@@ -13,6 +13,7 @@ import StatItem from '../components/StatItem';
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import _ from 'lodash'
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -39,12 +40,12 @@ export default class NewDiary extends React.Component {
           items: log
         }) 
     });
-    Database.listeningForCustomLogs((customLogs) => {
-      console.log(customLogs);
-      this.setState({
-          customLogs
-        }) 
-    })
+    // Database.listeningForCustomLogs((customLogs) => {
+    //   console.log(customLogs);
+    //   this.setState({
+    //       customLogs
+    //     }) 
+    // })
     }
 
     constructor(props) {
@@ -75,7 +76,6 @@ export default class NewDiary extends React.Component {
       ...this.state.items,
       ...this.state.customLogs
     };
-    console.log(newItems)
     return (
       <View style={styles.container}>
       {this.state.loading &&
@@ -109,18 +109,38 @@ export default class NewDiary extends React.Component {
 
 
     renderItem(item) {
-      let log = this.state.exercises.filter((exercise) => {
+      let log = "";
+      if (Array.isArray(item)) {
+        console.log("IF")
+        item.map((item) => {
+      log = this.state.exercises.filter((exercise) => {
         return exercise._key === item.id
-      })      
+      })  
+         
       let newlog = {
-        ...log[0],
+        ...log,
         ...item,
       }
-    return (
+      console.log(newlog)
+      }) 
+      
+      return (
       <View style={styles.item}>
       <StatItem own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
       </View>
     );
+  } else {
+    console.log("ELSE")
+      let newlog = item;
+      console.log(newlog)
+      return (
+      <View style={styles.item}>
+      <StatItem own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
+      </View>
+    );
+    }
+    
+    
   }
 
   renderEmptyDate() {
