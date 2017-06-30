@@ -298,7 +298,18 @@ static getUserProgramName(callback) {
     }
     static pushWorkoutLog(log){
         let uid = firebase.auth().currentUser.uid;
-        let path = '/user/' + uid + '/workoutLogs/' + Date.now();
+        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/0';
+        let totalWeight = 0;
+        log.forEach((logItem) => {
+            totalWeight+=parseInt(logItem.weight)
+        })
+        firebase.database().ref(path).set({
+            ...log
+        })
+    }
+    static pushWorkoutLog(log){
+        let uid = firebase.auth().currentUser.uid;
+        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/1';
         let totalWeight = 0;
         log.forEach((logItem) => {
             totalWeight+=parseInt(logItem.weight)
