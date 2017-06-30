@@ -66,7 +66,7 @@ class StatItem extends Component {
     }
     let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
-        <View>
+        <View style={Common.containerHorizontal}>
         <View style={[Common.inlineContainer, Common.paddingVerticalSmall]}>
          {this.displayLogThumbnail()}
           <View style={[Common.inlineLogContainer]}>

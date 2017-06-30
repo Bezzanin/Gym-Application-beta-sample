@@ -38,10 +38,17 @@ export default class ReplaceExerciseScreen extends Component {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
-        this.setState({exercises, dataSource: this.state.dataSource.cloneWithRows(exercises)});
+        const filteredExercises = this.filterExercises(exercises);
+        this.setState({exercises, dataSource: this.state.dataSource.cloneWithRows(filteredExercises)});
       } catch(e) {
 
       }
+    })
+  }
+
+  filterExercises(exercises){
+    return exercises.filter((exercise) => {
+      return exercise.type === this.props.route.params.item.type;
     })
   }
 

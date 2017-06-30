@@ -19,13 +19,14 @@ class ExerciseItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uriLink: 'not empty string',
-      videoLink: 'not empty string',
+      uriLink: 'default',
+      videoLink: 'default',
     }
   }
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
+      console.log(this.state.uriLink)
       this.setState({
         uriLink: url
       })
@@ -33,7 +34,6 @@ class ExerciseItem extends Component {
       console.log(error);
     });
   }
-
   displayAlternativeButton = () => {
     if (this.props.item.own) {
       return (
@@ -57,7 +57,10 @@ class ExerciseItem extends Component {
         onPress={this.props.onPress}>
         <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
-            <Image source={{uri: this.state.uriLink || require('../assets/images/CTA.png')}} style={Common.imageStyle}/>
+            <Image 
+              source={{uri: this.state.uriLink}}
+              defaultSource={require('../assets/images/default.png')}
+              style={Common.imageStyle}/>
           </View>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>

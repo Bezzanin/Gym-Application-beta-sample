@@ -7,6 +7,9 @@ import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Constants, Video} from 'expo';
 import Expo from 'expo';
+
+import ActivityPicker from '../components/ActivityPicker';
+
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -180,9 +183,14 @@ export default class ExerciseScreen extends React.Component {
     }
 
     displayVideo() {
-      if (this.state.videoLink !== 'https://')  {
+      if ((this.state.videoLink === 'https://') || (this.props.insideWorkout))  {
         return(
-        <View style={styles.videoContainer}>
+          <View/>
+        )
+      }
+    else {
+      return (
+      <View style={styles.videoContainer}>
 
             
           
@@ -196,11 +204,7 @@ export default class ExerciseScreen extends React.Component {
 
             />
 
-        </View>
-        )
-      }
-    else {
-      return (<View/>)
+        </View>)
     }
     }
   render() {
@@ -269,42 +273,14 @@ export default class ExerciseScreen extends React.Component {
           </View>
         </View>
 
-             <View style={[styles.paragraph]}>
-              
-              <View style={[Common.containerLeft, {paddingTop: 16}]}>
-                <Text style={Common.darkTitleH2}>{I18n.t('Addactivity')}</Text>
-              </View>
-              
-              <View style={{width: 120}}>
-              <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
-              <FormInput
-              maxLength={2}
-              onChangeText={sets => this.setState({ sets })}
-              placeholder={"Enter sets"}
-              containerStyle={{borderBottomWidth: 1, borderBottomColor: '#404040'}}
-              />
-              </View>
-           
-            <View key={i} style={styles.InputContainer}>
-              <Grid>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Sets')}</FormLabel>
-                </Col>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}} >{I18n.t('Reps')}</FormLabel>
-                </Col>
-                <Col>
-                  <FormLabel labelStyle={{fontWeight: '400', color: '#7F7F7F'}}>{I18n.t('Weight')}</FormLabel>
-                </Col>
-              </Grid>
-            </View>
+
             
-            {inputs}
+              
+              <ActivityPicker/>
+
             <View style={{height: Layout.gutter.l * 5}}/>
               
 
-              </View>
-       
       </ScrollView>
     );
   }

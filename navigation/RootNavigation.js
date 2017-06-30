@@ -49,13 +49,7 @@ export default class RootNavigation extends React.Component {
           renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}>
           <StackNavigation initialRoute="musclesScreen" />
         </TabNavigationItem>
-        
-        <TabNavigationItem
-          id="plus"
-          renderIcon={isSelected => this._renderMiddleIcon('ios-add-circle', isSelected)}>
-          <StackNavigation initialRoute="diary" />
-        </TabNavigationItem>
-
+      
         <TabNavigationItem
           id="diary"
           renderIcon={isSelected => this._renderIcon(Diary,'ios-bookmarks', isSelected)}>
@@ -82,16 +76,6 @@ export default class RootNavigation extends React.Component {
         color={color}
       />
       <Text style={[Common.tabTitle, {color, fontWeight}]}>{title}</Text>
-      </View>
-    );
-  }
-
-    _renderMiddleIcon(name, isSelected) {
-    let color = Colors.tintColor
-    let fontWeight = isSelected ? '400' : '300'
-    return (
-      <View style={Common.tabItemContainer}>
-        <AddActivity/>
       </View>
     );
   }

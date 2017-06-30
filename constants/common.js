@@ -41,6 +41,13 @@ const Common = {
         lineHeight: 21,
         fontWeight: 'bold'
     },
+    darkTextH3: {
+        color: Colors.darkTitleTextColor,
+        marginBottom: Layout.gutter.s,
+        fontSize: 16,
+        lineHeight: 21,
+        opacity: 0.8
+    },
     darkTitleH4: {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,
@@ -161,6 +168,12 @@ const Common = {
         fontSize: 16,
         lineHeight: 18,
         color: Colors.lightTitleTextColor,
+        fontWeight: '500',
+    },
+    darkActionTitle: {
+        fontSize: 16,
+        lineHeight: 18,
+        color: Colors.darkTitleTextColor,
         fontWeight: '500',
     },
     brightActionTitle: {
@@ -413,7 +426,18 @@ const Common = {
         justifyContent: 'center',
         alignSelf: 'center'
     },
-
+    darkButton: {
+        borderRadius: 4,
+        backgroundColor: 'transparent',
+        width: Layout.width.m,
+        borderColor: 'rgba(0,0,0,0.8)',
+        borderWidth: 1,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+    
     /**
      * Shadows
      */

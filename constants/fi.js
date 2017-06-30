@@ -22,6 +22,7 @@ export default {
   Weight:	"Paino",
   TotalWeight:	"Kokonaispaino",
   AverageWeight:	"Keskiarvopaino",
+  Set: "Sarja",
   Sets:	"Sarjat",
   Reps: "Toistot",
   Total: "Yhteensä",

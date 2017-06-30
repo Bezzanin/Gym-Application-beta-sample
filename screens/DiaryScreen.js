@@ -6,6 +6,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import Database from '../api/database';
 import LogItem from '../components/LogItem';
+import AddActivity from '../components/AddActivity';
 import ExerciseItem from '../components/ExerciseItem';
 import StatItem from '../components/StatItem'
 import Common from '../constants/common';
@@ -223,12 +224,18 @@ export default class LinksScreen extends React.Component {
                     onDateSelected={(i) => this.onDateChange(i)}
                     styleWeekend={false}
                 />
+                
                  {this.state.loading && <View style={styles.loading}>
+                    
             <ActivityIndicator
                 animating
                 size="large"
             />
-        </View>}         
+        </View>}
+        <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10}}>
+                  <Text style = {Common.darkTitleH2}>Lisaa first set</Text>
+                  <AddActivity/>
+                </View>
               {emptyList}
               {workoutList}
               {randomTips}
