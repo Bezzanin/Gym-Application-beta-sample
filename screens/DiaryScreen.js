@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, ListView, AsyncStorage, ActivityIndicator, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, ListView, AsyncStorage, ActivityIndicator, View, TouchableOpacity } from 'react-native';
 
 import Swipeout from 'react-native-swipeout'
 import CalendarStrip from 'react-native-calendar-strip';
@@ -12,9 +12,12 @@ import StatItem from '../components/StatItem'
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import { withNavigation } from '@expo/ex-navigation';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+
+
 
 var _ = require('lodash');
 var swipeoutBtns = [
@@ -26,6 +29,7 @@ var swipeoutBtns = [
     color: "#FFF"
   }
 ]
+@withNavigation
 export default class LinksScreen extends React.Component {
   static route = {
     navigationBar: {
@@ -46,8 +50,8 @@ export default class LinksScreen extends React.Component {
         console.log(e);
       }
   })
-  
-  }
+}
+
   componentDidMount() {
     
       Database.listeningForLogs(this.state.currentDay, (log) => {
@@ -157,13 +161,17 @@ export default class LinksScreen extends React.Component {
       }
    
       return newlog;
+      
     });
-   
     this.setState({
           exercisesSource: this.state.exercisesSource.cloneWithRows(logsId)
       });
    
 }
+
+  goToProgram = async () => {
+        this.props.navigator.push('NewDiary')
+      }
 
   render() {
 
@@ -190,11 +198,15 @@ export default class LinksScreen extends React.Component {
 
     const emptyList = (
       <ScrollView>
+        <TouchableOpacity onPress={() => {this.goToProgram()}}>
+                  <Text style={Common.lightTitleH3}>NewDiary</Text>
+                </TouchableOpacity>
                 <LogItem
                     titleText={I18n.t('TotalExercises')}
                     title={'50'}
                     weight={120}
                 />
+                
       </ScrollView>
     )
 
@@ -203,6 +215,7 @@ export default class LinksScreen extends React.Component {
           <View style={[Common.brightStats, Common.shadowBright]}>
               <Text style={Common.lightTagTitle}>{I18n.t('DailyAdvice')}</Text>
                 <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
+                
           </View>
       </View>
     )

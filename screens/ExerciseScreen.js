@@ -5,11 +5,15 @@ import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
 import * as firebase from 'firebase';
 import Database from '../api/database';
+<<<<<<< HEAD
 import {Constants, Video} from 'expo';
 import Expo from 'expo';
 
 import ActivityPicker from '../components/ActivityPicker';
 
+=======
+import {Video} from 'expo';
+>>>>>>> 7c407426255e3cbe50629cb7d808828cb35c9837
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -64,6 +68,7 @@ export default class ExerciseScreen extends React.Component {
       console.log(error);
     });
   }
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }

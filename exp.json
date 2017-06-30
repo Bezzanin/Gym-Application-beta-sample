@@ -1,5 +1,4 @@
 {
-
   "name": "Rational Gym",
   "description": "No description",
   "slug": "rational-app",
@@ -21,10 +20,6 @@
     "assetExts": ["ttf"]
   },
   "ios": {
-    "supportsTablet": true,
-    "bundleIdentifier": "com.rationalgym.gymapp"
-  },
-  "android": {
-     "package": "fit.rational.gym"
-   }
+    "supportsTablet": true
+  }
 }

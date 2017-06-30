@@ -35,21 +35,17 @@ class Stats extends Component {
 }
 
   filterByWeek() {
-    Database.listeningForStats((log) => {
-    var filtered = log.filter((item) => {
-       return( moment(item.workoutCompleted).format('W') == this.state.currWeek )
-     });
-     if ( filtered.length < 1 ) {
+    Database.listeningForWeekStats(this.state.currWeek, (log, weekTotalWeight, weekTotalWorkouts, weekTotalExercises) => {     
+     if ( log.length < 1 ) {
        this.setState({noDataHere: true,})
      } else {
         this.setState({noDataHere: false,})
      }
     this.setState({
-          allLogs: log,
-          weekLogs: filtered,
-          totalExercises: _.sumBy(filtered, 'amountOfExercisesCompleted'),
-          totalWeight: _.sumBy(filtered, 'totalWeight'),
-          workoutsDone: filtered.length,
+          weekLogs: log,
+          totalWeight: weekTotalWeight,
+          workoutsDone: weekTotalWorkouts,
+          totalExercises: weekTotalExercises,
           loading: false,
       }, () => {
         console.log(parseInt(moment(this.state.weekLogs.workoutCompleted).format('d')))
@@ -90,9 +86,8 @@ nextWeek = () => {
                 domainPadding={Layout.gutter.l}
                 >
                   <VictoryAxis
-                    tickValues={[0, 1, 2 , 3, 4 ,5 ,6]}
+                    tickValues={[1, 2, 3, 4, 5, 6, 7]}
                     tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
-                    offsetX={0}
                     style={{
                         grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
                     }}
@@ -106,8 +101,8 @@ nextWeek = () => {
                         data: {fill: "#CE0606", width: Layout.gutter.m+ Layout.gutter.xs},
                     }}
                     data={this.state.weekLogs}
-                    x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
-                    y={(d) => d.amountOfExercisesCompleted}
+                    x={(d) => parseInt(moment(_.last(d)).format('E'))}
+                    y={(d) => _.dropRight(d).length}
                   />
               </VictoryChart>
               <View style={{flexDirection: 'row', marginLeft: 38}}>

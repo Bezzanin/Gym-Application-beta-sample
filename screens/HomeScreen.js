@@ -29,6 +29,7 @@ import fi from '../constants/fi';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+import moment from "moment"
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -57,6 +58,8 @@ export default class HomeScreen extends Component {
 componentDidMount() {
     this.retrieveUserId();
     this.listenForExercises();
+
+    
 }
 
   listenForExercises() {
@@ -85,9 +88,7 @@ renderCard = () => {
       <View>
         <HeroCard 
           program={this.state.ownProgram}
-          programName={this.state.programName}
-          doneThisWeek={6}
-          exercisesThisWeek={12}/>
+          programName={this.state.programName}/>
       </View>
     );
   }
@@ -105,7 +106,7 @@ renderBoard = () => {
     return(
       <View style={Common.sectionBorder}>
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('ExercisesThisWeek')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>
         </View>
         <Stats
           loadingOFF={this.loadingOFF}

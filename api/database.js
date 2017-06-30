@@ -74,15 +74,72 @@ class Database {
 
     
 
-    static listeningForStats(callback) {
+    static listeningForWeekStats(currentWeek, callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/workoutLogs";
         let logsRec = [];
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
-            Object.keys(logs).forEach((date) => {
-                logsRec.push(logs[date])        
+            let weekTotalExercises = [];
+            let weekLogDates = Object.keys(logs).filter((date) => {
+                return ( moment(date).format('W') === currentWeek )
             })
+            // Total Weight Per Week
+            let totalWeight = []
+            weekLogDates.map((day) => {
+                weekTotalExercises.push(logs[day].length)
+                logs[day].map((exercises) => {
+                    exercises.weight.map((weight) =>{
+                        totalWeight.push(parseInt(weight))
+                    })
+                })
+            })
+            let weekTotalWeight = _.sum(totalWeight)
+            weekTotalExercises = _.sum(weekTotalExercises)
+            let weekTotalWorkouts = weekLogDates.length
+            weekLogDates.forEach((date) => {
+                logsRec.push([
+                    ...logs[date],
+                    date,
+                ]);
+            })
+          callback(logsRec, weekTotalWeight, weekTotalWorkouts, weekTotalExercises)
+        }, (e) => {console.log(e)})
+    }
+
+        static DiaryStats(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/workoutLogs";
+        let logs = []
+        firebase.database().ref(path).on('value', (snap) => {
+            let logs = snap.val()
+            let totalExercises = []
+            let totalWeight = []
+            Object.keys(logs).map((day) => {
+                totalExercises.push(logs[day].length)
+                logs[day].map((exercises) => {
+                    exercises.weight.map((weight) =>{
+                        totalWeight.push(parseInt(weight))
+                    })
+                })
+            })
+            let maxWeight = _.max(totalWeight)
+            totalExercises = _.sum(totalExercises)
+            let totalWorkouts = Object.keys(logs).length
+            totalWeight = _.sum(totalWeight)
+          callback(logs, totalWeight, totalWorkouts, totalExercises, maxWeight)
+        }, (e) => {console.log(e)})
+    }
+
+        static TestProfileStats(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/workoutLogs";
+        let logsRec = [];
+        firebase.database().ref(path).on('value', (snap) => {
+            let logs = snap.val();
+             Object.keys(logs).forEach((date) => {
+                 logsRec.push(logs[date].length)        
+             })
           callback(logsRec)
         }, (e) => {console.log(e)})
     }
@@ -204,6 +261,7 @@ static getUserProgramName(callback) {
     static getCurrentExerciseIndex(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
+
         firebase.database().ref(path).on('value', (snap) => {
             let index = snap.val().currentExerciseIndex;
             callback(index);
@@ -213,19 +271,16 @@ static getUserProgramName(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
         firebase.database().ref(path).on('value', (snap) => {
-
             let day = snap.val().currentWorkoutDay;
-
             callback(day);
         })
     }
     static getLastWorkoutDate(callback) {
-
-            let uid = firebase.auth().currentUser.uid;
+        let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/statistics/';
         firebase.database().ref(path).on('value', (snap) => {
-            let date = snap.val().lastWorkoutDate;
-            callback(date);
+        let date = snap.val().lastWorkoutDate;
+        callback(date);
         })
 
         
@@ -249,10 +304,7 @@ static getUserProgramName(callback) {
             totalWeight+=parseInt(logItem.weight)
         })
         firebase.database().ref(path).set({
-            ...log,
-            workoutCompleted: moment().format(),
-            amountOfExercisesCompleted: log.length,
-            totalWeight
+            ...log
         })
     }
     static rateWorkout(rate){
@@ -314,11 +366,11 @@ static getUserProgramName(callback) {
             });
         }
     }
-    static listeningForCustomLogs(currentDate, callback) {
+
+//Not In use Anymore 
+    static listeningForCustomLogs(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/exercisesLogs";
-        
-        let currDate = currentDate;
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let CustomLogs = [];
@@ -327,12 +379,12 @@ static getUserProgramName(callback) {
                 CustomLogs.push(logs[date])                
             })
             }
-            callback(CustomLogs);
+            callback(logs);
         }, (e) => {console.log(e)})
         
         
     }
-
+// ------- 
     static updateProgram(newMuscles) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";

@@ -26,11 +26,13 @@ class Profile extends Component {
 }
 
 componentDidMount() {
-    Database.listeningForStats((log) => {
+    Database.DiaryStats((log, totalWeight, totalWorkouts, totalExercises, maxWeight) => {
         this.setState({
             allLogs: log,
-            totalWorkouts: log.length,
-            totalExercises: _.sumBy(log, 'amountOfExercisesCompleted')
+            totalWorkouts,
+            totalExercises,
+            totalWeight,
+            maxWeight
         });
     });
     Database.getUserProgramName( (programName) => {
@@ -44,7 +46,6 @@ componentDidMount() {
           })
       })
     Database.listenForDetails((details) => {
-        console.log(details)
         this.setState({
               weight: details[0].weight,
               height: details[0].height
@@ -84,14 +85,15 @@ _displayLeaveButton() {
         <Col size={4}>
             <Row>
                 <BigTag
-                    title={I18n.t('workoutsFinished')}
-                    content={this.state.totalWorkouts}
+                    title={I18n.t('TotalWeight')}
+                    content={this.state.totalWeight}
+                    label={'kg'}
                     color={'#000'}
                 />
             </Row>
             <Row>
                 <BigTag
-                    title={I18n.t('Weight')}
+                    title={I18n.t('ownWeight')}
                     content={this.state.weight}
                     color={'#000'}
                     label={'kg'}
@@ -101,9 +103,10 @@ _displayLeaveButton() {
         <Col size={4}>
             <Row>
                 <BigTag
-                    title={I18n.t('exersiscesFinished')}
-                    content={this.state.totalExercises}
+                    title={I18n.t('maxWeight')}
+                    content={this.state.maxWeight}
                     color={'#000'}
+                    label={'kg'}
                 />
             </Row>
             <Row>
