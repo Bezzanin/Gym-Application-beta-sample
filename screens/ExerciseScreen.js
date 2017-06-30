@@ -189,7 +189,7 @@ componentDidMount() {
             }}>
             <Video
               ref={videoPlayer => this.videoPlayer = videoPlayer}
-              source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+              source={{ uri: this.state.videoLink }}
               isNetwork = {true}
               rate={this.state.videoRate}
               volume={1.0}

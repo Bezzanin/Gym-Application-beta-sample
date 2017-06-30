@@ -19,7 +19,9 @@ class HeroCard extends Component {
     super(props);
     this.state = {
       programName: '',
-      program: ''
+      program: '',
+      totalExercises: 0,
+      totalWorkouts: 0
     }
   }
   componentDidMount() {
@@ -32,7 +34,14 @@ class HeroCard extends Component {
       } catch(e) {
 
       }
-    })
+    });
+
+    Database.DiaryStats((log, totalWeight, totalWorkouts, totalExercises) => {
+        this.setState({
+            totalWorkouts,
+            totalExercises
+        });
+    });
   }
   retrieveUserProgram() {
     Database.getUserProgramName( (name) => {
@@ -63,17 +72,17 @@ class HeroCard extends Component {
                       <Col>
                         <View style={{justifyContent: 'center'}}>
                         <BigTag
-                          title={I18n.t('DoneThisWeek')}
-                          content={this.props.doneThisWeek}
+                          title={I18n.t('workoutsFinished')}
+                          content={this.state.totalWorkouts}
                           color={'#fff'}
-                          />
+                          /> 
                         </View>
                       </Col>
                       <Col>
                       <View style={{justifyContent: 'center'}}>
                         <BigTag
-                          title={I18n.t('ExercisesThisWeek')}
-                          content={this.props.exercisesThisWeek}
+                          title={I18n.t('exersiscesFinished')}
+                          content={this.state.totalExercises}
                           color={'#fff'}
                           />
                         </View>

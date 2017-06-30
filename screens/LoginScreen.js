@@ -21,12 +21,12 @@ import {
     SocialIcon,
     Button 
 } from 'react-native-elements';
-
 import React, {Component} from "react";
 import * as firebase from "firebase";
 import Database from '../api/database';
 import QuestionsScreen from './QuestionsScreen';
 import Common from '../constants/common';
+import LogInForm from '../components/LogInForm';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 I18n.locale = "fi";
@@ -43,61 +43,7 @@ export default class LoginScreen extends Component {
             response: ""
         };
 
-        this.signup = this.signup.bind(this);
-        this.login = this.login.bind(this);
         this.loginWithFacebook = this.loginWithFacebook.bind(this);
-        this.setEmailAndPassword = this.setEmailAndPassword.bind(this);
-    }
-
-    async signup() {
-
-
-        try {
-            await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
-
-            this.setState({
-                response: "account created"
-            });
-
-           /* setTimeout(() => {
-                this.props.navigator.push('home');
-            }, 1000);*/
-
-        } catch (error) {
-            this.setState({
-                response: error.toString()
-            })
-        }
-
-    }
-
-    setEmailAndPassword(email, password) {
-        this.setState({
-            email,
-            password
-        }, function logi(){
-            this.signup()
-        })
-    }
-
-    async login() {
-
-        try {
-            await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-
-            this.setState({
-                response: "Logged In!"
-            });
-
-            /*setTimeout(() => {
-                 this.props.navigator.push('home');
-            }, 1000);*/
-
-        } catch (error) {
-            this.setState({
-                response: error.toString()
-            })
-        }
 
     }
 
@@ -106,7 +52,6 @@ export default class LoginScreen extends Component {
             '1767868336864920',
             { permissions: ['public_profile', 'email'] }
         );
-
     if (type === 'success') {
         // Build Firebase credential with the Facebook access token.
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
@@ -120,6 +65,7 @@ export default class LoginScreen extends Component {
         });
         }
     }
+    
 
     render() {
 
@@ -144,34 +90,8 @@ export default class LoginScreen extends Component {
                     </View>
                     
                     <View style={styles.form}>
-                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>{I18n.t('Email')}</FormLabel>
-                        <FormInput
-                            placeholder={I18n.t('EnterYourEmail')}
-                            placeholderTextColor={"#CCC"}
-                            style={styles.inputContainerStyle}
-                            inputStyle = {{ color: '#fff' }} 
-                            keyboardType="email-address"
-                            onChangeText = {(email) => this.setState({email})}/>
-                        
-                        <FormLabel style={{alignSelf: 'flex-start', color: "#CCC"}}>{I18n.t('Password')}</FormLabel>
-                        <FormInput 
-                            placeholder={I18n.t('EnterPassword')}
-                            placeholderTextColor={"#CCC"}
-                            style={styles.inputContainerStyle}
-                            secureTextEntry={true}
-                            inputStyle = {{ color: '#fff' }} 
-                            onChangeText = {(password) => this.setState({password})}/>
-                        
-                        <FormValidationMessage>{this.state.response}</FormValidationMessage>
-                        <QuestionsScreen setEmailAndPassword={this.setEmailAndPassword} />
-                        <Button
-                            buttonStyle={styles.loginButton}
-                            onPress={this.login}
-                            title={I18n.t('LogIn')} />
-                        {/*<Button
-                            buttonStyle={styles.loginButton}
-                            onPress={this.signup}
-                            title='Sign up' />*/}
+                        <QuestionsScreen/>
+                        <LogInForm/>
                     </View>
                     <SocialIcon
                         title={I18n.t('LogInWithFacebook')}

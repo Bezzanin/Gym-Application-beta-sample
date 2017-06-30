@@ -34,6 +34,6 @@ export default createRouter(() => ({
   replaceExercise: () => ReplaceExerciseScreen,
   finishWorkout: () => FinishWorkoutScreen,
   XDayExercises: () => XDayExercisesScreen,
-  diary: () => DiaryScreen,
-  NewDiary: () => NewDiary
+  diary: () => NewDiary,
+  NewDiary: () => DiaryScreen,
 }));

@@ -13,38 +13,26 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
-class QuestionsScreen extends Component {
+class LogInForm extends Component {
 
   constructor(props) {
         super(props);
         this.state = {
-          modalVisible: false,
-            level: 1,
-            DaysPerWeek: 3,
-            email: I18n.t('Email'),
-            password: I18n.t('Password'),
-            gender: 'none',
-            height: 0,
-            weight: 0,
-            name: 'none',
-            response: ""
+        modalVisible: false,
+        email: I18n.t('Email'),
+        password: I18n.t('Password'),
         };
-        this.signup = this.signup.bind(this);
+        this.login = this.login.bind(this);
   }
 
-    async signup() {
+    async login() {
 
         try {
-            await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
-            await Database.addUserDetails(this.state.gender, 
-   this.state.DaysPerWeek, 
-   this.state.height, 
-   this.state.weight, 
-   this.state.name); 
+            await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+
             this.setState({
-                response: "account created"
+                response: "Logged In!"
             });
-            await this.setModalVisible(!this.state.modalVisible);
         } catch (error) {
             this.setState({
                 response: error.toString()
@@ -53,11 +41,10 @@ class QuestionsScreen extends Component {
 
     }
 
-
 setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
-
+ 
   render() {
     return (
         <View>
@@ -69,27 +56,20 @@ setModalVisible(visible) {
             onPress={() => {
               this.setModalVisible(true);
             }}
-            title={I18n.t('Register')}
+            title={I18n.t('LogIn')}
           />
           <Modal
             animationType={"slide"}
             transparent={false}
             visible={this.state.modalVisible}
           >
-          <View style={
-              Common.pseudoNavigation
-            }>
+          <View style={Common.pseudoNavigation}>
           <TouchableOpacity
-            onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-            
+            onPress={() => {this.setModalVisible(!this.state.modalVisible)}}
           >
             <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
           </TouchableOpacity>
           </View>
-
-
             <Swiper
               style={styles.wrapper}
               showsButtons
@@ -115,94 +95,6 @@ setModalVisible(visible) {
                   {I18n.t('WePrepared')}
                 </Text>
                 <View style={styles.divider} />
-                <Text style={styles.text}>{I18n.t('Gender')}</Text>
-
-                <View style={styles.Radio}>
-                  <RadioGroup
-                    size={20}
-                    thickness={2}
-                    color="#B2B2B2"
-                    onSelect={(index, value) => this.setState({ gender: value })}
-                  >
-                    <RadioButton value={"male"} color="#B2B2B2">
-                      <Text style={styles.labelText}>{I18n.t('Male')}</Text>
-                    </RadioButton>
-
-                    <RadioButton value={"female"} color="#B2B2B2">
-                      <Text style={styles.labelText}>{I18n.t('Female')}</Text>
-                    </RadioButton>
-                  </RadioGroup>
-                  
-                </View>
-                
-              </View>
-
-              <View style={styles.slide}>
-                <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
-                </Text>
-                <View style={styles.divider} />
-                <Text style={styles.text}>
-                  {I18n.t('HowManyWeeks')}
-                </Text>
-                <View style={styles.Radio}>
-                  <View style={{ flex: 1, width: Layout.window.width / 2 }}>
-                    <Slider
-                      value={this.state.DaysPerWeek}
-                      minimumValue={1}
-                      maximumValue={7}
-                      step={1}
-                      thumbTintColor={"#CE0707"}
-                      minimumTrackTintColor={"#B2B2B2"}
-                      onValueChange={val => this.setState({ DaysPerWeek: val })}
-                    />
-                    <Text style={styles.staticText}>
-                      {I18n.t('PerWeek')}: {this.state.DaysPerWeek}
-                    </Text>
-                  </View>
-
-                </View>
-              </View>
-
-              <View style={styles.slide}>
-                <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
-                </Text>
-                <View style={styles.divider} />
-                <Text style={styles.text}>{I18n.t('Measurements')}</Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: Layout.window.width,
-                    flexWrap: "wrap",
-                    justifyContent: "space-around"
-                  }}
-                >
-                  <View>
-                    <FormLabel>{I18n.t('Height')}</FormLabel>
-                    <FormInput
-                      onChangeText={height => this.setState({ height })}
-                      placeholder={"cm"}
-                      keyboardType={'numeric'}
-                    />
-                  </View>
-                  <View>
-                    <FormLabel>{I18n.t('Weight')}</FormLabel>
-                    <FormInput
-                      onChangeText={weight => this.setState({ weight })}
-                      placeholder={"kg"}
-                      keyboardType={'numeric'}
-                    />
-                  </View>
-                </View>
-
-              </View>
-
-              <View style={styles.slide}>
-                <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
-                </Text>
-                <View style={styles.divider} />
                 <Text style={styles.text}>
                   {I18n.t('FillBasic')}
                 </Text>
@@ -213,12 +105,6 @@ setModalVisible(visible) {
                     justifyContent: "space-around"
                   }}
                 >
-                  <FormLabel>{I18n.t('Name')}</FormLabel>
-                  <FormInput
-                    onChangeText={name => this.setState({ name })}
-                    placeholder={I18n.t('EnterName')}
-                    autoCorrect={false}
-                  />
                   <FormLabel>{I18n.t('EnterYourEmail')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ email: text })}
@@ -236,15 +122,13 @@ setModalVisible(visible) {
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>
                 <TouchableOpacity
-                  onPress={() => {
-                    this.signup();
-                  }}
+                  onPress={() => {this.login()}}
                   style={[
                           Common.brightButtonRounded,
                           Common.shadowBright,
                           Common.marginVerticalSmall
                         ]}>
-                  <Text style={Common.lightActionTitle} >{I18n.t('Done')}</Text>
+                  <Text style={Common.lightActionTitle} >{I18n.t('LogIn')}</Text>
                 </TouchableOpacity>
               </View>
             </Swiper>
@@ -350,4 +234,4 @@ loginButton: {
   
 });
 
-export default QuestionsScreen;
+export default LogInForm;

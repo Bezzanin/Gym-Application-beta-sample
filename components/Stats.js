@@ -88,7 +88,6 @@ nextWeek = () => {
                   <VictoryAxis
                     tickValues={[1, 2, 3, 4, 5, 6, 7]}
                     tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
-                    offsetX={0}
                     style={{
                         grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
                     }}
@@ -102,7 +101,7 @@ nextWeek = () => {
                         data: {fill: "#CE0606", width: Layout.gutter.m+ Layout.gutter.xs},
                     }}
                     data={this.state.weekLogs}
-                    x={(d) => {moment(_.last(d)).format('E')}}
+                    x={(d) => parseInt(moment(_.last(d)).format('E'))}
                     y={(d) => _.dropRight(d).length}
                   />
               </VictoryChart>

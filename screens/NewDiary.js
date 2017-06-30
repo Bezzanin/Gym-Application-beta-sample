@@ -9,7 +9,13 @@ import {
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import moment from 'moment';
 import Database from '../api/database';
-import StatItem from '../components/StatItem'
+import StatItem from '../components/StatItem';
+import Common from '../constants/common';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 
 export default class NewDiary extends React.Component {
@@ -28,12 +34,17 @@ export default class NewDiary extends React.Component {
       }
   })
 
-        Database.DiaryStats((log) => {
+    Database.DiaryStats((log) => {
         this.setState({
           items: log
-        })
-      
+        }) 
     });
+    Database.listeningForCustomLogs((customLogs) => {
+      console.log(customLogs);
+      this.setState({
+          customLogs
+        }) 
+    })
     }
 
     constructor(props) {
@@ -42,6 +53,7 @@ export default class NewDiary extends React.Component {
       items: {},
       exercises: [],
       loading: false,
+      date: moment().format('YYYY-MM-DD'),
     };
     this.renderItem = this.renderItem.bind(this)
   }
@@ -50,20 +62,31 @@ export default class NewDiary extends React.Component {
       title: 'NewDiary',
     },
   };
-  onDateSelect(date) {
-    console.log(date);
-    this.setState({ selectedDate: date })
-  }
+
+  onDayChange = (date) => {
+    this.setState({
+      date: new Date(date.year, date.month-1, date.day),
+    });
+  };
+
     render() {
+      let newItems = {
+      [moment(new Date(this.state.date)).format('YYYY-MM-DD')]: [],
+      ...this.state.items,
+      ...this.state.customLogs
+    };
+    console.log(newItems)
     return (
       <View style={styles.container}>
       {this.state.loading &&
       <Agenda
-        items={this.state.items}
+        items={newItems}
         renderItem={this.renderItem}
-        renderDay={this.renderDay}
+        onDayPress={this.onDayChange}
+        onDayChange={this.onDayChange}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
+        firstDay={1}
           theme={{
         calendarBackground: '#ffffff',
         textSectionTitleColor: '#000000',
@@ -102,7 +125,13 @@ export default class NewDiary extends React.Component {
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+      <View style={[Common.centered, Common.paddingVertical]}>
+          <View style={[Common.brightStats, Common.shadowBright]}>
+              <Text style={Common.lightTagTitle}>{I18n.t('DailyAdvice')}</Text>
+                <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
+                
+          </View>
+      </View>
     );
   }
 

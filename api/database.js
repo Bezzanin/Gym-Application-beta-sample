@@ -99,7 +99,6 @@ class Database {
             })
             let weekTotalWeight = _.sum(totalWeight)
             weekTotalExercises = _.sum(weekTotalExercises)
-            console.log(weekTotalExercises)
             let weekTotalWorkouts = weekLogDates.length
             weekLogDates.forEach((date) => {
                 logsRec.push([
@@ -127,10 +126,11 @@ class Database {
                     })
                 })
             })
+            let maxWeight = _.max(totalWeight)
             totalExercises = _.sum(totalExercises)
             let totalWorkouts = Object.keys(logs).length
             totalWeight = _.sum(totalWeight)
-          callback(logs, totalWeight, totalWorkouts, totalExercises)
+          callback(logs, totalWeight, totalWorkouts, totalExercises, maxWeight)
         }, (e) => {console.log(e)})
     }
 
@@ -371,11 +371,9 @@ static getUserProgramName(callback) {
     }
 
 //Not In use Anymore 
-    static listeningForCustomLogs(currentDate, callback) {
+    static listeningForCustomLogs(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/exercisesLogs";
-        
-        let currDate = currentDate;
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let CustomLogs = [];
@@ -384,7 +382,7 @@ static getUserProgramName(callback) {
                 CustomLogs.push(logs[date])                
             })
             }
-            callback(CustomLogs);
+            callback(logs);
         }, (e) => {console.log(e)})
         
         

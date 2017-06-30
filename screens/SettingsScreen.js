@@ -12,6 +12,7 @@ import fi from '../constants/fi';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+import moment from "moment"
 
 export default class SettingsScreen extends React.Component {
   
@@ -56,7 +57,7 @@ export default class SettingsScreen extends React.Component {
         style={Common.containerBasic}>
         <Profile />
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('ExercisesThisWeek')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>
         </View>
         <Stats loadingOFF={this.loadingOFF}/>
         {this.state.loading && <View style={Common.loading}>
