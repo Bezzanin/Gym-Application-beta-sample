@@ -4,16 +4,6 @@ var _ = require('lodash');
 
 class Database {
 
-    static setUserTodo(userId, todo) {
-
-        let userTodoPath = "/user/" + userId + "/details";
-
-        return firebase.database().ref(userTodoPath).set({
-            todo: todo
-        })
-
-    }
-
     static listenForExercises() {
         let ref = firebase.database().ref().child('exercises');
         let exercises = [];
@@ -37,14 +27,16 @@ class Database {
     }
 
         static listenForDetails(callback) {
-        let details = [];
+        // let details = [];
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/details";
          firebase.database().ref(path).on('value', (snap) => {
-            details.push({
-                height: snap.val().height,
-                weight: snap.val().weight,
-            });
+             details = snap.val()
+            // details.push({
+            //     height: snap.val().height,
+            //     weight: snap.val().weight,
+            // });
+        
            callback(details)
         });
          
@@ -82,7 +74,7 @@ class Database {
             let logs = snap.val();
             let weekTotalExercises = [];
             let weekLogDates = Object.keys(logs).filter((date) => {
-                return ( moment(date).format('W') === currentWeek )
+                return ( moment(date).format('W') == currentWeek )
             })
             // Total Weight Per Week
             let totalWeight = []
@@ -298,7 +290,7 @@ static getUserProgramName(callback) {
     }
     static pushWorkoutLog(log){
         let uid = firebase.auth().currentUser.uid;
-        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/0';
+        let path = '/user/' + uid + '/workoutLogs/' + moment().format("YYYY-MM-DD");
         let totalWeight = 0;
         log.forEach((logItem) => {
             totalWeight+=parseInt(logItem.weight)
@@ -307,17 +299,7 @@ static getUserProgramName(callback) {
             ...log
         })
     }
-    static pushWorkoutLog(log){
-        let uid = firebase.auth().currentUser.uid;
-        let path = '/user/' + uid + '/workoutLogs/' + Date.now() + '/1';
-        let totalWeight = 0;
-        log.forEach((logItem) => {
-            totalWeight+=parseInt(logItem.weight)
-        })
-        firebase.database().ref(path).set({
-            ...log
-        })
-    }
+
     static rateWorkout(rate){
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/details/';
@@ -347,20 +329,21 @@ static getUserProgramName(callback) {
             currentWorkoutDay: dayNumber + 1
         })
     }
-    static addExerciseStats(name, weight, sets, reps, ownExercise) {
-        let uid = firebase.auth().currentUser.uid;
-
+    static addExerciseStats(id, weight, sets, reps, ownExercise) {
+        let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/statistics";
-        let path2 = "/user/" + uid + "/exercisesLogs/" + Date.now();
-        firebase.database().ref(path2).set({
-            name,
+        let path2 = "/user/" + uid + "/exercisesLogs/" + moment().format("YYYY-MM-DD")
+        firebase.database().ref(path2).once('value', (snap) => {
+            let logs = snap.val();
+            if (logs === null) {logs = []}
+        logs.push({
+            id,
             weight,
             sets,
             reps,
-            metric: "kg",
-            date: moment().format()
+            })
+            firebase.database().ref(path2).set(logs)
         });
-
         firebase.database().ref(path).transaction( (statistics) => {
             if (statistics) {
                 statistics.exercisesDone++;

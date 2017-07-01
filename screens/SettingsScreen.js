@@ -6,7 +6,6 @@ const ActionButton = require('../components/ActionButton');
 import CommonStyle from "../constants/common";
 import Stats from '../components/Stats';
 import Profile from '../components/Profile';
-import {Video} from 'expo';
 import Expo from 'expo';
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
@@ -57,14 +56,6 @@ export default class SettingsScreen extends React.Component {
     return (
       <ScrollView
         style={Common.containerBasic}>
-         <Expo.Video
-        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-        shouldPlay={true}
-        muted={true}
-        resizeMode="cover"
-        repeat
-        style={{ width: 300, height: 300 }}
-      />
         <Profile />
         <View style={Common.container}>
           <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>

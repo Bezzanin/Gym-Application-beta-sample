@@ -6,6 +6,7 @@ const styles = require('../constants/styles.js');
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import Database from '../api/database';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -26,6 +27,7 @@ export default class SettingsScreen extends React.Component {
     };
     this.programsRef = this.getRef().child('programs');
     this.exercisesRef = this.getRef().child('exercises');
+    this.bestMatchProgram = this.bestMatchProgram.bind(this)
   }
 
   static route = {
@@ -45,7 +47,14 @@ export default class SettingsScreen extends React.Component {
 
       }
     })
-    this.listenForPrograms(this.programsRef);
+    Database.listenForDetails((details) => {
+      this.setState({
+        DaysPerWeek: details.DaysPerWeek,
+        userGender: details.gender
+      }, () => {
+        this.listenForPrograms(this.programsRef)
+      })
+    })
   }
   componentDidMount() {
     let user = firebase.auth().currentUser;
@@ -81,9 +90,29 @@ export default class SettingsScreen extends React.Component {
       this.setState({
         programs,
         programsDataSource: this.state.programsDataSource.cloneWithRows(programs)
+      }, ()=>{
+        this.bestMatchProgram(programs)      
       });
       AsyncStorage.setItem('programs', JSON.stringify(programs))
     });
+  }
+
+  bestMatchProgram(programs) {
+  let matchByDays = programs.filter((program) => {
+          return ( program.days === this.state.DaysPerWeek )
+  })
+  let matchByGender = matchByDays.filter((program) => {
+          return ( program.gender === this.state.userGender || program.gender === 'both' )
+  })
+  let match = matchByGender[0]
+  let matchResult = {
+    ...match,
+    isBestMatch: true
+  }
+  this.setState({
+    bestProgram: matchResult,
+    bestMatchFound: true
+  })
   }
 
 
@@ -96,7 +125,9 @@ export default class SettingsScreen extends React.Component {
 <View style={[Common.centered, {paddingTop:16}]}>
   <Text style={Common.darkTitleH1}>{I18n.t('SelectYourprogram')}</Text>
 <Text style = {[Common.darkBodyText, Common. centeredText]}>{I18n.t('ProgramsPromo')}</Text></View>
-
+        <ScrollView horizontal style={styles.programsContainer}>
+        {this.state.bestMatchFound &&
+        <View><ProgramCard item={this.state.bestProgram} uid={this.state.uid} exercises={this.state.exercises}/></View>}
         <ListView
           horizontal
           initialListSize = {2}
@@ -104,9 +135,9 @@ export default class SettingsScreen extends React.Component {
           dataSource={this.state.programsDataSource}
           renderRow={this._renderItem.bind(this)}
           enableEmptySections={true}
-          style={styles.programsContainer}/>
-      </View>
-     
+          />
+      </ScrollView>
+     </View>
     );
   }
 

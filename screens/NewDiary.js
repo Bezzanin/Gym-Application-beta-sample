@@ -72,6 +72,14 @@ export default class NewDiary extends React.Component {
     });
   };
 
+  sendDataTesing() {
+    let name = "TEST";
+    let weight = [77, 77, 77];
+    let sets = 3;
+    let reps = [9, 9, 9]
+
+    Database.addExerciseStats(name, weight, sets, reps);
+  }
     render() {
       let newItems = {
       [moment(new Date(this.state.date)).format('YYYY-MM-DD')]: [],
@@ -81,6 +89,7 @@ export default class NewDiary extends React.Component {
     return (
       <View style={styles.container}>
         <AddActivity/>
+
       {this.state.loading &&
       
       <Agenda
