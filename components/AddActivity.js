@@ -29,12 +29,14 @@ export default class AddActivity extends Component {
   }
 
   setModalVisible(visible) {
+    console.log('Closing')
     this.setState({ modalVisible: visible });
   }
 
   sendData() {
     Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
   }
+
 
   render() {
         
@@ -54,26 +56,15 @@ export default class AddActivity extends Component {
           visible={this.state.modalVisible}
         >
 
-          <ScrollView contentContainerStyle={Common.transparentContainer}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.setModalVisible(!this.state.modalVisible);
-              }}
-            >
-              <View style={Common.containerBasic} />
-            </TouchableWithoutFeedback>
-            <View style={[styles.paragraph, Common.shadowLight]}>
-              <ActivityPicker/>
+          <ScrollView contentContainerStyle={styles.container}>
+            
+            <View style={[styles.paragraph]}>
+              <ActivityPicker
+                onCloseModal={() => {this.setModalVisible(!this.state.modalVisible)}}
+              />
             </View>
 
             
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.setModalVisible(!this.state.modalVisible);
-              }}
-            >
-              <View style={Common.containerBasic} />
-            </TouchableWithoutFeedback>
           </ScrollView>
 
         </Modal>
@@ -85,15 +76,13 @@ export default class AddActivity extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
   paragraph: {
     paddingTop: 10,
+    flex: 1,
     backgroundColor: 'white',
     paddingBottom: 30,
-    borderRadius: 5,
   },
   hideButton: {
     position: 'absolute',

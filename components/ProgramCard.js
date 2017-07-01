@@ -36,7 +36,7 @@ class ProgramCard extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      uriLink: "",
+      uriLink: "_",
       filter: "ARMS",
       exercises: []
     }
@@ -55,7 +55,25 @@ class ProgramCard extends Component {
       ... otherState
     })
   }
-  
+
+  componentDidMount() {
+    var storageRef = firebase.storage().ref(`programs/program_bg_${this.props.item.photo}.png`);
+    storageRef.getDownloadURL().then((url) => {
+      
+      this.setState({
+        uriLink: url
+      }, () => {
+        console.log(this.state.uriLink)
+      })
+    }, function(error) {
+      console.log(error);
+    });
+  }
+  componentWilMount(){
+    this.setState({
+      link: '../assets/images/program_bg_'+'2.png'
+    })
+  }
   goToRoute = () => {
     this.props.navigator.push('programDashboard', {
       program: this.props.item,
@@ -67,6 +85,8 @@ class ProgramCard extends Component {
   render() {
     const { exercises } = this.props;
     const { uid } = this.props;
+    let id = 2
+    let link = '../assets/images/program_bg_'+'2.png'
     return (
       
       <TouchableHighlight 
@@ -74,7 +94,7 @@ class ProgramCard extends Component {
         onPress={this.goToRoute}
         style={styles.container}>
         <Image 
-          source={require('../assets/images/program_background.png')}
+          source={{uri: this.state.uriLink}}
           resizeMode={Image.resizeMode.cover}
           style={{flex: 1, width: null, height: null, borderRadius: 6}}
         >
@@ -88,7 +108,6 @@ class ProgramCard extends Component {
               <Tag title={I18n.t('PerWeek').toLowerCase()} content={this.props.item.days} color='#fff'/>
               <Tag title={I18n.t('muscleGroup').toLowerCase()} content={this._getMuscles()} color='#fff'/>
               <Tag title={I18n.t('Gender').toLowerCase()} content={I18n.t(this.props.item.gender)} color='#fff'/>
-              <Tag title={I18n.t('Level').toLowerCase()} content={this.props.item.level} color='#fff'/>
 
             </View>
           </View>

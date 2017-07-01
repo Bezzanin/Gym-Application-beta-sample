@@ -10,6 +10,7 @@ import {
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import moment from 'moment';
 import Database from '../api/database';
+import AddActivity from '../components/AddActivity';
 import StatItem from '../components/StatItem';
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
@@ -79,7 +80,7 @@ export default class NewDiary extends React.Component {
     };
     return (
       <View style={styles.container}>
-        <Text>Text</Text>
+        <AddActivity/>
       {this.state.loading &&
       
       <Agenda

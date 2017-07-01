@@ -75,6 +75,7 @@ export default class SettingsScreen extends React.Component {
           gender: child.val().gender,
           level: child.val().level,
           totalDays: child.val().totalDays,
+          photo: child.val().photo
         });
       });
       this.setState({
@@ -110,9 +111,9 @@ export default class SettingsScreen extends React.Component {
   }
 
   _renderItem(item) {
-
+    let cher = '../assets/images/program_bg_' + '2.png'
     return (
-      <ProgramCard item={item} uid={this.state.uid} exercises={this.state.exercises}/>
+      <ProgramCard item={item} bgLink={cher} uid={this.state.uid} exercises={this.state.exercises}/>
     );
   }
 }

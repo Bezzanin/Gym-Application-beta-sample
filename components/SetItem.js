@@ -2,7 +2,9 @@ import React from 'react';
 import {View,
         Text,
         Picker,
-        TouchableOpacity, } from 'react-native';
+        TouchableOpacity,
+        StyleSheet } from 'react-native';
+import Layout from '../constants/Layout';
 import {Grid, Col, Row} from 'react-native-elements';
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
@@ -18,6 +20,9 @@ export default class SetItem extends React.Component {
           data: '',
           reps: []
       }
+  }
+  componentDidMount() {
+    console.log(this.props)
   }
   getOrderDay(number) {
     switch (number){
@@ -37,42 +42,39 @@ export default class SetItem extends React.Component {
         return I18n.t('Seventh')
     }
   }
-  displayInfo() {
-    if (this.props.reps) {
-      return (
-        <Col size={3}>
-           
-            <Text style={Common.darkTextH3}>{this.props.reps === undefined ? '' : this.props.reps} {I18n.t('Reps').toLowerCase()}, {this.props.weight} kg</Text>
-            
-        </Col>
-    )}
-    else {
-      return(<View/>)
-    }
-  }
-  displayDeleteButton() {
-    if (this.props.reps) {
-      return (
-        
-        <Col size={1}>
-          <TouchableOpacity onPress={() => {this.props.onDelete(this.props.number)}}><Text>X</Text></TouchableOpacity>
-        </Col>
-    )}
-    else {
-      return(<View/>)
-    }
-  }
   render() {    
     return (
-      <Grid>
-        <View style={[Common.inlineContainer, (this.props.reps ? Common.sectionBorder : ''), Common.container]}>
-          <Col size={3}>
+
+        <View style={[styles.inlineContainer, Common.sectionBorder]}>
+          <View style={styles.col3}>
             <Text style={Common.darkTitleH3}>{I18n.t('Set')} {this.props.number}</Text>
-          </Col>
-          {this.displayInfo()}
-          {this.displayDeleteButton()}
+          </View>
+          <View style={styles.col3}>
+           
+            <Text style={Common.darkTextH3}>{this.props.reps} reps, {this.props.weight} kg</Text>
+            
         </View>
-      </Grid>
+          <View style={styles.col1}>
+          <TouchableOpacity onPress={() => {this.props.onDelete(this.props.index)}}><Text>X</Text></TouchableOpacity>
+        </View>
+        </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  col3: {
+    flex: 3,
+    alignItems: 'flex-start'
+  },
+  col1: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  inlineContainer: {
+    paddingHorizontal: Layout.gutter.l,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: Layout.gutter.m
+  }
+})
