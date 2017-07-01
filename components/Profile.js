@@ -47,8 +47,8 @@ componentDidMount() {
       })
     Database.listenForDetails((details) => {
         this.setState({
-              weight: details[0].weight,
-              height: details[0].height
+              weight: details.weight,
+              height: details.height
           })
     })
   }

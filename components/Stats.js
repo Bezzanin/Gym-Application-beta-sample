@@ -36,19 +36,17 @@ class Stats extends Component {
 
   filterByWeek() {
     Database.listeningForWeekStats(this.state.currWeek, (log, weekTotalWeight, weekTotalWorkouts, weekTotalExercises) => {     
-     if ( log.length < 1 ) {
-       this.setState({noDataHere: true,})
-     } else {
-        this.setState({noDataHere: false,})
-     }
+    //  if ( log.length < 1 ) {
+    //    this.setState({noDataHere: true,})
+    //  } else {
+    //     this.setState({noDataHere: false,})
+    //  }
     this.setState({
           weekLogs: log,
           totalWeight: weekTotalWeight,
           workoutsDone: weekTotalWorkouts,
           totalExercises: weekTotalExercises,
           loading: false,
-      }, () => {
-        console.log(parseInt(moment(this.state.weekLogs.workoutCompleted).format('d')))
       });
       this.props.loadingOFF();
     });
