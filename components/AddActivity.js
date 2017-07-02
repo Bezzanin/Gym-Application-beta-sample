@@ -25,18 +25,12 @@ export default class AddActivity extends Component {
       modalVisible: false,
       
     };
-    this.sendData = this.sendData.bind(this);
   }
 
   setModalVisible(visible) {
     console.log('Closing')
     this.setState({ modalVisible: visible });
   }
-
-  sendData() {
-    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
-  }
-
 
   render() {
         

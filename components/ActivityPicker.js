@@ -32,6 +32,11 @@ export default class ActivityPicker extends React.Component {
         })
         
     }
+
+    sendFBData(id, sets, reps, weight) {
+    console.log(id, sets, reps, weight)
+    Database.addExerciseStats(id, sets, reps, weight);
+  }
     sendWorkoutData() {
         Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
     }
@@ -143,13 +148,13 @@ renderItem = ({item, index}) => {
                 <TouchableOpacity
                 style={Common.brightButtonRounded}
                 onPress={() => {
-                    console.log(this.state.sets);
+                    {/*console.log(this.state.sets);
                     console.log(this.state.reps);
                     console.log(this.state.weight);
                     console.log("Start");
                     
-                    console.log("Done");
-                    this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
+                    console.log("Done");*/}
+                    this.sendFBData("KITNO", this.state.sets, this.state.reps, this.state.weight)
                 }}
                 >
                 <Text style={Common.lightActionTitle}>Show sets</Text>
