@@ -8,6 +8,7 @@ import {View,
 import LoadPicker from './LoadPicker';
 import SetItem from './SetItem';
 import Common from '../constants/common';
+import Database from '../api/database';
 
 let allReps = [];
 export default class ActivityPicker extends React.Component {
@@ -30,6 +31,9 @@ export default class ActivityPicker extends React.Component {
             newRep, index
         })
         
+    }
+    sendWorkoutData() {
+        Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
     }
     sendWeight(newWeight, index) {
         //let newWeight = this.state.reps.concat(weight);
@@ -103,7 +107,7 @@ renderItem = ({item, index}) => {
     
     return (
         <View style={Common.containerBasic}>
-            <View style={{ height: 60, zIndex: 2 }} />
+            <View style={{ height: 60, zIndex: 4 }} />
             <View style={[Common.shadowLight]}>
                 <View
                 style={{
@@ -143,8 +147,9 @@ renderItem = ({item, index}) => {
                     console.log(this.state.reps);
                     console.log(this.state.weight);
                     console.log("Start");
-                    this.props.onCloseModal();
+                    
                     console.log("Done");
+                    this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
                 }}
                 >
                 <Text style={Common.lightActionTitle}>Show sets</Text>

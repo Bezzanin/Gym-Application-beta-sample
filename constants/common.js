@@ -50,10 +50,29 @@ const Common = {
     },
     darkTitleH4: {
         color: Colors.darkTitleTextColor,
-        marginBottom: Layout.gutter.s,
         fontSize: 16,
         lineHeight: 19,
         fontWeight: '500',
+        opacity: 0.8
+    },
+    darkTitleH4Bold: {
+        color: Colors.darkTitleTextColor,
+        fontSize: 14,
+        lineHeight: 19,
+        fontWeight: '600',
+    },
+    darkTitleH4Light: {
+        color: Colors.darkTitleTextColor,
+        fontSize: 14,
+        lineHeight: 19,
+        fontWeight: '300',
+        opacity: 0.8
+    },
+    actionTitleH4Light: {
+        color: Colors.tintColor,
+        fontSize: 14,
+        lineHeight: 19,
+        fontWeight: '400',
         opacity: 0.8
     },
     darkLogTitle: {
@@ -433,6 +452,14 @@ const Common = {
         borderColor: 'rgba(0,0,0,0.8)',
         borderWidth: 1,
         height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+    navButton: {
+        backgroundColor: 'transparent',
+        paddingHorizontal: Layout.gutter.l,
+        height: 47,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center'

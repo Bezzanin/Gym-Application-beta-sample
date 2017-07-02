@@ -66,28 +66,26 @@ export default class ExerciseScreen extends React.Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  sendData() {
-    Database.addExerciseStats(this.props.route.params.exercise._key, this.state.weight, this.state.sets, this.state.reps, this.state.metric);
+  sendData(sets,reps,weight) {
+    this.setState({sets,reps,weight})
+    Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
   }
    
-   renderNextButton = (allWeight, allReps) => {
-     
-     goToNext = () => {
-       Database.addExerciseStats(this.props.route.params.exercise._key, this.state.weight, this.state.sets, this.state.reps, this.state.metric, true);
+        goToNext = (sets,reps,weight) => {
+       this.setState({sets,reps,weight})
+       Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric, true);
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
        let oldLog = this.props.route.params.logs
        oldLog.push({
          id: this.props.route.params.exercise._key,
-         weight: this.state.weight,
-         sets: this.state.sets,
-         reps: this.state.reps,
+         weight: weight,
+         sets: sets,
+         reps: reps,
          metric: this.state.metric,
        })
        AsyncStorage.setItem('logs', JSON.stringify(oldLog));
-       console.log('Index is ' + index + ', length is ' + this.props.route.params.sequence.length);
-       console.log('Below is the props.sequence');
-       console.log(this.props.route.params.sequence);
+       
        if (index >= this.props.route.params.sequence.length) {
          console.log('Pushed if');
          let emptyArr = []
@@ -102,7 +100,7 @@ export default class ExerciseScreen extends React.Component {
        }
        else {
           console.log('Pushed else');
-        
+          console.log(oldLog)
           this.props.navigator.push('exercise', {
             exercise: this.props.route.params.sequence[index],
             insideWorkout: true,
@@ -112,6 +110,10 @@ export default class ExerciseScreen extends React.Component {
           });
        }
      }
+   
+   
+   renderNextButton() {
+
      
      if (this.props.route.params.insideWorkout) {
        return(
@@ -122,7 +124,7 @@ export default class ExerciseScreen extends React.Component {
             this.setState({
                     weight: allWeight,
                     reps: allReps,
-                  }, () => {goToNext()}
+                  }, () => {this.goToNext()}
             )}}>
            <Text style={Common.lightActionTitle}>
              {I18n.t('Next')} {I18n.t('Exercise')}
@@ -209,55 +211,15 @@ export default class ExerciseScreen extends React.Component {
   render() {
 
     let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
-            let {onClosePressed, video, volume} = this.props;
-        let {currentTime, duration, paused} = this.state;
-        const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
-        let allReps = [];
-          let allWeight = [];
-      let inputs = [];
-
-        for(var i=0; (i<this.state.sets && i<7); i++){
-            let currSet = 'set' + i;
-            let counter = i;
-            allReps[counter] = "10";
-            allWeight[counter] = "30";
-        inputs.push(
-            (
-    <View key={i} style={styles.InputContainer}>
-        <Grid>
-          <Col>
-            <Text style={[{fontSize: 18, fontWeight: '500', color: '#7F7F7F', paddingTop: 9, paddingLeft: 20}]}>{counter + 1}</Text>
-          </Col>
-          <Col>
-            
-            <FormInput
-              maxLength={2}
-              style={{width: 20}}
-              keyboardType={'numeric'}
-              onChangeText={reps => {allReps[counter] = reps }}
-              defaultValue={"10"}
-              />
-
-          </Col>
-          <Col>
-          <FormInput
-            maxLength={3}
-            keyboardType={'numeric'}
-            onChangeText={weight => {allWeight[counter] = weight}}
-            placeholder={"weight"}
-            defaultValue={"30"}/>
-          </Col>
-          </Grid>
-    </View>
-            )
-        );  
-    }
+    let {onClosePressed, video, volume} = this.props;
+    let {currentTime, duration, paused} = this.state;
+    
     return (
       <ScrollView>
          
       
-          {this.displayVideo()}
-        {this.renderNextButton(allWeight, allReps)}
+        {this.displayVideo()}
+        {this.renderNextButton()}
         <View style={[Common.container, Common.sectionBorder]}>
           <Text style={Common.darkTitleH1}>{exerciseName}</Text>
           <View style = {Common.inlineContainer}>
@@ -271,12 +233,11 @@ export default class ExerciseScreen extends React.Component {
               color={'#000'}/>
           </View>
         </View>
-
-
-            
-              
-              <ActivityPicker/>
-
+        <ActivityPicker
+        onSendData={(sets,reps,weight) => {
+          
+          this.goToNext(sets,reps,weight)
+        }}/>  
             <View style={{height: Layout.gutter.l * 5}}/>
               
 

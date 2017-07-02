@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import Layout from '../constants/Layout'
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -52,40 +53,45 @@ class StatItem extends Component {
       let counter = i;
       logs.push(
         <View style={[Common.inlineLogContainer, Common.sectionBorder]}>
-          <View>
-            <Text style={[Common.darkLogTitleBold]}>{counter + 1}</Text>
+          <View style={{flex: 1}}>
+            <Text style={Common.darkTitleH4Bold}>{counter + 1}</Text>
           </View>
-          <View>
-            <Text style={Common.darkLogTitle}>{this.props.item.reps[counter] || ' '} {I18n.t('Reps')}</Text>
+          <View style={{flex: 1}}>
+            <Text style={Common.darkTitleH4Light}>{this.props.item.reps[counter] || ' '} {I18n.t('Reps')}</Text>
           </View>
-          <View>
-            <Text style={Common.darkLogTitle}>{this.props.item.weight[counter] || ' '} kg</Text>
+          <View style={{flex: 1,  paddingRight: Layout.gutter.l*2}}>
+            <Text style={Common.darkTitleH4Light}>{this.props.item.weight[counter] || ' '} kg</Text>
           </View>
         </View>
       )
     }
     let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
-        <View style={Common.containerHorizontal}>
-        <View style={[Common.inlineContainer, Common.paddingVerticalSmall]}>
-         {this.displayLogThumbnail()}
+        <View style={[Common.containerHorizontal, {paddingRight: Layout.gutter.l}]}>
+          <View style={[this.state.hideLogs && Common.sectionBorder, Common.paddingVerticalSmall]}>
+          <Text style={Common.darkTitleH4Bold}>
+                {this.props.own ? this.props.item.name || '' : exerciseName || ''}
+                
+              </Text>
+        <View style={[Common.inlineContainer]}>
+         
           <View style={[Common.inlineLogContainer]}>
            
-              <Text style={Common.darkTitleH4}>
-                {this.props.own ? this.props.item.name || '' : exerciseName || ''}, {this.props.item.sets} {I18n.t('Sets')}
+              <Text style={Common.darkTitleH4Light}>{this.props.item.sets} {I18n.t('Sets')}
                 
               </Text>
               
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
-                    <Text style={Common.brightActionTitle}>
-                    {this.state.hideLogs ? 'Show' : 'Hide'}</Text>
+                    <Text style={Common.actionTitleH4Light}>
+                    {this.state.hideLogs ? 'Details' : 'Hide'}</Text>
                   </TouchableOpacity>
             
           
           </View>
         </View>
-        <View style={[Common.containerBasic, Common.sectionBorder]}>
-          {this.state.hideLogs ? <View/> : <View style={Common.containerHorizontal}>{logs}</View>}
+        
+          {this.state.hideLogs ? <View/> : <View>{logs}</View>}
+        
         </View>
         </View>
     );

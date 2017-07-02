@@ -13,6 +13,7 @@ import Database from '../api/database';
 import AddActivity from '../components/AddActivity';
 import StatItem from '../components/StatItem';
 import Common from '../constants/common';
+import Layout from '../constants/Layout'
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 import _ from 'lodash'
@@ -63,6 +64,7 @@ export default class NewDiary extends React.Component {
   static route = {
     navigationBar: {
       title: 'NewDiary',
+      renderRight: () => <AddActivity/>
     },
   };
 
@@ -140,7 +142,10 @@ export default class NewDiary extends React.Component {
     console.log(newlog) 
       
       return (
-      <View style={styles.item}>
+      <View style={[styles.item, Common.shadowLight]}>
+        
+        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Workout exercises</Text>
+        
       <FlatList
           data={newlog}
           renderItem={({item}) => 
@@ -198,14 +203,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     borderRadius: 5,
-    marginRight: 10,
     marginTop: 35,
-    shadowRadius: 4,
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.4,
+    paddingBottom: 5,
   },
   emptyDate: {
     height: 15,

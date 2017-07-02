@@ -41,13 +41,13 @@ export default class AddActivity extends Component {
   render() {
         
     return (
-      <View style={styles.container}>
+      <View>
 
         <TouchableOpacity
           onPress={() => {
             this.setModalVisible(true);
           }}
-          style={Common.darkButton}>
+          style={Common.navButton}>
           <Text style={Common.darkActionTitle}>Add activity</Text>
           </TouchableOpacity>
         <Modal
