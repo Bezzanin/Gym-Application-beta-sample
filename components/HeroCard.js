@@ -62,7 +62,7 @@ class HeroCard extends Component {
                
                     <View>
                       <Text style={[Common.lightTitleH4, Common.removeMarginBetweenTitles]}>{I18n.t('YourProgram')}</Text>
-                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles]}>{this.state.programName} 
+                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles, {width: 300}]}>{this.state.programName} 
                       </Text>
                     </View>
               </Row>
