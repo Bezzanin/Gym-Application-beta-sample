@@ -71,7 +71,7 @@ export default class ExerciseScreen extends React.Component {
     Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
   }
    
-        goToNext = (sets,reps,weight) => {
+        goToNext = (someSHIT,sets,reps,weight) => {
        this.setState({sets,reps,weight})
        Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric, true);
        let index = 0;
@@ -234,9 +234,8 @@ export default class ExerciseScreen extends React.Component {
           </View>
         </View>
         <ActivityPicker
-        onSendData={(sets,reps,weight) => {
-          
-          this.goToNext(sets,reps,weight)
+        onSendData={(someSHIT, sets,reps,weight) => {
+          this.goToNext(someSHIt, sets,reps,weight)
         }}/>  
             <View style={{height: Layout.gutter.l * 5}}/>
               

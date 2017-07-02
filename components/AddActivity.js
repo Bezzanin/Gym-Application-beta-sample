@@ -23,7 +23,7 @@ export default class AddActivity extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      
+      name: "CUSTOM INPUT NEEDED"
     };
     this.onSendData = this.onSendData.bind(this);
   }
@@ -33,8 +33,8 @@ export default class AddActivity extends Component {
     this.setState({ modalVisible: visible });
   }
 
-  onSendData(name, sets, reps, weight) {
-    Database.addExerciseStats(name, sets, reps, weight);
+  onSendData(sets, reps, weight) {
+    Database.addExerciseStats(this.state.name, sets, reps, weight);
     this.setModalVisible(!this.state.modalVisible)
   }
 
