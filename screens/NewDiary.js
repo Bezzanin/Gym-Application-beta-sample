@@ -202,9 +202,10 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     flex: 1,
-    borderRadius: 5,
     marginTop: 35,
     paddingBottom: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5
   },
   emptyDate: {
     height: 15,
