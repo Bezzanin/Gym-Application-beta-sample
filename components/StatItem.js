@@ -68,7 +68,7 @@ class StatItem extends Component {
     // let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
         <View style={[Common.containerHorizontal, {paddingRight: Layout.gutter.l}]}>
-          <View style={[this.state.hideLogs && Common.sectionBorder, Common.paddingVerticalSmall]}>
+          <View style={[this.state.hideLogs && !this.props.last && Common.sectionBorder, Common.paddingVerticalSmall]}>
           <Text style={Common.darkTitleH4Bold}>
                 {this.props.item.own ? this.props.item.name || '' : 
                 I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))  || ''}

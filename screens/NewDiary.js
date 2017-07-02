@@ -123,6 +123,7 @@ export default class NewDiary extends React.Component {
 
     renderItem(item) {
       let log = "";
+      let solo = false;
       let newlog = []
       if (Array.isArray(item)) {
         console.log("IF")
@@ -138,7 +139,7 @@ export default class NewDiary extends React.Component {
       
     })
     console.log(newlog) 
-      
+
       return (
       <View style={[styles.item, Common.shadowLight]}>
         
@@ -146,8 +147,8 @@ export default class NewDiary extends React.Component {
         
       <FlatList
           data={newlog}
-          renderItem={({item}) => 
-            (<StatItem own={item._key ? false : true} item={item} imageLink={item.photo}/>)
+          renderItem={({item, index}) => 
+            (<StatItem last={index === newlog.length-1 ? true : false} own={item._key ? false : true} item={item} imageLink={item.photo}/>)
           }
       />
       </View>
@@ -158,8 +159,9 @@ export default class NewDiary extends React.Component {
       let newlog = item;
       console.log(newlog)
       return (
-      <View style={styles.item}>
-      <StatItem own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
+      <View style={[styles.item, Common.shadowLight]}>
+        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Added exercise</Text>
+      <StatItem last={true} own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
       </View>
     );
     }
