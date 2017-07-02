@@ -22,7 +22,14 @@ class DashboardExercisesList extends Component {
         <View>
             <View style={[Common.sectionBorder, {marginVertical: 7}]}/>
             <Grid>
-           
+            <Row>
+                    <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{I18n.t('Exercise')}</Text></View></Col>
+                    <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
+                    <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Weight').toLowerCase()}</Text></View></Col>
+                </Row>
+            </Grid>
+            <Grid>
+                
                 <FlatList
                 data = {this.props.data}
                 renderItem={this._renderItem}
@@ -37,8 +44,8 @@ class DashboardExercisesList extends Component {
 _renderItem = ({item}) => (
       
         <Row>
-            <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{item.name}</Text></View></Col>
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3 reps</Text></View></Col>
+            <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>40 kg</Text></View></Col>
         </Row>
     );

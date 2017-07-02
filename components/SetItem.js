@@ -55,7 +55,7 @@ export default class SetItem extends React.Component {
             
         </View>
           <View style={styles.col1}>
-          <TouchableOpacity onPress={() => {this.props.onDelete(this.props.index)}}><Text>X</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.props.onDelete(this.props.index)}}><Text style={Common.darkTextH3}>X</Text></TouchableOpacity>
         </View>
         </View>
     );

@@ -25,55 +25,63 @@ const Common = {
         marginBottom: Layout.gutter.s,
         fontSize: 24,
         lineHeight: 30,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
     },
     darkTitleH2: {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,
         fontSize: 20,
         lineHeight: 22,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
     },
     darkTitleH3: {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,
         fontSize: 16,
         lineHeight: 21,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
     },
     darkTextH3: {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,
         fontSize: 16,
         lineHeight: 21,
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     darkTitleH4: {
         color: Colors.darkTitleTextColor,
         fontSize: 16,
         lineHeight: 19,
         fontWeight: '500',
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     darkTitleH4Bold: {
         color: Colors.darkTitleTextColor,
         fontSize: 14,
         lineHeight: 19,
         fontWeight: '600',
+        backgroundColor: 'transparent'
     },
     darkTitleH4Light: {
         color: Colors.darkTitleTextColor,
         fontSize: 14,
         lineHeight: 19,
         fontWeight: '300',
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     actionTitleH4Light: {
         color: Colors.tintColor,
         fontSize: 14,
         lineHeight: 19,
         fontWeight: '400',
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     darkLogTitle: {
         color: Colors.darkTitleTextColor,
@@ -81,7 +89,8 @@ const Common = {
         fontWeight: '300',
         fontSize: 16,
         lineHeight: 19,
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     darkLogTitleBold: {
         color: Colors.darkTitleTextColor,
@@ -89,13 +98,15 @@ const Common = {
         fontWeight: '500',
         fontSize: 16,
         lineHeight: 17,
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: 'transparent'
     },
     darkBodyText: {
         color: Colors.darkBodyTextColor,
         marginVertical: Layout.gutter.xs,
         fontSize: 14,
-        lineHeight: 19
+        lineHeight: 19,
+        backgroundColor: 'transparent'
     },
     darkBodyText2: {
         color: Colors.darkTitleTextColor,
@@ -230,6 +241,9 @@ const Common = {
     paddingLeft: {
         paddingLeft: Layout.gutter.l
     },
+    paddingRight: {
+        paddingRight: Layout.gutter.l
+    },
     paddingVertical: {
         paddingVertical: Layout.gutter.m,
     },
@@ -297,7 +311,7 @@ const Common = {
     },
     pseudoNavigation: {
         height: 60,
-        paddingLeft: Layout.gutter.s,
+        paddingLeft: Layout.gutter.l,
         justifyContent: 'center',
         backgroundColor: '#F5F5F5',
         borderBottomColor: Colors.borderColor,
@@ -447,11 +461,9 @@ const Common = {
     },
     darkButton: {
         borderRadius: 4,
-        backgroundColor: 'transparent',
-        width: Layout.width.m,
-        borderColor: 'rgba(0,0,0,0.8)',
-        borderWidth: 1,
-        height: 45,
+        backgroundColor: '#404040',
+        width: Layout.width.s,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center'
@@ -480,9 +492,9 @@ const Common = {
         shadowRadius: 5,
         shadowOffset: {
             width: 0,
-            height: 4
+            height: 7
         },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
     },
     shadowBright: {
         shadowColor: "#CE0707",

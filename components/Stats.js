@@ -160,7 +160,7 @@ nextWeek = () => {
                   />
                   <VictoryLine
                     style={{
-                      data: {stroke: "tomato", opacity: 0.7}
+                      data: {stroke: "#CE0707"}
                     }}
                     data={this.state.weekLogs}
                     x={(d) => parseInt(moment(_.last(d)).format('E'))}

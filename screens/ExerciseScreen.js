@@ -219,8 +219,7 @@ export default class ExerciseScreen extends React.Component {
          
       
         {this.displayVideo()}
-        {this.renderNextButton()}
-        <View style={[Common.container, Common.sectionBorder]}>
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
           <Text style={Common.darkTitleH1}>{exerciseName}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
@@ -233,10 +232,12 @@ export default class ExerciseScreen extends React.Component {
               color={'#000'}/>
           </View>
         </View>
+     
         <ActivityPicker
+        insideWorkout={this.props.route.params.insideWorkout}
         onSendData={(sets,reps,weight) => {
           this.goToNext(sets,reps,weight)
-        }}/>  
+        }}/>
             <View style={{height: Layout.gutter.l * 5}}/>
               
 

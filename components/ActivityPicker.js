@@ -6,9 +6,15 @@ import {View,
         FlatList,
     ScrollView } from 'react-native';
 import LoadPicker from './LoadPicker';
+import Layout from '../constants/Layout'
 import SetItem from './SetItem';
 import Common from '../constants/common';
 import Database from '../api/database';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 let allReps = [];
 export default class ActivityPicker extends React.Component {
@@ -113,24 +119,22 @@ renderItem = ({item, index}) => {
     
     return (
         <View style={Common.containerBasic}>
-            <View style={{ height: 60, zIndex: 4 }} />
             <View style={[Common.shadowLight]}>
                 <View
-                style={{
+                style={[Common.paddingLeft, Common.paddingRight,{
                     alignItems: "center",
                     justifyContent: "space-between",
                     flexDirection: "row",
-                    paddingHorizontal: 10
-                }}
+                }]}
                 >
-                    <Text style={Common.darkTitleH2}>Lisaa first set</Text>
+                    <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa first set</Text>
                     <TouchableOpacity
-                        style={Common.darkButton}
+                        style={[Common.darkButton, Common.shadowLight]}
                         onPress={() => {
                         addSet(this.state.sets + 1, this.state.reps, this.state.weight);
                         }}
                     >
-                        <Text style={Common.darkActionTitle}>Add set</Text>
+                        <Text style={Common.lightActionTitle}>Add set</Text>
                     </TouchableOpacity>
                 </View>
                 <LoadPicker
@@ -149,14 +153,12 @@ renderItem = ({item, index}) => {
                 <TouchableOpacity
                 style={Common.brightButtonRounded}
                 onPress={() => {
-
                     this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
-
                 }}
                 >
-                <Text style={Common.lightActionTitle}>Show sets</Text>
+                <Text style={Common.lightActionTitle}>{this.props.insideWorkout ? `${I18n.t('Next')} ${I18n.t('Exercise').toLowerCase()}` : 'Show sets'}</Text>
                 </TouchableOpacity>
-                <View style={{ height: 100 }} />
+                <View style={{ height: 70 }} />
             </View>
             </ScrollView>
         </View>

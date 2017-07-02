@@ -6,7 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TextInput,
 } from 'react-native';
 import { Constants } from 'expo';
 import ActivityPicker from './ActivityPicker';
@@ -14,7 +15,6 @@ import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
-import { FormInput, FormLabel } from 'react-native-elements'
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -49,7 +49,7 @@ export default class AddActivity extends Component {
             this.setModalVisible(true);
           }}
           style={Common.navButton}>
-          <Text style={Common.darkActionTitle}>Add activity</Text>
+          <Text style={Common.brightActionTitle}>Add activity</Text>
           </TouchableOpacity>
         <Modal
           animationType={"slide"}
@@ -58,14 +58,24 @@ export default class AddActivity extends Component {
         >
 
           <ScrollView contentContainerStyle={styles.container}>
-            
+            <View style={Common.pseudoNavigation}>
+              <TouchableOpacity
+                onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
+              </TouchableOpacity>
+          </View>
             <View style={[styles.paragraph]}>
-              <FormLabel>{I18n.t('Name')}</FormLabel>
-                  <FormInput
-                    onChangeText={name => this.setState({ name })}
-                    placeholder={I18n.t('EnterName')}
-                    autoCorrect={false}
-                  />
+                  <View style={[Common.paddingVertical, Common.paddingLeft, Common.paddingRight, { backgroundColor: 'white', zIndex: 5}]}>
+                   <View style={{borderColor: '#CDCDCD', borderBottomWidth: 1}}>
+                    <Text style={Common.darkTitleH2}>{I18n.t('Name')}</Text>
+                   <TextInput
+                      style={{height: 40}}
+                      placeholder={I18n.t('EnterName')}
+                      autoCorrect={false}
+                      onChangeText={(name) => this.setState({name})}
+                    />
+                    </View>
+                    </View>
               <ActivityPicker
                 onSendData={this.onSendData}
               />

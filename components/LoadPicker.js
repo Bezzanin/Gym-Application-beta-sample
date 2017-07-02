@@ -22,7 +22,7 @@ export default class LoadPicker extends React.Component {
 
     return (
       <View>
-       <View style={{flexDirection: 'row'}}>
+       <View style={{flexDirection: 'row', marginBottom: 9}}>
         <Picker
             style = {{flex: 1, height: 200}}
             selectedValue={this.state.reps}

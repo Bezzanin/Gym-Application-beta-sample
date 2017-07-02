@@ -90,8 +90,6 @@ export default class NewDiary extends React.Component {
     };
     return (
       <View style={styles.container}>
-        <AddActivity/>
-
       {this.state.loading &&
       
       <Agenda
