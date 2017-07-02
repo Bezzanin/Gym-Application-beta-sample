@@ -21,6 +21,7 @@ export default class ActivityPicker extends React.Component {
           sets: 0,
           newRep: '',
           newWeight: '',
+          id: "Custom"
       }
   }
   
@@ -148,13 +149,9 @@ renderItem = ({item, index}) => {
                 <TouchableOpacity
                 style={Common.brightButtonRounded}
                 onPress={() => {
-                    {/*console.log(this.state.sets);
-                    console.log(this.state.reps);
-                    console.log(this.state.weight);
-                    console.log("Start");
-                    
-                    console.log("Done");*/}
-                    this.sendFBData("KITNO", this.state.sets, this.state.reps, this.state.weight)
+
+                    this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
+
                 }}
                 >
                 <Text style={Common.lightActionTitle}>Show sets</Text>

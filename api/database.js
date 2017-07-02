@@ -79,12 +79,16 @@ class Database {
             // Total Weight Per Week
             let totalWeight = []
             weekLogDates.map((day) => {
+                if(Array.isArray(logs[day][0])){
                 weekTotalExercises.push(logs[day][0].length)
                 logs[day][0].map((exercises) => {
                     exercises.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
-                })
+                })} else { 
+                    weekTotalExercises.push(1)
+                    totalWeight.push(parseInt(logs[day][0].weight))
+                }
             })
             let weekTotalWeight = _.sum(totalWeight)
             weekTotalExercises = _.sum(weekTotalExercises)
@@ -108,12 +112,16 @@ class Database {
             let totalExercises = []
             let totalWeight = []
             Object.keys(logs).map((day) => {
+                if(Array.isArray(logs[day][0])){
                 totalExercises.push(logs[day][0].length)
                 logs[day][0].map((exercises) => {
                     exercises.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
-                })
+                })} else {
+                    totalExercises.push(1)
+                    totalWeight.push(parseInt(logs[day][0].weight))
+                }
             })
             let maxWeight = _.max(totalWeight)
             totalExercises = _.sum(totalExercises)
@@ -295,9 +303,17 @@ static getUserProgramName(callback) {
         log.forEach((logItem) => {
             totalWeight+=parseInt(logItem.weight)
         })
-        firebase.database().ref(path).set({
-            ...log
-        })
+        // firebase.database().ref(path).set({
+        //     ...log
+        // })
+        //Test here
+        firebase.database().ref(path).once('value', (snap) => {
+            let logs = snap.val();
+            if (logs === null) {logs = []}
+        logs.push({...log})
+            firebase.database().ref(path).set(logs)
+        });
+        //Test End
     }
 
     static rateWorkout(rate){
@@ -332,7 +348,7 @@ static getUserProgramName(callback) {
     static addExerciseStats(id, sets, reps, weight, ownExercise) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/statistics";
-        let path2 = "/user/" + uid + "/exercisesLogs/" + moment().format("YYYY-MM-DD")
+        let path2 = "/user/" + uid + "/workoutLogs/" + moment().format("YYYY-MM-DD")
         firebase.database().ref(path2).once('value', (snap) => {
             let logs = snap.val();
             if (logs === null) {logs = []}
