@@ -149,7 +149,7 @@ renderItem = ({item, index}) => {
                     console.log("Start");
                     
                     console.log("Done");
-                    this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
+                    this.props.onSendData("NameOfEx", this.state.sets, this.state.reps, this.state.weight)
                 }}
                 >
                 <Text style={Common.lightActionTitle}>Show sets</Text>

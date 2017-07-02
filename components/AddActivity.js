@@ -25,7 +25,7 @@ export default class AddActivity extends Component {
       modalVisible: false,
       
     };
-    this.sendData = this.sendData.bind(this);
+    this.onSendData = this.onSendData.bind(this);
   }
 
   setModalVisible(visible) {
@@ -33,8 +33,9 @@ export default class AddActivity extends Component {
     this.setState({ modalVisible: visible });
   }
 
-  sendData() {
-    Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
+  onSendData(name, sets, reps, weight) {
+    Database.addExerciseStats(name, sets, reps, weight);
+    this.setModalVisible(!this.state.modalVisible)
   }
 
 
@@ -60,7 +61,7 @@ export default class AddActivity extends Component {
             
             <View style={[styles.paragraph]}>
               <ActivityPicker
-                onCloseModal={() => {this.setModalVisible(!this.state.modalVisible)}}
+                onSendData={this.onSendData}
               />
             </View>
 

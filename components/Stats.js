@@ -101,7 +101,17 @@ nextWeek = () => {
                     }}
                     data={this.state.weekLogs}
                     x={(d) => parseInt(moment(_.last(d)).format('E'))}
-                    y={(d) => _.dropRight(d).length}
+                    y={(d) => {
+                       var Bars = _.dropRight(d).map((item) => {
+                         let totalEx = []
+                         if (Array.isArray(item)) {
+                           return(item.length)
+                         } else {
+                           return(1)
+                         } return(totalEx)
+                         })
+                       return(_.sum(Bars))
+                     }}
                   />
               </VictoryChart>
               <View style={{flexDirection: 'row', marginLeft: 38}}>
