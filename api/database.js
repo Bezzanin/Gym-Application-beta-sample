@@ -353,10 +353,45 @@ static getUserProgramName(callback) {
             let logs = snap.val();
             if (logs === null) {logs = []}
         logs.push({
-            id,
+            name: id,
             weight,
             sets,
             reps,
+            own: true
+            })
+            firebase.database().ref(path2).set(logs)
+        });
+        firebase.database().ref(path).transaction( (statistics) => {
+            if (statistics) {
+                statistics.exercisesDone++;
+            }
+            return statistics;
+        });
+
+        if (ownExercise) {
+            firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence').transaction( (index) => {
+                if (index) {
+                    index.currentExerciseIndex ++;
+                }
+                return index;
+            });
+        }
+    }
+
+        //Test Function
+        static addExerciseStats2(id, sets, reps, weight, ownExercise) {
+        let uid = firebase.auth().currentUser.uid
+        let path = "/user/" + uid + "/statistics";
+        let path2 = "/user/" + uid + "/exerciseLogs/" + moment().format("YYYY-MM-DD")
+        firebase.database().ref(path2).once('value', (snap) => {
+            let logs = snap.val();
+            if (logs === null) {logs = []}
+        logs.push({
+            name: id,
+            weight,
+            sets,
+            reps,
+            own: true
             })
             firebase.database().ref(path2).set(logs)
         });

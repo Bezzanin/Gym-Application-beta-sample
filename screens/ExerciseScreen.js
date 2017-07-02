@@ -68,12 +68,12 @@ export default class ExerciseScreen extends React.Component {
   }
   sendData(sets,reps,weight) {
     this.setState({sets,reps,weight})
-    Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
+    Database.addExerciseStats2(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
   }
    
-        goToNext = (someSHIT,sets,reps,weight) => {
+        goToNext = (sets,reps,weight) => {
        this.setState({sets,reps,weight})
-       Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric, true);
+       Database.addExerciseStats2(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric, true);
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
        let oldLog = this.props.route.params.logs
@@ -234,8 +234,8 @@ export default class ExerciseScreen extends React.Component {
           </View>
         </View>
         <ActivityPicker
-        onSendData={(someSHIT, sets,reps,weight) => {
-          this.goToNext(someSHIt, sets,reps,weight)
+        onSendData={(sets,reps,weight) => {
+          this.goToNext(sets,reps,weight)
         }}/>  
             <View style={{height: Layout.gutter.l * 5}}/>
               
