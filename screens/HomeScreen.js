@@ -166,8 +166,6 @@ retrieveUserId() {
     return (
      <ScrollView>
        {this.renderCard()}
-       <TouchableOpacity onPress={() => {console.log(this.state.programName)}}><Text style={{fontSize:24, color:'red'}}>123</Text></TouchableOpacity>
-
         {this.renderBoard()}
         {this.state.isLoading && <View style={styles.loading}>
             <ActivityIndicator

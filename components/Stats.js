@@ -41,6 +41,7 @@ class Stats extends Component {
     //  } else {
     //     this.setState({noDataHere: false,})
     //  }
+    console.log(log)
     this.setState({
           weekLogs: log,
           totalWeight: weekTotalWeight,
@@ -130,8 +131,7 @@ nextWeek = () => {
         </Col>
     </Grid>
     
-      {/*
-      <Grid>
+     <Grid>
         <Col size ={2}>
             <View style ={[Common.minusHorizontal, Common.paddingVertical]}>
               <VictoryChart
@@ -141,34 +141,65 @@ nextWeek = () => {
                 domainPadding={Layout.gutter.l}
                 >
                   <VictoryAxis
-                    tickValues={[1, 2 , 3, 4 ,5 ,6, 7]}
-                    tickFormat={["Mo", "Tu", "We", "Th", "Fr", "St", "Su"]}
-                    offsetX={0}
-                    style={{
-                        grid: {stroke: "#ECECEC", strokeWidth: Layout.gutter.m + Layout.gutter.xs}
-                    }}
+                    tickValues={[1, 2, 3, 4, 5, 6, 7]}
+                    tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
                   />
                   <VictoryAxis
                     dependentAxis
                     tickFormat={(x) => (Math.round(x))}
                   />
-                  <VictoryBar
+                  <VictoryLine
                     style={{
-                        data: {fill: "#CE0606", width: Layout.gutter.m+ Layout.gutter.xs},
+                      data: {stroke: "tomato", opacity: 0.7}
                     }}
                     data={this.state.weekLogs}
-                    x={(d) => parseInt(moment(d.workoutCompleted).format('d'))}
-                    y={(d) => d.totalWeight}
+                    x={(d) => parseInt(moment(_.last(d)).format('E'))}
+                    y={(d) => {
+                      var dailyWeight = _.dropRight(d).map((item) => {
+                        let totalWeight = []
+                        if (Array.isArray(item)) {
+                          item.map((exercise) =>{
+                          exercise.weight.map((weight) =>{
+                            totalWeight.push(parseInt(weight))
+                          })
+                          })
+                        } else {
+                          item.weight.map((weight) =>{
+                            totalWeight.push(parseInt(weight))
+                          })
+                        }
+                      return(_.sum(totalWeight))
+                    });
+                    return(_.sum(dailyWeight)/10)
+                    }}
                   />
               </VictoryChart>
+              <View style={{flexDirection: 'row', marginLeft: 38}}>
+              <TouchableOpacity onPress={this.prevWeek}><Text style={Common.darkNameTag}>{I18n.t('Previous')} |</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.nextWeek}><Text style={Common.darkNameTag}>{I18n.t('NextWeek')}</Text></TouchableOpacity>
+              </View>
+
             </View>
         </Col>
         <Col size={1}>
           <View style={[Common.containerLeft, Common.paddingVertical]}>
-            
+            <BigTag
+              title={I18n.t('TotalExercises')}
+              content={this.state.totalExercises}
+              color={'#000'}
+              />
+              <BigTag
+              title={I18n.t('TotalWeight')}
+              content={this.state.totalWeight}
+              color={'#000'}/>
+              <BigTag
+              title={I18n.t('workoutsFinished')}
+              content={this.state.workoutsDone}
+              color={'#000'}
+              />
           </View>
         </Col>
-    </Grid> */}
+    </Grid>
 
       </View>
       

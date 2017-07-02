@@ -329,7 +329,7 @@ static getUserProgramName(callback) {
             currentWorkoutDay: dayNumber + 1
         })
     }
-    static addExerciseStats(id, weight, sets, reps, ownExercise) {
+    static addExerciseStats(id, sets, reps, weight, ownExercise) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/statistics";
         let path2 = "/user/" + uid + "/exercisesLogs/" + moment().format("YYYY-MM-DD")
