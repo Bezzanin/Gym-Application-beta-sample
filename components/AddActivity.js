@@ -14,6 +14,7 @@ import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import { FormInput, FormLabel } from 'react-native-elements'
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -23,7 +24,7 @@ export default class AddActivity extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      name: "CUSTOM INPUT NEEDED"
+      name: "CUSTOM Exerecise"
     };
     this.onSendData = this.onSendData.bind(this);
   }
@@ -60,6 +61,12 @@ export default class AddActivity extends Component {
           <ScrollView contentContainerStyle={styles.container}>
             
             <View style={[styles.paragraph]}>
+              <FormLabel>{I18n.t('Name')}</FormLabel>
+                  <FormInput
+                    onChangeText={name => this.setState({ name })}
+                    placeholder={I18n.t('EnterName')}
+                    autoCorrect={false}
+                  />
               <ActivityPicker
                 onSendData={this.onSendData}
               />
