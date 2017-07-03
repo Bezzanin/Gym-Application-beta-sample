@@ -49,7 +49,7 @@ export default class AddActivity extends Component {
             this.setModalVisible(true);
           }}
           style={Common.navButton}>
-          <Text style={Common.brightActionTitle}>Add activity</Text>
+          <Text style={Common.brightActionTitle}>{I18n.t('Add')} {I18n.t('Exercise')}</Text>
           </TouchableOpacity>
         <Modal
           animationType={"slide"}

@@ -65,7 +65,7 @@ class StatItem extends Component {
         </View>
       )
     }
-    // let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
+
     return (
         <View style={[Common.containerHorizontal, {paddingRight: Layout.gutter.l}]}>
           <View style={[this.state.hideLogs && !this.props.last && Common.sectionBorder, Common.paddingVerticalSmall]}>
@@ -84,7 +84,7 @@ class StatItem extends Component {
               
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
                     <Text style={Common.actionTitleH4Light}>
-                    {this.state.hideLogs ? 'Details' : 'Hide'}</Text>
+                    {this.state.hideLogs ? I18n.t('ShowMore') : I18n.t('Hide')}</Text>
                   </TouchableOpacity>
             
           

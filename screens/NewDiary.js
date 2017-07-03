@@ -21,6 +21,15 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
+import {LocaleConfig} from 'react-native-calendars';
+LocaleConfig.locales['fi'] = {
+    monthNames: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Tuokokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
+  monthNamesShort: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Tuokokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
+  dayNames: ['Sunnuntai',,'Maanantai','Tiistai','Keskivikko','Torstai','Perjantai','Lauantai'],
+  dayNamesShort: ['Su','Ma','Ti','Ke','To','Pe','La']
+}
+LocaleConfig.defaultLocale = 'fi';
+
 
 export default class NewDiary extends React.Component {
 
@@ -63,7 +72,7 @@ export default class NewDiary extends React.Component {
   }
   static route = {
     navigationBar: {
-      title: 'NewDiary',
+      title: I18n.t('Diary'),
       renderRight: () => <AddActivity/>
     },
   };
@@ -143,7 +152,7 @@ export default class NewDiary extends React.Component {
       return (
       <View style={[styles.item, Common.shadowLight]}>
         
-        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Workout exercises</Text>
+        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>{I18n.t('DoneThisDay')}</Text>
         
       <FlatList
           data={newlog}
@@ -160,7 +169,7 @@ export default class NewDiary extends React.Component {
       console.log(newlog)
       return (
       <View style={[styles.item, Common.shadowLight]}>
-        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Added exercise</Text>
+        <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>{I18n.t('CustomExercises')}</Text>
       <StatItem last={true} own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo}/>
       </View>
     );
