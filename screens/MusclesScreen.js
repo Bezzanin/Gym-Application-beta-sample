@@ -58,12 +58,12 @@ export default class ExercisesScreen extends Component {
                         
                         <Col>
                             <TouchableOpacity onPress={() => {this.goToExercises('triceps')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Triceps</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('triceps')}</Text>
                             </TouchableOpacity>
                         </Col>
                         <Col>
                             <TouchableOpacity onPress={() => {this.goToExercises('biceps')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Biceps</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('biceps')}</Text>
                             </TouchableOpacity>
                         </Col>
                     </Row>
@@ -71,12 +71,12 @@ export default class ExercisesScreen extends Component {
                         
                         <Col>
                             <TouchableOpacity onPress={() => {this.goToExercises('back')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Back</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('back')}</Text>
                             </TouchableOpacity>
                         </Col>
                         <Col>
                              <TouchableOpacity onPress={() => {this.goToExercises('chest')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Chest</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('chest')}</Text>
                             </TouchableOpacity>
                         </Col>
                     </Row>
@@ -84,12 +84,12 @@ export default class ExercisesScreen extends Component {
                         
                         <Col>
                             <TouchableOpacity onPress={() => {this.goToExercises('glutes')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Glutes</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('glutes')}</Text>
                             </TouchableOpacity>
                         </Col>
                         <Col>
                              <TouchableOpacity onPress={() => {this.goToExercises('abs')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Abs</Text>
+                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('abs')}</Text>
                             </TouchableOpacity>
                         </Col>
                        

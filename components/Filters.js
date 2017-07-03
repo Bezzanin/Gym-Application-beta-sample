@@ -18,8 +18,8 @@ class Filters extends Component {
           <TouchableOpacity style={[styles.filter, styles.filterMiddle, filter === "ISOLATION" && styles.selected]} onPress={() => this.props.onFilter("ISOLATION")}>
             <Text style={[styles.filterText, filter ==="ISOLATION" && styles.selectedText]}>{I18n.t('isolation')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.filter, filter === "MUSCLES" && styles.selected]} onPress={() => this.props.onFilter("BASIC")}>
-            <Text style={[styles.filterText, filter === "MUSCLES" && styles.selectedText]}>{I18n.t('basic')}</Text>
+          <TouchableOpacity style={[styles.filter, filter === "BASIC" && styles.selected]} onPress={() => this.props.onFilter("BASIC")}>
+            <Text style={[styles.filterText, filter === "BASIC" && styles.selectedText]}>{I18n.t('basic')}</Text>
           </TouchableOpacity>
         </View>
       </View>
