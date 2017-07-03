@@ -78,6 +78,7 @@ export default class AddActivity extends Component {
                     </View>
               <ActivityPicker
                 onSendData={this.onSendData}
+                onSendInitialState={() => {}}
               />
             </View>
 

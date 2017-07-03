@@ -73,24 +73,29 @@ class Database {
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let weekTotalExercises = [];
+            let customExercise = 0;
             let weekLogDates = Object.keys(logs).filter((date) => {
                 return ( moment(date).format('W') == currentWeek )
             })
             // Total Weight Per Week
             let totalWeight = []
             weekLogDates.map((day) => {
-                if(Array.isArray(logs[day][0])){
-                weekTotalExercises.push(logs[day][0].length)
-                logs[day][0].map((exercises) => {
-                    exercises.weight.map((weight) =>{
+                weekTotalExercises.push(logs[day].length)
+                logs[day].map((exercises) => {
+                if(Array.isArray(exercises)){
+                    exercises.map((exercise) => {
+                        
+                        exercise.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
-                })} else { 
+                    }) 
+                } else { 
                     weekTotalExercises.push(1)
-                    totalWeight.push(parseInt(logs[day][0].weight))
+                    customExercise = customExercise+1
+                    totalWeight.push(parseInt(exercises.weight))
                 }
+            }) 
             })
-            let weekTotalWeight = _.sum(totalWeight)
             weekTotalExercises = _.sum(weekTotalExercises)
             let weekTotalWorkouts = weekLogDates.length
             weekLogDates.forEach((date) => {
@@ -98,8 +103,9 @@ class Database {
                     ...logs[date],
                     date,
                 ]);
+            
             })
-          callback(logsRec, weekTotalWeight, weekTotalWorkouts, weekTotalExercises)
+          callback(logsRec, totalWeight, weekTotalWorkouts, weekTotalExercises, customExercise)
         }, (e) => {console.log(e)})
     }
 
@@ -112,16 +118,19 @@ class Database {
             let totalExercises = []
             let totalWeight = []
             Object.keys(logs).map((day) => {
-                if(Array.isArray(logs[day][0])){
-                totalExercises.push(logs[day][0].length)
-                logs[day][0].map((exercises) => {
-                    exercises.weight.map((weight) =>{
+                
+                totalExercises.push(logs[day].length)
+                logs[day].map((exercises) => {
+                if(Array.isArray(exercises)){
+                    exercises.map((exercise) => {
+                        exercise.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
                     })
-                })} else {
+                    }) 
+                } else {
                     totalExercises.push(1)
-                    totalWeight.push(parseInt(logs[day][0].weight))
-                }
+                    totalWeight.push(parseInt(exercises.weight))
+                }})
             })
             let maxWeight = _.max(totalWeight)
             totalExercises = _.sum(totalExercises)
