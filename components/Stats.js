@@ -35,7 +35,7 @@ class Stats extends Component {
 }
 
   filterByWeek() {
-    Database.listeningForWeekStats(this.state.currWeek, (log, weekTotalWeight, weekTotalWorkouts, weekTotalExercises) => {     
+    Database.listeningForWeekStats(this.state.currWeek, (log, totalWeight, weekTotalWorkouts, weekTotalExercises, customExercise) => {     
     //  if ( log.length < 1 ) {
     //    this.setState({noDataHere: true,})
     //  } else {
@@ -43,10 +43,13 @@ class Stats extends Component {
     //  }
     this.setState({
           weekLogs: log,
-          totalWeight: weekTotalWeight,
+          totalWeight: _.sum(totalWeight),
+          recordWeight: _.max(totalWeight),
+          averageWeight: Math.round(_.sum(totalWeight)/totalWeight.length),
           workoutsDone: weekTotalWorkouts,
           totalExercises: weekTotalExercises,
           loading: false,
+          customExercise
       });
       this.props.loadingOFF(this.state.currWeek);
     });
@@ -92,7 +95,7 @@ nextWeek = () => {
                   />
                   <VictoryAxis
                     dependentAxis
-                    tickFormat={(x) => (Math.round(x))}
+                    
                   />
                   <VictoryBar
                     style={{
@@ -129,8 +132,8 @@ nextWeek = () => {
               color={'#000'}
               />
               <BigTag
-              title={I18n.t('TotalWeight')}
-              content={this.state.totalWeight}
+              title={I18n.t('CustomExercises')+"et"}
+              content={this.state.customExercise}
               color={'#000'}/>
               <BigTag
               title={I18n.t('workoutsFinished')}
@@ -160,7 +163,7 @@ nextWeek = () => {
                   />
                   <VictoryLine
                     style={{
-                      data: {stroke: "#CE0707"}
+                      data: {stroke: "#CE0707", opacity: 0.7}
                     }}
                     data={this.state.weekLogs}
                     x={(d) => parseInt(moment(_.last(d)).format('E'))}
@@ -180,7 +183,7 @@ nextWeek = () => {
                         }
                       return(_.sum(totalWeight))
                     });
-                    return(_.sum(dailyWeight))
+                    return(_.sum(dailyWeight)/10)
                     }}
                   />
               </VictoryChart>
@@ -194,17 +197,20 @@ nextWeek = () => {
         <Col size={1}>
           <View style={[Common.containerLeft, Common.paddingVertical]}>
             <BigTag
-              title={I18n.t('TotalExercises')}
-              content={this.state.totalExercises}
+              title={I18n.t('TotalWeight')}
+              content={this.state.totalWeight}
+              label={'kg'}
               color={'#000'}
               />
               <BigTag
-              title={I18n.t('TotalWeight')}
-              content={this.state.totalWeight}
+              title={I18n.t("AverageWeight")}
+              content={this.state.averageWeight}
+              label={'kg'}
               color={'#000'}/>
               <BigTag
-              title={I18n.t('workoutsFinished')}
-              content={this.state.workoutsDone}
+              title={I18n.t("maximumWeight")}
+              content={this.state.recordWeight}
+              label={'kg'}
               color={'#000'}
               />
           </View>

@@ -54,7 +54,7 @@ export default class AddActivity extends Component {
             this.setModalVisible(true);
           }}
           style={Common.navButton}>
-          <Text style={Common.brightActionTitle}>Add activity</Text>
+          <Text style={Common.brightActionTitle}>{I18n.t('Add')} {I18n.t('Exercise')}</Text>
           </TouchableOpacity>
         <Modal
           animationType={"slide"}
@@ -82,6 +82,7 @@ export default class AddActivity extends Component {
                     </View>
                     </View>
               <ActivityPicker
+              
                 onSendData={(sets,reps,weight) => {
                   if (this.state.sets === 0) {
                     let newRep = []; newRep[0] = this.state.reps;
@@ -93,6 +94,7 @@ export default class AddActivity extends Component {
                   }
                   }}
                 onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
+
               />
             </View>
 

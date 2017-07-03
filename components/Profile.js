@@ -48,7 +48,8 @@ componentDidMount() {
     Database.listenForDetails((details) => {
         this.setState({
               weight: details.weight,
-              height: details.height
+              height: details.height,
+              userName: details.name
           })
     })
   }
@@ -79,7 +80,10 @@ _displayLeaveButton() {
   render() {
     return (
       <View style={[Common.container, Common.sectionBorder]}>
-          <Image source={require('../assets/images/CTA.png')} style={Common.avatar}/>
+          <BigTag
+                    content={"Hei, "+this.state.userName+" !"}
+                    color={'#000'}
+                />
     <Grid>
         <Col size={1}/>
         <Col size={4}>
