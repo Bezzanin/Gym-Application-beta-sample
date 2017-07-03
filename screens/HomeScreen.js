@@ -41,6 +41,7 @@ export default class HomeScreen extends Component {
       ownProgram: '',
       programName: '',
       isLoading: true,
+      weekNumber: moment().format("W")
     }
   }
   static route = {
@@ -49,9 +50,10 @@ export default class HomeScreen extends Component {
       title: I18n.t('Home'),
     },
   };
-  loadingOFF() {
+  loadingOFF(weekNumber) {
       this.setState({
       loading: false,
+      weekNumber
     })
   }
 
@@ -106,7 +108,7 @@ renderBoard = () => {
     return(
       <View style={Common.sectionBorder}>
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('week')} {this.state.weekNumber} {I18n.t('Exercises')}</Text>
         </View>
         <Stats
           loadingOFF={this.loadingOFF}

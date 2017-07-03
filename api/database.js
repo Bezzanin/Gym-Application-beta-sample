@@ -450,6 +450,7 @@ static getUserProgramName(callback) {
     static addUserDetails(gender, DaysPerWeek, height, weight, name) {
          let uid = firebase.auth().currentUser.uid;
          let path = "/user/" + uid + "/details";
+         let emptyDate = moment("1990-06-06").format('YYYY-MM-DD');
          firebase.database().ref().child('user').child(uid).set({
             ownProgram: {hasProgram: false, programName: ''},
             statistics: {
@@ -457,7 +458,7 @@ static getUserProgramName(callback) {
                 exercisesDoneYesterday: 0,
                 lastWorkoutDate: ''
             },
-            workoutLogs: '',
+            workoutLogs: {"2000-01-01": ["null"]},
             exercisesLogs: '',
             details: {difficultyRate: 0, level: 0, programName: '', 
             gender: gender, 
