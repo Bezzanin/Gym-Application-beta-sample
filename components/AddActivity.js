@@ -24,7 +24,12 @@ export default class AddActivity extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      name: "CUSTOM Exerecise"
+      name: "CUSTOM Exerecise",
+      newRep: '',
+      newWeight: '',
+      sets: '',
+      reps: '',
+      weight: '',
     };
     this.onSendData = this.onSendData.bind(this);
   }
@@ -77,7 +82,17 @@ export default class AddActivity extends Component {
                     </View>
                     </View>
               <ActivityPicker
-                onSendData={this.onSendData}
+                onSendData={(sets,reps,weight) => {
+                  if (this.state.sets === 0) {
+                    let newRep = []; newRep[0] = this.state.reps;
+                    let newWeight = []; newWeight[0] = this.state.weight;
+                    this.onSendData(this.state.sets, newRep, newWeight);
+                  }
+                  else {
+                    this.onSendData(this.state.sets, reps, weight)
+                  }
+                  }}
+                onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
               />
             </View>
 
