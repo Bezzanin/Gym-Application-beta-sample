@@ -4,7 +4,7 @@
   "slug": "rational-app",
   "privacy": "public",
   "sdkVersion": "17.0.0",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app-icon.png",
@@ -20,6 +20,7 @@
     "assetExts": ["ttf"]
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": true,
+    "bundleIdentifier": "com.rationalgym.gymapp"
   }
 }

@@ -34,7 +34,7 @@ export default class FinishWorkoutScreen extends React.Component {
       })
       Database.finishWorkout();
       console.log('navigator.pop triggered');
-      this.props.navigator.pop(2);
+      this.props.navigator.popToTop();
   }
   calculateWorkoutTime(){
     let workoutTime = (this.props.route.params.workoutFinished - this.props.route.params.workoutStarted)/60/60;

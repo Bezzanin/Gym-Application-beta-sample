@@ -32,14 +32,18 @@ export default class ActivityPicker extends React.Component {
   }
   
     sendData(newRep, index) {
-        //let newReps = this.state.reps.concat(reps);
-
+        this.setState({newRep}, () => {
+            this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight);
+            console.log(this.state.newRep)
+            console.log(this.state.newWeight)
+        })
+        
         this.setState({
             newRep, index
         })
         
     }
-
+    
     sendFBData(id, sets, reps, weight) {
     console.log(id, sets, reps, weight)
     Database.addExerciseStats(id, sets, reps, weight);
@@ -49,7 +53,7 @@ export default class ActivityPicker extends React.Component {
     }
     sendWeight(newWeight, index) {
         //let newWeight = this.state.reps.concat(weight);
- 
+        
         this.setState({
             newWeight, index
         })

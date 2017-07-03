@@ -34,8 +34,9 @@ I18n.translations = {fi};
 
 const filterExercises = (filter, exercises) => {
 return exercises.filter((item) => {
-  if (filter === 'ALL') {console.log('triceps triggered');return item.muscles === 'triceps'};
-  if (filter === 'triceps') {console.log('triceps triggered');return item.muscles === 'triceps'};
+  console.log(item)
+  if (filter === 'ALL') return true;
+  if (filter === 'triceps') return item.muscles === 'triceps';
   if (filter === 'biceps') return item.muscles === 'biceps';
   if (filter === 'chest') return item.muscles === 'chest';
   if (filter === 'abs') return item.muscles === 'abs';
@@ -44,6 +45,7 @@ return exercises.filter((item) => {
   if (filter === 'calves') return item.type === 'calves';
   if (filter === 'back') return item.muscles === 'back';
   if (filter === 'BASIC') return item.type === 'basic';
+  if (filter === 'ISOLATION') return item.type === 'isolation';
 })
 }
 
@@ -78,6 +80,7 @@ export default class ExercisesScreen extends Component {
       try {
         const exercises = JSON.parse(json);
         //this.setSource(exercises, exercises);
+        this.setState({exercises: filterExercises(this.props.route.params.filter, exercises)})
         this.setSource(this.state.exercises, filterExercises(this.props.route.params.filter, exercises), { })
       } catch(e) {
 
@@ -107,7 +110,6 @@ export default class ExercisesScreen extends Component {
           onFilter={this.handleFilter}
           filter={this.state.filter}/>
       </View>
-
         <ListView
           dataSource={this.state.dataSource}
           initialListSize = {4}

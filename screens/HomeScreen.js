@@ -52,6 +52,7 @@ export default class HomeScreen extends Component {
   };
   loadingOFF(weekNumber) {
       this.setState({
+        weekNumber,
       loading: false,
       weekNumber
     })

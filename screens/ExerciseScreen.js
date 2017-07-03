@@ -33,8 +33,8 @@ export default class ExerciseScreen extends React.Component {
       modalVisible: false,
       weight: '70',
       metric: 'kg',
-      sets: '3',
-      reps: '3',
+      sets: 0,
+      reps: 5,
       videoLink: 'https://',
       videoRate: 1.0
     }
@@ -71,9 +71,11 @@ export default class ExerciseScreen extends React.Component {
     Database.addExerciseStats2(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
   }
    
-        goToNext = (sets,reps,weight) => {
-       this.setState({sets,reps,weight})
-       Database.addExerciseStats2(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric, true);
+  goToNext = (sets,reps,weight) => {
+       this.setState({sets,reps,weight}, ()=>{
+         Database.addExerciseStats2(this.props.route.params.exercise._key, this.state.sets, this.state.reps, this.state.weight, this.state.metric, true);
+       })
+      
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
        let oldLog = this.props.route.params.logs
@@ -182,7 +184,30 @@ export default class ExerciseScreen extends React.Component {
         this.setState({currentTime: newTime, paused: paused});
         this.videoPlayer.seek(newTime);
     }
-
+    displayPicker() {
+      if (this.props.insideWorkout) {
+        return(
+          <View>
+           <ActivityPicker
+            insideWorkout={this.props.route.params.insideWorkout}
+            onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
+            onSendData={(sets,reps,weight) => {
+              if (this.state.sets === 0) {
+              let newRep = []; newRep[0] = this.state.reps;
+              let newWeight = []; newWeight[0] = this.state.weight;
+              this.goToNext(this.state.sets, newRep, newWeight)
+              }
+              else {
+                this.goToNext(sets,reps,weight)
+              }
+            }}/>
+            </View>
+        )
+      }
+      else {
+        return(<View/>)
+      }
+    }
     displayVideo() {
       if ((this.state.videoLink === 'https://') || (this.props.insideWorkout))  {
         return(
@@ -196,10 +221,9 @@ export default class ExerciseScreen extends React.Component {
             
           
             <Expo.Video
-              ref={this.state.videoLink}
-              //useNativeControls
-              volume={1.0}
-              muted={false}
+              source={{uri: this.state.videoLink}}
+              shouldPlay={true}
+              isMuted
               resizeMode="cover"
               style={{ flex: 1 }}
 
@@ -233,11 +257,7 @@ export default class ExerciseScreen extends React.Component {
           </View>
         </View>
      
-        <ActivityPicker
-        insideWorkout={this.props.route.params.insideWorkout}
-        onSendData={(sets,reps,weight) => {
-          this.goToNext(sets,reps,weight)
-        }}/>
+        {this.displayPicker()}
             <View style={{height: Layout.gutter.l * 5}}/>
               
 
