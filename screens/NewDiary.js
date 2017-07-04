@@ -50,7 +50,11 @@ export default class NewDiary extends React.Component {
     Database.DiaryStats((log) => {
         this.setState({
           items: log
-        }) 
+        })
+      this.onDayChange({
+        year: moment().format("YYYY"), 
+        month: moment().format("MM"), 
+        day: moment().format("DD")}) 
     });
     // Database.listeningForCustomLogs((customLogs) => {
     //   console.log(customLogs);
@@ -78,8 +82,22 @@ export default class NewDiary extends React.Component {
   };
 
   onDayChange = (date) => {
+    let initialDate = new Date(date.year, date.month-1, date.day);
+    let choosenDate = moment(new Date(initialDate)).format('YYYY-MM-DD')
+    let hasWorkoutDay = false
+    if (moment(choosenDate).format("dd") === "Th") {
+      hasWorkoutDay = true
+    } else { hasWorkoutDay = false}
+    let newItems = {
+        // if (moment(this.state.date).format("dd")) = "Th") {}
+      [choosenDate]: [],
+      ...this.state.items,
+      ...this.state.customLogs
+    };
     this.setState({
-      date: new Date(date.year, date.month-1, date.day),
+      date: moment(new Date(initialDate)).format('YYYY-MM-DD'),
+      newItems,
+      hasWorkoutDay 
     });
   };
 
@@ -92,17 +110,18 @@ export default class NewDiary extends React.Component {
     Database.addExerciseStats(name, weight, sets, reps);
   }
     render() {
-      let newItems = {
-      [moment(new Date(this.state.date)).format('YYYY-MM-DD')]: [],
-      ...this.state.items,
-      ...this.state.customLogs
-    };
+    //   let newItems = {
+    //     // if (moment(this.state.date).format("dd")) = "Th") {}
+    //   [this.state.date]: [],
+    //   ...this.state.items,
+    //   ...this.state.customLogs
+    // };
     return (
       <View style={styles.container}>
       {this.state.loading &&
       
       <Agenda
-        items={newItems}
+        items={this.state.newItems}
         renderItem={this.renderItem}
         onDayPress={this.onDayChange}
         onDayChange={this.onDayChange}
@@ -186,6 +205,7 @@ export default class NewDiary extends React.Component {
                 <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
           </View>
+          {this.state.hasWorkoutDay && <Text>You Have Workout this day</Text>}
       </View>
     );
   }
