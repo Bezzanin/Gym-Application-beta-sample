@@ -22,20 +22,22 @@ export default class ActivityPicker extends React.Component {
       super(props);
       this.state = {
           data: '',
-          reps: [],
-          weight: [],
+          reps: [5],
+          weight: [25],
           sets: 0,
-          newRep: '',
-          newWeight: '',
+          newRep: '5',
+          newWeight: '25',
           id: "Custom"
       }
   }
   
+
+  componentDidMount() {
+      this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight)
+  }
     sendData(newRep, index) {
         this.setState({newRep}, () => {
             this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight);
-            console.log(this.state.newRep)
-            console.log(this.state.newWeight)
         })
         
         this.setState({
@@ -45,14 +47,16 @@ export default class ActivityPicker extends React.Component {
     }
     
     sendFBData(id, sets, reps, weight) {
-    console.log(id, sets, reps, weight)
-    Database.addExerciseStats(id, sets, reps, weight);
-  }
+        console.log(id, sets, reps, weight)
+        Database.addExerciseStats(id, sets, reps, weight);
+    }
     sendWorkoutData() {
         Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
     }
     sendWeight(newWeight, index) {
-        //let newWeight = this.state.reps.concat(weight);
+        this.setState({newWeight}, () => {
+            this.props.onSendInitialState(this.state.sets, this.state.newReps, this.state.newWeight);
+        })
         
         this.setState({
             newWeight, index
@@ -60,13 +64,10 @@ export default class ActivityPicker extends React.Component {
     }
 
     handleDelete = (index) => {
-        console.log(index);
         let newReps = this.state.reps;
         newReps.splice(index, 1)
         let newWeight = this.state.weight;
         newWeight.splice(index, 1)
-        console.log(newReps)
-        console.log(newWeight)
         newSets = this.state.sets - 1;
         this.setState({sets: newSets, reps: newReps, weight: newWeight})
     }   
@@ -89,10 +90,6 @@ renderItem = ({item, index}) => {
     let sets = [];
     for (let i = 0; (i<=this.state.sets - 1); i++) {
         let counter = i;
-        console.log('Sets amount is ' + this.state.sets.length)
-        console.log(counter)
-        console.log('Reps amount ' + this.state.reps[counter]);
-        console.log('Weight amount ' + this.state.weight[counter]);
         sets.push(
             <View>
             {/*<Text>{this.state.reps[counter]}</Text>
@@ -110,7 +107,7 @@ renderItem = ({item, index}) => {
     }
 
     addSet = (number, reps, weight) => {
-        const newSets = this.state.sets + 1;
+        let newSets = this.state.sets + 1;
         let newReps = this.state.reps.concat(this.state.newRep);
         let newWeight = this.state.weight.concat(this.state.newWeight);
 
@@ -131,11 +128,13 @@ renderItem = ({item, index}) => {
                     flexDirection: "row",
                 }]}
                 >
-                    <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa first set</Text>
+                    <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa set</Text>
+                    <TouchableOpacity onPress={() => {
+                      console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
                     <TouchableOpacity
                         style={[Common.darkButton, Common.shadowLight]}
                         onPress={() => {
-                        addSet(this.state.sets + 1, this.state.reps, this.state.weight);
+                        addSet(this.state.sets, this.state.reps, this.state.weight);
                         }}
                     >
                         <Text style={Common.lightActionTitle}>Add set</Text>
