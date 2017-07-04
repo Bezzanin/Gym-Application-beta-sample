@@ -6,6 +6,7 @@ import Database from '../api/database';
 import Colors from '../constants/Colors';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
+import _ from 'lodash'
 
 export default class FinishWorkoutScreen extends React.Component {
   constructor(props){
@@ -22,6 +23,35 @@ export default class FinishWorkoutScreen extends React.Component {
       }
     },
   };
+  componentWillMount(){
+    let logs =this.props.route.params.logs
+
+    let totalEx = logs.length
+    let totalWeight = logs.map((item) => {
+        let result = []
+        item.weight.map((weight) => {
+          result.push(parseInt(weight))
+        })
+        return (result)
+    });
+    var totalSets =   logs.map((item) => {
+        return(item.sets)
+    }); 
+    var totalReps = logs.map((item) => {
+        let result = []
+        item.reps.map((reps) => {
+          result.push(parseInt(reps))
+        })
+        return (result)
+    });
+
+    this.setState({
+      totalExercises: totalEx,
+      totalWeight: _.sum(_.flatten(totalWeight)),
+      totalSets: _.sum(totalSets)+totalEx,
+      totalReps: _.sum(_.flatten(totalReps))
+    })
+  }
  async finishWorkout() {
       
       await AsyncStorage.getItem("ownProgram").then((json) => {
@@ -59,12 +89,12 @@ export default class FinishWorkoutScreen extends React.Component {
             <View style={{justifyContent: 'center', flex: 1}}>
               <BigTag
                 title={'exercises finished'}
-                content={'6'}
+                content={this.state.totalExercises}
                 color={'#000'}
               />
               <BigTag
-                title={'average sets'}
-                content={'3'}
+                title={'total sets'}
+                content={this.state.totalSets}
                 color={'#000'}
               />
               </View>
@@ -72,13 +102,14 @@ export default class FinishWorkoutScreen extends React.Component {
             <Col size={2}>
             <View style={{justifyContent: 'center', flex: 1}}>
               <BigTag
-                title={'time spent'}
-                content={'10'}
+                title={'total reps'}
+                content={this.state.totalReps}
                 color={'#000'}
               />
               <BigTag
-                title={'average weight'}
-                content={'70'}
+                title={'total weight'}
+                content={this.state.totalWeight}
+                label={"kg"}
                 color={'#000'}
               />
               </View>

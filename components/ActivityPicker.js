@@ -33,7 +33,7 @@ export default class ActivityPicker extends React.Component {
   
     sendData(newRep, index) {
         this.setState({newRep}, () => {
-            // this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight);
+            this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight);
             console.log(this.state.newRep)
             console.log(this.state.newWeight)
         })
