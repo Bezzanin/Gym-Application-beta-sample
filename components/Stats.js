@@ -156,10 +156,16 @@ nextWeek = () => {
                   <VictoryAxis
                     tickValues={[1, 2, 3, 4, 5, 6, 7]}
                     tickFormat={["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]}
+                    style={{
+                        grid: {stroke: "#ECECEC", strokeWidth: 1}
+                    }}
                   />
                   <VictoryAxis
                     dependentAxis
                     tickFormat={(x) => (Math.round(x))}
+                    style={{
+                        grid: {stroke: "#ECECEC", strokeWidth: 1}
+                    }}
                   />
                   <VictoryLine
                     style={{

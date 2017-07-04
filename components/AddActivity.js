@@ -24,12 +24,12 @@ export default class AddActivity extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      name: "CUSTOM Exerecise",
-      newRep: '',
-      newWeight: '',
-      sets: '',
-      reps: '',
-      weight: '',
+      name: "Oma liike",
+      newRep: 5,
+      newWeight: 25,
+      sets: 1,
+      reps: 5,
+      weight: 25,
     };
     this.onSendData = this.onSendData.bind(this);
   }
@@ -81,16 +81,23 @@ export default class AddActivity extends Component {
                     />
                     </View>
                     </View>
+                    <TouchableOpacity onPress={() => {
+                      console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
               <ActivityPicker
               
                 onSendData={(sets,reps,weight) => {
-                  if (this.state.sets === 0) {
+                  if (sets === 0) {
+                    console.log('Sets is zero');
                     let newRep = []; newRep[0] = this.state.reps;
                     let newWeight = []; newWeight[0] = this.state.weight;
-                    this.onSendData(this.state.sets, newRep, newWeight);
+                    console.log("newRep[0] is " + newRep[0])
+                    console.log("newWeight[0] is " + newWeight[0])
+                    console.log("this.state.reps is " + this.state.reps)
+                    
+                    this.onSendData(sets + 1, newRep, newWeight);
                   }
                   else {
-                    this.onSendData(this.state.sets, reps, weight)
+                    this.onSendData(sets, reps, weight)
                   }
                   }}
                 onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
