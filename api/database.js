@@ -369,22 +369,22 @@ static getUserProgramName(callback) {
         }, (e) => {console.log(e)})
     }
 
-        static addUserMadeProgram(name, days, muscles) {
+        static addUserMadeProgram(name, days, muscles, level, gender, duration) {
         let uid = firebase.auth().currentUser.uid
         let path = "/userPrograms/";
         function toObject(arr) {
             var day = {};
-            for (var i = 0; i < arr.length; ++i)
+            for (var i = 1; i < arr.length; ++i)
             day["day"+i] = arr[i];
             return day;
         }
-        let dailyMuscle = toObject(_.drop(muscles))
+        let dailyMuscle = toObject(muscles)
         firebase.database().ref(path).push({
             days: days,
-            gender: "Need to Implement",
-            level: "Need to Implement",
-            totalDays: "Need to Implement",
             name: name,
+            level,
+            gender,
+            totalDays: duration,
             ...dailyMuscle
         })
     }

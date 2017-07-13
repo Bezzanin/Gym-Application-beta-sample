@@ -7,6 +7,7 @@ import Layout from '../constants/Layout';
 import Database from '../api/database';
 import { Slider, FormInput, FormLabel } from 'react-native-elements';
 import Common from '../constants/common';
+import ModalDropdown from 'react-native-modal-dropdown';
 import _ from "lodash"
 I18n.locale = "fi";
 I18n.fallbacks = true;
@@ -15,12 +16,14 @@ I18n.translations = {fi};
 class customProgram extends Component {
 constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
         value: 3,
         previewText: [],
         dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
         musclesSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+        difficulty: 1,
+        duration: 30,
+        gender: 'Both'
     }
     this.recieveMuscles=this.recieveMuscles.bind(this)
     this.sendData=this.sendData.bind(this)
@@ -45,7 +48,7 @@ sendData() {
     console.log(this.state.previewText)
     console.log(this.state.value)
     console.log(this.state.name)
-    Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText)
+    Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration)
 }
 
   render() {
@@ -80,8 +83,44 @@ sendData() {
                 value={this.state.value}
                 onValueChange={(value) => this.setState({value})} />
             <Text>Value: {this.state.value}</Text>
+            <View
+                  style={{
+                    flexDirection: "row",
+                    width: 300,
+                    flexWrap: "wrap",
+                    justifyContent: "space-around"
+                  }}
+                >
+                  <View>
+                    <ModalDropdown options={['1kk', '2kk', '3kk']}
+                    defaultValue={"Duration"}
+                    textStyle={{ fontSize: 15}}
+                    dropdownStyle={{height: 115}}
+                    dropdownTextStyle={{fontSize: 15}}
+                    onSelect={(index, value) => this.setState({duration: (parseInt(index)+1)*30})}
+                    />
+                  </View>
+                  <View>
+                    <ModalDropdown options={['male', 'female', 'both']}
+                    defaultValue={"Gender"}
+                    textStyle={{ fontSize: 15}}
+                    dropdownStyle={{height: 115}}
+                    dropdownTextStyle={{fontSize: 15}}
+                    onSelect={(index, value) => this.setState({gender: value})}
+                    />
+                  </View>
+                  <View>
+                    <ModalDropdown options={['Basic', 'Advance', 'Expert']}
+                    defaultValue={"Level"}
+                    textStyle={{ fontSize: 15}}
+                    dropdownStyle={{height: 115}}
+                    dropdownTextStyle={{fontSize: 15}}
+                    onSelect={(index, value) => this.setState({difficulty: parseInt(index)+1})}
+                    />
+                  </View>
+                </View>
             <Text>Preview</Text>
-            <TouchableOpacity onPress={() => {console.log(this.state.previewText)}}><Text>Show state</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {console.log(this.state.gender + " " + this.state.difficulty + " " + this.state.duration)}}><Text>Show state</Text></TouchableOpacity>
             <ListView
                 dataSource={this.state.musclesSource}
                 renderRow={(rowData, sectionID, rowID) => <View><Text>Day {rowID} </Text><Text>{rowData}</Text></View>}
