@@ -92,8 +92,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Monday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Monday}
         onPress={() => {
@@ -107,8 +107,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Tuesday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Tuesday}
         onPress={() => {
@@ -122,8 +122,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
         title='Wednesday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Wednesday}
         onPress={() => {
@@ -137,8 +137,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Thursday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Thursday}
         onPress={() => {
@@ -152,8 +152,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Friday '
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Friday}
         onPress={() => {
@@ -167,8 +167,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Saturday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Saturday}
         onPress={() => {
@@ -182,8 +182,8 @@ export default class WeekDays extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Sunday'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.Sunday}
         onPress={() => {

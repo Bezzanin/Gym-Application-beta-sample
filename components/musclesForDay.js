@@ -47,8 +47,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Chest'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.chest}
         onPress={() => {
@@ -62,8 +62,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Shoulders'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.shoulders}
         onPress={() => {
@@ -77,8 +77,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
         title='Back '
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.back}
         onPress={() => {
@@ -92,8 +92,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Biceps'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.biceps}
         onPress={() => {
@@ -107,8 +107,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Legs '
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.legs}
         onPress={() => {
@@ -122,8 +122,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Triceps'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.triceps}
         onPress={() => {
@@ -137,8 +137,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Abs  '
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.abs}
         onPress={() => {
@@ -152,8 +152,8 @@ class MusclesForDay extends Component {
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Glutes'
         iconLeft
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
         checkedColor='#B2B2B2'
         checked={this.state.glutes}
         onPress={() => {
