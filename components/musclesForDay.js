@@ -52,8 +52,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.chest}
         onPress={() => {
-          this.setState({Chest: !this.state.Chest}, ()=>{
-            this.allMusclesForDay("chest", this.state.Chest)
+          this.setState({chest: !this.state.chest}, ()=>{
+            this.allMusclesForDay("chest", this.state.chest)
           });
         }}
       />
@@ -67,8 +67,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.shoulders}
         onPress={() => {
-          this.setState({Shoulders: !this.state.Shoulders}, ()=>{
-            this.allMusclesForDay("shoulders", this.state.Shoulders)
+          this.setState({shoulders: !this.state.shoulders}, ()=>{
+            this.allMusclesForDay("shoulders", this.state.shoulders)
           });
         }}
       />
@@ -82,8 +82,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.back}
         onPress={() => {
-          this.setState({Back: !this.state.Back}, ()=>{
-            this.allMusclesForDay("back", this.state.Back)
+          this.setState({back: !this.state.back}, ()=>{
+            this.allMusclesForDay("back", this.state.back)
           });
         }}
       />
@@ -97,8 +97,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.biceps}
         onPress={() => {
-          this.setState({Biceps: !this.state.Biceps}, ()=>{
-            this.allMusclesForDay("biceps", this.state.Biceps)
+          this.setState({biceps: !this.state.biceps}, ()=>{
+            this.allMusclesForDay("biceps", this.state.biceps)
           });
         }}
       />
@@ -112,8 +112,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.legs}
         onPress={() => {
-          this.setState({Legs: !this.state.Legs}, ()=>{
-            this.allMusclesForDay("legs", this.state.Legs)
+          this.setState({legs: !this.state.legs}, ()=>{
+            this.allMusclesForDay("legs", this.state.legs)
           });
         }}
       />
@@ -127,8 +127,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.triceps}
         onPress={() => {
-          this.setState({Triceps: !this.state.Triceps}, ()=>{
-            this.allMusclesForDay("triceps", this.state.Triceps)
+          this.setState({triceps: !this.state.triceps}, ()=>{
+            this.allMusclesForDay("triceps", this.state.triceps)
           });
         }}
       />
@@ -142,8 +142,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.abs}
         onPress={() => {
-          this.setState({Abs: !this.state.Abs}, ()=>{
-            this.allMusclesForDay("abs", this.state.Abs)
+          this.setState({abs: !this.state.abs}, ()=>{
+            this.allMusclesForDay("abs", this.state.abs)
           });
         }}
       />
@@ -157,8 +157,8 @@ class MusclesForDay extends Component {
         checkedColor='#B2B2B2'
         checked={this.state.glutes}
         onPress={() => {
-          this.setState({Glutes: !this.state.Glutes}, ()=>{
-            this.allMusclesForDay("glutes", this.state.Glutes)
+          this.setState({glutes: !this.state.glutes}, ()=>{
+            this.allMusclesForDay("glutes", this.state.glutes)
           });
         }}
       />
