@@ -47,6 +47,14 @@ export default class NewDiary extends React.Component {
       }
   })
 
+    Database.getWorkoutDays((days) => {
+      if (days !== undefined) {
+      this.setState({
+          workoutDays: days
+        }) 
+      } else { console.log("ELSE")}
+    })
+
     Database.DiaryStats((log) => {
         this.setState({
           items: log
@@ -56,12 +64,6 @@ export default class NewDiary extends React.Component {
         month: moment().format("MM"), 
         day: moment().format("DD")}) 
     });
-    // Database.listeningForCustomLogs((customLogs) => {
-    //   console.log(customLogs);
-    //   this.setState({
-    //       customLogs
-    //     }) 
-    // })
     }
 
     constructor(props) {
@@ -71,6 +73,7 @@ export default class NewDiary extends React.Component {
       exercises: [],
       loading: false,
       date: moment().format('YYYY-MM-DD'),
+      workoutDays: ["No"]
     };
     this.renderItem = this.renderItem.bind(this)
   }
@@ -85,8 +88,8 @@ export default class NewDiary extends React.Component {
     let initialDate = new Date(date.year, date.month-1, date.day);
     let choosenDate = moment(new Date(initialDate)).format('YYYY-MM-DD')
     let hasWorkoutDay = false
-    if (moment(choosenDate).format("dd") === "Th") {
-      hasWorkoutDay = true
+      if (this.state.workoutDays.includes(moment(choosenDate).format("dd"))) {
+      hasWorkoutDay = true;
     } else { hasWorkoutDay = false}
     let newItems = {
         // if (moment(this.state.date).format("dd")) = "Th") {}
@@ -101,21 +104,7 @@ export default class NewDiary extends React.Component {
     });
   };
 
-  sendDataTesing() {
-    let name = "TEST";
-    let weight = [77, 77, 77];
-    let sets = 3;
-    let reps = [9, 9, 9]
-
-    Database.addExerciseStats(name, weight, sets, reps);
-  }
     render() {
-    //   let newItems = {
-    //     // if (moment(this.state.date).format("dd")) = "Th") {}
-    //   [this.state.date]: [],
-    //   ...this.state.items,
-    //   ...this.state.customLogs
-    // };
     return (
       <View style={styles.container}>
       {this.state.loading &&
@@ -128,7 +117,7 @@ export default class NewDiary extends React.Component {
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
         firstDay={1}
-          theme={{
+        theme={{
         calendarBackground: '#ffffff',
         textSectionTitleColor: '#000000',
         selectedDayBackgroundColor: '#CE0707',
@@ -205,9 +194,32 @@ export default class NewDiary extends React.Component {
                 <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
           </View>
-          {this.state.hasWorkoutDay && <Text>You Have Workout this day</Text>}
+          {this.state.hasWorkoutDay && 
+          <TouchableOpacity onPress={() => {this.goToProgram()}}>
+            <Text>You Have Workout this day</Text>
+          </TouchableOpacity>}
       </View>
     );
+  }
+
+    goToProgram = async () => {
+    let ownProgram;
+    let exercises;
+    
+    Database.getUserProgramAll((program) => {
+      this.setState({
+        program
+      }, () => {
+        this.props.navigator.push('programDashboard', {
+          program: this.state.program,
+          exercises: this.state.exercises,
+        })
+      }
+      )
+    })
+    
+
+      
   }
 
 

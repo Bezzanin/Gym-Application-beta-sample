@@ -57,6 +57,8 @@ export default class SettingsScreen extends React.Component {
       <ScrollView
         style={Common.containerBasic}>
         <Profile />
+        <TouchableOpacity onPress={()=>this.props.navigator.push('customProgram')}
+        ><Text>Create Own Program</Text></TouchableOpacity>
         <View style={Common.container}>
           <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>
         </View>

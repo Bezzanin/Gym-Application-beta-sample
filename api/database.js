@@ -354,6 +354,41 @@ static getUserProgramName(callback) {
             currentWorkoutDay: dayNumber + 1
         })
     }
+
+    static setWorkoutDays(days) {
+        let uid = firebase.auth().currentUser.uid
+        let path = "/user/" + uid + "/ownProgram/weekDays";
+        firebase.database().ref(path).set(days)
+    }
+    static getWorkoutDays(callback) {
+        let uid = firebase.auth().currentUser.uid
+        let path = "/user/" + uid + "/ownProgram/weekDays";
+        firebase.database().ref(path).on('value', (snap) => {
+            let days = snap.val();
+            callback(days);
+        }, (e) => {console.log(e)})
+    }
+
+        static addUserMadeProgram(name, days, muscles) {
+        let uid = firebase.auth().currentUser.uid
+        let path = "/userPrograms/";
+        function toObject(arr) {
+            var day = {};
+            for (var i = 0; i < arr.length; ++i)
+            day["day"+i] = arr[i];
+            return day;
+        }
+        let dailyMuscle = toObject(_.drop(muscles))
+        firebase.database().ref(path).push({
+            days: days,
+            gender: "Need to Implement",
+            level: "Need to Implement",
+            totalDays: "Need to Implement",
+            name: name,
+            ...dailyMuscle
+        })
+    }
+
     static addExerciseStats(id, sets, reps, weight, ownExercise) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/statistics";

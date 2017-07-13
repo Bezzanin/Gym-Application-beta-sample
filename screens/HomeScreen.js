@@ -54,7 +54,6 @@ export default class HomeScreen extends Component {
       this.setState({
         weekNumber,
       loading: false,
-      weekNumber
     })
   }
 
