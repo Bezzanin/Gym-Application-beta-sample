@@ -40,8 +40,8 @@ class MusclesForDay extends Component {
   render() {
     return (
     <View>
-    <Text style={Common.darkTitleH1}>Day Number {this.props.dayNumber}</Text><Text>{this.state.allMuscles}</Text>
-      <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+    <Text style={Common.darkTitleH2}>Day {this.props.dayNumber} muscles</Text>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}

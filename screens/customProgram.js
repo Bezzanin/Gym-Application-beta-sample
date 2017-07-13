@@ -8,6 +8,7 @@ import Database from '../api/database';
 import { Slider, FormInput, FormLabel } from 'react-native-elements';
 import Common from '../constants/common';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Swiper from 'react-native-swiper';
 import _ from "lodash"
 I18n.locale = "fi";
 I18n.fallbacks = true;
@@ -23,7 +24,8 @@ constructor(props) {
         musclesSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
         difficulty: 1,
         duration: 30,
-        gender: 'Both'
+        gender: 'Both',
+        name: "Oma"
     }
     this.recieveMuscles=this.recieveMuscles.bind(this)
     this.sendData=this.sendData.bind(this)
@@ -45,9 +47,6 @@ recieveMuscles(dayNo, muscles) {
     
 }
 sendData() {
-    console.log(this.state.previewText)
-    console.log(this.state.value)
-    console.log(this.state.name)
     Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration)
 }
 
@@ -67,35 +66,34 @@ sendData() {
     
     return (
       <ScrollView>
-        <View style={{flex: 1, alignItems: 'stretch', alignSelf: "center", justifyContent: 'center', width: 300, marginTop: 50}}>
-            <FormLabel>Program Name</FormLabel>
+        <View style={{flex: 1, alignSelf: "center", justifyContent: 'center', width: 350, marginTop: 20}}>
+            <View style={{paddingBottom: 16}}>
+            <Text style={Common.darkTitleH2}>Program name</Text>
                   <FormInput
                     onChangeText={text => this.setState({ name: text })}
                     placeholder={I18n.t('Name')}
                     autoCorrect={false}
+                    
                   />
-            <Text style={Common.darkTitleH1}>Days per Week?</Text>
+            </View>
+            <Text style={Common.darkTitleH2}>Days per Week {this.state.value}</Text>
             <Slider
+                style={{marginLeft: 16, width: 320}}
                 minimumValue={1}
                 maximumValue={7}
                 step={1}
                 thumbTintColor={"#CE0707"}
+                trackStyle={styles.track}
+                thumbStyle={{ top: 20 }}
                 value={this.state.value}
                 onValueChange={(value) => this.setState({value})} />
-            <Text>Value: {this.state.value}</Text>
-            <View
-                  style={{
-                    flexDirection: "row",
-                    width: 300,
-                    flexWrap: "wrap",
-                    justifyContent: "space-around"
-                  }}
-                >
+            <View style={styles.row}>
                   <View>
                     <ModalDropdown options={['1kk', '2kk', '3kk']}
                     defaultValue={"Duration"}
-                    textStyle={{ fontSize: 15}}
-                    dropdownStyle={{height: 115}}
+                    style={styles.dropdown}
+                    textStyle={styles.dropdownText}
+                    dropdownStyle={styles.dropdown_2_dropdown}
                     dropdownTextStyle={{fontSize: 15}}
                     onSelect={(index, value) => this.setState({duration: (parseInt(index)+1)*30})}
                     />
@@ -103,30 +101,42 @@ sendData() {
                   <View>
                     <ModalDropdown options={['male', 'female', 'both']}
                     defaultValue={"Gender"}
-                    textStyle={{ fontSize: 15}}
-                    dropdownStyle={{height: 115}}
+                    style={styles.dropdown}
+                    textStyle={styles.dropdownText}
+                    dropdownStyle={styles.dropdown_2_dropdown}
                     dropdownTextStyle={{fontSize: 15}}
                     onSelect={(index, value) => this.setState({gender: value})}
                     />
                   </View>
                   <View>
-                    <ModalDropdown options={['Basic', 'Advance', 'Expert']}
+                    <ModalDropdown options={['Basic', 'Normal', 'Expert']}
                     defaultValue={"Level"}
-                    textStyle={{ fontSize: 15}}
-                    dropdownStyle={{height: 115}}
+                    style={styles.dropdown}
+                    textStyle={styles.dropdownText}
+                    dropdownStyle={styles.dropdown_2_dropdown}
                     dropdownTextStyle={{fontSize: 15}}
                     onSelect={(index, value) => this.setState({difficulty: parseInt(index)+1})}
                     />
                   </View>
                 </View>
-            <Text>Preview</Text>
-            <TouchableOpacity onPress={() => {console.log(this.state.gender + " " + this.state.difficulty + " " + this.state.duration)}}><Text>Show state</Text></TouchableOpacity>
-            <ListView
+                
+            {/* <View style={styles.row}>
+                <View><Text>{this.state.duration}</Text></View>
+                <View><Text>{this.state.gender}</Text></View>
+                <View><Text>{this.state.difficulty}</Text></View>
+            </View> */}
+            <Text style={Common.darkTitleH2}>Preview</Text>
+           <View style={styles.row}> 
+           <ListView
                 dataSource={this.state.musclesSource}
-                renderRow={(rowData, sectionID, rowID) => <View><Text>Day {rowID} </Text><Text>{rowData}</Text></View>}
-            />
+                renderRow={(rowData, sectionID, rowID) => <View><Text>Day {rowID} </Text><Text style={{flexDirection: 'column'}}>{rowData}</Text></View>}
+            /> 
+            </View>
+        <Swiper style={styles.wrapper} height={300}>
+         {daysAmount}
+        </Swiper>
+            
         </View>
-        {daysAmount}
         <TouchableOpacity
             onPress={() => {this.sendData()}}
             style={[
@@ -152,6 +162,39 @@ const styles = StyleSheet.create({
     marginTop: 50,
     alignSelf: 'center',
   },
+    track: {
+    height: 2,
+    borderRadius: 1,
+  },
+  row: {
+    flexDirection: "row",
+    width: 300,
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    paddingLeft: 16,
+    paddingBottom: 16
+  },
+dropdown: {
+    alignSelf: 'flex-end',
+    width: 75,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: "#CE0707",
+    backgroundColor: 'transparent',
+  },
+dropdownText: {
+    fontSize: 15,
+    textAlign: 'center',
+    paddingVertical: 4
+},
+  dropdown_2_dropdown: {
+    borderColor: '#CE0707',
+    width: 70,
+    height: 115,
+    borderWidth: 2,
+    borderRadius: 3,
+  },
+
 })
 
 export default customProgram;
