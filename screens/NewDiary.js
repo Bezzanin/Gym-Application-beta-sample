@@ -48,7 +48,7 @@ export default class NewDiary extends React.Component {
   })
 
     Database.getWorkoutDays((days) => {
-      if (days !== undefined) {
+      if (days !== null) {
       this.setState({
           workoutDays: days
         }) 

@@ -34,7 +34,6 @@ I18n.translations = {fi};
 
 const filterExercises = (filter, exercises) => {
 return exercises.filter((item) => {
-  console.log(item)
   if (filter === 'ALL') return true;
   if (filter === 'triceps') return item.muscles === 'triceps';
   if (filter === 'biceps') return item.muscles === 'biceps';
