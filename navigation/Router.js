@@ -19,6 +19,7 @@ import XDayExercisesScreen from '../screens/XDayExercisesScreen';
 import MusclesScreen from '../screens/MusclesScreen';
 import NewDiary from '../screens/NewDiary';
 import customProgram from '../screens/customProgram';
+import customProgramMuscles from '../screens/customProgramMuscles';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -38,5 +39,6 @@ export default createRouter(() => ({
   XDayExercises: () => XDayExercisesScreen,
   musclesScreen: () => MusclesScreen,
   diary: () => NewDiary,
-  customProgram: () => customProgram
+  customProgram: () => customProgram,
+  customProgramMuscles: () => customProgramMuscles,
 }));
