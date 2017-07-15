@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, TextInput } from "react-native";
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 import MusclesForDay from '../components/musclesForDay';
@@ -65,18 +65,21 @@ sendData() {
 
     
     return (
-      <ScrollView>
-        <View style={{flex: 1, alignSelf: "center", justifyContent: 'center', width: 350, marginTop: 20}}>
-            <View style={{paddingBottom: 16}}>
-            <Text style={Common.darkTitleH2}>Program name</Text>
-                  <FormInput
-                    onChangeText={text => this.setState({ name: text })}
-                    placeholder={I18n.t('Name')}
-                    autoCorrect={false}
-                    
-                  />
-            </View>
-            <Text style={Common.darkTitleH2}>Days per Week {this.state.value}</Text>
+      <ScrollView style={Common.containerBasic}>
+        <View style={[Common.container, Common.shadowLight, {backgroundColor: 'white'}]}>
+      
+            <View style={{marginBottom: 24}}>
+                <View style={{borderColor: '#CDCDCD', borderBottomWidth: 1}}>
+                    <Text style={Common.darkTitleH3}>{I18n.t('Name')}</Text>
+                    <TextInput
+                       style={{height: 30}}
+                       placeholder={I18n.t('EnterName')}
+                       autoCorrect={false}
+                       onChangeText={text => this.setState({ name: text })}
+                    />
+                    </View>
+                    </View>
+            <Text style={Common.darkTitleH3}>Days per Week {this.state.value}</Text>
             <Slider
                 style={{marginLeft: 16, width: 320}}
                 minimumValue={1}
@@ -125,15 +128,20 @@ sendData() {
                 <View><Text>{this.state.gender}</Text></View>
                 <View><Text>{this.state.difficulty}</Text></View>
             </View> */}
-            <Text style={Common.darkTitleH2}>Preview</Text>
-           <View style={styles.row}> 
-           <ListView
-                dataSource={this.state.musclesSource}
-                renderRow={(rowData, sectionID, rowID) => <View><Text>Day {rowID} </Text><Text style={{flexDirection: 'column'}}>{rowData}</Text></View>}
-            /> 
-            </View>
+            
+              <Text style={Common.darkTitleH3}>Preview</Text>
+              <View style={styles.row}> 
+                <ListView
+                      dataSource={this.state.musclesSource}
+                      renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
+                /> 
+              </View>
+        </View>
+        <View>
         <Swiper style={styles.wrapper} height={300}>
+        
          {daysAmount}
+        
         </Swiper>
             
         </View>
