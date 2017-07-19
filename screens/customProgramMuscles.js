@@ -80,10 +80,7 @@ constructor(props) {
         }
     }
   render() {
-    
-    
-    const { value } = this.props.route.params;
-        
+    const { value } = this.props.route.params;  
     let daysAmount = [];
     for(var i=0; (i<value && i<7); i++){
            let currSet = 'set' + i;
@@ -93,8 +90,7 @@ constructor(props) {
           dayNumber = {counter}
           recieveMuscles={this.recieveMuscles}
           />)
-          );  
-    }
+          );}
     return (
     <View>
             

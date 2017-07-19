@@ -36,29 +36,43 @@ export default class RootNavigation extends React.Component {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
 
+  onPress(tabItemOnPress, event) {
+    tabItemOnPress();
+    this.props.navigation.performAction(({ tabs, stacks }) => {
+      const { currentNavigatorUID } = this.props.navigation.navigationState;
+      if (this.props.navigation.navigationState.currentNavigatorUID !== 'main') {
+        stacks(currentNavigatorUID).popToTop(currentNavigatorUID);
+      }
+    });
+  }
+
   render() {
     return (
       <TabNavigation tabBarHeight={56} initialTab="home" navigatorUID="main">
         <TabNavigationItem
           id="home"
-          renderIcon={isSelected => this._renderIcon(Home,'ios-home', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Home,'ios-home', isSelected)}
+          onPress={this.onPress}>
           <StackNavigation initialRoute="home" />
         </TabNavigationItem>
         <TabNavigationItem
           id="musclesScreen"
-          renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}
+          onPress={this.onPress}>
           <StackNavigation initialRoute="musclesScreen" />
         </TabNavigationItem>
       
         <TabNavigationItem
           id="diary"
-          renderIcon={isSelected => this._renderIcon(Diary,'ios-bookmarks', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Diary,'ios-bookmarks', isSelected)}
+          onPress={this.onPress}>
           <StackNavigation initialRoute="diary" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="settings"
-          renderIcon={isSelected => this._renderIcon(Profile,'ios-contact', isSelected)}>
+          renderIcon={isSelected => this._renderIcon(Profile,'ios-contact', isSelected)}
+          onPress={this.onPress}>
           <StackNavigation initialRoute="settings" />
         </TabNavigationItem>
       </TabNavigation>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLabel, VictoryLine } from "victory-native";
 import {Grid, Col, Row} from 'react-native-elements';
 import Layout from '../constants/Layout';
@@ -30,17 +30,13 @@ class Stats extends Component {
     this.state = {
     dateLog: '',
     currWeek: moment().format("W"),
-    noDataHere: false
+    noDataHere: false,
   }
 }
 
   filterByWeek() {
     Database.listeningForWeekStats(this.state.currWeek, (log, totalWeight, weekTotalWorkouts, weekTotalExercises, customExercise) => {     
-    //  if ( log.length < 1 ) {
-    //    this.setState({noDataHere: true,})
-    //  } else {
-    //     this.setState({noDataHere: false,})
-    //  }
+
     this.setState({
           weekLogs: log,
           totalWeight: _.sum(totalWeight),
@@ -76,7 +72,6 @@ nextWeek = () => {
     return (
       <View>
       <View>
-
       <Grid>
         <Col size ={2}>
             <View style ={[Common.minusHorizontal, Common.paddingVertical]}>
@@ -240,6 +235,14 @@ const styles = StyleSheet.create({
   },
   chartContainer: {
       flex: 3,
+  },
+  TestBttn: {
+    position: "absolute",
+    bottom: 0,
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10
   },
   TextContainer: {
       flex: 2,
