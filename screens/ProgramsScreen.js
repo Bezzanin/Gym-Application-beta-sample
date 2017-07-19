@@ -137,6 +137,11 @@ export default class SettingsScreen extends React.Component {
           enableEmptySections={true}
           />
       </ScrollView>
+      <View style={{paddingBottom: 10, marginTop: -5}}>
+        <TouchableOpacity style={Common.centered} onPress={()=>this.props.navigator.push('customProgram')}>
+          <Text style={[Common.centeredText, Common.darkBodyText]}>or create your own</Text>
+          </TouchableOpacity>
+      </View>
      </View>
     );
   }

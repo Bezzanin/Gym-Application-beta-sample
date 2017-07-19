@@ -46,72 +46,147 @@ export default class ExercisesScreen extends Component {
        style={{
            flex: 1
        }}>
-          <Image
+          {/* <Image
             source={require('../assets/images/muscles.png')}
             resizeMode={Image.resizeMode.cover}
             style={{flex: 1, width: null, height: null}}
-            >
-                <View style={{backgroundColor: 'transparent', flex: 1}}>
+            > */ }
+                
                     <Grid>
-                        <Row/>
                     <Row>
                         
                         <Col>
-                            <TouchableOpacity onPress={() => {this.goToExercises('triceps')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('triceps')}</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('triceps')}}>
+                                
+                                <Image
+                                    source={require('../assets/images/muscle_groups/triceps.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('triceps')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                         <Col>
-                            <TouchableOpacity onPress={() => {this.goToExercises('biceps')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('biceps')}</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('biceps')}}>
+                                <Image
+                                    source={require('../assets/images/muscle_groups/biceps.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('biceps')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                     </Row>
                     <Row>
                         
                         <Col>
-                            <TouchableOpacity onPress={() => {this.goToExercises('back')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('back')}</Text>
+
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('back')}}>
+          
+                                <Image
+                                    source={require('../assets/images/muscle_groups/back.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('back')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                         <Col>
-                             <TouchableOpacity onPress={() => {this.goToExercises('chest')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('chest')}</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('chest')}}>
+                                
+                                <Image
+                                    source={require('../assets/images/muscle_groups/chest.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('chest')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                     </Row>
                     <Row>
                         
                         <Col>
-                            <TouchableOpacity onPress={() => {this.goToExercises('glutes')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('glutes')}</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('glutes')}}>
+                                <Image
+                                    source={require('../assets/images/muscle_groups/glutes.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('glutes')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                         <Col>
-                             <TouchableOpacity onPress={() => {this.goToExercises('abs')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>{I18n.t('abs')}</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('abs')}}>
+                                <Image
+                                    source={require('../assets/images/muscle_groups/abs.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('abs')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                        
                     </Row>
                     <Row>
                         
                         <Col>
-                            <TouchableOpacity onPress={() => {this.goToExercises('calves')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Calves</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('calves')}}>
+                                <Image
+                                    source={require('../assets/images/muscle_groups/calves.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('calves')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                         <Col>
-                             <TouchableOpacity onPress={() => {this.goToExercises('legs')}}>
-                                <Text style={[Common.lightTitleH1, Common.shadowMedium, {paddingLeft: 20}]}>Legs</Text>
+                            <View style={{flex: 1, padding: 8}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('all')}}>
+                                <Image
+                                    source={require('../assets/images/muscles.png')}
+                                    resizeMode={Image.resizeMode.cover}
+                                    style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
+                                    > 
+                                        
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('all')}</Text>
+                                </Image>
                             </TouchableOpacity>
+                            </View>
                         </Col>
                         
                     </Row>
-                    <Row/>
+
                     </Grid>
-                </View>
-            </Image>
+           
+            {/* </Image> */}
       </View>
     )
   }

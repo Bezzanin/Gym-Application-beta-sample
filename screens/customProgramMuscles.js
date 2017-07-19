@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, FlatList } from "react-native";
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 import MusclesForDay from '../components/musclesForDay';
@@ -30,26 +30,55 @@ constructor(props) {
     }
     this.recieveMuscles=this.recieveMuscles.bind(this)
     this.sendData=this.sendData.bind(this)
-}
-static route = {
-    navigationBar: {
-      visible: true,
-      title: I18n.t('muscles'),
-    },
-};
-recieveMuscles(dayNo, muscles) {
-    previewText = this.state.previewText
-    previewText[dayNo] = muscles.toString()
-    this.setState({
-        previewText,
-        musclesSource: this.state.dataSource.cloneWithRows(previewText)
-    })
-    
-}
-sendData() {
-    Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration)
-}
-
+    }
+    static route = {
+        navigationBar: {
+        visible: true,
+        title: I18n.t('muscles'),
+        },
+    };
+    componentWillMount() {
+        this.setState({
+        
+            musclesSource: this.state.dataSource.cloneWithRows([''])
+        })
+    }
+    recieveMuscles(dayNo, muscles) {
+        previewText = this.state.previewText
+        previewText[dayNo] = muscles.toString()
+        this.setState({
+            previewText,
+            musclesSource: this.state.dataSource.cloneWithRows(previewText)
+        })
+        
+    }
+    sendData() {
+        Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration)
+    }
+    renderList = () => {
+        if (this.state.previewText.length === 0) {
+           return (
+               <View style={{height: 140, justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>
+                   <Text style={[Common.darkTitleH1, Common.centeredText]}>What do you want to train?</Text>
+                <Text style={[Common.darkBodyText, Common.centeredText]}>Use the slider below to check muscles you would like to focus on each day. The order is important</Text>
+               </View>
+           )
+        }
+        else {
+            return (
+                <View>
+                    <Text style={[Common.darkTitleH1, Common.centeredText]}>What do you want to train?</Text>
+                    <ListView
+                        
+                        style={[Common.paddingLeft, Common.sectionBorder, {height: 140}]}
+                        dataSource={this.state.musclesSource}
+                        enableEmptySections
+                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
+                    />
+                </View>
+            )
+        }
+    }
   render() {
     
     
@@ -68,19 +97,15 @@ sendData() {
     }
     return (
     <View>
-      <View>
+            
 
             
-              <Text style={Common.darkTitleH3}>Preview</Text>
-              <View style={styles.row}> 
-                <ListView
-                      dataSource={this.state.musclesSource}
-                      renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
-                /> 
-              </View>
-        </View>
+              
+       
+                
+        {this.renderList()}
         <View>
-        <Swiper style={styles.wrapper} height={300}>
+        <Swiper showsButtons nextButton={<Text style={{fontSize: 48,color: "#CE0707"}}>›</Text>} prevButton={<Text style={{fontSize: 48, color: "#CE0707"}}>‹</Text>} style={styles.wrapper} height={300}>
         
          {daysAmount}
         

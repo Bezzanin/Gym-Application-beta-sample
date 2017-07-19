@@ -79,14 +79,17 @@ _displayLeaveButton() {
 }
   render() {
     return (
-      <View style={[Common.container, Common.sectionBorder]}>
-          <BigTag
-                    content={"Hei, "+this.state.userName+" !"}
-                    color={'#000'}
-                />
+    <View style={[Common.container, Common.sectionBorder]}>
+        <View style={{marginBottom: 16}}>
+            <BigTag
+                        content={"Hei, "+this.state.userName+" !"}
+                        color={'#000'}
+                    />
+        </View>
+                <View>
     <Grid>
-        <Col size={1}/>
-        <Col size={4}>
+       
+        <Col size={3}>
             <Row>
                 <BigTag
                     title={I18n.t('TotalWeight')}
@@ -104,7 +107,7 @@ _displayLeaveButton() {
                 />
             </Row>
         </Col>
-        <Col size={4}>
+        <Col size={3}>
             <Row>
                 <BigTag
                     title={I18n.t('maxWeight')}
@@ -124,22 +127,22 @@ _displayLeaveButton() {
             </Row>
 
         </Col>
-        <Col size={1}/>
         </Grid>
-        <View style={{height: 30}}/>
+        </View>
+        
+        <View style={[Common.sectionBorder, {height: 10, marginBottom: 15}]}/>
         <Grid>
-            <Col size={1}/>
+            
             <Col size={8}>
                 <Row>
                     <BigTag
                     title={I18n.t('currentProgram')}
-                    label={this.state.programName}
+                    content={this.state.programName}
                     color={'#000'}
                 />
                 </Row>
                 <Row>{this._displayLeaveButton()}</Row>
             </Col>
-            <Col size={1}/>
         </Grid>       
       </View>
     );

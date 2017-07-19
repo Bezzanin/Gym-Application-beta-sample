@@ -155,7 +155,8 @@ const Common = {
         marginBottom: Layout.gutter.s,
         fontSize: 20,
         lineHeight: 22,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
     },
     lightTitleH3: {
         color: Colors.lightTitleTextColor,
@@ -217,8 +218,14 @@ const Common = {
         fontSize: 14
     },
     coloredView: {
-        backgroundColor: '#CDCDCD'
+        backgroundColor: '#F3F3F3',
+        borderColor: '#CDCDCD',
+        borderWidth: 0.5,
+        borderRadius: 5,
     },
+    highlightView: {
+        backgroundColor: '#CE0707',
+    }, 
     coloredViewGreen: {
         backgroundColor: 'green'
     },
@@ -230,6 +237,16 @@ const Common = {
      * -----------------------
      * centered, aligned, left, right
      */
+    limitToL: {
+        width: Layout.width.l
+    },
+    limitToM: {
+        width: Layout.width.m
+    },
+    textPadding: {
+        paddingTop: Layout.gutter.sxs,
+        paddingLeft: Layout.gutter.s,
+    },
     centeredText: {
         textAlign: 'center',
         width: Layout.width.l
@@ -240,6 +257,9 @@ const Common = {
     },
     paddingLeft: {
         paddingLeft: Layout.gutter.l
+    },
+    paddingLeftSmall: {
+        paddingLeft: Layout.gutter.s
     },
     paddingRight: {
         paddingRight: Layout.gutter.l
@@ -375,12 +395,17 @@ const Common = {
         flex: 1,
     },
     avatar: {
-    alignSelf: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginVertical: 16,
- },
+        alignSelf: 'center',
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        marginVertical: 16,
+    },
+    attachToBottom: {
+        paddingVertical: Layout.gutter.l,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     /**
      * Exercise component styles
      */
@@ -422,6 +447,17 @@ const Common = {
     /**
      * Buttons style
      */
+    leftAttachedButton: {
+        borderRadius: 100,
+        backgroundColor: 'transparent',
+        width: Layout.width.m,
+        borderColor: Colors.borderColor,
+        borderWidth: 1,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'flex-start'
+    },
     lightButtonRounded: {
         borderRadius: 100,
         backgroundColor: 'transparent',
@@ -504,6 +540,15 @@ const Common = {
             height: 3,
             width: 0
         },
+    },
+    shadowProgramHighlight: {
+        shadowColor: "#8A0000",
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+        shadowOffset: {
+            height: 4,
+            width: 0,
+        }
     },
     /**
      * Functional

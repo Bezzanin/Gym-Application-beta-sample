@@ -61,8 +61,8 @@ export default class WeekDays extends Component {
           onPress={() => {
             this.setModalVisible(true);
           }}
-          style={Common.navButton}>
-          <Text style={Common.brightActionTitle}>Workout Days</Text>
+          style={[Common.leftAttachedButton, {marginTop: 20, width: 300}]}>
+          <Text style={[Common.darkActionTitle]}>Schedule workout days</Text>
           </TouchableOpacity>
         <Modal
           animationType={"slide"}
@@ -79,12 +79,12 @@ export default class WeekDays extends Component {
           </View>
             <View style={[styles.paragraph]}>
                   <View style={[Common.paddingVertical, Common.paddingLeft, Common.paddingRight, { backgroundColor: 'white', zIndex: 5}]}>
-                   <View style={{borderColor: '#CDCDCD', borderBottomWidth: 1}}>
-                    <Text style={Common.darkTitleH2}>WeekDays</Text>
+                   <View style={Common.centered}>
+                    <Text style={[Common.darkTitleH2, Common.centeredText]}>Select workout days</Text>
+                    <Text style={[Common.darkBodyText, Common.centeredText]}>Choose at what days you want to have workouts</Text>
                     </View>
                     </View>
-                    <TouchableOpacity onPress={() => {
-                      console.log(this.state.days)}}><Text>Check days</Text></TouchableOpacity>
+
                     
     <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
       <CheckBox
@@ -193,9 +193,10 @@ export default class WeekDays extends Component {
         }}
       />
       </View>
-      <TouchableOpacity 
+      <TouchableOpacity
+      style={Common.brightButtonRounded} 
       onPress={() => this.onSendData(this.state.days)}>
-        <Text>DONE</Text>
+        <Text style={Common.lightActionTitle}>Save days</Text>
       </TouchableOpacity>
             </View>
 

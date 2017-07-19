@@ -59,7 +59,7 @@ class MusclesForDay extends Component {
       />
         <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={[!this.state.checked ? {marginRight: -2} : {marginRight: 0}, {width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}]}
         title='Shoulders'
         iconLeft
         checkedIcon='check-square-o'

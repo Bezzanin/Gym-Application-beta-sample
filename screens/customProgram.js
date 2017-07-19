@@ -42,8 +42,12 @@ static route = {
 
   render() {    
     return (
-      <ScrollView style={Common.containerBasic}>
-        <View style={[Common.container, Common.shadowLight, {backgroundColor: 'white'}]}>
+      <View style={Common.containerBasic}>
+        <View style={[Common.centered, Common.paddingVertical, {paddingTop: 16}]}>
+          <Text style={[Common.darkTitleH1, Common.centeredText]}>Make your own program</Text>
+          <Text style={[Common.centeredText, Common.darkBodyText]}>Fill in basic information about your program. Later on you can arrange muscles in correct order of days </Text>
+        </View>
+        <View style={[Common.container, {backgroundColor: 'white'}]}>
       
             <View style={{marginBottom: 24}}>
                 <View style={{borderColor: '#CDCDCD', borderBottomWidth: 1}}>
@@ -54,9 +58,11 @@ static route = {
                        autoCorrect={false}
                        onChangeText={text => this.setState({ name: text })}
                     />
-                    </View>
-                    </View>
+                </View>
+            </View>
+            
             <Text style={Common.darkTitleH3}>Days per Week {this.state.value}</Text>
+            
             <Slider
                 style={{marginLeft: 16, width: 320}}
                 minimumValue={1}
@@ -67,17 +73,20 @@ static route = {
                 thumbStyle={{ top: 20 }}
                 value={this.state.value}
                 onValueChange={(value) => this.setState({value})} />
-            <TouchableOpacity 
-            onPress={()=>this.sendParams()}
-            style={[
-                Common.brightButtonRounded,
-                Common.shadowBright,
-                Common.marginVerticalSmall
-            ]}>
-              <Text>NEXT</Text></TouchableOpacity>
+               
             </View>
-        
-      </ScrollView>
+
+            <View style={[Common.attachToBottom]}>
+                <TouchableOpacity 
+                onPress={()=>this.sendParams()}
+                style={[
+                    Common.brightButtonRounded,
+                    Common.shadowBright,
+                    Common.marginVerticalSmall
+                ]}>
+                <Text style={Common.lightActionTitle}>Next</Text></TouchableOpacity>
+            </View>
+      </View>
     );
   }
 }

@@ -188,16 +188,19 @@ export default class NewDiary extends React.Component {
 
   renderEmptyDate() {
     return (
-      <View style={[Common.centered, Common.paddingVertical]}>
+      <View style={[Common.paddingLeftSmall, Common.marginVerticalSmall]}>
           <View style={[Common.brightStats, Common.shadowBright]}>
               <Text style={Common.lightTagTitle}>{I18n.t('DailyAdvice')}</Text>
                 <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
           </View>
-          {this.state.hasWorkoutDay && 
-          <TouchableOpacity onPress={() => {this.goToProgram()}}>
-            <Text>You Have Workout this day</Text>
-          </TouchableOpacity>}
+          {this.state.hasWorkoutDay &&
+          <View style={{paddingLeft: 0}}>
+            <View style={{height: 10}}/>
+          <TouchableOpacity style={Common.leftAttachedButton} onPress={() => {this.goToProgram()}}>
+            <Text style={Common.darkActionTitle}>Begin workout</Text>
+          </TouchableOpacity>
+          </View>}
       </View>
     );
   }

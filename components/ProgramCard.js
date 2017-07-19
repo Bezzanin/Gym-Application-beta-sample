@@ -92,7 +92,7 @@ class ProgramCard extends Component {
       <TouchableHighlight 
         underlayColor={'transparent'}
         onPress={this.goToRoute}
-        style={styles.container}>
+        style={[styles.container, this.props.item.isBestMatch ? Common.shadowProgramHighlight : Common.shadowMedium]}>
         <Image 
           source={{uri: this.state.uriLink}}
           resizeMode={Image.resizeMode.cover}
@@ -100,7 +100,7 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              {this.props.item.isBestMatch && <Text style={Common.lightTitleH2}>Best Match Program</Text>}
+              {this.props.item.isBestMatch && <Text style={Common.lightTitleH4}>Best Match Program</Text>}
               <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
@@ -135,13 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Layout.window.width * 0.7,
     marginHorizontal: 20,
+    marginTop: 2,
+    marginBottom: 8,
     borderRadius: 6,
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5
   },
   textContainer: {
     alignItems: 'flex-start',

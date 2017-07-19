@@ -169,6 +169,7 @@ export default {
   ClosedCableRow: "?",
 
   others: 'muuta',
+  all: 'Kaikki',
   ShowMore: "näytä lisää",
   Hide: "piilottaa"
 };
