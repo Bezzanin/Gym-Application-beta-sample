@@ -503,7 +503,7 @@ static getUserProgramName(callback) {
                 lastWorkoutDate: ''
             },
             workoutLogs: {"2000-01-01": ["null"]},
-            exercisesLogs: '',
+            exerciseLogs: '',
             details: {difficultyRate: 0, level: 0, programName: '', 
             gender: gender, 
             DaysPerWeek: DaysPerWeek,

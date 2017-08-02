@@ -24,8 +24,8 @@ class DashboardExercisesList extends Component {
             <Grid>
             <Row>
                     <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{I18n.t('Exercise')}</Text></View></Col>
+                    <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Sets').toLowerCase()}</Text></View></Col>
                     <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
-                    <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Weight').toLowerCase()}</Text></View></Col>
                 </Row>
             </Grid>
             <Grid>
@@ -46,7 +46,7 @@ _renderItem = ({item}) => (
         <Row>
             <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>40 kg</Text></View></Col>
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
         </Row>
     );
   

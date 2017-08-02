@@ -225,7 +225,7 @@ export default class ExerciseScreen extends React.Component {
               shouldPlay={true}
               isMuted
               resizeMode="cover"
-              style={{ flex: 1 }}
+              style={{ flex: 1}}
 
             />
 
