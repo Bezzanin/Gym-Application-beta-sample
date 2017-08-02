@@ -213,10 +213,14 @@ _retrieveFilteredItems(filter, exercises) {
     let exercisesSequence = {day1: {id: 0}};
     let newArr = this.props.route.params.exercises.sort(this.compare('muscles'));
     for ( i=1; i<=this.props.route.params.program.days; i++ ) {
+        let dayExercises = 'day' + i + 'exercises';
         let day = 'day' + i;
-        let ref = this.props.route.params.program[day];
+        let ref = this.props.route.params.program[dayExercises];
         let filteredByDay = this.props.route.params.exercises.filter((item) => {
-            return ref.split(', ').includes(item.muscles);
+            console.log('*')
+            console.log(ref.split(', '));
+            console.log('*')
+            return ref.split(', ').includes(item._key);
         })
 
         let filteredByNumber = this.filterByNumber(filteredByDay, 4);

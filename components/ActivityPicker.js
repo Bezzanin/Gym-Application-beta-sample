@@ -33,17 +33,17 @@ export default class ActivityPicker extends React.Component {
   
 
   componentDidMount() {
-      this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight)
+      this.props.onSendInitialReps(this.state.sets, this.state.newRep);
+      this.props.onSendInitialWeight(this.state.sets, this.state.newWeight)
   }
     sendData(newRep, index) {
-        this.setState({newRep}, () => {
-            this.props.onSendInitialState(this.state.sets, this.state.newRep, this.state.newWeight);
+
+        console.log(newRep)
+
+        this.setState({newRep, index}, () => {
+            this.props.onSendInitialReps(this.state.sets, this.state.newRep);
         })
-        
-        this.setState({
-            newRep, index
-        })
-        
+
     }
     
     sendFBData(id, sets, reps, weight) {
@@ -54,8 +54,11 @@ export default class ActivityPicker extends React.Component {
         Database.addExerciseStats(this.state.text, this.state.weight, this.state.sets, this.state.reps);
     }
     sendWeight(newWeight, index) {
+
+        console.log(newWeight)
+
         this.setState({newWeight}, () => {
-            this.props.onSendInitialState(this.state.sets, this.state.newReps, this.state.newWeight);
+            this.props.onSendInitialWeight(this.state.sets, this.state.newWeight);
         })
         
         this.setState({
@@ -98,8 +101,8 @@ renderItem = ({item, index}) => {
                 key={counter}
                 number={counter + 1}
                 index={counter}
-                reps={this.state.reps[counter]}
-                weight={this.state.weight[counter]}
+                reps={this.state.reps[counter+1]}
+                weight={this.state.weight[counter+1]}
                 onDelete={(index) => {this.handleDelete(index)}}
             />
             </View>
@@ -130,7 +133,7 @@ renderItem = ({item, index}) => {
                 >
                     <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa set</Text>
                     <TouchableOpacity onPress={() => {
-                      console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
+                      console.log(this.state.reps); console.log(this.state.weight)}}><Text>Check reps</Text></TouchableOpacity>
                     <TouchableOpacity
                         style={[Common.darkButton, Common.shadowLight]}
                         onPress={() => {
@@ -156,7 +159,7 @@ renderItem = ({item, index}) => {
                 <TouchableOpacity
                 style={Common.brightButtonRounded}
                 onPress={() => {
-                    this.props.onSendData(this.state.sets, this.state.reps, this.state.weight)
+                    this.props.onSendData(this.state.sets, this.state.newRep, this.state.newWeight, this.state.reps, this.state.weight)
                 }}
                 >
                 <Text style={Common.lightActionTitle}>{this.props.insideWorkout ? `${I18n.t('Next')} ${I18n.t('Exercise').toLowerCase()}` : 'Show sets'}</Text>

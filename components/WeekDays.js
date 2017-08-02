@@ -196,7 +196,7 @@ export default class WeekDays extends Component {
       <TouchableOpacity
       style={Common.brightButtonRounded} 
       onPress={() => this.onSendData(this.state.days)}>
-        <Text style={Common.lightActionTitle}>Save days</Text>
+        <Text style={Common.lightActionTitle}>Save</Text>
       </TouchableOpacity>
             </View>
 

@@ -65,11 +65,17 @@ export default class ProgramBadge extends Component {
               source={require('../assets/images/program_dashboard.png')}
               style={{flex: 1, width: null, height: null}}>
                 <View style={styles.heroContainer}>
-                    <Text style={styles.programState}>{I18n.t('YourProgram')}</Text>
+                    <View style={styles.inlineTextContainer}>
+                        <Text style={styles.programState}>{I18n.t('YourProgram')}</Text>
+                        {this.showAllProgramsButton()}
+                    </View>
+                    
                     <View style={styles.inlineTagContainer}>
                         <BigTag title={I18n.t('PerWeek')} content={this.props.days}/>
+                        <View style={{width: 50}}/>
                         <BigTag title={I18n.t('HowLong')} content={'30'} label={' ' + I18n.t('days')}/>
                     </View>
+                    
                     {this._displayEnrollButton()}
                 </View>
             </Image>
@@ -88,6 +94,7 @@ export default class ProgramBadge extends Component {
         let day = 'day1';
         return (
             <View>
+               
                         <TouchableOpacity
                             onPress={() => {continueProgram()}}
                             style={[
@@ -100,6 +107,22 @@ export default class ProgramBadge extends Component {
             </View>
         )
     }
+  }
+  showAllProgramsButton() {
+       switch (this.props.programName) { 
+        case this.props.program._key:
+            
+           
+            return (
+                <View>
+                    <TouchableOpacity 
+                    onPress={() => {this.goToAllPrograms()}}>
+                        <Text style={Common.lightActionTitle}>ALL PROGRAMS</Text>
+                    </TouchableOpacity>
+            </View>
+            )
+        default: return( <View/> )
+    } 
   }
   showContinueExercise() {
     let today = moment().format('MM-DD-YY');
@@ -117,7 +140,13 @@ export default class ProgramBadge extends Component {
         )
       }
     else {
-        //let timeout = setTimeout(() => {
+        //let timeout = setTimeout(() => 
+
+        
+           /* <TouchableOpacity onPress={() => {this.goToAllPrograms()}}>
+                    <Text>Show all programs</Text>
+                </TouchableOpacity> */
+
     switch (this.props.programName) { 
         case this.props.program._key:
             let index = 1;
@@ -176,6 +205,11 @@ _displayLeaveButton() {
             );
     }
 }
+
+  goToAllPrograms = () => {
+    this.props.navigator.push('programs');
+  }
+
 _displayEnrollButton() {
     enrollProgram = () => {
         let emptyArr = [];
@@ -275,9 +309,14 @@ imageContainer: {
     color: '#FFFFFF',
     marginVertical: 7,
   },
+  inlineTextContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+  },
   inlineTagContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-around'
+      justifyContent: 'flex-start'
 
   }
 })

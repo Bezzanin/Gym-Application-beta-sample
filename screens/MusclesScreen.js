@@ -169,14 +169,14 @@ export default class ExercisesScreen extends Component {
                         </Col>
                         <Col>
                             <View style={{flex: 1, padding: 8}}>
-                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('all')}}>
+                            <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('legs')}}>
                                 <Image
                                     source={require('../assets/images/muscles.png')}
                                     resizeMode={Image.resizeMode.cover}
                                     style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
                                     > 
                                         
-                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('all')}</Text>
+                                    <Text style={[Common.lightTitleH2, Common.shadowMedium]}>{I18n.t('legs')}</Text>
                                 </Image>
                             </TouchableOpacity>
                             </View>
