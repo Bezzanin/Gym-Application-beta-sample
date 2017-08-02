@@ -363,6 +363,13 @@ const Common = {
         paddingHorizontal: Layout.gutter.m,
         paddingTop: Layout.gutter.s,
     },
+    lightStats:{
+        width: Layout.window.width - (2 * Layout.gutter.l),
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        paddingHorizontal: Layout.gutter.m,
+        paddingTop: Layout.gutter.s,
+    },
     promotionCard: {
         width: Layout.window.width - (2 * Layout.gutter.l),
         height: Layout.width.m * 1.3,

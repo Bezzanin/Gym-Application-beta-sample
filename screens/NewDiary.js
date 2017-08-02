@@ -189,9 +189,9 @@ export default class NewDiary extends React.Component {
   renderEmptyDate() {
     return (
       <View style={[Common.paddingLeftSmall, Common.marginVerticalSmall]}>
-          <View style={[Common.brightStats, Common.shadowBright]}>
-              <Text style={Common.lightTagTitle}>{I18n.t('DailyAdvice')}</Text>
-                <Text style={Common.lightTitleH3}>{I18n.t('RandomAdvice')}</Text>
+          <View style={[Common.lightStats, Common.shadowLight]}>
+              <Text style={Common.darkTagTitle}>{I18n.t('DailyAdvice')}</Text>
+                <Text style={Common.darkTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
           </View>
           {this.state.hasWorkoutDay &&

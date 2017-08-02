@@ -38,8 +38,13 @@ export default class AddActivity extends Component {
     console.log('Closing')
     this.setState({ modalVisible: visible });
   }
-  onSendData(sets, reps, weight) {
-    Database.addExerciseStats(this.state.name, sets, reps, weight);
+  onSendData(sets, reps, weight, reparray, weightarray) {
+    
+    console.log('Show the array');
+    console.log(reparray);
+    console.log('Show the array');
+    console.log(weightarray);
+    Database.addExerciseStats(this.state.name, sets, reparray, weightarray);
     this.setModalVisible(!this.state.modalVisible)
   }
 
@@ -100,8 +105,8 @@ export default class AddActivity extends Component {
                     this.onSendData(sets, reps, weight)
                   }
                   }}
-                onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
-
+                onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
+                onSendInitialWeight={(sets, weight) => {console.log('The weight used is ' + weight); this.setState({sets, weight}) }}
               />
             </View>
 

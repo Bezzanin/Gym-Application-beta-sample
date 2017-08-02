@@ -34,6 +34,7 @@ export default class ExerciseScreen extends React.Component {
       weight: '70',
       metric: 'kg',
       sets: 0,
+      repsx: 10,
       reps: 5,
       videoLink: 'https://',
       videoRate: 1.0
@@ -190,12 +191,26 @@ export default class ExerciseScreen extends React.Component {
           <View>
            <ActivityPicker
             insideWorkout={this.props.route.params.insideWorkout}
-            onSendInitialState={(sets,reps,weight) => {this.setState({sets,reps,weight})}}
-            onSendData={(sets,reps,weight) => {
-              if (this.state.sets === 0) {
-              let newRep = []; newRep[0] = this.state.reps;
-              let newWeight = []; newWeight[0] = this.state.weight;
-              this.goToNext(this.state.sets, newRep, newWeight)
+            onSendInitialState={(sets, reps, weight) => {
+               console.log('Reps from initial below')
+              console.log(reps)
+              console.log('Sets from initial below')
+              console.log(sets)
+              this.setState({sets,reps,weight})}}
+            onSendData={(sets, reps, weight) => {
+              console.log('Reps below')
+              console.log(reps)
+              console.log('Sets below')
+              console.log(sets)
+              if (this.state.sets === 1) {
+                  this.setState({
+                    repsx: reps
+                  }, () => {
+                    let newRep = [];
+                    newRep[0] = this.state.reps;
+                    let newWeight = []; newWeight[0] = this.state.weight;
+                    this.goToNext(this.state.sets, this.state.reps, newWeight)
+                  })
               }
               else {
                 this.goToNext(sets,reps,weight)
