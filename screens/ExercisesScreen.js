@@ -78,9 +78,10 @@ export default class ExercisesScreen extends Component {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
-        //this.setSource(exercises, exercises);
-        this.setState({exercises: filterExercises(this.props.route.params.filter, exercises)})
-        this.setSource(this.state.exercises, filterExercises(this.props.route.params.filter, exercises), { })
+        console.log(exercises)
+        this.setSource(exercises, exercises);
+        this.setState({exercises: filterExercises('ALL', exercises)})
+        this.setSource(this.state.exercises, filterExercises('ALL', exercises), { })
       } catch(e) {
 
       }
