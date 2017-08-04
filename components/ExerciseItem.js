@@ -12,7 +12,7 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
-const { View, TouchableHighlight, Text, Image, TouchableOpacity } = ReactNative;
+const { View, TouchableHighlight, Text, Image, TouchableOpacity, ActivityIndicator } = ReactNative;
 
 @withNavigation
 class ExerciseItem extends Component {
@@ -28,7 +28,8 @@ class ExerciseItem extends Component {
     storageRef.getDownloadURL().then((url) => {
       console.log(this.state.uriLink)
       this.setState({
-        uriLink: url
+        uriLink: url,
+        loading: true
       })
     }, function(error) {
       console.log(error);
@@ -59,7 +60,10 @@ class ExerciseItem extends Component {
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
             <Image 
               source={{uri: this.state.uriLink}}
-              style={Common.imageStyle}/>
+              onLoadEnd={()=> { this.setState({ loading: false }) }}
+              style={Common.imageStyle}>
+              <ActivityIndicator animating={ this.state.loading } style = {styles.activityIndicator}/>
+              </Image>
           </View>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
@@ -108,6 +112,11 @@ const styles = StyleSheet.create({
   tag: {
     fontSize: 14,
     marginVertical: 1
-  }
+  },
+  activityIndicator: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+   }
 })
 module.exports = ExerciseItem;
