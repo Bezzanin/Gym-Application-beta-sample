@@ -59,7 +59,6 @@ class ExerciseItem extends Component {
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
             <Image 
               source={{uri: this.state.uriLink}}
-              defaultSource={require('../assets/images/default.png')}
               style={Common.imageStyle}/>
           </View>
           <View style={[Common.inlineContainer]}>
