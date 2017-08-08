@@ -21,6 +21,7 @@ class ExerciseItem extends Component {
     this.state = {
       uriLink: 'default',
       videoLink: 'default',
+      loading: true
     }
   }
   componentDidMount() {
@@ -29,7 +30,7 @@ class ExerciseItem extends Component {
       console.log(this.state.uriLink)
       this.setState({
         uriLink: url,
-        loading: true
+        
       })
     }, function(error) {
       console.log(error);

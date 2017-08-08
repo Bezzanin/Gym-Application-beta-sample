@@ -14,7 +14,7 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
-const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity } = ReactNative;
+const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity, ActivityIndicator } = ReactNative;
 
 const filterExercises = (filter, exercises) => {
 return exercises.filter((item) => {
@@ -38,7 +38,8 @@ class ProgramCard extends Component {
       }),
       uriLink: "_",
       filter: "ARMS",
-      exercises: []
+      exercises: [],
+      loading: true
     }
     this.handleFilter = this.handleFilter.bind(this);
  
@@ -96,6 +97,7 @@ class ProgramCard extends Component {
         <Image 
           source={{uri: this.state.uriLink}}
           resizeMode={Image.resizeMode.cover}
+          onLoadEnd={()=> { this.setState({ loading: false }) }}
           style={{flex: 1, width: null, height: null, borderRadius: 6}}
         >
           <View style={styles.textContainer}>
@@ -164,5 +166,10 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff'
   },
+    activityIndicator: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+   }
 })
 module.exports = ProgramCard;
