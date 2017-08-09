@@ -35,6 +35,7 @@ export default class WeekDays extends Component {
   }
   onSendData(days) {
     Database.setWorkoutDays(days);
+    this.setModalVisible(!this.state.modalVisible)
   }
 
   allWeekDays(weekday, condition) {
