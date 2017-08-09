@@ -58,7 +58,7 @@ class ExerciseItem extends Component {
         onPress={this.props.onPress}>
         <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
-            <Image 
+            <Image
               source={{uri: this.state.uriLink}}
               onLoadEnd={()=> { this.setState({ loading: false }) }}
               style={Common.imageStyle}>

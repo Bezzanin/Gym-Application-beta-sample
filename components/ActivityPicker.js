@@ -159,6 +159,10 @@ renderItem = ({item, index}) => {
                 <TouchableOpacity
                 style={Common.brightButtonRounded}
                 onPress={() => {
+                    console.log("Loggin this.state.reps")
+                    console.log(this.state.reps);
+                    console.log("Loggin this.state.weight")
+                    console.log(this.state.weight);
                     this.props.onSendData(this.state.sets, this.state.newRep, this.state.newWeight, this.state.reps, this.state.weight)
                 }}
                 >

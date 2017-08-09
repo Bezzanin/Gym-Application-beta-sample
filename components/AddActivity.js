@@ -90,7 +90,7 @@ export default class AddActivity extends Component {
                       console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
               <ActivityPicker
               
-                onSendData={(sets,reps,weight) => {
+                onSendData={(sets,reps,weight, reparray, weightarray) => {
                   if (sets === 0) {
                     console.log('Sets is zero');
                     let newRep = []; newRep[0] = this.state.reps;
@@ -99,10 +99,10 @@ export default class AddActivity extends Component {
                     console.log("newWeight[0] is " + newWeight[0])
                     console.log("this.state.reps is " + this.state.reps)
                     
-                    this.onSendData(sets + 1, newRep, newWeight);
+                    this.onSendData(sets + 1, newRep, newWeight, reparray, weightarray);
                   }
                   else {
-                    this.onSendData(sets, reps, weight)
+                    this.onSendData(sets, reps, weight, reparray, weightarray)
                   }
                   }}
                 onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
