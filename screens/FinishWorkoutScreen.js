@@ -6,7 +6,12 @@ import Database from '../api/database';
 import Colors from '../constants/Colors';
 import Common from '../constants/common';
 import BigTag from '../components/BigTag';
-import _ from 'lodash'
+import _ from 'lodash';
+import I18n from 'react-native-i18n';
+import fi from '../constants/fi';
+I18n.locale = "fi";
+I18n.fallbacks = true;
+I18n.translations = {fi};
 
 export default class FinishWorkoutScreen extends React.Component {
   constructor(props){
@@ -19,7 +24,7 @@ export default class FinishWorkoutScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params){
-        return `Congratulations!`
+        return I18n.t('Feedback')
       }
     },
   };
@@ -78,7 +83,7 @@ export default class FinishWorkoutScreen extends React.Component {
           
           <Row size={1}>
             <View style={[Common.centered, {flex: 1}]}>
-              <Text style={[Common.centeredText, Common.darkTitleH1]}>Workout is completed</Text>
+              <Text style={[Common.centeredText, Common.darkTitleH1]}>{I18n.t('WorkoutIsCompleted')}</Text>
             </View>
           </Row>
           <View style={[Common.sectionBorder, {flex: 1, maxHeight: 30, marginBottom: 10}]}/>
@@ -88,12 +93,12 @@ export default class FinishWorkoutScreen extends React.Component {
             <Col size={2}>
             <View style={{justifyContent: 'center', flex: 1}}>
               <BigTag
-                title={'exercises finished'}
+                title={I18n.t('exercisesDone')}
                 content={this.state.totalExercises}
                 color={'#000'}
               />
               <BigTag
-                title={'total sets'}
+                title={I18n.t('TotalSets')}
                 content={this.state.totalSets}
                 color={'#000'}
               />
@@ -102,12 +107,12 @@ export default class FinishWorkoutScreen extends React.Component {
             <Col size={2}>
             <View style={{justifyContent: 'center', flex: 1}}>
               <BigTag
-                title={'total reps'}
+                title={I18n.t('TotalReps')}
                 content={this.state.totalReps}
                 color={'#000'}
               />
               <BigTag
-                title={'total weight'}
+                title={I18n.t('TotalWeight')}
                 content={this.state.totalWeight}
                 label={"kg"}
                 color={'#000'}
@@ -122,18 +127,18 @@ export default class FinishWorkoutScreen extends React.Component {
           <View style={[Common.sectionBorder]}/>
           <Row size={1} containerStyle={Common.centered}>
             <View style={[Common.centered, {flex: 1}]}>
-              <Text style={[Common.darkBodyText, Common.centeredText]}>Please, rate workout difficulty, so that we make it more suitable for you</Text>
+              <Text style={[Common.darkBodyText, Common.centeredText]}>{I18n.t('FeedbackText')}</Text>
             </View>
             </Row>
           <Row size={1}>
             <Col>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(1); Database.rateWorkout(1); this.finishWorkout()}}><Text style={styles.colorBlack}>Bad</Text></TouchableOpacity>
+              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(1); Database.rateWorkout(1); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('Bad')}</Text></TouchableOpacity>
             </Col>
             <Col containerStyle={styles.centered}>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(2); Database.rateWorkout(2); this.finishWorkout()}}><Text style={styles.colorBlack}>Fine</Text></TouchableOpacity>
+              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(2); Database.rateWorkout(2); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('Fine')}</Text></TouchableOpacity>
             </Col>
             <Col>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(3); Database.rateWorkout(3); this.finishWorkout()}}><Text style={styles.colorBlack}>Very nice</Text></TouchableOpacity>
+              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(3); Database.rateWorkout(3); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('VeryGood')}</Text></TouchableOpacity>
             </Col>
           </Row>
           <Row/>
