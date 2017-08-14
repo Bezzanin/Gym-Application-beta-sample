@@ -219,15 +219,15 @@ setModalVisible(visible) {
                     placeholder={I18n.t('EnterName')}
                     autoCorrect={false}
                   />
-                  <FormLabel>{I18n.t('EnterYourEmail')}</FormLabel>
+                  <FormLabel>{I18n.t('Email')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ email: text })}
-                    placeholder={I18n.t('Email')}
+                    placeholder={I18n.t('EnterYourEmail')}
                     keyboardType="email-address"
                     autoCapitalize={'none'}
                     autoCorrect={false}
                   />
-                  <FormLabel>{I18n.t('EnterPassword')}</FormLabel>
+                  <FormLabel>{I18n.t('Password')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ password: text })}
                     placeholder={I18n.t('EnterPassword')}

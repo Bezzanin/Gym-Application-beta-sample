@@ -35,6 +35,7 @@ export default class WeekDays extends Component {
   }
   onSendData(days) {
     Database.setWorkoutDays(days);
+    this.setModalVisible(!this.state.modalVisible)
   }
 
   allWeekDays(weekday, condition) {
@@ -62,7 +63,7 @@ export default class WeekDays extends Component {
             this.setModalVisible(true);
           }}
           style={[Common.leftAttachedButton, {marginTop: 20, width: 300}]}>
-          <Text style={[Common.darkActionTitle]}>Schedule workout days</Text>
+          <Text style={[Common.darkActionTitle]}>{I18n.t('SelectWorkoutDays')}</Text>
           </TouchableOpacity>
         <Modal
           animationType={"slide"}
@@ -80,8 +81,8 @@ export default class WeekDays extends Component {
             <View style={[styles.paragraph]}>
                   <View style={[Common.paddingVertical, Common.paddingLeft, Common.paddingRight, { backgroundColor: 'white', zIndex: 5}]}>
                    <View style={Common.centered}>
-                    <Text style={[Common.darkTitleH2, Common.centeredText]}>Select workout days</Text>
-                    <Text style={[Common.darkBodyText, Common.centeredText]}>Choose at what days you want to have workouts</Text>
+                    <Text style={[Common.darkTitleH2, Common.centeredText]}>{I18n.t('SelectWorkoutDays')}</Text>
+                    <Text style={[Common.darkBodyText, Common.centeredText]}>{I18n.t('ChooseAtWhatDays')}</Text>
                     </View>
                     </View>
 
@@ -90,7 +91,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Monday'
+        title={I18n.t('Monday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -105,7 +106,7 @@ export default class WeekDays extends Component {
         <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Tuesday'
+        title={I18n.t('Tuesday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -120,7 +121,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
-        title='Wednesday'
+        title={I18n.t('Wednesday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -135,7 +136,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Thursday'
+        title={I18n.t('Thursday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -150,7 +151,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Friday '
+        title={I18n.t('Friday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -165,7 +166,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Saturday'
+        title={I18n.t('Saturday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -180,7 +181,7 @@ export default class WeekDays extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Sunday'
+        title={I18n.t('Sunday')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -196,7 +197,7 @@ export default class WeekDays extends Component {
       <TouchableOpacity
       style={Common.brightButtonRounded} 
       onPress={() => this.onSendData(this.state.days)}>
-        <Text style={Common.lightActionTitle}>Save</Text>
+        <Text style={Common.lightActionTitle}>{I18n.t('Save')}</Text>
       </TouchableOpacity>
             </View>
 

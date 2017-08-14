@@ -108,7 +108,7 @@ renderBoard = () => {
     return(
       <View style={Common.sectionBorder}>
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('week')} {this.state.weekNumber} {I18n.t('Exercises')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('inWeek')} {this.state.weekNumber} {I18n.t('Exercises')}</Text>
         </View>
         <Stats
           loadingOFF={this.loadingOFF}
