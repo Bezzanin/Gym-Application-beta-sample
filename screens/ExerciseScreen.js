@@ -191,12 +191,10 @@ export default class ExerciseScreen extends React.Component {
           <View>
            <ActivityPicker
             insideWorkout={this.props.route.params.insideWorkout}
-            onSendInitialState={(sets, reps, weight) => {
-               console.log('Reps from initial below')
-              console.log(reps)
-              console.log('Sets from initial below')
-              console.log(sets)
-              this.setState({sets,reps,weight})}}
+            onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
+                onSendInitialWeight={(sets, weight) => {console.log('The weight used is ' + weight); this.setState({sets, weight}) }}
+
+
             onSendData={(sets, reps, weight) => {
               console.log('Reps below')
               console.log(reps)
