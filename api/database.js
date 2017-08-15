@@ -82,12 +82,13 @@ class Database {
             weekLogDates.map((day) => {
                 weekTotalExercises.push(logs[day].length)
                 logs[day].map((exercises) => {
+                    console.log(exercises)
                 if(Array.isArray(exercises)){
                     exercises.map((exercise) => {
-                        
+                        if(Array.isArray(exercise.weight)){
                         exercise.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
-                    })
+                    })} else {totalWeight.push(parseInt(exercise.weight))}
                     }) 
                 } else { 
                     weekTotalExercises.push(1)
@@ -123,10 +124,11 @@ class Database {
                 logs[day].map((exercises) => {
                 if(Array.isArray(exercises)){
                     exercises.map((exercise) => {
+                        if(Array.isArray(exercise.weight)){
                         exercise.weight.map((weight) =>{
                         totalWeight.push(parseInt(weight))
-                    })
-                    }) 
+                    })} else {totalWeight.push(parseInt(exercise.weight))}
+                    })  
                 } else {
                     totalExercises.push(1)
                     totalWeight.push(parseInt(exercises.weight))
