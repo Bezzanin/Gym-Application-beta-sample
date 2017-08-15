@@ -5,6 +5,7 @@ import { withNavigation } from '@expo/ex-navigation';
 import Layout from '../constants/Layout';
 import ExerciseItem from '../components/ExerciseItem';
 import BigTag from '../components/BigTag';
+import WeekDays from '../components/WeekDays';
 import { Font } from 'expo';
 import Database from '../api/database';
 import Common from '../constants/common';
@@ -172,6 +173,10 @@ export default class ProgramBadge extends Component {
                                     ]}>
                             <Text style={Common.lightActionTitle} >{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
+                        <View style={[Common.container, Common.sectionBorder]}>
+                        <WeekDays/>
+                        </View>
+                        
             </View>
             )
         default: return( <View/> )

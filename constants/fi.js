@@ -129,7 +129,7 @@ export default {
   Seventh: "Seitsemäs",
   Day: "Päivä",
   WorkoutIsCompleted: "Harjoitus tehty!",
-  Feedback: "palaute",
+  Feedback: "Palaute",
   Bad: "Helppo",
   Fine: "Sopiva",
   VeryGood: "Vaikea",

@@ -286,6 +286,15 @@ static getUserProgramName(callback) {
             callback(day);
         })
     }
+    static getCurrentWorkoutDaysNumber(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = '/user/' + uid + '/ownProgram/';
+        firebase.database().ref(path).on('value', (snap) => {
+            let days = snap.val().days;
+            console.log(`There are ${days} days overall`);
+            callback(days);
+        })
+    }
     static getLastWorkoutDate(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/statistics/';
@@ -297,14 +306,15 @@ static getUserProgramName(callback) {
         
     }
     static finishWorkout(){
-        let dayNumber;
+        let dayNumber, days;
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/statistics';
         firebase.database().ref(path).update({
             lastWorkoutDate: moment().format('MM-DD-YY')
         });
         this.getCurrentWorkoutDay((day) => {dayNumber = day})
-        this.emptyWorkout(dayNumber);
+        this.getCurrentWorkoutDaysNumber((days) => {days})
+        this.emptyWorkout(dayNumber, days);
         
     }
     static pushWorkoutLog(log){
@@ -314,10 +324,7 @@ static getUserProgramName(callback) {
         log.forEach((logItem) => {
             totalWeight+=parseInt(logItem.weight)
         })
-        // firebase.database().ref(path).set({
-        //     ...log
-        // })
-        //Test here
+
         firebase.database().ref(path).once('value', (snap) => {
             let logs = snap.val();
             if (logs === null) {logs = []}
@@ -348,13 +355,21 @@ static getUserProgramName(callback) {
 
     }
 
-    static emptyWorkout(dayNumber){
+    static emptyWorkout(dayNumber, days){
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence';
-        firebase.database().ref(path).update({
+
+        if (dayNumber === days) {
+            firebase.database().ref(path).update({
+            currentExerciseIndex: 0,
+            currentWorkoutDay: 1
+        })}
+        else {
+            firebase.database().ref(path).update({
             currentExerciseIndex: 0,
             currentWorkoutDay: dayNumber + 1
-        })
+        })}
+        
     }
 
     static setWorkoutDays(days) {

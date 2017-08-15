@@ -157,8 +157,6 @@ getOwnExercises() {
         <View style={[Common.container, Common.sectionBorder]}>
         <Text style={styles.textBlackTitle}>{I18n.t('Workouts')}</Text>
         
-        <WeekDays/>
-        
         </View>
         {this.displayWorkoutDays()}
         <Divider/>
