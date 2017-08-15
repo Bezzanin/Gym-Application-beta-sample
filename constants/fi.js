@@ -104,7 +104,7 @@ export default {
   male: 'Mies',
   female: 'Nainen',
   both: '',
-  exersiscesDone: "Treeniliikkeitä",
+  exercisesDone: "Treeniliikkeitä",
   TotalSets: "Sarjoja yhteensä",
   TotalReps: "Toistoja yhteensä",
   FeedbackText: "Ole hyvä ja arvioi treenin vaikeus, että voimme muokata ohjelmaa eteenpäin",
