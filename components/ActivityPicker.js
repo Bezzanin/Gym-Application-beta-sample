@@ -132,8 +132,6 @@ renderItem = ({item, index}) => {
                 }]}
                 >
                     <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa set</Text>
-                    <TouchableOpacity onPress={() => {
-                      console.log(this.state.reps); console.log(this.state.weight)}}><Text>Check reps</Text></TouchableOpacity>
                     <TouchableOpacity
                         style={[Common.darkButton, Common.shadowLight]}
                         onPress={() => {

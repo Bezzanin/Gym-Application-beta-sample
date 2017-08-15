@@ -89,7 +89,7 @@ export default class ExerciseScreen extends React.Component {
        })
        AsyncStorage.setItem('logs', JSON.stringify(oldLog));
        
-       if (index >= this.props.route.params.sequence.length) {
+       if (index >= this.props.route.params.sequence.length-1) {
          console.log('Pushed if');
          let emptyArr = []
          AsyncStorage.setItem('logs', JSON.stringify(emptyArr))
@@ -105,7 +105,7 @@ export default class ExerciseScreen extends React.Component {
           console.log('Pushed else');
           console.log(oldLog)
           this.props.navigator.push('exercise', {
-            exercise: this.props.route.params.sequence[index],
+            exercise: this.props.route.params.sequence[index+1],
             insideWorkout: true,
             sequence: this.props.route.params.sequence,
             logs: oldLog,
