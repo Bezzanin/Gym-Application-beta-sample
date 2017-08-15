@@ -33,10 +33,12 @@ export default class FinishWorkoutScreen extends React.Component {
 
     let totalEx = logs.length
     let totalWeight = logs.map((item) => {
+      console.log(item)
         let result = []
-        item.weight.map((weight) => {
+        if(Array.isArray(item.weight)){
+          item.weight.map((weight) => {
           result.push(parseInt(weight))
-        })
+        })} else {result.push(parseInt(item.weight))}
         return (result)
     });
     var totalSets =   logs.map((item) => {
@@ -44,9 +46,10 @@ export default class FinishWorkoutScreen extends React.Component {
     }); 
     var totalReps = logs.map((item) => {
         let result = []
+        if(Array.isArray(item.reps)){
         item.reps.map((reps) => {
           result.push(parseInt(reps))
-        })
+        })} else {result.push(parseInt(item.reps))}
         return (result)
     });
 
