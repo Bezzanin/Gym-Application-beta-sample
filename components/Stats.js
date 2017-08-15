@@ -173,9 +173,10 @@ nextWeek = () => {
                         let totalWeight = []
                         if (Array.isArray(item)) {
                           item.map((exercise) =>{
-                          exercise.weight.map((weight) =>{
-                            totalWeight.push(parseInt(weight))
-                          })
+                          if(Array.isArray(exercise.weight)){
+                              exercise.weight.map((weight) =>{
+                              totalWeight.push(parseInt(weight))
+                          })} else {totalWeight.push(parseInt(exercise.weight))}
                           })
                         } else {
                           item.weight.map((weight) =>{
