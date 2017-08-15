@@ -314,6 +314,7 @@ static getUserProgramName(callback) {
         });
         this.getCurrentWorkoutDay((day) => {dayNumber = day})
         this.getCurrentWorkoutDaysNumber((days) => {days})
+        console.log(`current day is ${dayNumber} and there are ${days} days overall`)
         this.emptyWorkout(dayNumber, days);
         
     }
@@ -355,10 +356,14 @@ static getUserProgramName(callback) {
 
     }
 
-    static emptyWorkout(dayNumber, days){
+    static emptyWorkout(dayNumber){
         let uid = firebase.auth().currentUser.uid;
+        let days;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence';
-
+        let path2 = '/user/' + uid + '/ownProgram/';
+            firebase.database().ref(path2).on('value', (snap) => {
+                days = snap.val().days;
+            })
         if (dayNumber === days) {
             firebase.database().ref(path).update({
             currentExerciseIndex: 0,

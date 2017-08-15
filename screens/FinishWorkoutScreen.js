@@ -70,7 +70,7 @@ export default class FinishWorkoutScreen extends React.Component {
             console.log(e)
         }
       })
-      Database.finishWorkout();
+      //Database.finishWorkout();
       console.log('navigator.pop triggered');
       this.props.navigator.popToTop();
   }
