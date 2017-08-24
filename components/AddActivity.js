@@ -72,9 +72,8 @@ export default class AddActivity extends Component {
                     />
                     </View>
                     </View>
-                    <TouchableOpacity onPress={() => {
-                      console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
-                    <ActivityInput/>
+                    
+                    <ActivityInput onSendData={(sets, reps, weight) => {Database.addExerciseStats('test', sets, reps, weight)}}/>
             </View>
 
             

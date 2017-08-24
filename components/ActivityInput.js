@@ -8,6 +8,7 @@ export default class ActivityInput extends Component {
     constructor(props){
       super(props);
       this.state = {
+          touched: false,
           lastReps: '5',
           newLastReps: '',
           lastWeight: '25',
@@ -19,13 +20,22 @@ export default class ActivityInput extends Component {
 
 
     onSendData() {
-        Database.addExerciseStats('Check me', this.state.allReps.length, this.state.allReps, this.state.allWeight, true)
+        if (this.state.touched) {
+            this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
+        }
+        else {
+            let oneRep = [];
+            let oneWeight = [];
+            oneRep[0] = this.state.lastReps;
+            oneWeight[0] = this.state.lastWeight;
+            this.props.onSendData(1, oneRep, oneWeight);
+        }
     }
     onAddSet() {
         let newAllReps   = this.state.allReps.concat(this.state.lastReps);
         let newAllWeight = this.state.allWeight.concat(this.state.lastWeight);
         console.log(newAllReps + ' ' + newAllWeight);
-        this.setState({allReps: newAllReps, allWeight: newAllWeight})
+        this.setState({touched: true, allReps: newAllReps, allWeight: newAllWeight})
     }
 
     handleDelete = (index) => {
@@ -59,49 +69,75 @@ export default class ActivityInput extends Component {
       <View style={[Common.marginBottom]}>
         <View style={[Common.sectionBorder]}>
             <TouchableOpacity onPress={() => {console.log(this.state)}}><Text>Check</Text></TouchableOpacity>
-            {/* <View style={{flexDirection: 'row'}}> */}
-            <Text>How many reps did you use?</Text>
-            
-                <TextInput
-                    style={Common.input}
-                    onChangeText={(reps) => this.setState({lastReps: reps})}
-                    value={this.state.lastReps}
-                />
-                <TouchableOpacity onPress={() => {
-                    let newLastReps = parseInt(this.state.lastReps) + 1;
-                    this.setState({lastReps: newLastReps.toString()})}
-                    }>
-                <Text>+</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    let newLastReps = parseInt(this.state.lastReps) - 1;
-                    this.setState({lastReps: newLastReps.toString()})}
-                    }>
-                <Text>-</Text>
-                </TouchableOpacity>
-            
-            <Text>What weight did you use?</Text>
-            <TextInput
-                style={Common.input}
-                onChangeText={(weight) => this.setState({lastWeight: weight})}
-                value={this.state.lastWeight}
-            />
-            <TouchableOpacity onPress={() => {
-                let newLastWeight = parseInt(this.state.lastWeight) + 1;
-                this.setState({lastWeight: newLastWeight.toString()})}
-                }>
-            <Text>+</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-                let newLastWeight = parseInt(this.state.lastWeight) - 1;
-                this.setState({lastWeight: newLastWeight.toString()})}
-                }>
-            <Text>-</Text>
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View>
+                    <Text style={Common.darkTagTitle}>Reps used</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
 
-            <TouchableOpacity onPress={() => {this.onAddSet()}}><Text>Add set</Text></TouchableOpacity>
+                        <View style={Common.input}>
+                        <TextInput
+                            style={Common.inputText}
+                            keyboardType={'numeric'}
+                            maxLength={3}
+                            onChangeText={(reps) => this.setState({lastReps: reps})}
+                            value={this.state.lastReps}
+                        />
+                        </View>
+                        
+                        
+                        <TouchableOpacity
+                            style={[Common.inputStepper, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0.5}]}
+                            onPress={() => {
+                                let newLastReps = parseInt(this.state.lastReps) - 1;
+                                this.setState({lastReps: newLastReps.toString()})}
+                                }>
+                        <Text style={Common.inputStepperText}>–</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftRadius: 0.5}]}
+                            onPress={() => {
+                                let newLastReps = parseInt(this.state.lastReps) + 1;
+                                this.setState({lastReps: newLastReps.toString()})}
+                            }>
+                        <Text style={Common.inputStepperText}>+</Text>
+                        </TouchableOpacity>
+                       <Text>     </Text>{/* <//Remove asap */}
+                    </View>
+                </View>  
+                <View>
+                <Text style={Common.darkTagTitle}>Weight used</Text>
+                
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <TextInput
+                        style={Common.input}
+                        keyboardType={'numeric'}
+                        onChangeText={(weight) => this.setState({lastWeight: weight})}
+                        value={this.state.lastWeight}
+                    />
+                    
+                    <TouchableOpacity
+                        style={[Common.inputStepper, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0.5}]}
+                        onPress={() => {
+                        let newLastWeight = parseInt(this.state.lastWeight) - 1;
+                        this.setState({lastWeight: newLastWeight.toString()})}
+                        }>
+                    <Text style={Common.inputStepperText}>–</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                         
+                         style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftRadius: 0.5}]}
+                        onPress={() => {
+                        let newLastWeight = parseInt(this.state.lastWeight) + 1;
+                        this.setState({lastWeight: newLastWeight.toString()})}
+                        }>
+                    <Text style={Common.inputStepperText}>+</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+                <TouchableOpacity onPress={() => {this.onAddSet()}}><Text>Add set</Text></TouchableOpacity>
+            </View>
             {sets}
-            <TouchableOpacity onPress={() => {this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)}}><Text>Input to the database</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.onSendData()}}><Text>Input to the database</Text></TouchableOpacity>
         </View>
       </View>
     );

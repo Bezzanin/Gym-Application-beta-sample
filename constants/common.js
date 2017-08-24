@@ -571,10 +571,26 @@ const Common = {
         backgroundColor: "rgba(0,0,0,.2)"
     },
     input: {
-        width: 40,
+        
         borderBottomWidth: 1,
-        borderColor: 'black',
-        height: 40,
+        borderColor: '#000',
+        
+    },
+    inputText: {
+        width: 40,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    inputStepper: {
+        paddingHorizontal: Layout.gutter.s * 2,
+        paddingVertical: 0,
+        borderWidth: 1,
+        borderColor: '#CE0707',
+    },
+    inputStepperText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#CE0707'
     }
 };
 
