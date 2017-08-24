@@ -18,25 +18,37 @@ import {Slider, CheckBox} from 'react-native-elements';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+import MultipleChoice from 'react-native-multiple-choice';
 
 export default class WeekDays extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false,
-      days: []
+      days: [],
+      testWeekDays: '',
     };
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
   onSendData(days) {
     Database.setWorkoutDays(days);
     this.setModalVisible(!this.state.modalVisible)
   }
+
+    _renderText(option) {
+    return (
+      <View style={styles.textBoxStyle}>
+    <Text style={styles.textStyle}>{option}</Text></View>
+    );
+    }
+
+_renderIndicator(option) { 
+  return (
+    <View style={styles.indicator}></View>
+    );
+    }
+
 
   allWeekDays(weekday, condition) {
     allDays = this.state.days
@@ -58,154 +70,16 @@ export default class WeekDays extends Component {
     return (
       <View>
 
-        <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true);
-          }}
-          style={[Common.leftAttachedButton, {marginTop: 20, width: 300}]}>
-          <Text style={[Common.darkActionTitle]}>{I18n.t('SelectWorkoutDays')}</Text>
-          </TouchableOpacity>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-        >
+<MultipleChoice
+    options={['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su']}
+    maxSelectedOptions={3}
+    renderText={(option)=>this._renderText(option)}
+    renderIndicator={(option)=>this._renderIndicator(option)}
+    onSelection={(option)=>console.log(option + ' was selected!')}
+    selectedOptionsList={(optionList)=>console.log(optionList + ' was selected!')}
+/>
 
-          <ScrollView contentContainerStyle={styles.container}>
-            <View style={Common.pseudoNavigation}>
-              <TouchableOpacity
-                onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
-              </TouchableOpacity>
-          </View>
-            <View style={[styles.paragraph]}>
-                  <View style={[Common.paddingVertical, Common.paddingLeft, Common.paddingRight, { backgroundColor: 'white', zIndex: 5}]}>
-                   <View style={Common.centered}>
-                    <Text style={[Common.darkTitleH2, Common.centeredText]}>{I18n.t('SelectWorkoutDays')}</Text>
-                    <Text style={[Common.darkBodyText, Common.centeredText]}>{I18n.t('ChooseAtWhatDays')}</Text>
-                    </View>
-                    </View>
-
-                    
-    <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Monday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Monday}
-        onPress={() => {
-          this.setState({Monday: !this.state.Monday}, ()=>{
-            this.allWeekDays("Mo", this.state.Monday)
-          });
-        }}
-      />
-        <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Tuesday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Tuesday}
-        onPress={() => {
-          this.setState({Tuesday: !this.state.Tuesday}, ()=>{
-            this.allWeekDays("Tu", this.state.Tuesday)
-          });
-        }}
-      />
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
-        title={I18n.t('Wednesday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Wednesday}
-        onPress={() => {
-          this.setState({Wednesday: !this.state.Wednesday}, ()=>{
-            this.allWeekDays("We", this.state.Wednesday)
-          });
-        }}
-      />
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Thursday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Thursday}
-        onPress={() => {
-          this.setState({Thursday: !this.state.Thursday}, ()=>{
-            this.allWeekDays("Th", this.state.Thursday)
-          });
-        }}
-      />
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Friday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Friday}
-        onPress={() => {
-          this.setState({Friday: !this.state.Friday}, ()=>{
-            this.allWeekDays("Fr", this.state.Friday)
-          });
-        }}
-      />
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Saturday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Saturday}
-        onPress={() => {
-          this.setState({Saturday: !this.state.Saturday}, ()=>{
-            this.allWeekDays("Sa", this.state.Saturday)
-          });
-        }}
-      />
-      <CheckBox
-        left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title={I18n.t('Sunday')}
-        iconLeft
-        checkedIcon='check-square-o'
-        uncheckedIcon='square-o'
-        checkedColor='#B2B2B2'
-        checked={this.state.Sunday}
-        onPress={() => {
-          this.setState({Sunday: !this.state.Sunday}, ()=>{
-            this.allWeekDays("Su", this.state.Sunday)
-          });
-        }}
-      />
-      </View>
-      <TouchableOpacity
-      style={Common.brightButtonRounded} 
-      onPress={() => this.onSendData(this.state.days)}>
-        <Text style={Common.lightActionTitle}>{I18n.t('Save')}</Text>
-      </TouchableOpacity>
-            </View>
-
-            
-          </ScrollView>
-
-        </Modal>
-
+      <TouchableOpacity onPress={() => {console.log(this.state.testWeekDays)}}><Text>AA</Text></TouchableOpacity>
       </View>
     );
   }
@@ -214,6 +88,20 @@ export default class WeekDays extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  indicator: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'rgba(163, 168, 175, 0.48)',
+    position: 'absolute',
+    left: -40,
+  },
+  textBoxStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
+    borderWidth: 0.5,
   },
   paragraph: {
     paddingTop: 10,

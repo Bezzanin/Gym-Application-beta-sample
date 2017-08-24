@@ -58,7 +58,7 @@ export default class SettingsScreen extends React.Component {
         style={Common.containerBasic}>
         <Profile />
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('week')} {moment().format("W")} {I18n.t('Exercises')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('inWeek')} {moment().format("W")} {I18n.t('Exercises')}</Text>
         </View>
         <Stats loadingOFF={this.loadingOFF}/>
         {this.state.loading && <View style={Common.loading}>

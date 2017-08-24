@@ -63,10 +63,10 @@ export default class AddActivity extends Component {
             <View style={[styles.paragraph]}>
                   <View style={[Common.paddingVertical, Common.paddingLeft, Common.paddingRight, { backgroundColor: 'white', zIndex: 5}]}>
                    <View style={{borderColor: '#CDCDCD', borderBottomWidth: 1}}>
-                    <Text style={Common.darkTitleH2}>{I18n.t('Name')}</Text>
+                    <Text style={Common.darkTitleH2}>{I18n.t('ExerciseName')}</Text>
                    <TextInput
                       style={{height: 40}}
-                      placeholder={I18n.t('EnterName')}
+                      placeholder={I18n.t('EnterExerciseName')}
                       autoCorrect={false}
                       onChangeText={(name) => this.setState({name})}
                     />
