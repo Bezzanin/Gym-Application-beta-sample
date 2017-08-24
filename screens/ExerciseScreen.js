@@ -8,6 +8,7 @@ import Database from '../api/database';
 import {Constants, Video} from 'expo';
 import Expo from 'expo';
 import ActivityPicker from '../components/ActivityPicker';
+import ActivityInput from '../components/ActivityInput';
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -189,7 +190,12 @@ export default class ExerciseScreen extends React.Component {
       if (this.props.insideWorkout) {
         return(
           <View>
-           <ActivityPicker
+            <ActivityInput
+              onSendData={(sets, reps, weight) => {
+                this.goToNext(sets, reps, weight)
+              }}
+            />
+           {/* <ActivityPicker
             insideWorkout={this.props.route.params.insideWorkout}
             onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
                 onSendInitialWeight={(sets, weight) => {console.log('The weight used is ' + weight); this.setState({sets, weight}) }}
@@ -213,7 +219,7 @@ export default class ExerciseScreen extends React.Component {
               else {
                 this.goToNext(sets,reps,weight)
               }
-            }}/>
+            }}/> */}
             </View>
         )
       }

@@ -10,7 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 import { Constants } from 'expo';
-import ActivityPicker from './ActivityPicker';
+import ActivityInput from './ActivityInput';
 import Common from '../constants/common';
 import Database from '../api/database';
 import I18n from 'react-native-i18n';
@@ -24,29 +24,15 @@ export default class AddActivity extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      name: "Oma liike",
-      newRep: 5,
-      newWeight: 25,
-      sets: 1,
-      reps: 5,
-      weight: 25,
+      name: "Oma liike"
     };
-    this.onSendData = this.onSendData.bind(this);
   }
 
   setModalVisible(visible) {
     console.log('Closing')
     this.setState({ modalVisible: visible });
   }
-  onSendData(sets, reps, weight, reparray, weightarray) {
-    
-    console.log('Show the array');
-    console.log(reparray);
-    console.log('Show the array');
-    console.log(weightarray);
-    Database.addExerciseStats(this.state.name, sets, reparray, weightarray);
-    this.setModalVisible(!this.state.modalVisible)
-  }
+
 
 
   render() {
@@ -88,26 +74,7 @@ export default class AddActivity extends Component {
                     </View>
                     <TouchableOpacity onPress={() => {
                       console.log(this.state.reps)}}><Text>Check reps</Text></TouchableOpacity>
-              <ActivityPicker
-              
-                onSendData={(sets,reps,weight, reparray, weightarray) => {
-                  if (sets === 0) {
-                    console.log('Sets is zero');
-                    let newRep = []; newRep[0] = this.state.reps;
-                    let newWeight = []; newWeight[0] = this.state.weight;
-                    console.log("newRep[0] is " + newRep[0])
-                    console.log("newWeight[0] is " + newWeight[0])
-                    console.log("this.state.reps is " + this.state.reps)
-                    
-                    this.onSendData(sets + 1, newRep, newWeight, reparray, weightarray);
-                  }
-                  else {
-                    this.onSendData(sets, reps, weight, reparray, weightarray)
-                  }
-                  }}
-                onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
-                onSendInitialWeight={(sets, weight) => {console.log('The weight used is ' + weight); this.setState({sets, weight}) }}
-              />
+                    <ActivityInput/>
             </View>
 
             

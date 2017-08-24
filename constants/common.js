@@ -569,6 +569,12 @@ const Common = {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "rgba(0,0,0,.2)"
+    },
+    input: {
+        width: 40,
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        height: 40,
     }
 };
 
