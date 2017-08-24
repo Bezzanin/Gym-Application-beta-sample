@@ -174,6 +174,7 @@ export default class NewDiary extends React.Component {
   } else {
     console.log("ELSE")
       let newlog = item;
+      console.log('newlognewlognewlognewlog')
       console.log(newlog)
       return (
       <View style={[styles.item, Common.shadowLight]}>

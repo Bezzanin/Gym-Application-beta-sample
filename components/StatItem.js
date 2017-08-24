@@ -26,6 +26,8 @@ class StatItem extends Component {
     }
   }
   componentDidMount() {
+    console.log('I am a I am a I am a I am A');
+    console.log(this.props.item)
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       this.setState({
@@ -57,10 +59,10 @@ class StatItem extends Component {
             <Text style={Common.darkTitleH4Bold}>{counter + 1}</Text>
           </View>
           <View style={{flex: 1}}>
-            <Text style={Common.darkTitleH4Light}>{this.props.item.reps[counter] || ' '} {I18n.t('Reps')}</Text>
+            <Text style={Common.darkTitleH4Light}>{this.props.item.reps[counter]} {I18n.t('Reps')}</Text>
           </View>
           <View style={{flex: 1,  paddingRight: Layout.gutter.l*2}}>
-            <Text style={Common.darkTitleH4Light}>{this.props.item.weight[counter] || ' '} kg</Text>
+            <Text style={Common.darkTitleH4Light}>{this.props.item.weight[counter]} kg</Text>
           </View>
         </View>
       )
