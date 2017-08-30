@@ -25,7 +25,6 @@ export default class WeekDays extends Component {
     super(props);
     this.state = {
       days: [],
-      testWeekDays: '',
     };
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
@@ -33,7 +32,6 @@ export default class WeekDays extends Component {
 
   onSendData(days) {
     Database.setWorkoutDays(days);
-    this.setModalVisible(!this.state.modalVisible)
   }
 
     _renderText(option) {
@@ -50,15 +48,16 @@ _renderIndicator(option) {
     }
 
 
-  allWeekDays(weekday, condition) {
+  allWeekDays(weekday) {
     allDays = this.state.days
-    if (condition === true) {
-    allDays.push(weekday)
+    if (allDays.includes(weekday)) {
+      var index = allDays.indexOf(weekday)
+      if (index > -1) {
+        allDays.splice(index, 1);
+      }
+    
     } else {
-    var index = allDays.indexOf(weekday)
-    if (index > -1) {
-      allDays.splice(index, 1);
-    }
+      allDays.push(weekday)
   }
     this.setState({
       days: allDays
@@ -75,11 +74,11 @@ _renderIndicator(option) {
     maxSelectedOptions={3}
     renderText={(option)=>this._renderText(option)}
     renderIndicator={(option)=>this._renderIndicator(option)}
-    onSelection={(option)=>console.log(option + ' was selected!')}
+    onSelection={this.allWeekDays}
     selectedOptionsList={(optionList)=>console.log(optionList + ' was selected!')}
 />
 
-      <TouchableOpacity onPress={() => {console.log(this.state.testWeekDays)}}><Text>AA</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text>AA</Text></TouchableOpacity>
       </View>
     );
   }
