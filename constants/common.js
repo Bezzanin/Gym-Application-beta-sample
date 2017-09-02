@@ -572,25 +572,43 @@ const Common = {
     },
     input: {
         
+        borderBottomColor: '#CDCDCD',
         borderBottomWidth: 1,
-        borderColor: '#000',
-        
+        marginBottom: 0,
+        marginRight: Layout.gutter.s,
+        paddingBottom: 0,
     },
     inputText: {
-        width: 40,
-        fontSize: 20,
+        width: 32,
+        height: 20,
+        textAlign: 'left',
+        fontSize: 16,
+        lineHeight: 1,
+        marginBottom: 0,
+        paddingBottom: 0,
         fontWeight: 'bold'
     },
     inputStepper: {
         paddingHorizontal: Layout.gutter.s * 2,
         paddingVertical: 0,
         borderWidth: 1,
+        alignItems: 'center',
         borderColor: '#CE0707',
     },
     inputStepperText: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#CE0707'
+    },
+    inputSubmit: {
+        fontSize: 18,
+        color: '#CE0707',
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    inputBar: {
+        paddingBottom: Layout.gutter.s,
+        paddingHorizontal: Layout.gutter.l
     }
 };
 
