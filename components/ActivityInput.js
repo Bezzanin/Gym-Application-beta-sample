@@ -66,10 +66,10 @@ export default class ActivityInput extends Component {
             )
         }
     return (
-      <View style={[Common.marginBottom]}>
-        <View style={[Common.sectionBorder]}>
-            <TouchableOpacity onPress={() => {console.log(this.state)}}><Text>Check</Text></TouchableOpacity>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flex: 1}}>
+        <View style={[Common.sectionBorder, Common.inputBar]}>
+            {/* <TouchableOpacity onPress={() => {console.log(this.state)}}><Text>Check</Text></TouchableOpacity> */}
+            <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between'}}>
                 <View>
                     <Text style={Common.darkTagTitle}>Reps used</Text>
                     <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
@@ -84,7 +84,7 @@ export default class ActivityInput extends Component {
                         />
                         </View>
                         
-                        
+                        {/* Minus */}
                         <TouchableOpacity
                             style={[Common.inputStepper, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0.5}]}
                             onPress={() => {
@@ -93,39 +93,46 @@ export default class ActivityInput extends Component {
                                 }>
                         <Text style={Common.inputStepperText}>–</Text>
                         </TouchableOpacity>
+
+                         {/* Plus */}
                         <TouchableOpacity
-                            style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftRadius: 0.5}]}
+                            style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 0.5}]}
                             onPress={() => {
                                 let newLastReps = parseInt(this.state.lastReps) + 1;
                                 this.setState({lastReps: newLastReps.toString()})}
                             }>
                         <Text style={Common.inputStepperText}>+</Text>
                         </TouchableOpacity>
-                       <Text>     </Text>{/* <//Remove asap */}
                     </View>
-                </View>  
+                </View>
+                  
                 <View>
                 <Text style={Common.darkTagTitle}>Weight used</Text>
                 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                     <View style={Common.input}>
                     <TextInput
-                        style={Common.input}
+                        style={Common.inputText}
+                        maxLength={3}
                         keyboardType={'numeric'}
                         onChangeText={(weight) => this.setState({lastWeight: weight})}
                         value={this.state.lastWeight}
                     />
-                    
+                    </View>
+                    {/* Minus*/}
                     <TouchableOpacity
-                        style={[Common.inputStepper, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0.5}]}
+                       style={[Common.inputStepper, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0.5}]}
                         onPress={() => {
                         let newLastWeight = parseInt(this.state.lastWeight) - 1;
                         this.setState({lastWeight: newLastWeight.toString()})}
                         }>
                     <Text style={Common.inputStepperText}>–</Text>
                     </TouchableOpacity>
+
+                    {/* Plus */}
                     <TouchableOpacity
                          
-                         style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftRadius: 0.5}]}
+                         style={[Common.inputStepper, {borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 0.5}]}
                         onPress={() => {
                         let newLastWeight = parseInt(this.state.lastWeight) + 1;
                         this.setState({lastWeight: newLastWeight.toString()})}
@@ -134,11 +141,14 @@ export default class ActivityInput extends Component {
                     </TouchableOpacity>
                 </View>
                 </View>
-                <TouchableOpacity onPress={() => {this.onAddSet()}}><Text>Add set</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.onAddSet()}}>
+                    <Text style={Common.inputSubmit}>ADD</Text>
+                </TouchableOpacity>
             </View>
-            {sets}
-            <TouchableOpacity onPress={() => {this.onSendData()}}><Text>Input to the database</Text></TouchableOpacity>
         </View>
+       
+        {sets}
+        <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
       </View>
     );
     
