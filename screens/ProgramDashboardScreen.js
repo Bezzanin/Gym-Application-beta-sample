@@ -224,7 +224,6 @@ _retrieveFilteredItems(filter, exercises) {
         let filteredByNumber = this.filterByNumber(filteredByDay, 4);
         exercisesSequence[day] = filteredByNumber;
     }
-    console.log(exercisesSequence);
     this.setState({
             sequence2: exercisesSequence
         })
