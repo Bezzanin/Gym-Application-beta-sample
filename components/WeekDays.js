@@ -28,6 +28,7 @@ export default class WeekDays extends Component {
     };
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
+    this.state.options = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
   }
 
   onSendData(days) {
@@ -70,12 +71,11 @@ _renderIndicator(option) {
       <View>
 
 <MultipleChoice
-    options={['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su']}
+    options={this.state.options}
     maxSelectedOptions={3}
     renderText={(option)=>this._renderText(option)}
     renderIndicator={(option)=>this._renderIndicator(option)}
     onSelection={this.allWeekDays}
-    selectedOptionsList={(optionList)=>console.log(optionList + ' was selected!')}
 />
 
       <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text>AA</Text></TouchableOpacity>
