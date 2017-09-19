@@ -189,37 +189,13 @@ export default class ExerciseScreen extends React.Component {
     displayPicker() {
       if (this.props.insideWorkout) {
         return(
-          <View>
+          <View style={{flex: 1}}>
             <ActivityInput
               onSendData={(sets, reps, weight) => {
                 this.goToNext(sets, reps, weight)
               }}
             />
-           {/* <ActivityPicker
-            insideWorkout={this.props.route.params.insideWorkout}
-            onSendInitialReps={(sets, reps) => {console.log('The reps amount is ' + reps); this.setState({sets,reps})}}
-                onSendInitialWeight={(sets, weight) => {console.log('The weight used is ' + weight); this.setState({sets, weight}) }}
-
-
-            onSendData={(sets, reps, weight) => {
-              console.log('Reps below')
-              console.log(reps)
-              console.log('Sets below')
-              console.log(sets)
-              if (this.state.sets === 1) {
-                  this.setState({
-                    repsx: reps
-                  }, () => {
-                    let newRep = [];
-                    newRep[0] = this.state.reps;
-                    let newWeight = []; newWeight[0] = this.state.weight;
-                    this.goToNext(this.state.sets, this.state.reps, newWeight)
-                  })
-              }
-              else {
-                this.goToNext(sets,reps,weight)
-              }
-            }}/> */}
+           
             </View>
         )
       }
@@ -277,7 +253,6 @@ export default class ExerciseScreen extends React.Component {
         </View>
      
         {this.displayPicker()}
-            <View style={{height: Layout.gutter.l * 5}}/>
               
 
       </ScrollView>

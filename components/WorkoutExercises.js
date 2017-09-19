@@ -18,7 +18,8 @@ class WorkoutExercises extends Component {
     this.state = {
         isLoading: true,
         numberOfExercises: ''
-    } 
+    }
+    this.handleMoveUp = this.handleMoveUp.bind(this);
   }
 
 goToAllExercises() {
@@ -39,20 +40,25 @@ getDayOrder() {
         case 6: return I18n.t('Seventh')
     }
 }
-    
+handleMoveUp(number) {
+    this.props.onMoveUp(number, this.props.dayNumber);
+    this.forceUpdate();
+}
 render() {
-    const {dayNumber, exercises, program, numberOfExercises, muscles} = this.props;
+    const {dayNumber, exercises, program, numberOfExercises, muscles, onMoveUp} = this.props;
     return (
         <View style={[Common.container, Common.sectionBorder]}>
             <TouchableOpacity onPress={() => {this.goToAllExercises()}}>
                 <View>
                     <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
                     <Text style={Common.darkTitleH2}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
-                    <Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text>
                 </View>
             </TouchableOpacity>
             <DashboardExercisesList
-                data={this.props.exercises}/>
+                onMoveUp={this.handleMoveUp}
+                //onMoveDown={this.props.onMoveDown(number)}
+                data={this.props.exercises}
+                numberOfExercises={this.props.numberOfExercises}/>
         </View> 
     );
   }

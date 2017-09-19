@@ -15,6 +15,20 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
+
+Array.prototype.move = function (old_index, new_index) {
+        console.log('*')
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        console.log('k is ' + k)
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
+
 export default class ExerciseScreen extends React.Component {
   constructor(props) {
       super(props);
@@ -28,8 +42,10 @@ export default class ExerciseScreen extends React.Component {
           sequence2: '',
           isLoading: true,
           isLeavingProgram: false,
+          updateExercises: false,
           logs: []
-      }
+      };
+      this.handleMoveUp = this.handleMoveUp.bind(this);
   }
   static route = {
     navigationBar: {
@@ -123,7 +139,7 @@ getOwnExercises() {
     }
     else {
         console.log("It's not your program, else triggered")
-        this._retrieveFilteredItems();
+        this.retrieveFilteredItems();
         this.setOwnPropertyTo(false);
        
     }
@@ -152,6 +168,7 @@ getOwnExercises() {
             handleClick = {this.setOwnPropertyTo.bind(this)}
             handleContinueProgram = {this.handleContinue.bind(this)}
             isLeaving = {this.state.isLeavingProgram}
+            
             style={{flex: 1}}
             />
         <View style={[Common.container, Common.sectionBorder]}>
@@ -163,7 +180,34 @@ getOwnExercises() {
       </ScrollView>
     );
   }
+handleMoveDown(input) {
+    console.log('Trying to move down')
+    console.log(this);
+}
 
+handleMoveUp = (number, dayNumber) => {
+
+let checkArr = [{data: 1}, {data: 2}, {data: 3}, {data: 4}, {data: 5}];
+console.log(checkArr.move(2,3));
+
+  console.log(`Moving up ${number} string from ${dayNumber} day`);
+  let day = 'day' + dayNumber;
+  console.log(this.state.sequence2[day]);
+  let newSequence = this.state.sequence2;
+
+
+
+  
+  let timeout = setTimeout( () => {
+        let newSequence = this.state.sequence2;
+        newSequence[day].move(number, number + 1);
+      console.log(newSequence[day]);
+  }, 2000)
+  this.setState({
+      sequence2: newSequence,
+      updateExercises: true,
+  })
+}
 displayWorkoutDays() {
     if (this.state.isLoading) {
         return (<View/>)
@@ -172,7 +216,7 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.props.route.params.program.days; i++) {
         let day = 'day' + i;
-        let length =  this.state.sequence2[day].length;
+        let length =  2//this.state.sequence2[day].length;
 
         workoutExercises.push(
             <View>
@@ -184,7 +228,10 @@ displayWorkoutDays() {
                     exercises={this.state.sequence2[day]}
                     day={day}
                     program={this.props.route.params.program}
-                    isLeaving={this.state.isLeavingProgram}/>
+                    isLeaving={this.state.isLeavingProgram}
+                    onMoveUp={this.handleMoveUp}
+                    updateExercises = {this.state.updateExercises}
+                    onMoveDown={this.handleMoveDown}/>
             </View>
         );
     }
@@ -207,6 +254,32 @@ setOwnPropertyTo(bool) {
     revertExercise();
 }
 
+
+retrieveFilteredItems() {
+    let exercisesSequence = {day1: {id: 0}};
+    
+    for ( i=1; i<=this.props.route.params.program.days; i++ ) {
+        let dayNumberIDs = 'day' + i + 'exercises';
+        let day = 'day' + i;
+        let exercisesArray = [];
+        console.log(this.props.route.params.program[dayNumberIDs]);
+        this.props.route.params.program[dayNumberIDs].split(', ').forEach((id) => {
+            console.log(id);
+            this.props.route.params.exercises.forEach((exercise) => {
+                console.log(id + ' ' + exercise._key)
+                if (exercise._key === id) {
+                    exercisesArray.push(exercise);
+                }
+            })
+        })
+        console.log(exercisesArray);
+        exercisesSequence[day] = exercisesArray;
+    }
+
+    this.setState({
+        sequence2: exercisesSequence
+    })
+}
 _retrieveFilteredItems(filter, exercises) {
     let exercisesSequence = {day1: {id: 0}};
     let newArr = this.props.route.params.exercises.sort(this.compare('muscles'));

@@ -608,7 +608,8 @@ const Common = {
     },
     inputBar: {
         paddingBottom: Layout.gutter.s,
-        paddingHorizontal: Layout.gutter.l
+        paddingHorizontal: Layout.gutter.l,
+        flex: 1,
     }
 };
 

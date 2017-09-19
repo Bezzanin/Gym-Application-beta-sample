@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import SetItem from './SetItem';
 import Common from '../constants/common';
+import Layout from '../constants/Layout';
 import Database from '../api/database';
 
 export default class ActivityInput extends Component {
@@ -66,7 +67,7 @@ export default class ActivityInput extends Component {
             )
         }
     return (
-      <View style={{flex: 1}}>
+      <View>
         <View style={[Common.sectionBorder, Common.inputBar]}>
             {/* <TouchableOpacity onPress={() => {console.log(this.state)}}><Text>Check</Text></TouchableOpacity> */}
             <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between'}}>
@@ -148,6 +149,7 @@ export default class ActivityInput extends Component {
         </View>
        
         {sets}
+        <View style={{flex: 1, minHeight: 200}}></View>
         <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
       </View>
     );
