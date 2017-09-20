@@ -78,7 +78,7 @@ _renderIndicator(option) {
     onSelection={this.allWeekDays}
 />
 
-      <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text>AA</Text></TouchableOpacity>
+      <TouchableOpacity style={Common.greyButtonRounded} onPress={() => {this.onSendData(this.state.days)}}><Text style={Common.darkActionTitle}>AA</Text></TouchableOpacity>
       </View>
     );
   }

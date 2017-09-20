@@ -199,9 +199,10 @@ console.log(checkArr.move(2,3));
 
   
   let timeout = setTimeout( () => {
-        let newSequence = this.state.sequence2;
-        newSequence[day].move(number, number + 1);
-      console.log(newSequence[day]);
+    let newSequence = this.state.sequence2;
+
+    newSequence[day].move(number, number + 1);
+    console.log(newSequence[day]);
   }, 2000)
   this.setState({
       sequence2: newSequence,
@@ -226,11 +227,11 @@ displayWorkoutDays() {
                     numberOfExercises={length}
                     muscles={this.props.route.params.program[day]}
                     exercises={this.state.sequence2[day]}
+                    sequence={this.state.sequence2}
                     day={day}
                     program={this.props.route.params.program}
                     isLeaving={this.state.isLeavingProgram}
                     onMoveUp={this.handleMoveUp}
-                    updateExercises = {this.state.updateExercises}
                     onMoveDown={this.handleMoveDown}/>
             </View>
         );

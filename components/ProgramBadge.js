@@ -173,7 +173,7 @@ export default class ProgramBadge extends Component {
                                     ]}>
                             <Text style={Common.lightActionTitle} >{I18n.t('ContinueProgram')}</Text>
                         </TouchableOpacity>
-                        <View style={[Common.container, Common.sectionBorder]}>
+                        <View style={[Common.container]}>
                         <WeekDays/>
                         </View>
                         

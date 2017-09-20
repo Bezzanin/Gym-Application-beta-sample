@@ -42,7 +42,7 @@ getDayOrder() {
 }
 handleMoveUp(number) {
     this.props.onMoveUp(number, this.props.dayNumber);
-    this.forceUpdate();
+    
 }
 render() {
     const {dayNumber, exercises, program, numberOfExercises, muscles, onMoveUp} = this.props;

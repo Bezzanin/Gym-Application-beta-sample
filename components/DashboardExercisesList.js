@@ -51,7 +51,7 @@ _renderItem = ({item, index}) => (
             <View>
             <TouchableOpacity onPress={() => {
                 this.props.onMoveUp(index)}}><Text>˄</Text></TouchableOpacity>
-            {/* <TouchableOpacity onPress={() => {this.props.onMoveDown(2) }}><Text>˅</Text></TouchableOpacity>*/}</View>
+             {/*<TouchableOpacity onPress={() => {this.props.onMoveDown(2) }}><Text>˅</Text></TouchableOpacity>*/}</View>
             </Col>
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
