@@ -64,7 +64,7 @@ static route = {
             <Text style={Common.darkTitleH3}>Days per Week {this.state.value}</Text>
             
             <Slider
-                style={{marginLeft: 16, width: 320}}
+                
                 minimumValue={1}
                 maximumValue={7}
                 step={1}

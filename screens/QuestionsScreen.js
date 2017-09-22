@@ -101,7 +101,8 @@ setModalVisible(visible) {
                   style={[
                     Common.brightButtonRounded,
                     Common.shadowBright,
-                    Common.marginVerticalSmall
+                    Common.marginVerticalSmall,
+
                   ]}
                 >
                   <Text style={Common.lightActionTitle}>{I18n.t('Next')}</Text>
@@ -123,6 +124,7 @@ setModalVisible(visible) {
                     thickness={2}
                     color="#B2B2B2"
                     onSelect={(index, value) => this.setState({ gender: value })}
+                    selectedIndex={0}
                   >
                     <RadioButton value={"male"} color="#B2B2B2">
                       <Text style={styles.labelText}>{I18n.t('Male')}</Text>
@@ -171,12 +173,7 @@ setModalVisible(visible) {
                 <View style={styles.divider} />
                 <Text style={styles.text}>{I18n.t('Measurements')}</Text>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    width: Layout.window.width,
-                    flexWrap: "wrap",
-                    justifyContent: "space-around"
-                  }}
+                  style={[Common.container, styles.heightWeight]}
                 >
                   <View>
                     <FormLabel>{I18n.t('Height')}</FormLabel>
@@ -301,7 +298,10 @@ const styles = StyleSheet.create({
   flex: 1, 
   top: -200, 
   justifyContent: 'center', 
-  alignItems: 'flex-end',
+  alignItems: 'center',
+  position: 'relative',
+  flexDirection: 'column',
+  alignSelf: 'center',
 },
   doneButton: {
   backgroundColor: 'transparent', 
@@ -347,7 +347,10 @@ loginButton: {
         marginTop: 10,
         backgroundColor: 'transparent'
     },
-  
+heightWeight: {
+  flexDirection: "column",
+  justifyContent: "flex-start"
+}
 });
 
 export default QuestionsScreen;

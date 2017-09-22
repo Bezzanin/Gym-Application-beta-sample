@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import {Slider, CheckBox} from 'react-native-elements';
+import {Slider, CheckBox, Grid, Col} from 'react-native-elements';
 import Database from '../api/database';
 import Common from '../constants/common';
 
@@ -42,6 +42,8 @@ class MusclesForDay extends Component {
     <View style={Common.container}>
     <Text style={Common.darkTitleH3}>Day {this.props.dayNumber} muscles</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+    <Grid>
+    <Col>
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
@@ -74,7 +76,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
+        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Back '
         iconLeft
         checkedIcon='check-square-o'
@@ -102,6 +104,8 @@ class MusclesForDay extends Component {
           });
         }}
       />
+    </Col>
+    <Col>
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
@@ -135,7 +139,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Abs  '
+        title='Abs'
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -162,7 +166,8 @@ class MusclesForDay extends Component {
           });
         }}
       />
-
+    </Col>
+    </Grid>
         
   </View>
   </View>

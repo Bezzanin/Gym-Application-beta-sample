@@ -100,23 +100,6 @@ export default class ExercisesScreen extends Component {
     });
   }
 
-  setSearchText(action){
-    let searchText = action;
-
-    moviesLength = this.state.exercises.length;
-    aMovie = this.state.exercises;
-
-    const filteredMovies = this.state.exercises.filter((exercise) => {
-      return (exercise.name.includes(searchText))
-    });
-
-    
-
-    this.setState({
-      searchText,
-      dataSource: this.state.dataSource.cloneWithRows(filteredMovies)
-  })
-  }
 
   render() {
    
@@ -124,11 +107,6 @@ export default class ExercisesScreen extends Component {
       <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.heading1}>{I18n.t('SearchExercises')}</Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          placeholder="Search ex......."
-          value={this.state.searchText}
-          onChangeText={this.setSearchText.bind(this)} />
         <Filters
           onFilter={this.handleFilter}
           filter={this.state.filter}/>
