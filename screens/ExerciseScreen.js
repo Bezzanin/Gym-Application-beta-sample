@@ -6,7 +6,6 @@ import ProgressController from "../components/ProgressController";
 import * as firebase from 'firebase';
 import Database from '../api/database';
 import {Constants, Video} from 'expo';
-import Expo from 'expo';
 import ActivityPicker from '../components/ActivityPicker';
 import ActivityInput from '../components/ActivityInput';
 import Common from '../constants/common';
@@ -239,13 +238,12 @@ export default class ExerciseScreen extends React.Component {
 
             
           
-            <Expo.Video
+            <Video
               source={{uri: this.state.videoLink}}
               shouldPlay={true}
               isMuted
               resizeMode="cover"
               style={{ flex: 1}}
-
             />
 
         </View>)

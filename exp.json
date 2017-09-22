@@ -3,7 +3,7 @@
   "description": "No description",
   "slug": "rational-app",
   "privacy": "public",
-  "sdkVersion": "17.0.0",
+  "sdkVersion": "20.0.0",
   "version": "1.0.13",
   "orientation": "portrait",
   "primaryColor": "#cccccc",

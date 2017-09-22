@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, FlatList } from "react-native";
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
-import MusclesForDay from '../components/musclesForDay';
+import MusclesForDay from '../components/MusclesForDay';
 import Layout from '../constants/Layout';
 import Database from '../api/database';
 import { Slider, FormInput, FormLabel } from 'react-native-elements';
@@ -58,7 +58,7 @@ constructor(props) {
     renderList = () => {
         if (this.state.previewText.length === 0) {
            return (
-               <View style={{height: 140, justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>
+               <View style={{height: 140, justifyContent: 'center', alignItems: 'center'}}>
                    <Text style={[Common.darkTitleH1, Common.centeredText]}>What do you want to train?</Text>
                 <Text style={[Common.darkBodyText, Common.centeredText]}>Use the slider below to check muscles you would like to focus on each day. The order is important</Text>
                </View>
@@ -67,10 +67,10 @@ constructor(props) {
         else {
             return (
                 <View>
-                    <Text style={[Common.darkTitleH1, Common.centeredText]}>What do you want to train?</Text>
+                    <Text style={[Common.darkTitleH1, Common.centeredText, styles.title]}>What do you want to train?</Text>
                     <ListView
                         
-                        style={[Common.paddingLeft, Common.sectionBorder, {height: 140}]}
+                        style={[Common.paddingLeft, Common.sectionBorder, {minHeight: 100}]}
                         dataSource={this.state.musclesSource}
                         enableEmptySections
                         renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
@@ -92,7 +92,7 @@ constructor(props) {
           />)
           );}
     return (
-    <View>
+    <ScrollView style={{flex: 1}}>
             
 
             
@@ -100,10 +100,15 @@ constructor(props) {
        
                 
         {this.renderList()}
-        <View>
-        <Swiper showsButtons nextButton={<Text style={{fontSize: 48,color: "#CE0707"}}>›</Text>} prevButton={<Text style={{fontSize: 48, color: "#CE0707"}}>‹</Text>} style={styles.wrapper} height={300}>
+        <View style={{flex: 1}}>
+        <Swiper
+        loop={false} 
+        showsButtons 
+        nextButton={<Text style={{fontSize: 48,color: "#CE0707"}}>›</Text>} 
+        prevButton={<Text style={{fontSize: 48, color: "#CE0707"}}>‹</Text>} 
+         height={300}>
         
-         {daysAmount}
+        {daysAmount}
         
         </Swiper>
             
@@ -117,7 +122,7 @@ constructor(props) {
         ]}>
             <Text style={Common.lightActionTitle} >Done</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -125,7 +130,8 @@ constructor(props) {
 const styles = StyleSheet.create({
  slide: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    zIndex: 10
   },
   row: {
     flexDirection: "row",
@@ -134,6 +140,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingLeft: 16,
     paddingBottom: 16
+  },
+  title: {
+      alignSelf: 'center'
   }
 })
 
