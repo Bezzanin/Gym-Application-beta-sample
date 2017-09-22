@@ -17,10 +17,8 @@ I18n.translations = {fi};
 
 
 Array.prototype.move = function (old_index, new_index) {
-        console.log('*')
     if (new_index >= this.length) {
         var k = new_index - this.length;
-        console.log('k is ' + k)
         while ((k--) + 1) {
             this.push(undefined);
         }
@@ -42,10 +40,9 @@ export default class ExerciseScreen extends React.Component {
           sequence2: '',
           isLoading: true,
           isLeavingProgram: false,
-          updateExercises: false,
           logs: []
       };
-      this.handleMoveUp = this.handleMoveUp.bind(this);
+      //this.handleMoveUp = this.handleMoveUp.bind(this);
   }
   static route = {
     navigationBar: {
@@ -54,25 +51,17 @@ export default class ExerciseScreen extends React.Component {
       }
     },
   };
-  componentWillMount() {
-      console.log('Triggered')
-      AsyncStorage.getItem('logs').then(json => {
-          this.setState({
-              logs: JSON.parse(json) || []
-          }, function logCOnsole() {
-              console.log('Log below')
-              console.log(this.state.logs);
-          })
-      })
-  }
+
   componentDidMount() {
     this.renderExercises();
       let uid = this.props.route.params.uid;
       Database.getUserProgram( (programName) => {
+          console.log('setState 5, programName');
           this.setState({
               programName
           })
       })
+        console.log('setState 7 some datasource');
        this.setState({
           dataSource: this.state.dataSource.cloneWithRows(this.props.route.params.exercises),
       });
@@ -81,6 +70,12 @@ export default class ExerciseScreen extends React.Component {
             isLoading: false
         })
       }, 1000)
+    AsyncStorage.getItem('logs').then(json => {
+          console.log('setState 4, async logs');
+          this.setState({
+              logs: JSON.parse(json) || []
+          })
+      })
   }
   rerenderListView = () => {
     
@@ -88,7 +83,6 @@ export default class ExerciseScreen extends React.Component {
     firebase.database().ref().child('user').child(this.props.route.params.uid).child('ownProgram').child('exerciseSequence').on('value', (snap)=>{
         var ownExercises = [];
         Object.keys(snap.val().exercises).forEach((day) => {
-            console.log(day);
             Object.keys(day).forEach((exercise) => {
                 ownExercises.push({
                 ...exercise,
@@ -100,6 +94,7 @@ export default class ExerciseScreen extends React.Component {
         
         
     }).then( ()=> {
+        console.log('setState 6, sequence2, datasource');
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(ownExercises),
             sequence2: ownExercises,
@@ -111,9 +106,21 @@ export default class ExerciseScreen extends React.Component {
 
 }
 
+componentWillReceiveProps(nextProps) {
+    console.log('I have received nextProps (pds)');
+    console.log(nextProps);
+}
+componentWillUpdate(nextProps, nextState) {
+    console.log('PROGRAMDASHBOARDSCREEN — WANT TO RERENDER RIGHT NOW');
+    console.log(nextProps);
+    console.log(nextState);
+}
+
 getOwnExercises() {
-    console.log('Getting own exercises');
+     console.log('getOwnExercises')
     Database.getOwnExercises((exercises) => {
+        console.log('getOwnExercises from db')
+        console.log('setState 1');
         this.setState({
             sequence2: exercises
         }, () => {
@@ -131,10 +138,12 @@ getOwnExercises() {
     
     let currentProgramKey = await this.props.route.params.program._key;
     if (currentProgramKey === ownProgramKey || '') {
-        console.log("It's your program")
-         this.setState({ownProgram: true})
+        
+        console.log('setState 2, ownProgram');
+         //this.setState({ownProgram: true})
          //this._retrieveFilteredItems();
          //this.rerenderListView();
+         console.log('getOwnExercises');
          this.getOwnExercises();
     }
     else {
@@ -149,15 +158,7 @@ getOwnExercises() {
     const { uid } = this.state;
     return (
       <ScrollView style={styles.container}>
-        {/*<View style={styles.imageContainer}>
-            <Image 
-                source={require('../assets/images/program_background.png')}
-                resizeMode={Image.resizeMode.fill}
-                style={{flex: 1, width: null, height: null}}
-            >
-                <Text style={styles.textWhiteTitle}>{this.props.route.params.program._key}</Text>
-            </Image>
-        </View>*/}
+
         <ProgramBadge 
             days={this.props.route.params.program.days}
             program = {this.props.route.params.program}
@@ -168,7 +169,6 @@ getOwnExercises() {
             handleClick = {this.setOwnPropertyTo.bind(this)}
             handleContinueProgram = {this.handleContinue.bind(this)}
             isLeaving = {this.state.isLeavingProgram}
-            
             style={{flex: 1}}
             />
         <View style={[Common.container, Common.sectionBorder]}>
@@ -180,35 +180,6 @@ getOwnExercises() {
       </ScrollView>
     );
   }
-handleMoveDown(input) {
-    console.log('Trying to move down')
-    console.log(this);
-}
-
-handleMoveUp = (number, dayNumber) => {
-
-let checkArr = [{data: 1}, {data: 2}, {data: 3}, {data: 4}, {data: 5}];
-console.log(checkArr.move(2,3));
-
-  console.log(`Moving up ${number} string from ${dayNumber} day`);
-  let day = 'day' + dayNumber;
-  console.log(this.state.sequence2[day]);
-  let newSequence = this.state.sequence2;
-
-
-
-  
-  let timeout = setTimeout( () => {
-    let newSequence = this.state.sequence2;
-
-    newSequence[day].move(number, number + 1);
-    console.log(newSequence[day]);
-  }, 2000)
-  this.setState({
-      sequence2: newSequence,
-      updateExercises: true,
-  })
-}
 displayWorkoutDays() {
     if (this.state.isLoading) {
         return (<View/>)
@@ -227,11 +198,12 @@ displayWorkoutDays() {
                     numberOfExercises={length}
                     muscles={this.props.route.params.program[day]}
                     exercises={this.state.sequence2[day]}
+                    data={this.state.sequence2[day]}
                     sequence={this.state.sequence2}
                     day={day}
                     program={this.props.route.params.program}
                     isLeaving={this.state.isLeavingProgram}
-                    onMoveUp={this.handleMoveUp}
+                    //onMoveUp={this.handleMoveUp}
                     onMoveDown={this.handleMoveDown}/>
             </View>
         );
@@ -242,9 +214,9 @@ displayWorkoutDays() {
 
 
 setOwnPropertyTo(bool) {
+    console.log('Touched set own property')
     revertExercise = () => {
-        console.log('this.state.sequence2 below');
-        console.log(this.state.sequence2);
+
         Object.keys(this.state.sequence2).forEach((day) => {
             console.log('Day is' + day);
             this.state.sequence2[day].forEach((exercise) => {
@@ -263,45 +235,19 @@ retrieveFilteredItems() {
         let dayNumberIDs = 'day' + i + 'exercises';
         let day = 'day' + i;
         let exercisesArray = [];
-        console.log(this.props.route.params.program[dayNumberIDs]);
         this.props.route.params.program[dayNumberIDs].split(', ').forEach((id) => {
-            console.log(id);
             this.props.route.params.exercises.forEach((exercise) => {
-                console.log(id + ' ' + exercise._key)
                 if (exercise._key === id) {
                     exercisesArray.push(exercise);
                 }
             })
         })
-        console.log(exercisesArray);
         exercisesSequence[day] = exercisesArray;
     }
-
+    console.log('setState 3, sequnce2');
     this.setState({
         sequence2: exercisesSequence
     })
-}
-_retrieveFilteredItems(filter, exercises) {
-    let exercisesSequence = {day1: {id: 0}};
-    let newArr = this.props.route.params.exercises.sort(this.compare('muscles'));
-    for ( i=1; i<=this.props.route.params.program.days; i++ ) {
-        let dayExercises = 'day' + i + 'exercises';
-        let day = 'day' + i;
-        let ref = this.props.route.params.program[dayExercises];
-        let filteredByDay = this.props.route.params.exercises.filter((item) => {
-            console.log('*')
-            console.log(ref.split(', '));
-            console.log('*')
-            return ref.split(', ').includes(item._key);
-        })
-
-        let filteredByNumber = this.filterByNumber(filteredByDay, 4);
-        exercisesSequence[day] = filteredByNumber;
-    }
-    this.setState({
-            sequence2: exercisesSequence
-        })
-  
 }
 
 filterByNumber = (arrayToFilter, n) => {
@@ -323,7 +269,6 @@ filterByNumber = (arrayToFilter, n) => {
 }
 
 handleClick(bool) {
-    console.log('Triggered handleClick')
     this.setOwnPropertyTo(bool);
     this.rerenderListView;
 }
