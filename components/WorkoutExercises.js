@@ -48,16 +48,7 @@ goToAllExercises() {
         day: this.props.day
     })
 }
-componentWillReceiveProps(nextProps) {
-    console.log('I have received nextProps (we)');
-    console.log(nextProps);
-}
 
-componentWillUpdate(nextProps, nextState) {
-    console.log('WORKOUTEXERCISES WANT TO RERENDER RIGHT NOW');
-    console.log(nextProps);
-    console.log(nextState);
-}
 getDayOrder() {
     switch(this.props.dayNumber) {
         case 1: return I18n.t('First')
@@ -69,48 +60,68 @@ getDayOrder() {
     }
 }
 handleMoveUp(number) {
-   // this.props.onMoveUp(number, this.props.dayNumber);
     let newExercises = this.state.exercises.slice();
-    newExercises.pop();
-    //Database.saveDaySequence(newExercises, 'day' + this.props.dayNumber);
+     newExercises.move(number, number + 1);
     this.setState({
         exercises: newExercises
+    }, () => {
+        this.props.passChanges(this.state.exercises, 'day' + this.props.dayNumber);
     })
-    
 }
 saveChanges() {
     Database.saveDaySequence(this.state.exercises, 'day' + this.props.dayNumber);
 }
 handleMoveDown(number) {
-   // this.props.onMoveUp(number, this.props.dayNumber);
     let newExercises = this.state.exercises.slice();
-    newExercises.move(number, number + 1);
-    Database.saveDaySequence(newExercises, 'day' + this.props.dayNumber);
+    newExercises.move(number, number - 1);
     this.setState({
         exercises: newExercises
+    }, () => {
+        this.props.passChanges(this.state.exercises);
     })
     
 }
 
-_renderItem = ({item, index}) => (
-      
-        <Row id={item.id}>
-            <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
-            <Col size={1}>
+_renderItem = ({item, index}) => {
+    let rightpart;
+    if (this.props.editMode) {
+        rightpart = (
             <View>
+            <Col size={1}>
             <TouchableOpacity onPress={() => {
-                this.handleMoveUp(index)}}><Text>˄</Text>
+                this.handleMoveUp(index)}}><Text>Move Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-                 this.handleMoveDown(index)}}><Text>˅</Text>
-            </TouchableOpacity>
-             
-             </View>
             </Col>
+
+            <Col size={1}>
+            <TouchableOpacity onPress={() => {
+                 this.handleMoveDown(index)}}><Text>Move Down</Text>
+            </TouchableOpacity>
+            </Col>
+            </View>
+        )
+    }
+    else {
+        rightpart = (
+            <View>
+
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
+            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
+            </View>
+        )
+    }
+    return (
+        <Row id={item.id}>
+            <Col size={3}>
+            <View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View>
+            </Col>
+            {rightpart}
+            
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
             <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
         </Row>
     )
+}
 
 render() {
     const {dayNumber, exercises, program, numberOfExercises, muscles, onMoveUp} = this.props;

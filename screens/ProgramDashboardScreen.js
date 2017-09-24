@@ -36,22 +36,40 @@ export default class ExerciseScreen extends React.Component {
           }),
           programName: 'attempt1',
           ownProgram: false,
+          editModeOn: false,
           sequence: [],
           sequence2: '',
           isLoading: true,
           isLeavingProgram: false,
           logs: []
       };
-      //this.handleMoveUp = this.handleMoveUp.bind(this);
+      this.passChanges = this.passChanges.bind(this);
+      this.renderRightComponent = this.renderRightComponent.bind(this);
   }
   static route = {
     navigationBar: {
-      title(params){
-        return params.program.name
+      title: 'Program',
+      renderRight: (route, props) => {
+          <TouchableOpacity onPress={() => {
+              this.setState({editModeOn: !this.state.editModeOn})}}><Text>Edit</Text></TouchableOpacity>
       }
     },
   };
-
+  
+//   renderRightComponent = () => {
+//       if (this.state.ownProgram && this.state.editModeOn) {
+//           return <TouchableOpacity onPress={() => {
+//               Database.saveExerciseSequence(this.state.sequence2);
+//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Done</Text></TouchableOpacity>
+//       }
+//     else if (this.state.ownProgram && !this.state.editModeOn) {
+//         return <TouchableOpacity onPress={() => {
+//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Edit</Text></TouchableOpacity>
+//     } 
+//     else {
+//         return <View/>
+//     }
+//   }
   componentDidMount() {
     this.renderExercises();
       let uid = this.props.route.params.uid;
@@ -104,16 +122,6 @@ export default class ExerciseScreen extends React.Component {
 
     
 
-}
-
-componentWillReceiveProps(nextProps) {
-    console.log('I have received nextProps (pds)');
-    console.log(nextProps);
-}
-componentWillUpdate(nextProps, nextState) {
-    console.log('PROGRAMDASHBOARDSCREEN — WANT TO RERENDER RIGHT NOW');
-    console.log(nextProps);
-    console.log(nextState);
 }
 
 getOwnExercises() {
@@ -180,6 +188,19 @@ getOwnExercises() {
       </ScrollView>
     );
   }
+passChanges(newOrder, day){
+    const exercises = this.state.sequence2;
+    exercises[day] = newOrder;
+    console.log(exercises[day]);
+
+    this.forceUpdate();
+    console.log(this.state.sequence2)
+}
+
+saveChanges() {
+    Database.saveExerciseSequence(this.state.sequence2);
+}
+
 displayWorkoutDays() {
     if (this.state.isLoading) {
         return (<View/>)
@@ -203,6 +224,8 @@ displayWorkoutDays() {
                     day={day}
                     program={this.props.route.params.program}
                     isLeaving={this.state.isLeavingProgram}
+                    editMode={this.state.editModeOn}
+                    passChanges={this.passChanges}
                     //onMoveUp={this.handleMoveUp}
                     onMoveDown={this.handleMoveDown}/>
             </View>
