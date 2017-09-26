@@ -173,7 +173,7 @@ export default {
   BicepsCurl:	"Hauiskääntö",
   Concentrationcurl:	"Keskitetty yhden käden hauiskääntö",
   BenchDip:	"Penkkidippi",
-  Tricepspushdown:	"Ojentajakääntö",
+  Tricepspushdown:	"Ojentajapunnerrus",
   Lyingtricepsextensions:	"Ojentajakääntö maaten taljassa",
 	TricepsPushDownWithRope: "Ojentajapunnerrus taljassa",
   Crunch:	"Vatsarutistus maaten",
