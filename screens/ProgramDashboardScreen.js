@@ -44,7 +44,6 @@ export default class ExerciseScreen extends React.Component {
           logs: []
       };
       this.passChanges = this.passChanges.bind(this);
-      this.renderRightComponent = this.renderRightComponent.bind(this);
   }
   static route = {
     navigationBar: {

@@ -61,7 +61,7 @@ getDayOrder() {
 }
 handleMoveUp(number) {
     let newExercises = this.state.exercises.slice();
-     newExercises.move(number, number + 1);
+     newExercises.move(number, number - 1);
     this.setState({
         exercises: newExercises
     }, () => {
@@ -73,7 +73,7 @@ saveChanges() {
 }
 handleMoveDown(number) {
     let newExercises = this.state.exercises.slice();
-    newExercises.move(number, number - 1);
+    newExercises.move(number, number + 1);
     this.setState({
         exercises: newExercises
     }, () => {
@@ -82,46 +82,25 @@ handleMoveDown(number) {
     
 }
 
-_renderItem = ({item, index}) => {
-    let rightpart;
-    if (this.props.editMode) {
-        rightpart = (
-            <View>
-            <Col size={1}>
-            <TouchableOpacity onPress={() => {
-                this.handleMoveUp(index)}}><Text>Move Up</Text>
-            </TouchableOpacity>
-            </Col>
-
-            <Col size={1}>
-            <TouchableOpacity onPress={() => {
-                 this.handleMoveDown(index)}}><Text>Move Down</Text>
-            </TouchableOpacity>
-            </Col>
-            </View>
-        )
-    }
-    else {
-        rightpart = (
-            <View>
-
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
-            </View>
-        )
-    }
-    return (
+_renderItem = ({item, index}) => (
+      
         <Row id={item.id}>
-            <Col size={3}>
-            <View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View>
+            <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
+            <Col size={2}>
+        
+            <TouchableOpacity onPress={() => {
+                this.handleMoveUp(index)}}><Text>Up</Text>
+            </TouchableOpacity>
             </Col>
-            {rightpart}
-            
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
-            <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
+            <Col size={2}>
+            <TouchableOpacity onPress={() => {
+                 this.handleMoveDown(index)}}><Text>Down</Text>
+            </TouchableOpacity>
+            </Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
         </Row>
     )
-}
 
 render() {
     const {dayNumber, exercises, program, numberOfExercises, muscles, onMoveUp} = this.props;
@@ -136,12 +115,14 @@ render() {
 
             <View>
                 <View style={[Common.sectionBorder, {marginVertical: 7}]}/>
-                <TouchableOpacity onPress={() => {this.saveChanges()}}><Text>Save changes</Text></TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => {this.saveChanges()}}><Text>Save changes</Text></TouchableOpacity> */}
                 <Grid>
                 <Row>
-                        <Col size={3}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text></View></Col>
-                        <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Sets').toLowerCase()}</Text></View></Col>
-                        <Col size={1}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
+                        <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text></View></Col>
+                        <Col size={2}></Col>
+                        <Col size={2}></Col>
+                        <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Sets').toLowerCase()}</Text></View></Col>
+                        <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
                     </Row>
                 </Grid>
 
