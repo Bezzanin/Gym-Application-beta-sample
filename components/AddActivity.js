@@ -77,8 +77,8 @@ export default class AddActivity extends Component {
                     />
                     </View>
                     </View>
-                    <View style={{marginTop: 100}}>
-                    <ActivityInput onSendData={this.onSendData}/>
+                    <View>
+                      <ActivityInput onSendData={this.onSendData}/>
                     </View>
             </View>
 
@@ -93,9 +93,6 @@ export default class AddActivity extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   paragraph: {
     paddingTop: 10,
     flex: 1,

@@ -149,7 +149,7 @@ export default class ActivityInput extends Component {
         </View>
        
         {sets}
-        <View style={{flex: 1, minHeight: 200}}></View>
+        <View style={{flex: 1, minHeight: 100}}></View>
         <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
       </View>
     );
