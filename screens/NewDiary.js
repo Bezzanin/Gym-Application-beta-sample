@@ -58,12 +58,14 @@ export default class NewDiary extends React.Component {
     Database.DiaryStats((log) => {
         this.setState({
           items: log
+        }, () => {
+          this.onDayChange({
+            year: moment().format("YYYY"), 
+            month: moment().format("MM"), 
+            day: moment().format("DD")}) 
+        });
         })
-      this.onDayChange({
-        year: moment().format("YYYY"), 
-        month: moment().format("MM"), 
-        day: moment().format("DD")}) 
-    });
+      
     }
 
     constructor(props) {
@@ -130,20 +132,18 @@ export default class NewDiary extends React.Component {
         arrowColor: '#CE0707',
         monthTextColor: '#000',
         agendaDayTextColor: '#000',
-        agendaDayNumColor: '#000'
+        agendaDayNumColor: '#000',
         }}
       />}
        </View>
     );
   }
 
-
     renderItem(item) {
       let log = "";
       let solo = false;
       let newlog = []
       if (Array.isArray(item)) {
-        console.log("IF")
         item.map((item) => {
       log = this.state.exercises.filter((exercise) => {
         return exercise._key === item.id
@@ -155,7 +155,6 @@ export default class NewDiary extends React.Component {
       })
       
     })
-    console.log(newlog) 
 
       return (
       <View style={[styles.item, Common.shadowLight]}>
@@ -172,10 +171,7 @@ export default class NewDiary extends React.Component {
       
     );
   } else {
-    console.log("ELSE")
       let newlog = item;
-      console.log('newlognewlognewlognewlog')
-      console.log(newlog)
       return (
       <View style={[styles.item, Common.shadowLight]}>
         <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>{I18n.t('CustomExercises')}</Text>
