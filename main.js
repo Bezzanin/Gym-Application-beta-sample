@@ -19,6 +19,8 @@ import Database from "./api/database";
 import Router from './navigation/Router';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
+console.ignoredYellowBox = ['Setting a timer', 'Warning: Grid', 'Warning: Col', 'Warning: Row'];
+
 class AppContainer extends React.Component {
 
   state = {
