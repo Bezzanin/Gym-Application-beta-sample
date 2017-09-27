@@ -89,6 +89,8 @@ nextWeek = () => {
                     }}
                   />
                   <VictoryAxis
+                    tickFormat={(x) => {if(x % 1 != 0) {return x = "-"
+                    } else {return x}}}
                     dependentAxis
                     
                   />
@@ -157,7 +159,8 @@ nextWeek = () => {
                   />
                   <VictoryAxis
                     dependentAxis
-                    tickFormat={(x) => (Math.round(x))}
+                    tickFormat={(x) => {if(x % 1 != 0) {return x = "-"
+                    } else {return x}}}
                     style={{
                         grid: {stroke: "#ECECEC", strokeWidth: 1}
                     }}
