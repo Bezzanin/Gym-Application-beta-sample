@@ -36,6 +36,14 @@ const Common = {
         fontWeight: 'bold',
         backgroundColor: 'transparent'
     },
+    darkTitleH2lowMargin: {
+        color: Colors.darkTitleTextColor,
+        marginBottom: 2,
+        fontSize: 20,
+        lineHeight: 22,
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
+    },
     darkTitleH3: {
         color: Colors.darkTitleTextColor,
         marginBottom: Layout.gutter.s,

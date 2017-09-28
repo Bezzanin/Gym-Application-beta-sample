@@ -69,12 +69,12 @@ export default class ExerciseScreen extends React.Component {
   }
   sendData(sets,reps,weight) {
     this.setState({sets,reps,weight})
-    Database.addExerciseStats2(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
+    Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
   }
    
   goToNext = (sets,reps,weight) => {
        this.setState({sets,reps,weight}, ()=>{
-         Database.addExerciseStats2(this.props.route.params.exercise._key, this.state.sets, this.state.reps, this.state.weight, this.state.metric, true);
+         Database.addExerciseStats(this.props.route.params.exercise._key, this.state.sets, this.state.reps, this.state.weight, this.state.metric, true);
        })
       
        let index = 0;

@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import SetItem from './SetItem';
 import Common from '../constants/common';
 import Layout from '../constants/Layout';
-import Database from '../api/database';
 
 export default class ActivityInput extends Component {
     constructor(props){

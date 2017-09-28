@@ -91,7 +91,7 @@ class Database {
                     })} else {totalWeight.push(parseInt(exercise.weight))}
                     }) 
                 } else { 
-                    weekTotalExercises.push(1)
+                    weekTotalExercises.push(0)
                     customExercise = customExercise+1
                     totalWeight.push(parseInt(exercises.weight))
                 }
@@ -179,7 +179,7 @@ class Database {
     }
     static getOwnExercises(callback) {
             let uid = firebase.auth().currentUser.uid;
-            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').on('value', (snap) => {
+            let exercises = firebase.database().ref().child('user').child(uid).child('ownProgram').child('exerciseSequence').once('value', (snap) => {
                 let exercises = snap.val().exercises;
                 callback(snap.val().exercises);
             });
@@ -190,7 +190,7 @@ class Database {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
         console.log('Hi, receiving user program');
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value', (snap) => {
             let programName = "";
             if (snap.val()) {
                 programName = snap.val().programName
@@ -279,7 +279,7 @@ static getUserProgramName(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
 
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value', (snap) => {
             let index = snap.val().currentExerciseIndex;
             callback(index);
         })
@@ -287,7 +287,7 @@ static getUserProgramName(callback) {
     static getCurrentWorkoutDay(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value', (snap) => {
             let day = snap.val().currentWorkoutDay;
             callback(day);
         })
@@ -421,40 +421,6 @@ static getUserProgramName(callback) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/statistics";
         let path2 = "/user/" + uid + "/workoutLogs/" + moment().format("YYYY-MM-DD")
-        firebase.database().ref(path2).once('value', (snap) => {
-            let logs = snap.val();
-            if (logs === null) {logs = []}
-        logs.push({
-            name: id,
-            weight,
-            sets,
-            reps,
-            own: true
-            })
-            firebase.database().ref(path2).set(logs)
-        });
-        firebase.database().ref(path).transaction( (statistics) => {
-            if (statistics) {
-                statistics.exercisesDone++;
-            }
-            return statistics;
-        });
-
-        if (ownExercise) {
-            firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence').transaction( (index) => {
-                if (index) {
-                    index.currentExerciseIndex ++;
-                }
-                return index;
-            });
-        }
-    }
-
-        //Test Function
-        static addExerciseStats2(id, sets, reps, weight, ownExercise) {
-        let uid = firebase.auth().currentUser.uid
-        let path = "/user/" + uid + "/statistics";
-        let path2 = "/user/" + uid + "/exerciseLogs/" + moment().format("YYYY-MM-DD")
         firebase.database().ref(path2).once('value', (snap) => {
             let logs = snap.val();
             if (logs === null) {logs = []}

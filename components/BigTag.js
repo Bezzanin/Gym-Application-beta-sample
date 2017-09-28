@@ -12,13 +12,15 @@ export default class BigTag extends Component {
       <View style={[Common.marginBottom]}>
     <Text style={this.props.color === '#000' ? Common.darkTagTitle : Common.lightTagTitle}>{
     this.props.title}</Text>
+    <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
     <Text 
     style={this.props.color === '#000' ? Common.darkTagTitleDisplay : Common.lightTagTitleDisplay}>
     {this.props.content || ''}
     </Text>
-    <Text style={this.props.color === '#000' ? Common.darkTitleH2: Common.lightTagTitle}>
+    <Text style={this.props.color === '#000' ? Common.darkTitleH2lowMargin: Common.lightTagTitle}>
     {this.props.label || ''}
     </Text>
+    </View>
       </View>
     );
     }
