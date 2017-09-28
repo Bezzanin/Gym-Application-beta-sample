@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo, PanResponder } from 'react-native';
 import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
@@ -41,7 +41,8 @@ export default class ExerciseScreen extends React.Component {
           sequence2: '',
           isLoading: true,
           isLeavingProgram: false,
-          logs: []
+          logs: [],
+          scrollable: true,
       };
       this.passChanges = this.passChanges.bind(this);
   }
@@ -55,20 +56,6 @@ export default class ExerciseScreen extends React.Component {
     },
   };
   
-//   renderRightComponent = () => {
-//       if (this.state.ownProgram && this.state.editModeOn) {
-//           return <TouchableOpacity onPress={() => {
-//               Database.saveExerciseSequence(this.state.sequence2);
-//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Done</Text></TouchableOpacity>
-//       }
-//     else if (this.state.ownProgram && !this.state.editModeOn) {
-//         return <TouchableOpacity onPress={() => {
-//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Edit</Text></TouchableOpacity>
-//     } 
-//     else {
-//         return <View/>
-//     }
-//   }
   componentDidMount() {
     this.renderExercises();
       let uid = this.props.route.params.uid;
@@ -164,7 +151,7 @@ getOwnExercises() {
 
     const { uid } = this.state;
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} scrollEnabled={this.state.scrollable}>
 
         <ProgramBadge 
             days={this.props.route.params.program.days}
@@ -182,6 +169,7 @@ getOwnExercises() {
         <Text style={styles.textBlackTitle}>{I18n.t('Workouts')}</Text>
         
         </View>
+        <TouchableOpacity onPress={() => {this.handleScrolling()}}><Text>Edit</Text></TouchableOpacity>
         {this.displayWorkoutDays()}
         <Divider/>
       </ScrollView>

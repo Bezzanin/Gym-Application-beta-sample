@@ -54,7 +54,8 @@ class ExerciseItem extends Component {
   render() {
     let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
-      <TouchableHighlight 
+      <TouchableHighlight
+        {...this.props.sortHandlers}
         underlayColor={'#920707'}
         onPress={this.props.onPress}>
         <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>

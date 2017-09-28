@@ -9,6 +9,7 @@ import Database from '../api/database';
 import DashboardExercisesList from '../components/DashboardExercisesList'
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import SortableListView from 'react-native-sortable-listview';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
@@ -27,7 +28,6 @@ Array.prototype.move = function (old_index, new_index) {
 };
 
 
-
 @withNavigation
 class WorkoutExercises extends Component {
   constructor(props) {
@@ -37,7 +37,6 @@ class WorkoutExercises extends Component {
         numberOfExercises: '',
         exercises: props.data
     }
-    this.handleMoveUp = this.handleMoveUp.bind(this);
   }
 goToAllExercises() {
     console.log('Go to all triggered');
@@ -59,44 +58,15 @@ getDayOrder() {
         case 6: return I18n.t('Seventh')
     }
 }
-handleMoveUp(number) {
-    let newExercises = this.state.exercises.slice();
-     newExercises.move(number, number - 1);
-    this.setState({
-        exercises: newExercises
-    }, () => {
-        this.props.passChanges(this.state.exercises, 'day' + this.props.dayNumber);
-    })
-}
+
 saveChanges() {
     Database.saveDaySequence(this.state.exercises, 'day' + this.props.dayNumber);
-}
-handleMoveDown(number) {
-    let newExercises = this.state.exercises.slice();
-    newExercises.move(number, number + 1);
-    this.setState({
-        exercises: newExercises
-    }, () => {
-        this.props.passChanges(this.state.exercises);
-    })
-    
 }
 
 _renderItem = ({item, index}) => (
       
         <Row id={item.id}>
             <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
-            <Col size={2}>
-        
-            <TouchableOpacity onPress={() => {
-                this.handleMoveUp(index)}}><Text>Up</Text>
-            </TouchableOpacity>
-            </Col>
-            <Col size={2}>
-            <TouchableOpacity onPress={() => {
-                 this.handleMoveDown(index)}}><Text>Down</Text>
-            </TouchableOpacity>
-            </Col>
             <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
             <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
         </Row>
@@ -119,14 +89,13 @@ render() {
                 <Grid>
                 <Row>
                         <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text></View></Col>
-                        <Col size={2}></Col>
-                        <Col size={2}></Col>
                         <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Sets').toLowerCase()}</Text></View></Col>
                         <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
                     </Row>
                 </Grid>
 
                 <Grid>
+
                     <FlatList
                     data = {this.state.exercises}
                     renderItem={this._renderItem}
@@ -135,12 +104,12 @@ render() {
                 </Grid>
 
             </View>
-            {/*<DashboardExercisesList
+            <DashboardExercisesList
                 //onMoveUp={this.handleMoveUp}
                 //onMoveDown={this.props.onMoveDown(number)}
                 //data={this.props.exercises}
                 numberOfExercises={this.props.numberOfExercises}/>
-                */}
+               
         </View> 
     );
   }
