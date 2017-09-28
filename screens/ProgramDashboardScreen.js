@@ -45,6 +45,7 @@ export default class ExerciseScreen extends React.Component {
           scrollable: true,
       };
       this.passChanges = this.passChanges.bind(this);
+      
   }
   static route = {
     navigationBar: {

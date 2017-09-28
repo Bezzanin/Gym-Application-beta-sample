@@ -106,7 +106,8 @@ constructor(props) {
         showsButtons 
         nextButton={<Text style={{fontSize: 48,color: "#CE0707"}}>›</Text>} 
         prevButton={<Text style={{fontSize: 48, color: "#CE0707"}}>‹</Text>} 
-         height={300}>
+        height={300}
+        activeDotColor={"#CE0707"}>
         
         {daysAmount}
         

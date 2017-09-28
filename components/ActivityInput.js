@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import SetItem from './SetItem';
 import Common from '../constants/common';
 import Layout from '../constants/Layout';
-import Database from '../api/database';
 
 export default class ActivityInput extends Component {
     constructor(props){
@@ -148,7 +147,7 @@ export default class ActivityInput extends Component {
         </View>
        
         {sets}
-        <View style={{flex: 1, minHeight: 200}}></View>
+        <View style={{flex: 1, minHeight: 100}}></View>
         <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
       </View>
     );

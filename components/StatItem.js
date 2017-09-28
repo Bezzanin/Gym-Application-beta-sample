@@ -26,8 +26,6 @@ class StatItem extends Component {
     }
   }
   componentDidMount() {
-    console.log('I am a I am a I am a I am A');
-    console.log(this.props.item)
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       this.setState({

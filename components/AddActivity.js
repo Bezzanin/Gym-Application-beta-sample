@@ -26,11 +26,16 @@ export default class AddActivity extends Component {
       modalVisible: false,
       name: "Oma liike"
     };
+    this.onSendData = this.onSendData.bind(this);
   }
 
   setModalVisible(visible) {
-    console.log('Closing')
     this.setState({ modalVisible: visible });
+  }
+
+  onSendData(sets, reps, weight) {
+    Database.addExerciseStats(this.state.name, sets, reps, weight);
+    this.setModalVisible(false);
   }
 
 
@@ -72,8 +77,9 @@ export default class AddActivity extends Component {
                     />
                     </View>
                     </View>
-                    
-                    <ActivityInput onSendData={(sets, reps, weight) => {Database.addExerciseStats('test', sets, reps, weight)}}/>
+                    <View>
+                      <ActivityInput onSendData={this.onSendData}/>
+                    </View>
             </View>
 
             
@@ -87,9 +93,6 @@ export default class AddActivity extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   paragraph: {
     paddingTop: 10,
     flex: 1,
