@@ -94,7 +94,6 @@ export default class ExerciseScreen extends React.Component {
          let emptyArr = []
          AsyncStorage.setItem('logs', JSON.stringify(emptyArr))
          Database.finishWorkout();
-         Database.pushWorkoutLog(oldLog);
          this.props.navigator.push('finishWorkout', {
            logs: oldLog,
            workoutStarted: this.props.route.params.workoutStarted,

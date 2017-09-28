@@ -113,7 +113,7 @@ setModalVisible(visible) {
             >
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
+                  {I18n.t('FillBasic')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>{I18n.t('Gender')}</Text>
@@ -141,7 +141,7 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
+                  {I18n.t('FillBasic')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>
@@ -168,7 +168,7 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
+                  {I18n.t('FillBasic')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>{I18n.t('Measurements')}</Text>
@@ -197,7 +197,7 @@ setModalVisible(visible) {
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
+                  {I18n.t('FillBasic')}
                 </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>

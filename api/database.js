@@ -190,7 +190,7 @@ class Database {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
         console.log('Hi, receiving user program');
-        firebase.database().ref(path).once('value', (snap) => {
+        firebase.database().ref(path).on('value', (snap) => {
             let programName = "";
             if (snap.val()) {
                 programName = snap.val().programName
@@ -324,22 +324,25 @@ static getUserProgramName(callback) {
         this.emptyWorkout(dayNumber, days);
         
     }
-    static pushWorkoutLog(log){
-        let uid = firebase.auth().currentUser.uid;
-        let path = '/user/' + uid + '/workoutLogs/' + moment().format("YYYY-MM-DD");
-        let totalWeight = 0;
-        log.forEach((logItem) => {
-            totalWeight+=parseInt(logItem.weight)
-        })
 
-        firebase.database().ref(path).once('value', (snap) => {
-            let logs = snap.val();
-            if (logs === null) {logs = []}
-        logs.push({...log})
-            firebase.database().ref(path).set(logs)
-        });
-        //Test End
-    }
+    // Depriciated: Now the logs are separately added in addExerciseStats()
+    
+    // static pushWorkoutLog(log){
+    //     let uid = firebase.auth().currentUser.uid;
+    //     let path = '/user/' + uid + '/workoutLogs/' + moment().format("YYYY-MM-DD");
+    //     let totalWeight = 0;
+    //     log.forEach((logItem) => {
+    //         totalWeight+=parseInt(logItem.weight)
+    //     })
+
+    //     firebase.database().ref(path).once('value', (snap) => {
+    //         let logs = snap.val();
+    //         if (logs === null) {logs = []}
+    //     logs.push({...log})
+    //         firebase.database().ref(path).set(logs)
+    //     });
+    //     //Test End
+    // }
 
     static rateWorkout(rate){
         let uid = firebase.auth().currentUser.uid;
