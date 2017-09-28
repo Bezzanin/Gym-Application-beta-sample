@@ -19,18 +19,13 @@ I18n.translations = {fi};
 
 @withNavigation
 class EditModeButton extends Component {
-  constructor(props) {
-    super(props);
 
-    this.toggleMode = this.toggleMode.bind(this)
-  }
   componentWillMount() {
     this.setState({
       editModeOn: this.props.editModeOn
     })
   }
   toggleMode() {
-    console.log('triggered toggle')
     this.setState({
       editModeOn: !this.state.editModeOn
     })
@@ -41,10 +36,8 @@ class EditModeButton extends Component {
       return (
         <View>
           <TouchableOpacity onPress={() => {
-            console.log(this.props.order);
             this.toggleMode();
-            console.log(this.props.handleToggle);
-            //this.props.handleToggle();
+            this.props.handleToggle();
             Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
             this.props.navigator.pop();
             }}><Text>Done</Text></TouchableOpacity>
@@ -55,9 +48,7 @@ class EditModeButton extends Component {
       return (
         <View>
           <TouchableOpacity onPress={() => {
-            console.log(this.props.order);
             this.toggleMode();
-            console.log(this.props.handleToggle);
             this.props.handleToggle();
     
             }}><Text>Edit</Text></TouchableOpacity>

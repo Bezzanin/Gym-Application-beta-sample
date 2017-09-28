@@ -42,7 +42,6 @@ export default class XDAYExercisesScreen extends Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
   static route = {
-    
     navigationBar: {
       visible: true,
       title(params){ 
@@ -51,13 +50,11 @@ export default class XDAYExercisesScreen extends Component {
     }
   };
   handleToggle = () => {
-    console.log('Propable toggle')
     this.setState({
       editModeOn: !this.state.editModeOn
     })
   }
   componentWillMount() {
-    console.log('Remount');
     data = this.props.route.params.exercises.slice();
     order =  Object.keys(this.props.route.params.exercises.slice());
     editModeOn = false;
@@ -70,18 +67,22 @@ export default class XDAYExercisesScreen extends Component {
         <SortableListView
         style={{ flex: 1 }}
         disableSorting={!this.state.editModeOn}
-        renderHeader={() => <View><TouchableOpacity onPress={() => {console.log(this.props)}}><Text>Check order</Text></TouchableOpacity><EditModeButton handleToggle={this.handleToggle} exercises ={data} order={order} editModeOn={false}/></View>}
+        renderHeader={() => <View><EditModeButton handleToggle={this.handleToggle} exercises ={data} order={order} editModeOn={false}/></View>}
         data={this.props.route.params.exercises.slice()}
         order={order}
         onRowMoved={e => {
-        order.splice(e.to, 0, order.splice(e.from, 1)[0])
-        this.forceUpdate();
-        console.log(data);
-        console.log(order);
-       // Database.saveDaySequence(this.sortExercises(this.props.route.params.exercises.slice(), order), 'day1');
-        //this.props.navigator.pop();
+          order.splice(e.to, 0, order.splice(e.from, 1)[0])
+          this.forceUpdate();
         }}
-        renderRow={row => <ExerciseItem item={row} imageLink={row.photo} onPress={this.goToRoute} onReplace={this.goToReplace.bind(row)}/>}
+        renderRow={row => <ExerciseItem item={row} imageLink={row.photo} onPress={this.goToRoute} onReplace={
+          () => {
+            this.props.navigator.push('replaceExercise', {
+              item: row,
+              sequence: this.props.route.params.exercises,
+              day: this.props.route.params.day
+            })
+          }
+        }/>}
     />
       )
     }
@@ -90,14 +91,6 @@ export default class XDAYExercisesScreen extends Component {
     }
   }
 
-
-    goToReplace = () => {
-      this.props.navigator.push('replaceExercise', {
-        item: row,
-        sequence: this.props.route.params.exercises,
-        day: this.props.route.params.day
-      })
-    }
     goToRoute = () => {
       this.props.navigator.push('exercise', {
         exercise: item,

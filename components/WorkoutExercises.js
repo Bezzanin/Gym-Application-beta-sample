@@ -14,20 +14,6 @@ I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
 
-Array.prototype.move = function (old_index, new_index) {
-      
-    
-    if (new_index >= this.length) {
-        var k = new_index - this.length;
-        while ((k--) + 1) {
-            this.push(undefined);
-        }
-    }
-    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
-    return this; // for testing purposes
-};
-
-
 @withNavigation
 class WorkoutExercises extends Component {
   constructor(props) {
@@ -59,10 +45,6 @@ getDayOrder() {
     }
 }
 
-saveChanges() {
-    Database.saveDaySequence(this.state.exercises, 'day' + this.props.dayNumber);
-}
-
 _renderItem = ({item, index}) => (
       
         <Row id={item.id}>
@@ -85,7 +67,6 @@ render() {
 
             <View>
                 <View style={[Common.sectionBorder, {marginVertical: 7}]}/>
-                {/* <TouchableOpacity onPress={() => {this.saveChanges()}}><Text>Save changes</Text></TouchableOpacity> */}
                 <Grid>
                 <Row>
                         <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText}>{this.props.numberOfExercises} {I18n.t('Exercises')}</Text></View></Col>
@@ -105,11 +86,7 @@ render() {
 
             </View>
             <DashboardExercisesList
-                //onMoveUp={this.handleMoveUp}
-                //onMoveDown={this.props.onMoveDown(number)}
-                //data={this.props.exercises}
                 numberOfExercises={this.props.numberOfExercises}/>
-               
         </View> 
     );
   }
