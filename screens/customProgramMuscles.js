@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, FlatList } from "react-native";
+import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, AsyncStorage,FlatList } from "react-native";
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
 import MusclesForDay from '../components/MusclesForDay';
@@ -19,14 +19,15 @@ class customProgramMuscles extends Component {
 constructor(props) {
     super(props);
     this.state = {
-        value: 1,
+        value: 3,
         previewText: [],
         dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
         musclesSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
         difficulty: 1,
         duration: 30,
         gender: 'Both',
-        name: "Oma"
+        name: "Oma",
+        sequence: {},
     }
     this.recieveMuscles=this.recieveMuscles.bind(this)
     this.sendData=this.sendData.bind(this)
@@ -43,6 +44,17 @@ constructor(props) {
             musclesSource: this.state.dataSource.cloneWithRows([''])
         })
     }
+    componentDidMount() {
+        AsyncStorage.getItem("exercises").then((json) => {
+            try {
+              this.setState({
+                exercises: JSON.parse(json)
+              })
+            } catch(e) {
+      
+            }
+          });
+    }
     recieveMuscles(dayNo, muscles) {
         previewText = this.state.previewText
         previewText[dayNo] = muscles.toString()
@@ -51,6 +63,50 @@ constructor(props) {
             musclesSource: this.state.dataSource.cloneWithRows(previewText)
         })
         
+    }
+    compare = (property) => {
+        return (a, b) => {
+            if (a[property] < b[property]) return -1;
+            if (a[property] > b[property]) return 1;
+            return 0;
+        }
+    }
+    
+    buildSequence(program) {
+        let exercisesSequence = {day1: {id: 0}};
+        let newArr = this.state.exercises.sort(this.compare('muscles'));
+        for ( i=1; i<=this.state.value; i++ ) {
+            let day = 'day' + i;
+            let ref = program[day];
+            let filteredByDay = this.state.exercises.filter((item) => {
+                return ref.split(', ').includes(item.muscles);
+            })
+    
+            let filteredByNumber = this.filterByNumber(filteredByDay, 4);
+            exercisesSequence[day] = filteredByNumber;
+        }
+        console.log(exercisesSequence)
+        this.setState({
+                sequence: exercisesSequence
+            })
+    }
+
+    filterByNumber = (arrayToFilter, n) => {
+        let muscleToCompareWith = 'brain';
+        let counter = 1;
+        let filtered = [];
+        arrayToFilter.forEach((item) => {
+          if ((item.muscles !== muscleToCompareWith)) {
+            counter = 1;
+            muscleToCompareWith = item.muscles;
+            filtered.push(item);
+          }
+          else if ((item.muscles === muscleToCompareWith) && (counter < n)) {
+            filtered.push(item);
+            counter++;
+          }
+        });
+        return filtered;
     }
     sendData() {
         Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration);
@@ -65,13 +121,16 @@ constructor(props) {
         let fakeIds = {day1: '12, 10', day2: '9, 4', day3: '7, 6'}
         let fakeSequence = {day1: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day2: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day3: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}]}
         let program = {
+            key: 'custom',
             name: this.state.name,
             difficulty: this.state.difficulty,
             gender: this.state.gender,
-            days: this.state.duration,
+            days: this.state.value,
             ...dailyMuscle,
         }
         console.log(program);
+        this.buildSequence(program);
+        console.log(this.state.sequence);
         Database.enrollIntoCustomProgram(program);
         Database.saveExerciseSequence(fakeSequence);
         this.props.navigator.push('programDashboard', {
