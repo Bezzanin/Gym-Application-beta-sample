@@ -118,7 +118,8 @@ class Database {
             let logs = snap.val()
             let totalExercises = []
             let totalWeight = []
-            Object.keys(logs).map((day) => {
+            let allDays = _.drop(Object.keys(logs))
+            allDays.map((day) => {
                 
                 totalExercises.push(logs[day].length)
                 logs[day].map((exercises) => {
@@ -137,8 +138,10 @@ class Database {
             let maxWeight = _.max(totalWeight)
             totalExercises = _.sum(totalExercises)
             let totalWorkouts = Object.keys(logs).length
-            totalWeight = _.sum(totalWeight)
-          callback(logs, totalWeight, totalWorkouts, totalExercises, maxWeight)
+            finalWeight = _.sum(totalWeight)
+            console.log('Total Weight')
+            console.log(totalWeight)
+          callback(logs, finalWeight, totalWorkouts, totalExercises, maxWeight)
         }, (e) => {console.log(e)})
     }
 
@@ -394,7 +397,7 @@ static getUserProgramName(callback) {
     static getWorkoutDays(callback) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/ownProgram/weekDays";
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value', (snap) => {
             let days = snap.val();
             callback(days);
         }, (e) => {console.log(e)})

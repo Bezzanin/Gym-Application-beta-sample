@@ -22,6 +22,7 @@ class Profile extends Component {
     totalExercises: "",
     programName: "Not enrolled",
     hasProgram: false,
+    totalWeight: 0
   }
 }
 
