@@ -43,7 +43,7 @@ return exercises.filter((item) => {
   if (filter === 'glutes') return item.muscles === 'glutes';
   if (filter === 'calves') return item.type === 'calves';
   if (filter === 'back') return item.muscles === 'back';
-  if (filter === 'BASIC') return item.type === 'basic';
+  if (filter === 'BASIC') {console.log(item); return item.type === 'basic';}
   if (filter === 'ISOLATION') return item.type === 'isolation';
 })
 }
@@ -74,7 +74,7 @@ export default class ExercisesScreen extends Component {
     },
   };
 
-  componentWillMount() {
+  componentDidMount() {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);

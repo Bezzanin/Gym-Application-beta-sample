@@ -36,6 +36,20 @@ class ExerciseItem extends Component {
       console.log(error);
     });
   }
+   componentWillReceiveProps(nextProps) {
+    console.log('Received new props')
+  //   console.log(nextProps);
+    this.setState({loading: true})
+    var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
+    storageRef.getDownloadURL().then((url) => {
+      this.setState({
+        uriLink: url,
+        
+      })
+    }, function(error) {
+      console.log(error);
+    });
+  }
   displayAlternativeButton = () => {
     if (this.props.item.own) {
       return (
