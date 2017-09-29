@@ -85,8 +85,8 @@ render() {
                 </Grid>
 
             </View>
-            <DashboardExercisesList
-                numberOfExercises={this.props.numberOfExercises}/>
+            {/* <DashboardExercisesList
+                numberOfExercises={this.props.numberOfExercises}/> */}
         </View> 
     );
   }
