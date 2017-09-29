@@ -15,9 +15,16 @@ import ExerciseItem from '../components/ExerciseItem';
 import Common from '../constants/common';
 import I18n from 'react-native-i18n';
 import fi from '../constants/fi';
+import {withNavigation} from '@expo/ex-navigation';
+import SortableListView from 'react-native-sortable-listview';
+import EditModeButton from '../components/EditModeButton';
+
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+
+let data, order, editModeOn;
+
 
 export default class XDAYExercisesScreen extends Component {
   constructor(props) {
@@ -25,56 +32,69 @@ export default class XDAYExercisesScreen extends Component {
     this.state = {
       exercises: [],
       ownProgram: '',
+      loaded: false,
+      editModeOn: false,
+      data: this.props.route.params.exercises.slice(),
       dataSource: new ListView.DataSource({
               rowHasChanged: (r1, r2) => r1 !== r2
           }),
     }
+    this.handleToggle = this.handleToggle.bind(this);
   }
   static route = {
     navigationBar: {
       visible: true,
       title(params){ 
         return ` ${params.dayNumber} ${I18n.t('Day')}`
-      }
-    },
-  };
-
-async componentDidMount() {
-  await this.setState({
-    dataSource: this.state.dataSource.cloneWithRows(this.props.route.params.exercises)
-  })
-}
-  render() {
-    return (
-     <ScrollView>
-       
-       <View style={[Common.paddingLeft, Common.paddingVertical, Common.sectionBorder]}>
-       <Text style={Common.darkTitleH1}>{I18n.t('Exercises')}</Text>
-       <Text style={Common.darkBodyText}>{I18n.t('Exercises')} {this.props.route.params.dayNumber} {I18n.t('Day')}</Text>
-       </View>
-        <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderItem.bind(this)}
-                    enableEmptySections={true}/>
-        
-      </ScrollView>
-    );
-  }
-  _renderItem(item) {
-    goToReplace = () => {
-      this.props.navigator.push('replaceExercise', {
-        item: item,
-        sequence: this.props.route.params.exercises,
-        day: this.props.route.params.day
-      })
+      },
     }
+  };
+  handleToggle = () => {
+    this.setState({
+      editModeOn: !this.state.editModeOn
+    })
+  }
+  componentWillMount() {
+    data = this.props.route.params.exercises.slice();
+    order =  Object.keys(this.props.route.params.exercises.slice());
+    editModeOn = false;
+    this.setState({loaded: !this.state.loaded})
+  }
+
+  render() {
+    if (this.state.loaded) {
+      return (
+        <SortableListView
+        style={{ flex: 1 }}
+        disableSorting={!this.state.editModeOn}
+        renderHeader={() => <View><EditModeButton handleToggle={this.handleToggle} exercises ={data} order={order} editModeOn={false}/></View>}
+        data={this.props.route.params.exercises.slice()}
+        order={order}
+        onRowMoved={e => {
+          order.splice(e.to, 0, order.splice(e.from, 1)[0])
+          this.forceUpdate();
+        }}
+        renderRow={row => <ExerciseItem item={row} imageLink={row.photo} onPress={this.goToRoute} onReplace={
+          () => {
+            this.props.navigator.push('replaceExercise', {
+              item: row,
+              sequence: this.props.route.params.exercises,
+              day: this.props.route.params.day
+            })
+          }
+        }/>}
+    />
+      )
+    }
+    else {
+      <View/>
+    }
+  }
+
     goToRoute = () => {
       this.props.navigator.push('exercise', {
         exercise: item,
       })
     }
-    return (
-      <ExerciseItem item={item} imageLink={item.photo} onPress={goToRoute} onReplace={goToReplace}/>
-    );
-  }
+
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo, PanResponder } from 'react-native';
 import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
@@ -16,17 +16,6 @@ I18n.fallbacks = true;
 I18n.translations = {fi};
 
 
-Array.prototype.move = function (old_index, new_index) {
-    if (new_index >= this.length) {
-        var k = new_index - this.length;
-        while ((k--) + 1) {
-            this.push(undefined);
-        }
-    }
-    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
-    return this; // for testing purposes
-};
-
 export default class ExerciseScreen extends React.Component {
   constructor(props) {
       super(props);
@@ -41,10 +30,10 @@ export default class ExerciseScreen extends React.Component {
           sequence2: '',
           isLoading: true,
           isLeavingProgram: false,
-          logs: []
+          logs: [],
+          scrollable: true,
       };
-      this.passChanges = this.passChanges.bind(this);
-      //this.renderRightComponent = this.renderRightComponent.bind(this);
+      
   }
   static route = {
     navigationBar: {
@@ -56,30 +45,14 @@ export default class ExerciseScreen extends React.Component {
     },
   };
   
-//   renderRightComponent = () => {
-//       if (this.state.ownProgram && this.state.editModeOn) {
-//           return <TouchableOpacity onPress={() => {
-//               Database.saveExerciseSequence(this.state.sequence2);
-//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Done</Text></TouchableOpacity>
-//       }
-//     else if (this.state.ownProgram && !this.state.editModeOn) {
-//         return <TouchableOpacity onPress={() => {
-//               this.setState({editModeOn: !this.state.editModeOn})}}><Text>Edit</Text></TouchableOpacity>
-//     } 
-//     else {
-//         return <View/>
-//     }
-//   }
   componentDidMount() {
     this.renderExercises();
       let uid = this.props.route.params.uid;
       Database.getUserProgram( (programName) => {
-          console.log('setState 5, programName');
           this.setState({
               programName
           })
       })
-        console.log('setState 7 some datasource');
        this.setState({
           dataSource: this.state.dataSource.cloneWithRows(this.props.route.params.exercises),
       });
@@ -89,7 +62,6 @@ export default class ExerciseScreen extends React.Component {
         })
       }, 1000)
     AsyncStorage.getItem('logs').then(json => {
-          console.log('setState 4, async logs');
           this.setState({
               logs: JSON.parse(json) || []
           })
@@ -112,7 +84,6 @@ export default class ExerciseScreen extends React.Component {
         
         
     }).then( ()=> {
-        console.log('setState 6, sequence2, datasource');
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(ownExercises),
             sequence2: ownExercises,
@@ -125,21 +96,17 @@ export default class ExerciseScreen extends React.Component {
 }
 
 getOwnExercises() {
-     console.log('getOwnExercises')
     Database.getOwnExercises((exercises) => {
-        console.log('getOwnExercises from db')
-        console.log('setState 1');
+        
         this.setState({
             sequence2: exercises
         }, () => {
-            console.log('Getting own exercises...')
             this.setOwnPropertyTo(true)
         })
     })
 }
   async renderExercises() {
     let ownProgramKey = '';
-    console.log('PERFORMED RERENDER PERFORMED RERENDER PERFORMED RERENDER');
     await AsyncStorage.getItem('ownProgramKey').then( (key) => {
         ownProgramKey = JSON.parse(key); 
     })
@@ -147,15 +114,10 @@ getOwnExercises() {
     let currentProgramKey = await this.props.route.params.program._key;
     if (currentProgramKey === ownProgramKey || '') {
         
-        console.log('setState 2, ownProgram');
-         //this.setState({ownProgram: true})
-         //this._retrieveFilteredItems();
-         //this.rerenderListView();
-         console.log('getOwnExercises');
+     
          this.getOwnExercises();
     }
     else {
-        console.log("It's not your program, else triggered")
         this.retrieveFilteredItems();
         this.setOwnPropertyTo(false);
        
@@ -165,7 +127,7 @@ getOwnExercises() {
 
     const { uid } = this.state;
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} scrollEnabled={this.state.scrollable}>
 
         <ProgramBadge 
             days={this.props.route.params.program.days}
@@ -183,23 +145,12 @@ getOwnExercises() {
         <Text style={styles.textBlackTitle}>{I18n.t('Workouts')}</Text>
         
         </View>
+        <TouchableOpacity onPress={() => {this.handleScrolling()}}><Text>Edit</Text></TouchableOpacity>
         {this.displayWorkoutDays()}
         <Divider/>
       </ScrollView>
     );
   }
-passChanges(newOrder, day){
-    const exercises = this.state.sequence2;
-    exercises[day] = newOrder;
-    console.log(exercises[day]);
-
-    this.forceUpdate();
-    console.log(this.state.sequence2)
-}
-
-saveChanges() {
-    Database.saveExerciseSequence(this.state.sequence2);
-}
 
 displayWorkoutDays() {
     if (this.state.isLoading) {
@@ -209,7 +160,7 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.props.route.params.program.days; i++) {
         let day = 'day' + i;
-        let length =  2//this.state.sequence2[day].length;
+        let length =  this.state.sequence2[day].length;
 
         workoutExercises.push(
             <View>
@@ -224,10 +175,7 @@ displayWorkoutDays() {
                     day={day}
                     program={this.props.route.params.program}
                     isLeaving={this.state.isLeavingProgram}
-                    editMode={this.state.editModeOn}
-                    passChanges={this.passChanges}
-                    //onMoveUp={this.handleMoveUp}
-                    onMoveDown={this.handleMoveDown}/>
+                    />
             </View>
         );
     }

@@ -18,7 +18,6 @@ export default class ActivityInput extends Component {
       }
     }
 
-
     onSendData() {
         if (this.state.touched) {
             this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
