@@ -53,7 +53,31 @@ constructor(props) {
         
     }
     sendData() {
-        Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration)
+        Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration);
+
+        function toObject(arr) {
+            var day = {};
+            for (var i = 1; i < arr.length; ++i)
+            day["day"+i] = arr[i];
+            return day;
+        }
+        let dailyMuscle = toObject(this.state.previewText);
+        let fakeIds = {day1: '12, 10', day2: '9, 4', day3: '7, 6'}
+        let fakeSequence = {day1: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day2: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day3: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}]}
+        let program = {
+            name: this.state.name,
+            difficulty: this.state.difficulty,
+            gender: this.state.gender,
+            days: this.state.duration,
+            ...dailyMuscle,
+        }
+        console.log(program);
+        Database.enrollIntoCustomProgram(program);
+        Database.saveExerciseSequence(fakeSequence);
+        this.props.navigator.push('programDashboard', {
+            program,
+            exercises: {name: 'bla'}
+          })
     }
     renderList = () => {
         if (this.state.previewText.length === 0) {

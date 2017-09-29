@@ -33,6 +33,10 @@ goToAllExercises() {
         day: this.props.day
     })
 }
+componentWillMount() {
+    console.log('BELOW ARE MUSCLES')
+    console.log(this.props.muscles)
+}
 
 getDayOrder() {
     switch(this.props.dayNumber) {

@@ -43,7 +43,6 @@ export default class ExerciseScreen extends React.Component {
   };
   
   componentDidMount() {
-      console.log(this.props.route.params);
     this.setState({
         program: this.props.route.params.program,
         uid: this.props.route.params.uid,
@@ -161,8 +160,7 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.state.program.days; i++) {
         let day = 'day' + i;
-        let length =  this.state.sequence2[day].length;
-
+        let length =  2//this.state.sequence2[day].length;
         workoutExercises.push(
             <View>
                 <WorkoutExercises 

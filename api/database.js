@@ -200,6 +200,7 @@ class Database {
             if (snap.val()) {
                 programName = snap.val().programName
             }
+            console.log(programName)
             callback(programName);
     })
  
@@ -215,6 +216,8 @@ class Database {
                 program = snap.val()
                 program._key = snap.val().programName
             }
+            console.log('GOT USER PROGRAM ALL')
+            console.log(program);
             callback(program);
     })
  
@@ -269,6 +272,25 @@ static getUserProgramName(callback) {
 
             })
     }
+
+    static enrollIntoCustomProgram(passedProgram) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/ownProgram";
+       
+        firebase.database().ref(path).update({
+            programRealName: passedProgram.name,
+            gender: passedProgram.gender,
+            days: passedProgram.days,
+            day1: passedProgram.day1 || '',
+            day2: passedProgram.day2 || '',
+            day3: passedProgram.day3 || '',
+            day4: passedProgram.day4 || '',
+            day5: passedProgram.day5 || '',
+            day6: passedProgram.day6 || '',
+            hasProgram: true,
+
+        })
+}
 
 
 
