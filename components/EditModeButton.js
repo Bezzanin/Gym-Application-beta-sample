@@ -35,23 +35,26 @@ class EditModeButton extends Component {
     if (this.state.editModeOn) {
       return (
         <View>
-          <TouchableOpacity onPress={() => {
-            this.toggleMode();
-            this.props.handleToggle();
-            Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
-            this.props.navigator.pop();
-            }}><Text>Done</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={[Common.container, Common.sectionBorder]}
+            onPress={() => {
+              this.toggleMode();
+              this.props.handleToggle();
+              Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
+              this.props.navigator.pop();
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>Save and return</Text></TouchableOpacity>
         </View>
       )
     }
     else {
       return (
         <View>
-          <TouchableOpacity onPress={() => {
-            this.toggleMode();
-            this.props.handleToggle();
-    
-            }}><Text>Edit</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={[Common.container, Common.sectionBorder]}
+            onPress={() => {
+              this.toggleMode();
+              this.props.handleToggle();
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>Change order</Text></TouchableOpacity>
         </View>
       )
     }

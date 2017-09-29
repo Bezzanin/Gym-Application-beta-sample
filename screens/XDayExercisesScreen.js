@@ -74,7 +74,15 @@ export default class XDAYExercisesScreen extends Component {
           order.splice(e.to, 0, order.splice(e.from, 1)[0])
           this.forceUpdate();
         }}
-        renderRow={row => <ExerciseItem item={row} imageLink={row.photo} onPress={this.goToRoute} onReplace={
+        renderRow={row => <ExerciseItem
+        item={row}
+        imageLink={row.photo}
+        onPress={() => {
+          this.props.navigator.push('exercise', {
+        exercise: row,
+      })
+        }}
+        onReplace={
           () => {
             this.props.navigator.push('replaceExercise', {
               item: row,
@@ -90,11 +98,5 @@ export default class XDAYExercisesScreen extends Component {
       <View/>
     }
   }
-
-    goToRoute = () => {
-      this.props.navigator.push('exercise', {
-        exercise: item,
-      })
-    }
 
 }

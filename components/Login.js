@@ -5,7 +5,8 @@ import {
     View,
     StyleSheet,
     dismissKeyboard,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    AsyncStorage,
 } from "react-native";
 
 import React, {Component} from "react";
