@@ -95,7 +95,7 @@ export default class ReplaceExerciseScreen extends Component {
             [day]: this.props.route.params.sequence
         });
         
-        //this.props.navigator.pop();
+        this.props.navigator.pop();
     }
     return (
       <ExerciseItem item={item} imageLink={item.photo} videoLink={item.video} onPress={ () => {replaceExerciseWithAlternative(this.props.route.params.item._key, item)} }/>

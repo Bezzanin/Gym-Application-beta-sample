@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   TextInput,
+  AsyncStorage,
 } from 'react-native';
 import { Constants } from 'expo';
 import Common from '../constants/common';
@@ -18,21 +19,42 @@ import {Slider, CheckBox} from 'react-native-elements';
 I18n.locale = "fi";
 I18n.fallbacks = true;
 I18n.translations = {fi};
+
+import { withNavigation } from '@expo/ex-navigation';
 import MultipleChoice from 'react-native-multiple-choice';
 
+
+@withNavigation
 export default class WeekDays extends Component {
   constructor(props) {
     super(props);
     this.state = {
       days: [],
+      shouldRender: 'true',
     };
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
     this.state.options = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
   }
 
+  componentDidMount() {
+    AsyncStorage.getItem('showWeekDays').then((val) => {
+      console.log(val);
+      this.setState({
+        shouldRender: val
+      })
+    })
+  }
   onSendData(days) {
-    Database.setWorkoutDays(days);
+    this.setState({
+      shouldRender: 'maybe'
+    })
+    setTimeout(() => {
+      Database.setWorkoutDays(days);
+      AsyncStorage.setItem('showWeekDays', 'false');
+      this.props.navigator.popToTop();
+    }, 2000)
+    
   }
 
     _renderText(option) {
@@ -66,21 +88,32 @@ _renderIndicator(option) {
   }
 
   render() {
-        
-    return (
-      <View>
-
-<MultipleChoice
-    options={this.state.options}
-    maxSelectedOptions={3}
-    renderText={(option)=>this._renderText(option)}
-    renderIndicator={(option)=>this._renderIndicator(option)}
-    onSelection={this.allWeekDays}
-/>
-
-      <TouchableOpacity style={Common.greyButtonRounded} onPress={() => {this.onSendData(this.state.days)}}><Text style={Common.darkActionTitle}>AA</Text></TouchableOpacity>
-      </View>
-    );
+        if (this.state.shouldRender === 'true') {
+          return (
+            <View>
+              <MultipleChoice
+                  options={this.state.options}
+                  maxSelectedOptions={3}
+                  renderText={(option)=>this._renderText(option)}
+                  renderIndicator={(option)=>this._renderIndicator(option)}
+                  onSelection={this.allWeekDays}
+              />
+              <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text style={[Common.textButton, {fontSize: 18}]}>Save days</Text></TouchableOpacity>
+            </View>
+          );
+        }
+        else if (this.state.shouldRender === 'false') {
+          return (
+            <View/>
+          )
+        }
+        else {
+          return (
+          <View>
+            <Text>The schedule is saved. You can change the days later in the settings</Text>
+          </View>
+          )
+        }
   }
 }
 

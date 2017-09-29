@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo, PanResponder } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, Alert, AsyncStorage, NetInfo } from 'react-native';
 import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
@@ -32,20 +32,22 @@ export default class ExerciseScreen extends React.Component {
           isLeavingProgram: false,
           logs: [],
           scrollable: true,
+          program: {},
       };
       
   }
   static route = {
     navigationBar: {
-      title: 'Program',
-      renderRight: (route, props) => {
-          <TouchableOpacity onPress={() => {
-              this.setState({editModeOn: !this.state.editModeOn})}}><Text>Edit</Text></TouchableOpacity>
-      }
+      title: 'Program'
     },
   };
   
   componentDidMount() {
+      console.log(this.props.route.params);
+    this.setState({
+        program: this.props.route.params.program,
+        uid: this.props.route.params.uid,
+    })
     this.renderExercises();
       let uid = this.props.route.params.uid;
       Database.getUserProgram( (programName) => {
@@ -130,12 +132,12 @@ getOwnExercises() {
       <ScrollView style={styles.container} scrollEnabled={this.state.scrollable}>
 
         <ProgramBadge 
-            days={this.props.route.params.program.days}
-            program = {this.props.route.params.program}
+            days={this.state.program.days}
+            program = {this.state.program}
             programName = {this.state.programName}
             ownProgram={this.state.ownProgram}
             sequence = {this.state.sequence2 || {day1: {id: 1}}}
-            uid = {this.props.route.params.uid}
+            uid = {this.state.uid}
             handleClick = {this.setOwnPropertyTo.bind(this)}
             handleContinueProgram = {this.handleContinue.bind(this)}
             isLeaving = {this.state.isLeavingProgram}
@@ -145,7 +147,6 @@ getOwnExercises() {
         <Text style={styles.textBlackTitle}>{I18n.t('Workouts')}</Text>
         
         </View>
-        <TouchableOpacity onPress={() => {this.handleScrolling()}}><Text>Edit</Text></TouchableOpacity>
         {this.displayWorkoutDays()}
         <Divider/>
       </ScrollView>
@@ -158,7 +159,7 @@ displayWorkoutDays() {
     }
     let workoutExercises = [];
 
-    for (i = 1; i <= this.props.route.params.program.days; i++) {
+    for (i = 1; i <= this.state.program.days; i++) {
         let day = 'day' + i;
         let length =  this.state.sequence2[day].length;
 
@@ -168,12 +169,12 @@ displayWorkoutDays() {
                     key={i} 
                     dayNumber={i}
                     numberOfExercises={length}
-                    muscles={this.props.route.params.program[day]}
+                    muscles={this.state.program[day]}
                     exercises={this.state.sequence2[day]}
                     data={this.state.sequence2[day]}
                     sequence={this.state.sequence2}
                     day={day}
-                    program={this.props.route.params.program}
+                    program={this.state.program}
                     isLeaving={this.state.isLeavingProgram}
                     />
             </View>
