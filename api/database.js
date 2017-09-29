@@ -73,7 +73,7 @@ class Database {
         firebase.database().ref(path).on('value', (snap) => {
             let logs = snap.val();
             let weekTotalExercises = [];
-            let customExercise = 0;
+            let customExercises = [];
             let weekLogDates = Object.keys(logs).filter((date) => {
                 return ( moment(date).format('W') == currentWeek )
             })
@@ -82,8 +82,10 @@ class Database {
             weekLogDates.map((day) => {
                 weekTotalExercises.push(logs[day].length)
                 logs[day].map((exercises) => {
-                    console.log(exercises)
                 if(Array.isArray(exercises)){
+                    console.log("IFFF")
+                    weekTotalExercises.push(exercises.length)
+                    
                     exercises.map((exercise) => {
                         if(Array.isArray(exercise.weight)){
                         exercise.weight.map((weight) =>{
@@ -91,13 +93,15 @@ class Database {
                     })} else {totalWeight.push(parseInt(exercise.weight))}
                     }) 
                 } else { 
-                    weekTotalExercises.push(0)
-                    customExercise = customExercise+1
+                    console.log("ELES")
+                    
+                    customExercises.push(1)
                     totalWeight.push(parseInt(exercises.weight))
                 }
             }) 
             })
             weekTotalExercises = _.sum(weekTotalExercises)
+            customExercise = customExercises.length
             let weekTotalWorkouts = weekLogDates.length
             weekLogDates.forEach((date) => {
                 logsRec.push([
@@ -139,8 +143,6 @@ class Database {
             totalExercises = _.sum(totalExercises)
             let totalWorkouts = Object.keys(logs).length
             finalWeight = _.sum(totalWeight)
-            console.log('Total Weight')
-            console.log(totalWeight)
           callback(logs, finalWeight, totalWorkouts, totalExercises, maxWeight)
         }, (e) => {console.log(e)})
     }
@@ -328,24 +330,23 @@ static getUserProgramName(callback) {
         
     }
 
-    // Depriciated: Now the logs are separately added in addExerciseStats()
     
-    // static pushWorkoutLog(log){
-    //     let uid = firebase.auth().currentUser.uid;
-    //     let path = '/user/' + uid + '/workoutLogs/' + moment().format("YYYY-MM-DD");
-    //     let totalWeight = 0;
-    //     log.forEach((logItem) => {
-    //         totalWeight+=parseInt(logItem.weight)
-    //     })
+    static pushWorkoutLog(log){
+        let uid = firebase.auth().currentUser.uid;
+        let path = '/user/' + uid + '/workoutLogs/' + moment().format("YYYY-MM-DD");
+        let totalWeight = 0;
+        log.forEach((logItem) => {
+            totalWeight+=parseInt(logItem.weight)
+        })
 
-    //     firebase.database().ref(path).once('value', (snap) => {
-    //         let logs = snap.val();
-    //         if (logs === null) {logs = []}
-    //     logs.push({...log})
-    //         firebase.database().ref(path).set(logs)
-    //     });
-    //     //Test End
-    // }
+        firebase.database().ref(path).once('value', (snap) => {
+            let logs = snap.val();
+            if (logs === null) {logs = []}
+        logs.push({...log})
+            firebase.database().ref(path).set(logs)
+        });
+        //Test End
+    }
 
     static rateWorkout(rate){
         let uid = firebase.auth().currentUser.uid;
@@ -421,6 +422,18 @@ static getUserProgramName(callback) {
             totalDays: duration,
             ...dailyMuscle
         })
+    }
+
+    static showNextExercise(ownExercise) {
+        let uid = firebase.auth().currentUser.uid
+        if (ownExercise) {
+            firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence').transaction( (index) => {
+                if (index) {
+                    index.currentExerciseIndex ++;
+                }
+                return index;
+            });
+        }
     }
 
     static addExerciseStats(id, sets, reps, weight, ownExercise) {
