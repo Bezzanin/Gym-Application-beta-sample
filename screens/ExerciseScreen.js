@@ -74,7 +74,7 @@ export default class ExerciseScreen extends React.Component {
    
   goToNext = (sets,reps,weight) => {
        this.setState({sets,reps,weight}, ()=>{
-         Database.addExerciseStats(this.props.route.params.exercise._key, this.state.sets, this.state.reps, this.state.weight, this.state.metric, true);
+         Database.showNextExercise(true);
        })
       
        let index = 0;
@@ -93,6 +93,7 @@ export default class ExerciseScreen extends React.Component {
          console.log('Pushed if');
          let emptyArr = []
          AsyncStorage.setItem('logs', JSON.stringify(emptyArr))
+         Database.pushWorkoutLog(oldLog);
          Database.finishWorkout();
          this.props.navigator.push('finishWorkout', {
            logs: oldLog,
