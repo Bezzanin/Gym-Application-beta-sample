@@ -24,6 +24,23 @@ class ExerciseItem extends Component {
       loading: true
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    if((this.props.item) !== (nextProps.item)) // Check if new markers are different from old
+    {
+      var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
+      storageRef.getDownloadURL().then((url) => {
+        // console.log(this.state.uriLink)
+        this.setState({
+          uriLink: url,
+          
+        })
+      }, function(error) {
+        console.log(error);
+      });
+    }
+   
+} 
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
