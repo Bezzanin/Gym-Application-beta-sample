@@ -83,7 +83,6 @@ class Database {
                 weekTotalExercises.push(logs[day].length)
                 logs[day].map((exercises) => {
                 if(Array.isArray(exercises)){
-                    console.log("IFFF")
                     weekTotalExercises.push(exercises.length)
                     
                     exercises.map((exercise) => {
@@ -92,9 +91,7 @@ class Database {
                         totalWeight.push(parseInt(weight))
                     })} else {totalWeight.push(parseInt(exercise.weight))}
                     }) 
-                } else { 
-                    console.log("ELES")
-                    
+                } else {
                     customExercises.push(1)
                     totalWeight.push(parseInt(exercises.weight))
                 }
@@ -160,10 +157,9 @@ class Database {
         }, (e) => {console.log(e)})
     }
     
-    static saveExerciseSequence(exercises) {
+    static saveExerciseSequence(exercises){
             let uid = firebase.auth().currentUser.uid;
             let path = "/user/" + uid + "/ownProgram/exerciseSequence";
-            console.log(Object.keys(exercises));
             Object.keys(exercises).forEach((day) => {
                 let x = day;
                 firebase.database().ref(path).child('exercises').update({
@@ -194,13 +190,11 @@ class Database {
     static getUserProgram(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = "/user/" + uid + "/ownProgram";
-        console.log('Hi, receiving user program');
         firebase.database().ref(path).on('value', (snap) => {
             let programName = "";
             if (snap.val()) {
                 programName = snap.val().programName
             }
-            console.log(programName)
             callback(programName);
     })
  
@@ -216,8 +210,6 @@ class Database {
                 program = snap.val()
                 program._key = snap.val().programName
             }
-            console.log('GOT USER PROGRAM ALL')
-            console.log(program);
             callback(program);
     })
  
@@ -278,6 +270,7 @@ static getUserProgramName(callback) {
         let path = "/user/" + uid + "/ownProgram";
        
         firebase.database().ref(path).update({
+            programName: passedProgram._key,
             programRealName: passedProgram.name,
             gender: passedProgram.gender,
             days: passedProgram.days,
@@ -324,7 +317,6 @@ static getUserProgramName(callback) {
         let path = '/user/' + uid + '/ownProgram/';
         firebase.database().ref(path).on('value', (snap) => {
             let days = snap.val().days;
-            console.log(`There are ${days} days overall`);
             callback(days);
         })
     }
@@ -347,7 +339,6 @@ static getUserProgramName(callback) {
         });
         this.getCurrentWorkoutDay((day) => {dayNumber = day})
         this.getCurrentWorkoutDaysNumber((days) => {days})
-        console.log(`current day is ${dayNumber} and there are ${days} days overall`)
         this.emptyWorkout(dayNumber, days);
         
     }

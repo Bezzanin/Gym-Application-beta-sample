@@ -85,7 +85,6 @@ constructor(props) {
             let filteredByNumber = this.filterByNumber(filteredByDay, 4);
             exercisesSequence[day] = filteredByNumber;
         }
-        console.log(exercisesSequence)
         this.setState({
                 sequence: exercisesSequence
             })
@@ -114,29 +113,35 @@ constructor(props) {
         function toObject(arr) {
             var day = {};
             for (var i = 1; i < arr.length; ++i)
-            day["day"+i] = arr[i];
+            day["day"+i] = arr[i].split(',').join(', ');
             return day;
         }
+
         let dailyMuscle = toObject(this.state.previewText);
         let fakeIds = {day1: '12, 10', day2: '9, 4', day3: '7, 6'}
         let fakeSequence = {day1: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day2: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}], day3: [{name: '1', muscles: 'chest', own: false, photo: "penkkipunnerrus", type: "basic", video: "penkkipunnerrus"}]}
         let program = {
-            key: 'custom',
+            _key: 'custom',
             name: this.state.name,
             difficulty: this.state.difficulty,
             gender: this.state.gender,
             days: this.state.value,
             ...dailyMuscle,
         }
-        console.log(program);
         this.buildSequence(program);
-        console.log(this.state.sequence);
+        AsyncStorage.setItem('ownProgramKey', JSON.stringify(program._key));
         Database.enrollIntoCustomProgram(program);
-        Database.saveExerciseSequence(fakeSequence);
-        this.props.navigator.push('programDashboard', {
-            program,
-            exercises: {name: 'bla'}
-          })
+        Database.saveExerciseSequence(this.state.sequence); 
+        let timeout1 = setTimeout(() => {   
+            Database.saveExerciseSequence(this.state.sequence);
+        }, 1000)
+        let timeout2 = setTimeout(() => {
+            this.props.navigator.push('programDashboard', {
+                program,
+                exercises: this.state.sequence
+              })
+        }, 3000)
+        
     }
     renderList = () => {
         if (this.state.previewText.length === 0) {

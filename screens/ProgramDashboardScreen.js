@@ -67,8 +67,6 @@ export default class ExerciseScreen extends React.Component {
               logs: JSON.parse(json) || []
           })
       })
-      console.log('USERS PROGRAM BELOW')
-      console.log(this.state.program)
   }
   rerenderListView = () => {
     
@@ -116,14 +114,11 @@ getOwnExercises() {
     
     let currentProgramKey = await this.props.route.params.program._key;
     if (currentProgramKey === ownProgramKey || '') {
-        
-     
          this.getOwnExercises();
     }
     else {
         this.retrieveFilteredItems();
-        this.setOwnPropertyTo(false);
-       
+        this.setOwnPropertyTo(false);  
     }
   }
   render() {
@@ -202,12 +197,10 @@ setOwnPropertyTo(bool) {
 
 retrieveFilteredItems() {
     let exercisesSequence = {day1: {id: 0}};
-    
     for ( i=1; i<=this.props.route.params.program.days; i++ ) {
         let dayNumberIDs = 'day' + i + 'exercises';
         let day = 'day' + i;
         let exercisesArray = [];
-        console.log(this.props.route.params.program[dayNumberIDs]);
         this.props.route.params.program[dayNumberIDs].split(', ').forEach((id) => {
             this.props.route.params.exercises.forEach((exercise) => {
                 if (exercise._key === id) {
