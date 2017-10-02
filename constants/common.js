@@ -527,7 +527,13 @@ const Common = {
         justifyContent: 'center',
         alignSelf: 'center'
     },
-    
+    borderButton: {
+        paddingHorizontal: 16,
+        paddingVertical: 6,
+        borderRadius: 25,
+        backgroundColor: Colors.tintColor,
+        marginHorizontal: 6
+    },
     /**
      * Shadows
      */

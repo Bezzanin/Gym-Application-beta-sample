@@ -76,6 +76,7 @@ export default class XDAYExercisesScreen extends Component {
         }}
         renderRow={row => <ExerciseItem
         item={row}
+        editModeOn={true}
         imageLink={row.photo}
         onPress={() => {
           this.props.navigator.push('exercise', {

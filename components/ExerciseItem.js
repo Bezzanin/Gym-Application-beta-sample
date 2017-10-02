@@ -89,7 +89,7 @@ class ExerciseItem extends Component {
         {...this.props.sortHandlers}
         underlayColor={'#920707'}
         onPress={this.props.onPress}>
-        <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
+        <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder, this.props.editModeOn && styles.draggable, this.props.editModeOn && Common.shadowLight]}>
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
             <Image
               source={{uri: this.state.uriLink}}
@@ -114,37 +114,8 @@ class ExerciseItem extends Component {
   }
 }
 const styles = StyleSheet.create({
-  exerciseContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  imageStyle: {
-    flex: 1,
-    resizeMode: 'cover',
-    borderRadius: 3,
-  },
-
-  imageContainer: {
-    width: 107,
-    height: 73,
-    backgroundColor: '#CFCFCF',
-    margin: 12,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.5,
-    borderRadius: 6
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 5,
-    fontWeight: '500'
-  },
-  tag: {
-    fontSize: 14,
-    marginVertical: 1
+  draggable: {
+    marginVertical: 16,
   },
   activityIndicator: {
       flex: 1,

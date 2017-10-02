@@ -25,17 +25,12 @@ class WorkoutExercises extends Component {
     }
   }
 goToAllExercises() {
-    console.log('Go to all triggered');
     this.props.navigator.push('XDayExercises', {
         dayNumber: this.props.dayNumber,
         exercises: this.props.exercises,
         program: this.props.program,
         day: this.props.day
     })
-}
-componentWillMount() {
-    console.log('BELOW ARE MUSCLES')
-    console.log(this.props.muscles)
 }
 
 getDayOrder() {
@@ -65,7 +60,7 @@ render() {
             <TouchableOpacity onPress={() => {this.goToAllExercises()}}>
                 <View>
                     <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
-                    <Text style={Common.darkTitleH2}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
+                    <Text style={[Common.darkTitleH2, Common.textButton]}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
                 </View>
             </TouchableOpacity>
 

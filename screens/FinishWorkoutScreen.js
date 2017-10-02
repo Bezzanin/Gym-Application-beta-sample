@@ -135,13 +135,13 @@ export default class FinishWorkoutScreen extends React.Component {
             </Row>
           <Row size={1}>
             <Col>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(1); Database.rateWorkout(1); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('Bad')}</Text></TouchableOpacity>
-            </Col>
-            <Col containerStyle={styles.centered}>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(2); Database.rateWorkout(2); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('Fine')}</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.centered, Common.borderButton]} onPress={() => {console.log(1); Database.rateWorkout(1); this.finishWorkout()}}><Text style={Common.lightActionTitle}>{I18n.t('Bad')}</Text></TouchableOpacity>
             </Col>
             <Col>
-              <TouchableOpacity  style={styles.centered} onPress={() => {console.log(3); Database.rateWorkout(3); this.finishWorkout()}}><Text style={styles.colorBlack}>{I18n.t('VeryGood')}</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.centered, Common.borderButton]} onPress={() => {console.log(2); Database.rateWorkout(2); this.finishWorkout()}}><Text style={Common.lightActionTitle}>{I18n.t('Fine')}</Text></TouchableOpacity>
+            </Col>
+            <Col>
+              <TouchableOpacity style={[styles.centered, Common.borderButton]} onPress={() => {console.log(3); Database.rateWorkout(3); this.finishWorkout()}}><Text style={Common.lightActionTitle}>{I18n.t('VeryGood')}</Text></TouchableOpacity>
             </Col>
           </Row>
           <Row/>
