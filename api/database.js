@@ -404,7 +404,7 @@ static getUserProgramName(callback) {
     }
 
     static setWorkoutDays(days) {
-        let uid = firebase.auth().currentUser.uid
+let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/ownProgram/weekDays";
         firebase.database().ref(path).set(days)
     }
@@ -506,16 +506,6 @@ static getUserProgramName(callback) {
         firebase.database().ref(path).update({
             day1: newMuscles
         });
-    }
-    static getId() {
-
-        let checkAuthInterval = setInterval(function(){
-        if ( typeof firebase.auth().currentUser.uid !== undefined ) {
-            clearInterval(checkAuthInterval);
-            return firebase.auth().currentUser.uid;
-        }
-        }, 500);
-
     }
     static addUserDetails(gender, DaysPerWeek, height, weight, name) {
          let uid = firebase.auth().currentUser.uid;

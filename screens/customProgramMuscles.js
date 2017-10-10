@@ -28,6 +28,7 @@ constructor(props) {
         gender: 'Both',
         name: "Oma",
         sequence: {},
+        hasAllData: false,
     }
     this.recieveMuscles=this.recieveMuscles.bind(this)
     this.sendData=this.sendData.bind(this)
@@ -45,6 +46,10 @@ constructor(props) {
         })
     }
     componentDidMount() {
+        this.setState({
+            value: this.props.route.params.value,
+            name: this.props.route.params.name,
+        })
         AsyncStorage.getItem("exercises").then((json) => {
             try {
               this.setState({
@@ -56,8 +61,8 @@ constructor(props) {
           });
     }
     recieveMuscles(dayNo, muscles) {
-        previewText = this.state.previewText
-        previewText[dayNo] = muscles.toString()
+        previewText = this.state.previewText.slice();
+        previewText[dayNo-1] = muscles.toString()
         this.setState({
             previewText,
             musclesSource: this.state.dataSource.cloneWithRows(previewText)
@@ -74,10 +79,14 @@ constructor(props) {
     
     buildSequence(program) {
         let exercisesSequence = {day1: {id: 0}};
+        console.log('Program is program');
+        console.log(program)
         let newArr = this.state.exercises.sort(this.compare('muscles'));
-        for ( i=1; i<=this.state.value; i++ ) {
+        for ( i=1; i <=this.state.value; i++ ) {
             let day = 'day' + i;
             let ref = program[day];
+            console.log('REF IS')
+            console.log(ref);
             let filteredByDay = this.state.exercises.filter((item) => {
                 return ref.split(', ').includes(item.muscles);
             })
@@ -107,13 +116,30 @@ constructor(props) {
         });
         return filtered;
     }
+    checkFormState() {
+        let hasData = true;
+        console.log(this.state.previewText.length);
+        console.log(this.state.previewText)
+        if (this.state.previewText.length === 0 || this.state.previewText.length < this.state.value) {
+            hasData = false;
+        }
+        for (var i = 0, l = this.state.previewText.length; i < l; i++) {
+            if (typeof(this.state.previewText[i])=='undefined') {
+                hasData = false;
+            };
+        };
+        console.log(hasData)
+        return hasData
+    }
     sendData() {
         Database.addUserMadeProgram(this.state.name, this.state.value, this.state.previewText, this.state.difficulty, this.state.gender, this.state.duration);
 
         function toObject(arr) {
             var day = {};
-            for (var i = 1; i < arr.length; ++i)
-            day["day"+i] = arr[i].split(',').join(', ');
+            for (let i = 1; i <= arr.length; i++) {
+                day["day"+i] = arr[i-1].split(',').join(', ');
+            }
+           
             return day;
         }
 
@@ -203,6 +229,7 @@ constructor(props) {
             
         </View>
         <TouchableOpacity
+            disabled={!this.checkFormState()}
             onPress={() => {this.sendData()}}
             style={[
                 Common.brightButtonRounded,

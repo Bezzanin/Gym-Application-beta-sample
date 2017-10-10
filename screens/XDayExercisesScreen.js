@@ -67,7 +67,13 @@ export default class XDAYExercisesScreen extends Component {
         <SortableListView
         style={{ flex: 1 }}
         disableSorting={!this.state.editModeOn}
-        renderHeader={() => <View><EditModeButton handleToggle={this.handleToggle} exercises ={data} order={order} editModeOn={false}/></View>}
+        renderHeader={() => <View>
+                              <EditModeButton
+                                handleToggle={this.handleToggle}
+                                exercises ={data}
+                                order={order}
+                                editModeOn={false}/>
+                            </View>}
         data={this.props.route.params.exercises.slice()}
         order={order}
         onRowMoved={e => {
@@ -76,7 +82,7 @@ export default class XDAYExercisesScreen extends Component {
         }}
         renderRow={row => <ExerciseItem
         item={row}
-        editModeOn={true}
+        editModeOn={this.state.editModeOn}
         imageLink={row.photo}
         onPress={() => {
           this.props.navigator.push('exercise', {

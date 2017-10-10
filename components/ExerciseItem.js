@@ -88,8 +88,9 @@ class ExerciseItem extends Component {
       <TouchableHighlight
         {...this.props.sortHandlers}
         underlayColor={'#920707'}
-        onPress={this.props.onPress}>
-        <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder, this.props.editModeOn && styles.draggable, this.props.editModeOn && Common.shadowLight]}>
+        onPress={this.props.onPress}
+        style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
+        <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
           <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
             <Image
               source={{uri: this.state.uriLink}}
@@ -98,6 +99,7 @@ class ExerciseItem extends Component {
               <ActivityIndicator animating={ this.state.loading } style = {styles.activityIndicator}/>
               </Image>
           </View>
+          <TouchableOpacity onPress={() => {console.log(this.props.editModeOn)}}><Text>Check props</Text></TouchableOpacity>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
               <Text style={Common.darkTitleH3}>{exerciseName || ''}</Text>

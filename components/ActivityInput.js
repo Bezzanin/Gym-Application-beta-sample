@@ -75,6 +75,7 @@ export default class ActivityInput extends Component {
 
                         <View style={Common.input}>
                         <TextInput
+                            selectTextOnFocus
                             style={Common.inputText}
                             keyboardType={'numeric'}
                             maxLength={3}
@@ -111,6 +112,7 @@ export default class ActivityInput extends Component {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                      <View style={Common.input}>
                     <TextInput
+                        selectTextOnFocus
                         style={Common.inputText}
                         maxLength={3}
                         keyboardType={'numeric'}
