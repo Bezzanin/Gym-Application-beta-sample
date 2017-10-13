@@ -107,10 +107,6 @@ export default {
   TotalSets: "Sarjoja yhteensä",
   TotalReps: "Toistoja yhteensä",
   FeedbackText: "Ole hyvä ja arvioi treenin vaikeus, että voimme muokata ohjelmaa eteenpäin",
-
-  
-
-
   Next: "Seuraava",
   Measurements: "Kirjaa mitat",
   HowManyWeeks: "Kuinka monta kertaa viikossa harjoittelet?",
@@ -144,9 +140,6 @@ export default {
   Saturday: "Lauantai",
   Sunday: "Sunnuntai",
   Save: "Tallenna",
-  
-
-
   EnrollToProgram: "Valitse ohjelma",
   EditProgram: "Edit",
   DoneWorkoutToday: "Olet tehnyt harjoituksen tänään",
@@ -194,8 +187,6 @@ export default {
   SeatedCalfRaise:	"Pohjelaite istuen",
   ClosedCableRow: "?",
   Legraiseonthebench: "Vatsarutistus istuen",
-
-
   others: 'muuta',
   all: 'Kaikki',
   ShowMore: "näytä lisää",
