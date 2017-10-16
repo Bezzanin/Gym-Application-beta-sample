@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, AsyncStorage,FlatList } from "react-native";
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import MusclesForDay from '../components/MusclesForDay';
 import Layout from '../constants/Layout';
@@ -10,9 +10,9 @@ import Common from '../constants/common';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Swiper from 'react-native-swiper';
 import _ from "lodash"
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 class customProgramMuscles extends Component {
 

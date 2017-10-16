@@ -27,11 +27,11 @@ import Database from '../api/database';
 import QuestionsScreen from './QuestionsScreen';
 import Common from '../constants/common';
 import LogInForm from '../components/LogInForm';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -66,6 +66,10 @@ export default class LoginScreen extends Component {
         }
     }
     
+    changeLanguage(lang) {
+        I18n.locale = lang;
+        this.forceUpdate()
+    }
 
     render() {
 
@@ -100,6 +104,15 @@ export default class LoginScreen extends Component {
                         button
                         type='facebook'
                     />
+                    <View style={styles.language}>
+                    <TouchableOpacity onPress={() => {this.changeLanguage("fi")}}>
+                        <Text style={[Common.lightBodyText]}>FI</Text>
+                    </TouchableOpacity>
+                    <Text style={[Common.lightBodyText]}> | </Text>
+                    <TouchableOpacity onPress={() => {this.changeLanguage("en")}}>
+                        <Text style={[Common.lightBodyText]}>EN</Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
             </Image>
         </View>
@@ -111,6 +124,10 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         zIndex: -1
+    },
+    language: {
+        flexDirection: "row",
+        marginTop: 50
     },
     containerCentered: {
         flex: 1,

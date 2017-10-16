@@ -7,12 +7,12 @@ import Common from '../constants/common';
 import BigTag from '../components/BigTag';
 import Database from '../api/database';
 import DashboardExercisesList from '../components/DashboardExercisesList'
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import SortableListView from 'react-native-sortable-listview';
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 @withNavigation
 class WorkoutExercises extends Component {

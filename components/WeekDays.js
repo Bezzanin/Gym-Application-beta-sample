@@ -13,12 +13,12 @@ import {
 import { Constants } from 'expo';
 import Common from '../constants/common';
 import Database from '../api/database';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import {Slider, CheckBox} from 'react-native-elements';
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 import { withNavigation } from '@expo/ex-navigation';
 import MultipleChoice from 'react-native-multiple-choice';

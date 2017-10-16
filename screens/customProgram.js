@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import Layout from '../constants/Layout';
 import Database from '../api/database';
 import { Slider } from 'react-native-elements';
 import Common from '../constants/common';
 import _ from "lodash"
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 class customProgram extends Component {
 constructor(props) {

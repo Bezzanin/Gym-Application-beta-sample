@@ -10,12 +10,12 @@ import AddActivity from '../components/AddActivity';
 import ExerciseItem from '../components/ExerciseItem';
 import StatItem from '../components/StatItem'
 import Common from '../constants/common';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import { withNavigation } from '@expo/ex-navigation';
-I18n.locale = "fi";
+import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en};
 
 
 
