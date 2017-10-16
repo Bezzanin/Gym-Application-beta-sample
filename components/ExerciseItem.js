@@ -99,7 +99,6 @@ class ExerciseItem extends Component {
               <ActivityIndicator animating={ this.state.loading } style = {styles.activityIndicator}/>
               </Image>
           </View>
-          <TouchableOpacity onPress={() => {console.log(this.props.editModeOn)}}><Text>Check props</Text></TouchableOpacity>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
               <Text style={Common.darkTitleH3}>{exerciseName || ''}</Text>
