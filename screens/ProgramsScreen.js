@@ -7,9 +7,9 @@ import Common from '../constants/common';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import Database from '../api/database';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 export default class SettingsScreen extends React.Component {
   constructor(props) {

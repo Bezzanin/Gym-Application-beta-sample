@@ -16,9 +16,9 @@ import registerForPushNotificationsAsync
   from '../api/registerForPushNotificationsAsync';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 const Home = I18n.t('Home');
 const Exercises = I18n.t('Exercises');

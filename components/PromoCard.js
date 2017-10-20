@@ -5,9 +5,9 @@ import Common from '../constants/common';
 import { withNavigation } from '@expo/ex-navigation';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 @withNavigation
 export default class PromoCard extends Component {

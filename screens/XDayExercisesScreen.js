@@ -21,7 +21,7 @@ import EditModeButton from '../components/EditModeButton';
 
 import en from '../constants/en';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 let data, order, editModeOn;
 

@@ -7,9 +7,9 @@ import Database from '../api/database';
 import { Slider } from 'react-native-elements';
 import Common from '../constants/common';
 import _ from "lodash"
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 class customProgram extends Component {
 constructor(props) {

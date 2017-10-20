@@ -29,9 +29,9 @@ import Common from '../constants/common';
 import LogInForm from '../components/LogInForm';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -111,6 +111,10 @@ export default class LoginScreen extends Component {
                     <Text style={[Common.lightBodyText]}> | </Text>
                     <TouchableOpacity onPress={() => {this.changeLanguage("en")}}>
                         <Text style={[Common.lightBodyText]}>EN</Text>
+                    </TouchableOpacity>
+                    <Text style={[Common.lightBodyText]}> | </Text>
+                    <TouchableOpacity onPress={() => {this.changeLanguage("ru")}}>
+                        <Text style={[Common.lightBodyText]}>RU</Text>
                     </TouchableOpacity>
                     </View>
                 </View>

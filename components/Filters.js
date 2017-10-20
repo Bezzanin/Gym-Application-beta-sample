@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 class Filters extends Component {
   render() {

@@ -10,9 +10,9 @@ import DashboardExercisesList from '../components/DashboardExercisesList'
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import SortableListView from 'react-native-sortable-listview';
-import en from '../constants/en';
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi, en};
+I18n.translations = {fi, en, ru};
 
 @withNavigation
 class WorkoutExercises extends Component {
