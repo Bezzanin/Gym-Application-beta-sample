@@ -8,11 +8,11 @@ import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import BigTag from '../components/BigTag';
 import Common from '../constants/common';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-I18n.locale = "fi";
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en, ru};
 
 const { View, TouchableHighlight, Text, Image, ListView, TouchableOpacity, ActivityIndicator } = ReactNative;
 

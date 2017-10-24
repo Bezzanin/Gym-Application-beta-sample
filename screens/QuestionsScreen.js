@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, Modal, StatusBar } from "react-native";
+import { Platform, View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, Modal, StatusBar } from "react-native";
 import Swiper from 'react-native-swiper';
 import Layout from '../constants/Layout';
 import {Slider, CheckBox, Button, FormInput, FormLabel, FormValidationMessage} from 'react-native-elements';
@@ -7,11 +7,11 @@ import Database from '../api/database';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import * as firebase from "firebase";
 import Common from '../constants/common';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-I18n.locale = "fi";
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en, ru};
 
 class QuestionsScreen extends Component {
 
@@ -27,7 +27,8 @@ class QuestionsScreen extends Component {
             height: 0,
             weight: 0,
             name: 'none',
-            response: ""
+            response: "",
+            pagination: 'none'
         };
         this.signup = this.signup.bind(this);
   }
@@ -95,6 +96,8 @@ setModalVisible(visible) {
               showsButtons
               scrollEnabled={false}
               showsPagination={true}
+              activeDotColor={"#CE0707"}
+              paginationStyle={{display: this.state.pagination}}
               prevButton={<Text style={styles.buttonText} />}
               nextButton={
                 <View
@@ -181,6 +184,7 @@ setModalVisible(visible) {
                       onChangeText={height => this.setState({ height })}
                       placeholder={"cm"}
                       keyboardType={'numeric'}
+                      onFocus={() => console.log("Focused")}
                     />
                   </View>
                   <View>
@@ -252,8 +256,6 @@ setModalVisible(visible) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-  },
  slide: {
     flex: 1,
     backgroundColor: '#FFF'
@@ -295,13 +297,25 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   nextButton: {
-  flex: 1, 
-  top: -200, 
-  justifyContent: 'center', 
-  alignItems: 'center',
-  position: 'relative',
-  flexDirection: 'column',
-  alignSelf: 'center',
+  ...Platform.select({
+    ios: {
+      alignItems: 'center',
+      position: 'relative',
+      flexDirection: 'column',
+      alignSelf: 'center',
+      flex: 1, 
+      top: -200, 
+    },
+    android: {
+      justifyContent: 'center',
+      position: 'absolute', 
+      top: 150,
+      left: 0,
+      right: 0, 
+      bottom: 0,
+    },
+  }),
+
 },
   doneButton: {
   backgroundColor: 'transparent', 
