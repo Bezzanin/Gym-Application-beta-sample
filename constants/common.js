@@ -7,6 +7,11 @@ const Common = {
      * ---------------------
      * Display, h1, h2, h3 in dark and light mode
      */
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     tabTitle: {
         fontSize: 12,
         textAlign: 'center'

@@ -37,7 +37,7 @@ export default {
     Exercises: 	"Exercises",
     Exercise: "Exercise",
     ExercisesThisWeek: "Exercises this week",
-    ExercisesLibrary: "Exercises Library",
+    ExercisesLibrary: "Library",
     SearchExercises: "Search Exercises",
     All: "All",
     totalDays: "Total Days",
