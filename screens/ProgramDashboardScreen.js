@@ -157,7 +157,10 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.state.program.days; i++) {
         let day = 'day' + i;
-        let length =  this.state.sequence2[day].length;
+        let length = null;
+        if (Array.isArray(this.state.sequence2[day])) {
+        length =  this.state.sequence2[day].length;
+        }
         workoutExercises.push(
             <View>
                 <WorkoutExercises 

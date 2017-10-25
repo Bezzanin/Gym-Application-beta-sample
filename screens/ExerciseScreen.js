@@ -228,7 +228,7 @@ export default class ExerciseScreen extends React.Component {
               content={'Instructions'}
               color={'#000'}/>
           <Text>
-          Lay down on the bench. Then, using your thighs to help raise the dumbbells up. Repeat the movement for the prescribed amount of repetitions of your training program.
+          Lay down on the bench. Then, using your thighs to help raise the dumbbells up.
           </Text>
           <Tag
               content={'Caution'}
@@ -293,7 +293,7 @@ export default class ExerciseScreen extends React.Component {
           </View>
           </View>
           <View style={{flex: 1}}>
-          {this.props.insideWorkout ? 
+          {/* {this.props.insideWorkout ? 
           <TouchableOpacity onPress={this.goToRoute} style={{flex: 1}}>
           <Image
               source={{uri: this.state.uriLink}}
@@ -308,7 +308,7 @@ export default class ExerciseScreen extends React.Component {
       />
           </Image>
           </TouchableOpacity>
-          : <Text></Text>}
+          : <Text></Text>} */}
           </View>
         </View>
         {this.state.showDescriptions ?
