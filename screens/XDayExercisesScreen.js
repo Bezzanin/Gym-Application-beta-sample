@@ -20,6 +20,7 @@ import SortableListView from 'react-native-sortable-listview';
 import EditModeButton from '../components/EditModeButton';
 
 import en from '../constants/en';
+import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 

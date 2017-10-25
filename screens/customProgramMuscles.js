@@ -187,7 +187,7 @@ constructor(props) {
                         style={[Common.paddingLeft, Common.sectionBorder, {minHeight: 100}]}
                         dataSource={this.state.musclesSource}
                         enableEmptySections
-                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
+                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {parseInt(rowID) + 1} – <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
                     />
                 </View>
             )
