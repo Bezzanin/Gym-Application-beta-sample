@@ -408,6 +408,7 @@ let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/ownProgram/weekDays";
         firebase.database().ref(path).set(days)
     }
+    
     static getWorkoutDays(callback) {
         let uid = firebase.auth().currentUser.uid
         let path = "/user/" + uid + "/ownProgram/weekDays";

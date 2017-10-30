@@ -198,6 +198,7 @@ export default class NewDiary extends React.Component {
             <Text style={Common.darkActionTitle}>Begin workout</Text>
           </TouchableOpacity>
           </View>}
+
       </View>
     );
   }

@@ -35,7 +35,7 @@ export default class WeekDays extends Component {
     this.baseState = this.state
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
-    this.state.options = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
+    this.state.options = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   }
 
   componentDidMount() {
@@ -47,15 +47,14 @@ export default class WeekDays extends Component {
     })
   }
   onSendData(days) {
-    // this.setState({
-    //   shouldRender: 'maybe'
-    // })
-    // setTimeout(() => {
-    //   Database.setWorkoutDays(days);
-    //   AsyncStorage.setItem('showWeekDays', 'false');
-    //   this.props.navigator.popToTop();
-    // }, 2000)
-    this.setState(this.baseState)
+    this.setState({
+      shouldRender: 'maybe'
+    })
+    setTimeout(() => {
+      Database.setWorkoutDays(days);
+      AsyncStorage.setItem('showWeekDays', 'false');
+      this.props.navigator.popToTop();
+    }, 2000)
     
   }
 
