@@ -95,7 +95,8 @@ class ProgramCard extends Component {
         onPress={this.goToRoute}
         style={[styles.container, this.props.item.isBestMatch ? Common.shadowProgramHighlight : Common.shadowMedium]}>
         <Image 
-          source={{uri: this.state.uriLink}}
+          source={{uri: this.state.uriLink, cache: 'force-cache'}}
+          cache
           resizeMode={Image.resizeMode.cover}
           onLoadEnd={()=> { this.setState({ loading: false }) }}
           style={{flex: 1, width: null, height: null, borderRadius: 6}}
