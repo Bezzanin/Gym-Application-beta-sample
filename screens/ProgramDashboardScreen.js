@@ -3,7 +3,6 @@ import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, 
 import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
-import WeekDays from '../components/WeekDays';
 import WorkoutExercises from '../components/WorkoutExercises';
 import DashboardExercisesList from '../components/DashboardExercisesList';
 import Database from '../api/database';

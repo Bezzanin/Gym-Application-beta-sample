@@ -32,6 +32,7 @@ export default class WeekDays extends Component {
       days: [],
       shouldRender: 'true',
     };
+    this.baseState = this.state
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
     this.state.options = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
@@ -46,14 +47,15 @@ export default class WeekDays extends Component {
     })
   }
   onSendData(days) {
-    this.setState({
-      shouldRender: 'maybe'
-    })
-    setTimeout(() => {
-      Database.setWorkoutDays(days);
-      AsyncStorage.setItem('showWeekDays', 'false');
-      this.props.navigator.popToTop();
-    }, 2000)
+    // this.setState({
+    //   shouldRender: 'maybe'
+    // })
+    // setTimeout(() => {
+    //   Database.setWorkoutDays(days);
+    //   AsyncStorage.setItem('showWeekDays', 'false');
+    //   this.props.navigator.popToTop();
+    // }, 2000)
+    this.setState(this.baseState)
     
   }
 
@@ -93,7 +95,7 @@ _renderIndicator(option) {
             <View>
               <MultipleChoice
                   options={this.state.options}
-                  maxSelectedOptions={3}
+                  maxSelectedOptions={this.props.amountOfDays}
                   renderText={(option)=>this._renderText(option)}
                   renderIndicator={(option)=>this._renderIndicator(option)}
                   onSelection={this.allWeekDays}
