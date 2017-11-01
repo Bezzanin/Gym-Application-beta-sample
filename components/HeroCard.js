@@ -7,11 +7,11 @@ import Common from '../constants/common';
 import BigTag from '../components/BigTag';
 import Database from '../api/database';
 import {Grid, Col, Row} from 'react-native-elements';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-I18n.locale = "fi";
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en, ru};
 
 @withNavigation
 class HeroCard extends Component {

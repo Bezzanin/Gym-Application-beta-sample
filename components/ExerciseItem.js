@@ -6,11 +6,11 @@ import {withNavigation} from '@expo/ex-navigation';
 import Common from '../constants/common';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-I18n.locale = "fi";
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en, ru};
 
 const { View, TouchableHighlight, Text, Image, TouchableOpacity, ActivityIndicator } = ReactNative;
 
@@ -99,7 +99,6 @@ class ExerciseItem extends Component {
               <ActivityIndicator animating={ this.state.loading } style = {styles.activityIndicator}/>
               </Image>
           </View>
-          <TouchableOpacity onPress={() => {console.log(this.props.editModeOn)}}><Text>Check props</Text></TouchableOpacity>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
               <Text style={Common.darkTitleH3}>{exerciseName || ''}</Text>

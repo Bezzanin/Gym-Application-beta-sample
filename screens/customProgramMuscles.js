@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet, ListView, TouchableOpacity, AsyncStorage,FlatList } from "react-native";
-import I18n from 'react-native-i18n';
+import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import MusclesForDay from '../components/MusclesForDay';
 import Layout from '../constants/Layout';
@@ -10,9 +10,9 @@ import Common from '../constants/common';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Swiper from 'react-native-swiper';
 import _ from "lodash"
-I18n.locale = "fi";
+import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
-I18n.translations = {fi};
+I18n.translations = {fi, en, ru};
 
 class customProgramMuscles extends Component {
 
@@ -187,7 +187,7 @@ constructor(props) {
                         style={[Common.paddingLeft, Common.sectionBorder, {minHeight: 100}]}
                         dataSource={this.state.musclesSource}
                         enableEmptySections
-                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {rowID}: <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
+                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {parseInt(rowID) + 1} – <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
                     />
                 </View>
             )
