@@ -53,27 +53,77 @@ export default class RootNavigation extends React.Component {
           id="home"
           renderIcon={isSelected => this._renderIcon(Home,'ios-home', isSelected)}
           onPress={this.onPress}>
-          <StackNavigation initialRoute="home" />
+          <StackNavigation
+            id="home"
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#fff',
+                tintColor: '#000',
+                titleStyle: {
+                  fontWeight: '600',
+                },
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD'
+              }
+            }}
+            initialRoute="home" />
         </TabNavigationItem>
         <TabNavigationItem
           id="exercises"
           renderIcon={isSelected => this._renderIcon(ExercisesLibrary,'ios-clipboard', isSelected)}
           onPress={this.onPress}>
-          <StackNavigation initialRoute="exercises" />
+          <StackNavigation
+            id="exercises"
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#fff',
+                tintColor: '#000',
+                titleStyle: {
+                  fontWeight: '600',
+                },
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD'
+              }
+            }}
+            initialRoute="exercises" />
         </TabNavigationItem>
       
         <TabNavigationItem
           id="diary"
           renderIcon={isSelected => this._renderIcon(Diary,'ios-bookmarks', isSelected)}
           onPress={this.onPress}>
-          <StackNavigation initialRoute="diary" />
+          <StackNavigation
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#fff',
+                tintColor: '#000',
+                titleStyle: {
+                  fontWeight: '600',
+                },
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD'
+              }
+            }}
+            initialRoute="diary" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="settings"
           renderIcon={isSelected => this._renderIcon(Profile,'ios-contact', isSelected)}
           onPress={this.onPress}>
-          <StackNavigation initialRoute="settings" />
+          <StackNavigation
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#fff',
+                tintColor: '#000',
+                titleStyle: {
+                  fontWeight: '600',
+                },
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD'
+              }
+            }}
+            initialRoute="settings" />
         </TabNavigationItem>
       </TabNavigation>
     );
