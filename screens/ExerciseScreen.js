@@ -202,6 +202,26 @@ export default class ExerciseScreen extends React.Component {
         return(<View/>)
       }
     }
+    onReplace() {
+        this.props.navigator.push('replaceExercise', {
+          item: row,
+          sequence: this.props.route.params.exercises,
+          day: this.props.route.params.day
+        })
+    }
+    displayReplace() {
+      if (this.props.insideWorkout) {
+        return(
+          <View style={{flex: 1}}>
+            <Text>Don’t have right equipment?</Text>
+            <TouchableOpacity onPress={ () => {this.goToReplace()}}><Text>Find alternative</Text></TouchableOpacity>
+            </View>
+        )
+      }
+      else {
+        return(<View/>)
+      }
+    }
     displayVideo() {
       if ((this.state.videoLink === 'https://') || (this.props.insideWorkout))  {
         return(

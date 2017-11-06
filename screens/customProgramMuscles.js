@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   title: {
-      alignSelf: 'center'
+      alignSelf: 'center',
   }
 })
 

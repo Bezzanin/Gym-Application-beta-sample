@@ -16,7 +16,7 @@ import ReplaceExerciseScreen from '../screens/ReplaceExerciseScreen';
 import FinishWorkoutScreen from '../screens/FinishWorkoutScreen';
 import XDayExercisesScreen from '../screens/XDayExercisesScreen';
 
-import MusclesScreen from '../screens/MusclesScreen';
+//import MusclesScreen from '../screens/MusclesScreen';
 import NewDiary from '../screens/NewDiary';
 import customProgram from '../screens/customProgram';
 import customProgramMuscles from '../screens/customProgramMuscles';
@@ -37,7 +37,7 @@ export default createRouter(() => ({
   replaceExercise: () => ReplaceExerciseScreen,
   finishWorkout: () => FinishWorkoutScreen,
   XDayExercises: () => XDayExercisesScreen,
-  musclesScreen: () => MusclesScreen,
+  //musclesScreen: () => MusclesScreen,
   diary: () => NewDiary,
   customProgram: () => customProgram,
   customProgramMuscles: () => customProgramMuscles,

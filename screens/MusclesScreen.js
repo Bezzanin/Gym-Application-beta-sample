@@ -46,11 +46,6 @@ export default class ExercisesScreen extends Component {
        style={{
            flex: 1
        }}>
-          {/* <Image
-            source={require('../assets/images/muscles.png')}
-            resizeMode={Image.resizeMode.cover}
-            style={{flex: 1, width: null, height: null}}
-            > */ }
                 
                     <Grid>
                     <Row>
