@@ -29,7 +29,7 @@ const Profile = I18n.t('Profile');
 export default class RootNavigation extends React.Component {
 
   componentDidMount() {
-    //this._notificationSubscription = this._registerForPushNotifications();
+    this._notificationSubscription = this._registerForPushNotifications();
   }
 
   componentWillUnmount() {

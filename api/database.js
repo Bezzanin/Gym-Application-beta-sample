@@ -508,6 +508,20 @@ let uid = firebase.auth().currentUser.uid
             day1: newMuscles
         });
     }
+
+    static getUID(callback) {
+            firebase.auth().onAuthStateChanged((user) => {
+                callback(user);
+            })
+    }
+
+    static addPushToken(uid, token) {
+        let path = "/user/" + uid + "/details";
+        firebase.database().ref(path).update({
+           token: token
+        });
+    }
+
     static addUserDetails(gender, DaysPerWeek, height, weight, name) {
          let uid = firebase.auth().currentUser.uid;
          let path = "/user/" + uid + "/details";

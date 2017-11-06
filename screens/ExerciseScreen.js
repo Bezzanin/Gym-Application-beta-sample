@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage, Image, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Share, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage, Image, ActivityIndicator } from 'react-native';
 import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
@@ -43,6 +43,7 @@ export default class ExerciseScreen extends React.Component {
       showDescriptions: false
     }
     this.goToRoute = this.goToRoute.bind(this)
+    this.onClick = this.onClick.bind(this)
   }
   static route = {
     navigationBar: {
@@ -54,6 +55,22 @@ export default class ExerciseScreen extends React.Component {
       ...NavigationStyles.SlideHorizontal,
     },
   };
+
+  onClick() {
+    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
+    Share.share({
+      message: exerciseName,
+      url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
+      title: 'Wow, did you see that?'
+    }, {
+      // Android only:
+      dialogTitle: 'Share BAM goodness',
+      // iOS only:
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ]
+    })
+  }
 
 
   componentWillMount() {
@@ -293,6 +310,14 @@ export default class ExerciseScreen extends React.Component {
           </View>
           </View>
           <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.onClick} style={{flex: 1, justifyContent: 'center'}}>
+          <Ionicons
+              name={'md-share'}
+              size={30}
+              color={'#CE0707'}
+              style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+            />
+          </TouchableOpacity>
           {/* {this.props.insideWorkout ? 
           <TouchableOpacity onPress={this.goToRoute} style={{flex: 1}}>
           <Image
@@ -325,8 +350,10 @@ export default class ExerciseScreen extends React.Component {
         </View>
          : <View/>}
         {this.displayPicker()}
+        <TouchableOpacity onPress={this.onClick}>
+        <Text>Share</Text>
+        </TouchableOpacity>
               
-
       </ScrollView>
     );
   }
