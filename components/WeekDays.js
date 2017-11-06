@@ -32,9 +32,10 @@ export default class WeekDays extends Component {
       days: [],
       shouldRender: 'true',
     };
+    this.baseState = this.state
     this.onSendData = this.onSendData.bind(this);
     this.allWeekDays = this.allWeekDays.bind(this);
-    this.state.options = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
+    this.state.options = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   }
 
   componentDidMount() {
@@ -93,7 +94,7 @@ _renderIndicator(option) {
             <View>
               <MultipleChoice
                   options={this.state.options}
-                  maxSelectedOptions={3}
+                  maxSelectedOptions={this.props.amountOfDays}
                   renderText={(option)=>this._renderText(option)}
                   renderIndicator={(option)=>this._renderIndicator(option)}
                   onSelection={this.allWeekDays}

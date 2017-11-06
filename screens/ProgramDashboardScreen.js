@@ -3,7 +3,6 @@ import { ScrollView, View, Text, StyleSheet, Image, ListView, TouchableOpacity, 
 import ProgramBadge from '../components/ProgramBadge';
 import Divider from '../components/Divider';
 import ExerciseItem from '../components/ExerciseItem';
-import WeekDays from '../components/WeekDays';
 import WorkoutExercises from '../components/WorkoutExercises';
 import DashboardExercisesList from '../components/DashboardExercisesList';
 import Database from '../api/database';
@@ -157,7 +156,10 @@ displayWorkoutDays() {
 
     for (i = 1; i <= this.state.program.days; i++) {
         let day = 'day' + i;
-        let length =  this.state.sequence2[day].length;
+        let length = null;
+        if (Array.isArray(this.state.sequence2[day])) {
+        length =  this.state.sequence2[day].length;
+        }
         workoutExercises.push(
             <View>
                 <WorkoutExercises 

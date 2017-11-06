@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage } from 'react-native';
+import { ScrollView, View, Share, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage, Image, ActivityIndicator } from 'react-native';
 import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
@@ -12,6 +12,7 @@ import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
+import { Ionicons } from '@expo/vector-icons';
 import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
@@ -37,8 +38,12 @@ export default class ExerciseScreen extends React.Component {
       repsx: 10,
       reps: 5,
       videoLink: 'https://',
-      videoRate: 1.0
+      videoRate: 1.0,
+      loading: true,
+      showDescriptions: false
     }
+    this.goToRoute = this.goToRoute.bind(this)
+    this.onClick = this.onClick.bind(this)
   }
   static route = {
     navigationBar: {
@@ -51,6 +56,22 @@ export default class ExerciseScreen extends React.Component {
     },
   };
 
+  onClick() {
+    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
+    Share.share({
+      message: exerciseName,
+      url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
+      title: 'Wow, did you see that?'
+    }, {
+      // Android only:
+      dialogTitle: 'Share BAM goodness',
+      // iOS only:
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ]
+    })
+  }
+
 
   componentWillMount() {
     var storageRef = firebase.storage().ref(`videos/${this.props.route.params.exercise.video || 'id1'}.mp4`);
@@ -62,11 +83,30 @@ export default class ExerciseScreen extends React.Component {
     }, function(error) {
       console.log(error);
     });
+
+    var imageRef = firebase.storage().ref(`exercises/${this.props.route.params.exercise.photo}.png`);
+      imageRef.getDownloadURL().then((url) => {
+        // console.log(this.state.uriLink)
+        this.setState({
+          uriLink: url,
+          
+        })
+      }, function(error) {
+        console.log(error);
+      });
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
+
+  goToRoute() {
+    let showOrHide = !this.state.showDescriptions
+    this.setState({
+      showDescriptions: showOrHide
+    })
+  }
+
   sendData(sets,reps,weight) {
     this.setState({sets,reps,weight})
     Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
@@ -188,7 +228,7 @@ export default class ExerciseScreen extends React.Component {
     displayPicker() {
       if (this.props.insideWorkout) {
         return(
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, marginTop: 15}}>
             <ActivityInput
               onSendData={(sets, reps, weight) => {
                 this.goToNext(sets, reps, weight)
@@ -199,7 +239,28 @@ export default class ExerciseScreen extends React.Component {
         )
       }
       else {
-        return(<View/>)
+        return(
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
+          <Tag
+              content={'Instructions'}
+              color={'#000'}/>
+          <Text>
+          Lay down on the bench. Then, using your thighs to help raise the dumbbells up.
+          </Text>
+          <Tag
+              content={'Caution'}
+              color={'#000'}/>
+          <Text>
+          When you are done, do not drop the dumbbells next to you as this is dangerous to your rotator cuff in your shoulders and others working out around you.
+          </Text>
+          <Tag
+              content={'Variations'}
+              color={'#000'}/>
+          <Text>
+          Another variation of this exercise is to perform it with the palms of the hands facing each other.
+          </Text>
+        </View>
+        )
       }
     }
     onReplace() {
@@ -231,15 +292,13 @@ export default class ExerciseScreen extends React.Component {
     else {
       return (
       <View style={styles.videoContainer}>
-
-            
-          
             <Video
+              useNativeControls
               source={{uri: this.state.videoLink}}
               shouldPlay={true}
               isMuted
               resizeMode="cover"
-              style={{ flex: 1}}
+              style={{ flex: 1, zIndex: 3000}}
             />
 
         </View>)
@@ -256,7 +315,8 @@ export default class ExerciseScreen extends React.Component {
          
       
         {this.displayVideo()}
-        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 0, flexDirection: 'row'}]}>
+        <View style={{flex: 2}}>
           <Text style={Common.darkTitleH1}>{exerciseName}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
@@ -268,11 +328,52 @@ export default class ExerciseScreen extends React.Component {
               content={I18n.t(this.props.route.params.exercise.type)}
               color={'#000'}/>
           </View>
+          </View>
+          <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.onClick} style={{flex: 1, justifyContent: 'center'}}>
+          <Ionicons
+              name={'md-share'}
+              size={30}
+              color={'#CE0707'}
+              style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+            />
+          </TouchableOpacity>
+          {/* {this.props.insideWorkout ? 
+          <TouchableOpacity onPress={this.goToRoute} style={{flex: 1}}>
+          <Image
+              source={{uri: this.state.uriLink}}
+              onLoadEnd={()=> { this.setState({ loading: false }) }}
+              style={[Common.imageStyle, {justifyContent: 'center'}]}>
+              <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
+              <Ionicons
+        name={this.state.showDescriptions ? 'md-pause' : 'md-play'}
+        size={30}
+        color={'#FFF'}
+        style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+      />
+          </Image>
+          </TouchableOpacity>
+          : <Text></Text>} */}
+          </View>
         </View>
-     
-        {this.displayPicker()}
-              
+        {this.state.showDescriptions ?
+          <View style={styles.videoContainer}>
+          <Video
+            useNativeControls
+            source={{uri: this.state.videoLink}}
+            shouldPlay={true}
+            isMuted
+            resizeMode="cover"
+            style={{ flex: 1, zIndex: 3000}}
+        />
 
+        </View>
+         : <View/>}
+        {this.displayPicker()}
+        <TouchableOpacity onPress={this.onClick}>
+        <Text>Share</Text>
+        </TouchableOpacity>
+              
       </ScrollView>
     );
   }

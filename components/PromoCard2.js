@@ -13,12 +13,12 @@ I18n.translations = {fi, en, ru};
 export default class PromoCard2 extends Component {
     render() {
     return (
-      <View style={[Common.promotionCard,Common.shadowMedium]}>
+      <View style={[Common.promotionCard,Common.shadowMedium,{height: 'auto'}]}>
         <Image source={require('../assets/images/CTA2.png')} 
         style={[Common.centered, Common.imageCardCover, Common.shadowMedium]}>
 
 
-              <Text style={Common.lightTitleH2}>{I18n.t('ExercisesPromoTitle')}</Text>
+              <Text style={[Common.lightTitleH2, {textAlign: 'center'}]}>{I18n.t('ExercisesPromoTitle')}</Text>
            
               <Text style={[Common.lightBodyText, Common.centeredText]}>{I18n.t('ExercisesPromoText')}</Text>
 

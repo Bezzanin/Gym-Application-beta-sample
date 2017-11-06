@@ -117,7 +117,6 @@ export default class ExercisesScreen extends Component {
           renderRow={this._renderItem.bind(this)}
           enableEmptySections={true}
           style={[Common.containerBasic, Common.sectionBorder]}/>
-         
       </ScrollView>
     )
   }
