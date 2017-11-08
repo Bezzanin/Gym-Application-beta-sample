@@ -121,6 +121,13 @@ const Common = {
         lineHeight: 19,
         backgroundColor: 'transparent'
     },
+    darkBodyTextRead: {
+        color: 'rgba(0,0,0,0.8)',
+        marginVertical: Layout.gutter.xs,
+        fontSize: 16,
+        lineHeight: 22,
+        backgroundColor: 'transparent'
+    },
     darkBodyText2: {
         color: Colors.darkTitleTextColor,
         marginVertical: Layout.gutter.xs,
@@ -232,9 +239,9 @@ const Common = {
     },
     coloredView: {
         backgroundColor: '#F3F3F3',
-        borderColor: '#CDCDCD',
-        borderWidth: 0.5,
-        borderRadius: 5,
+        // borderColor: '#CDCDCD',
+        // borderWidth: 0.5,
+        // borderRadius: 5,
     },
     highlightView: {
         backgroundColor: '#CE0707',
@@ -311,7 +318,7 @@ const Common = {
   },
     container: {
         flex: 1,
-        paddingHorizontal: Layout.gutter.l,
+        paddingHorizontal: 16,
         paddingVertical: Layout.gutter.sxs,
         backgroundColor: 'transparent'
     },
@@ -555,6 +562,14 @@ const Common = {
         shadowOffset: {
             width: 0,
             height: 7
+        },
+        shadowOpacity: 0.1,
+    },
+    shadowSubtle: {
+        shadowRadius: 5,
+        shadowOffset: {
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.1,
     },

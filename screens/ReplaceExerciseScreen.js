@@ -87,6 +87,8 @@ export default class ReplaceExerciseScreen extends Component {
   _renderItem(item) {
     replaceExerciseWithAlternative =  (replaceId, itemToReplaceWith) => {
         let day = this.props.route.params.day;
+        console.log('THIS IS SEQUENCE');
+        console.log(this.props.route.params.sequence);
         let replacePosition = this.props.route.params.sequence.map( (e) => { return e._key; }).indexOf(replaceId);
         this.props.route.params.sequence[replacePosition] = itemToReplaceWith;
         let uid = firebase.auth().currentUser.uid;
@@ -95,7 +97,7 @@ export default class ReplaceExerciseScreen extends Component {
             [day]: this.props.route.params.sequence
         });
         
-        this.props.navigator.pop();
+        this.props.navigator.pop(1);
     }
     return (
       <ExerciseItem item={item} imageLink={item.photo} videoLink={item.video} onPress={ () => {replaceExerciseWithAlternative(this.props.route.params.item._key, item)} }/>

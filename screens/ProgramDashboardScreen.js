@@ -256,6 +256,7 @@ handleContinue() {
             exercise: this.state.sequence2[day][index],
             insideWorkout: true,
             sequence: this.state.sequence2[day],
+            day,
             logs: this.state.logs,
             workoutStarted: Date.now()
         })

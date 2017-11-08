@@ -8,6 +8,7 @@ import Database from '../api/database';
 import {Constants, Video} from 'expo';
 import ActivityPicker from '../components/ActivityPicker';
 import ActivityInput from '../components/ActivityInput';
+import AlternativeExercise from '../components/AlternativeExercise';
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'ex-react-native-i18n'
@@ -39,8 +40,10 @@ export default class ExerciseScreen extends React.Component {
       reps: 5,
       videoLink: 'https://',
       videoRate: 1.0,
+      exerciseName: '',
       loading: true,
-      showDescriptions: false
+      showDescriptions: false,
+      _updateTracker: '123',
     }
     this.goToRoute = this.goToRoute.bind(this)
     this.onClick = this.onClick.bind(this)
@@ -72,9 +75,26 @@ export default class ExerciseScreen extends React.Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    if((this.props.item) !== (nextProps.item)) // Check if new markers are different from old
+    {
+      var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
+      storageRef.getDownloadURL().then((url) => {
+        // console.log(this.state.uriLink)
+        this.setState({
+          uriLink: url,
+          
+        })
+      }, function(error) {
+        console.log(error);
+      });
+    }
+   
+} 
 
   componentWillMount() {
     var storageRef = firebase.storage().ref(`videos/${this.props.route.params.exercise.video || 'id1'}.mp4`);
+    var imageRef = firebase.storage().ref(`exercises/${this.props.route.params.exercise.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       
       this.setState({
@@ -83,8 +103,8 @@ export default class ExerciseScreen extends React.Component {
     }, function(error) {
       console.log(error);
     });
-
-    var imageRef = firebase.storage().ref(`exercises/${this.props.route.params.exercise.photo}.png`);
+    console.log('MY OWN SEQUENCE');
+    console.log(this.props.route.params.sequence);
       imageRef.getDownloadURL().then((url) => {
         // console.log(this.state.uriLink)
         this.setState({
@@ -94,6 +114,17 @@ export default class ExerciseScreen extends React.Component {
       }, function(error) {
         console.log(error);
       });
+  }
+  componentDidMount() {
+  this.setState({
+    _updateTracker: this.props.route.params.checker,
+    exerciseName: this.props.route.params.exercise.name,
+  })
+   setTimeout(() => {
+    this.props.navigator.updateCurrentRouteParams({
+            sequence: this.props.route.params.sequence
+          })
+    }, 1000);
   }
 
   setModalVisible(visible) {
@@ -149,6 +180,7 @@ export default class ExerciseScreen extends React.Component {
             insideWorkout: true,
             sequence: this.props.route.params.sequence,
             logs: oldLog,
+            checker: this.props.route.params.checker,
             workoutStarted: this.props.route.params.workoutStarted
           });
        }
@@ -178,53 +210,7 @@ export default class ExerciseScreen extends React.Component {
      }
    }
 
-   onVideoEnd() {
-        this.videoPlayer.seek(0);
-        this.setState({key: new Date(), currentTime: 0, paused: true});
-    }
-
-    onVideoLoad(e) {
-        this.setState({currentTime: e.currentTime, duration: e.duration});
-    }
-
-    onProgress(e) {
-        this.setState({currentTime: e.currentTime});
-    }
-
-    playOrPauseVideo(paused) {
-        this.setState({paused: !paused});
-    }
-
-    onBackward(currentTime) {
-        let newTime = Math.max(currentTime - FORWARD_DURATION, 0);
-        this.videoPlayer.seek(newTime);
-        this.setState({currentTime: newTime})
-    }
-
-    onForward(currentTime, duration) {
-        if (currentTime + FORWARD_DURATION > duration) {
-            this.onVideoEnd();
-        } else {
-            let newTime = currentTime + FORWARD_DURATION;
-            this.videoPlayer.seek(newTime);
-            this.setState({currentTime: newTime});
-        }
-    }
-
-    getCurrentTimePercentage(currentTime, duration) {
-        if (currentTime > 0) {
-            return parseFloat(currentTime) / parseFloat(duration);
-        } else {
-            return 0;
-        }
-    }
-
-    onProgressChanged(newPercent, paused) {
-        let {duration} = this.state;
-        let newTime = newPercent * duration / 100;
-        this.setState({currentTime: newTime, paused: paused});
-        this.videoPlayer.seek(newTime);
-    }
+   
     displayPicker() {
       if (this.props.insideWorkout) {
         return(
@@ -244,36 +230,40 @@ export default class ExerciseScreen extends React.Component {
           <Tag
               content={'Instructions'}
               color={'#000'}/>
-          <Text>
+          <Text style={Common.darkBodyTextRead}>
           Lay down on the bench. Then, using your thighs to help raise the dumbbells up.
           </Text>
           <Tag
               content={'Caution'}
               color={'#000'}/>
-          <Text>
+          <Text style={Common.darkBodyTextRead}>
           When you are done, do not drop the dumbbells next to you as this is dangerous to your rotator cuff in your shoulders and others working out around you.
           </Text>
           <Tag
               content={'Variations'}
               color={'#000'}/>
-          <Text>
+          <Text style={Common.darkBodyTextRead}>
           Another variation of this exercise is to perform it with the palms of the hands facing each other.
           </Text>
         </View>
         )
       }
     }
-    onReplace() {
+    goToReplace() {
+      console.log(this.props.route.params.sequence);
+      console.log(this.props.route.params.day);
         this.props.navigator.push('replaceExercise', {
-          item: row,
-          sequence: this.props.route.params.exercises,
-          day: this.props.route.params.day
+          item: this.props.route.params.exercise,
+          sequence: this.props.route.params.sequence,
+          day: this.props.route.params.day,
+          checker: this.state._updateTracker,
         })
     }
     displayReplace() {
       if (this.props.insideWorkout) {
         return(
           <View style={{flex: 1}}>
+            <AlternativeExercise sequence={this.props.route.params.sequence}/>
             <Text>Don’t have right equipment?</Text>
             <TouchableOpacity onPress={ () => {this.goToReplace()}}><Text>Find alternative</Text></TouchableOpacity>
             </View>
@@ -306,9 +296,7 @@ export default class ExerciseScreen extends React.Component {
     }
   render() {
 
-    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
-    let {onClosePressed, video, volume} = this.props;
-    let {currentTime, duration, paused} = this.state;
+    let exerciseName = I18n.t(this.state.exerciseName.replace(/[^A-Z0-9]+/ig, ''))
     
     return (
       <ScrollView>
@@ -370,6 +358,7 @@ export default class ExerciseScreen extends React.Component {
         </View>
          : <View/>}
         {this.displayPicker()}
+        {this.displayReplace()}
         <TouchableOpacity onPress={this.onClick}>
         <Text>Share</Text>
         </TouchableOpacity>
