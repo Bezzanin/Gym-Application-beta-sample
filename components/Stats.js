@@ -61,7 +61,7 @@ class Stats extends Component {
     };
 nextWeek = () => {
       this.setState({
-          currWeek: this.state.currWeek + 1
+          currWeek: parseInt(this.state.currWeek) + 1
       }, function dateLogUpdated () {
         this.filterByWeek();
       })

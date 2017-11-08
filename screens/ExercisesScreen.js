@@ -41,6 +41,7 @@ return exercises.filter((item) => {
   if (filter === 'abs') return item.muscles === 'abs';
   if (filter === 'legs') return item.muscles === 'legs';
   if (filter === 'glutes') return item.muscles === 'glutes';
+  if (filter === 'shoulders') return item.muscles === 'shoulders';
   if (filter === 'calves') return item.type === 'calves';
   if (filter === 'back') return item.muscles === 'back';
   if (filter === 'BASIC') {console.log(item); return item.type === 'basic';}
@@ -80,8 +81,8 @@ export default class ExercisesScreen extends Component {
         const exercises = JSON.parse(json);
         console.log(exercises)
         this.setSource(exercises, exercises);
-        this.setState({exercises: filterExercises('ALL', exercises)})
-        this.setSource(this.state.exercises, filterExercises('ALL', exercises), { })
+        this.setState({exercises: filterExercises(this.props.route.params.filter, exercises)})
+        this.setSource(this.state.exercises, filterExercises(this.props.route.params.filter, exercises), { })
       } catch(e) {
 
       }
@@ -117,7 +118,6 @@ export default class ExercisesScreen extends Component {
           renderRow={this._renderItem.bind(this)}
           enableEmptySections={true}
           style={[Common.containerBasic, Common.sectionBorder]}/>
-         
       </ScrollView>
     )
   }

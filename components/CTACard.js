@@ -4,6 +4,10 @@ import { Button } from 'react-native-elements';
 import { withNavigation } from '@expo/ex-navigation';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
+<<<<<<< HEAD
+=======
+import Layout from '../constants/Layout'
+>>>>>>> 179a154e26082eda65e10cc40ca1bb1ea3447b73
 import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
@@ -30,8 +34,7 @@ class CTACard extends Component {
             <Button
             buttonStyle={styles.ActionButton}
             onPress={this.goToSomewhere}
-  title={I18n.t('ChooseProgram')} />
-
+            title={I18n.t('ChooseProgram')} />
   		</View>
 {this.state.loading && <View style={styles.loading}>
             <ActivityIndicator
@@ -58,6 +61,8 @@ const styles = StyleSheet.create({
  },
   title: {
     marginVertical: 30,
+    width: Layout.window.width,
+    textAlign: 'center',
     backgroundColor: 'transparent',
     color: '#FFFFFF',
     justifyContent: 'center',
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
   paragraph: {
     marginHorizontal: 50, 
     backgroundColor: 'transparent',
+    width: Layout.window.width * 0.9,
     color: '#FFFFFF',
     justifyContent: 'center',
     alignSelf: 'center',

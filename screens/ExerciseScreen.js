@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage } from 'react-native';
+import { ScrollView, View, Share, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Picker, AsyncStorage, Image, ActivityIndicator } from 'react-native';
 import Layout from '../constants/Layout';
 import Tag from '../components/Tag';
 import ProgressController from "../components/ProgressController";
@@ -8,10 +8,12 @@ import Database from '../api/database';
 import {Constants, Video} from 'expo';
 import ActivityPicker from '../components/ActivityPicker';
 import ActivityInput from '../components/ActivityInput';
+import AlternativeExercise from '../components/AlternativeExercise';
 import Common from '../constants/common';
 import {Grid, Col, Row} from 'react-native-elements';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
+import { Ionicons } from '@expo/vector-icons';
 import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
@@ -37,8 +39,14 @@ export default class ExerciseScreen extends React.Component {
       repsx: 10,
       reps: 5,
       videoLink: 'https://',
-      videoRate: 1.0
+      videoRate: 1.0,
+      exerciseName: '',
+      loading: true,
+      showDescriptions: false,
+      _updateTracker: '123',
     }
+    this.goToRoute = this.goToRoute.bind(this)
+    this.onClick = this.onClick.bind(this)
   }
   static route = {
     navigationBar: {
@@ -51,9 +59,42 @@ export default class ExerciseScreen extends React.Component {
     },
   };
 
+  onClick() {
+    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
+    Share.share({
+      message: exerciseName,
+      url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
+      title: 'Wow, did you see that?'
+    }, {
+      // Android only:
+      dialogTitle: 'Share BAM goodness',
+      // iOS only:
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ]
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if((this.props.item) !== (nextProps.item)) // Check if new markers are different from old
+    {
+      var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
+      storageRef.getDownloadURL().then((url) => {
+        // console.log(this.state.uriLink)
+        this.setState({
+          uriLink: url,
+          
+        })
+      }, function(error) {
+        console.log(error);
+      });
+    }
+   
+} 
 
   componentWillMount() {
     var storageRef = firebase.storage().ref(`videos/${this.props.route.params.exercise.video || 'id1'}.mp4`);
+    var imageRef = firebase.storage().ref(`exercises/${this.props.route.params.exercise.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       
       this.setState({
@@ -62,11 +103,41 @@ export default class ExerciseScreen extends React.Component {
     }, function(error) {
       console.log(error);
     });
+    console.log('MY OWN SEQUENCE');
+    console.log(this.props.route.params.sequence);
+      imageRef.getDownloadURL().then((url) => {
+        // console.log(this.state.uriLink)
+        this.setState({
+          uriLink: url,
+          
+        })
+      }, function(error) {
+        console.log(error);
+      });
+  }
+  componentDidMount() {
+  this.setState({
+    _updateTracker: this.props.route.params.checker,
+    exerciseName: this.props.route.params.exercise.name,
+  })
+   setTimeout(() => {
+    this.props.navigator.updateCurrentRouteParams({
+            sequence: this.props.route.params.sequence
+          })
+    }, 1000);
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
+
+  goToRoute() {
+    let showOrHide = !this.state.showDescriptions
+    this.setState({
+      showDescriptions: showOrHide
+    })
+  }
+
   sendData(sets,reps,weight) {
     this.setState({sets,reps,weight})
     Database.addExerciseStats(this.props.route.params.exercise._key, sets, reps, weight, this.state.metric);
@@ -109,6 +180,7 @@ export default class ExerciseScreen extends React.Component {
             insideWorkout: true,
             sequence: this.props.route.params.sequence,
             logs: oldLog,
+            checker: this.props.route.params.checker,
             workoutStarted: this.props.route.params.workoutStarted
           });
        }
@@ -138,63 +210,62 @@ export default class ExerciseScreen extends React.Component {
      }
    }
 
-   onVideoEnd() {
-        this.videoPlayer.seek(0);
-        this.setState({key: new Date(), currentTime: 0, paused: true});
-    }
-
-    onVideoLoad(e) {
-        this.setState({currentTime: e.currentTime, duration: e.duration});
-    }
-
-    onProgress(e) {
-        this.setState({currentTime: e.currentTime});
-    }
-
-    playOrPauseVideo(paused) {
-        this.setState({paused: !paused});
-    }
-
-    onBackward(currentTime) {
-        let newTime = Math.max(currentTime - FORWARD_DURATION, 0);
-        this.videoPlayer.seek(newTime);
-        this.setState({currentTime: newTime})
-    }
-
-    onForward(currentTime, duration) {
-        if (currentTime + FORWARD_DURATION > duration) {
-            this.onVideoEnd();
-        } else {
-            let newTime = currentTime + FORWARD_DURATION;
-            this.videoPlayer.seek(newTime);
-            this.setState({currentTime: newTime});
-        }
-    }
-
-    getCurrentTimePercentage(currentTime, duration) {
-        if (currentTime > 0) {
-            return parseFloat(currentTime) / parseFloat(duration);
-        } else {
-            return 0;
-        }
-    }
-
-    onProgressChanged(newPercent, paused) {
-        let {duration} = this.state;
-        let newTime = newPercent * duration / 100;
-        this.setState({currentTime: newTime, paused: paused});
-        this.videoPlayer.seek(newTime);
-    }
+   
     displayPicker() {
       if (this.props.insideWorkout) {
         return(
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, marginTop: 15}}>
             <ActivityInput
               onSendData={(sets, reps, weight) => {
                 this.goToNext(sets, reps, weight)
               }}
             />
            
+            </View>
+        )
+      }
+      else {
+        return(
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
+          <Tag
+              content={'Instructions'}
+              color={'#000'}/>
+          <Text style={Common.darkBodyTextRead}>
+          Lay down on the bench. Then, using your thighs to help raise the dumbbells up.
+          </Text>
+          <Tag
+              content={'Caution'}
+              color={'#000'}/>
+          <Text style={Common.darkBodyTextRead}>
+          When you are done, do not drop the dumbbells next to you as this is dangerous to your rotator cuff in your shoulders and others working out around you.
+          </Text>
+          <Tag
+              content={'Variations'}
+              color={'#000'}/>
+          <Text style={Common.darkBodyTextRead}>
+          Another variation of this exercise is to perform it with the palms of the hands facing each other.
+          </Text>
+        </View>
+        )
+      }
+    }
+    goToReplace() {
+      console.log(this.props.route.params.sequence);
+      console.log(this.props.route.params.day);
+        this.props.navigator.push('replaceExercise', {
+          item: this.props.route.params.exercise,
+          sequence: this.props.route.params.sequence,
+          day: this.props.route.params.day,
+          checker: this.state._updateTracker,
+        })
+    }
+    displayReplace() {
+      if (this.props.insideWorkout) {
+        return(
+          <View style={{flex: 1}}>
+            <AlternativeExercise sequence={this.props.route.params.sequence}/>
+            <Text>Don’t have right equipment?</Text>
+            <TouchableOpacity onPress={ () => {this.goToReplace()}}><Text>Find alternative</Text></TouchableOpacity>
             </View>
         )
       }
@@ -211,15 +282,13 @@ export default class ExerciseScreen extends React.Component {
     else {
       return (
       <View style={styles.videoContainer}>
-
-            
-          
             <Video
+              useNativeControls
               source={{uri: this.state.videoLink}}
               shouldPlay={true}
               isMuted
               resizeMode="cover"
-              style={{ flex: 1}}
+              style={{ flex: 1, zIndex: 3000}}
             />
 
         </View>)
@@ -227,16 +296,15 @@ export default class ExerciseScreen extends React.Component {
     }
   render() {
 
-    let exerciseName = I18n.t(this.props.route.params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))
-    let {onClosePressed, video, volume} = this.props;
-    let {currentTime, duration, paused} = this.state;
+    let exerciseName = I18n.t(this.state.exerciseName.replace(/[^A-Z0-9]+/ig, ''))
     
     return (
       <ScrollView>
          
       
         {this.displayVideo()}
-        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 0, flexDirection: 'row'}]}>
+        <View style={{flex: 2}}>
           <Text style={Common.darkTitleH1}>{exerciseName}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
@@ -248,11 +316,53 @@ export default class ExerciseScreen extends React.Component {
               content={I18n.t(this.props.route.params.exercise.type)}
               color={'#000'}/>
           </View>
+          </View>
+          <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.onClick} style={{flex: 1, justifyContent: 'center'}}>
+          <Ionicons
+              name={'md-share'}
+              size={30}
+              color={'#CE0707'}
+              style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+            />
+          </TouchableOpacity>
+          {/* {this.props.insideWorkout ? 
+          <TouchableOpacity onPress={this.goToRoute} style={{flex: 1}}>
+          <Image
+              source={{uri: this.state.uriLink}}
+              onLoadEnd={()=> { this.setState({ loading: false }) }}
+              style={[Common.imageStyle, {justifyContent: 'center'}]}>
+              <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
+              <Ionicons
+        name={this.state.showDescriptions ? 'md-pause' : 'md-play'}
+        size={30}
+        color={'#FFF'}
+        style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+      />
+          </Image>
+          </TouchableOpacity>
+          : <Text></Text>} */}
+          </View>
         </View>
-     
-        {this.displayPicker()}
-              
+        {this.state.showDescriptions ?
+          <View style={styles.videoContainer}>
+          <Video
+            useNativeControls
+            source={{uri: this.state.videoLink}}
+            shouldPlay={true}
+            isMuted
+            resizeMode="cover"
+            style={{ flex: 1, zIndex: 3000}}
+        />
 
+        </View>
+         : <View/>}
+        {this.displayPicker()}
+        {this.displayReplace()}
+        <TouchableOpacity onPress={this.onClick}>
+        <Text>Share</Text>
+        </TouchableOpacity>
+              
       </ScrollView>
     );
   }

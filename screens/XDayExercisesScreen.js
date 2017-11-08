@@ -18,9 +18,8 @@ import fi from '../constants/fi';
 import {withNavigation} from '@expo/ex-navigation';
 import SortableListView from 'react-native-sortable-listview';
 import EditModeButton from '../components/EditModeButton';
-
-import en from '../constants/en';
 import ru from '../constants/ru';
+import en from '../constants/en';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
@@ -92,6 +91,10 @@ export default class XDAYExercisesScreen extends Component {
         }}
         onReplace={
           () => {
+            console.log('ITEM IS ITEM IS')
+            console.log(row);
+            console.log('XDAYEXERCISES SEQUENCE')
+            console.log(this.props.route.params.exercises);
             this.props.navigator.push('replaceExercise', {
               item: row,
               sequence: this.props.route.params.exercises,

@@ -96,7 +96,7 @@ class ExerciseItem extends Component {
               source={{uri: this.state.uriLink}}
               onLoadEnd={()=> { this.setState({ loading: false }) }}
               style={Common.imageStyle}>
-              <ActivityIndicator animating={ this.state.loading } style = {styles.activityIndicator}/>
+              <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
               </Image>
           </View>
           <View style={[Common.inlineContainer]}>
@@ -117,11 +117,6 @@ class ExerciseItem extends Component {
 const styles = StyleSheet.create({
   draggable: {
     marginVertical: 16,
-  },
-  activityIndicator: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-   }
+  }
 })
 module.exports = ExerciseItem;

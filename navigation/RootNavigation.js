@@ -48,7 +48,8 @@ export default class RootNavigation extends React.Component {
 
   render() {
     return (
-      <TabNavigation tabBarHeight={56} initialTab="home" navigatorUID="main">
+      <TabNavigation tabBarHeight={56} initialTab="home"
+      navigatorUID="main">
         <TabNavigationItem
           id="home"
           renderIcon={isSelected => this._renderIcon(Home,'ios-home', isSelected)}
@@ -62,8 +63,7 @@ export default class RootNavigation extends React.Component {
                 titleStyle: {
                   fontWeight: '600',
                 },
-                borderBottomWidth: 1,
-                borderBottomColor: '#CDCDCD'
+                borderBottomWidth: 0
               }
             }}
             initialRoute="home" />
@@ -81,8 +81,7 @@ export default class RootNavigation extends React.Component {
                 titleStyle: {
                   fontWeight: '600',
                 },
-                borderBottomWidth: 1,
-                borderBottomColor: '#CDCDCD'
+                borderBottomWidth: 0
               }
             }}
             initialRoute="exercises" />
@@ -112,17 +111,18 @@ export default class RootNavigation extends React.Component {
           renderIcon={isSelected => this._renderIcon(Profile,'ios-contact', isSelected)}
           onPress={this.onPress}>
           <StackNavigation
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: '#fff',
-                tintColor: '#000',
-                titleStyle: {
-                  fontWeight: '600',
-                },
-                borderBottomWidth: 1,
-                borderBottomColor: '#CDCDCD'
-              }
-            }}
+          defaultRouteConfig={{
+            navigationBar: {
+              backgroundColor: '#fff',
+              borderBottomWidth: 0,
+              tintColor: '#000',
+              titleStyle: {
+                fontWeight: '600',
+              },
+              renderBackground: () => <View
+                style={[{flex: 1}, Common.shadowSubtle]}/>
+            }
+          }}
             initialRoute="settings" />
         </TabNavigationItem>
       </TabNavigation>

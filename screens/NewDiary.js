@@ -18,6 +18,7 @@ import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import _ from 'lodash'
 import en from '../constants/en'; import ru from '../constants/ru';
+import { MaterialIcons } from '@expo/vector-icons';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
@@ -47,11 +48,12 @@ export default class NewDiary extends React.Component {
       }
   })
 
+
     Database.getWorkoutDays((days) => {
       if (days !== null) {
       this.setState({
           workoutDays: days
-        }) 
+        }, () => {this.renderWorkoutIcons()}) 
       } else { console.log("ELSE")}
     })
 
@@ -75,9 +77,17 @@ export default class NewDiary extends React.Component {
       exercises: [],
       loading: false,
       date: moment().format('YYYY-MM-DD'),
-      workoutDays: ["No"]
+      workoutDays: ["No"],
+      Mo: false,
+      Tu: false,
+      We: false,
+      Th: false,
+      Fr: false,
+      Sa: false,
+      Su: false
     };
     this.renderItem = this.renderItem.bind(this)
+    this.renderWorkoutIcons = this.renderWorkoutIcons.bind(this)
   }
   static route = {
     navigationBar: {
@@ -106,11 +116,30 @@ export default class NewDiary extends React.Component {
     });
   };
 
+  renderWorkoutIcons() {
+    if (this.state.workoutDays.includes("Mo")) {this.state.Mo = true;} else { this.state.Mo = false}
+    if (this.state.workoutDays.includes("Tu")) {this.state.Tu = true;} else { this.state.Tu = false}
+    if (this.state.workoutDays.includes("We")) {this.state.We = true;} else { this.state.We = false}
+    if (this.state.workoutDays.includes("Th")) {this.state.Th = true;} else { this.state.Th = false}
+    if (this.state.workoutDays.includes("Fr")) {this.state.Fr = true;} else { this.state.Fr = false}
+    if (this.state.workoutDays.includes("Sa")) {this.state.Sa = true;} else { this.state.Sa = false}
+    if (this.state.workoutDays.includes("Su")) {this.state.Su = true;} else { this.state.Su = false}
+  }
+
     render() {
     return (
       <View style={styles.container}>
+        <View style={styles.workoutsContainer}>
+        {this.state.Mo ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.Tu ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.We ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.Th ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.Fr ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.Sa ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        {this.state.Su ? <MaterialIcons name="fitness-center" size={20} color="#CE0707" /> : <View style={{width: 20}}/>}
+        </View>
+        
       {this.state.loading &&
-      
       <Agenda
         items={this.state.newItems}
         renderItem={this.renderItem}
@@ -186,7 +215,7 @@ export default class NewDiary extends React.Component {
   renderEmptyDate() {
     return (
       <View style={[Common.paddingLeftSmall, Common.marginVerticalSmall]}>
-          <View style={[Common.lightStats, Common.shadowLight]}>
+          <View style={[Common.lightStats, Common.shadowLight, {width: Layout.window.width*0.75}]}>
               <Text style={Common.darkTagTitle}>{I18n.t('DailyAdvice')}</Text>
                 <Text style={Common.darkTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
@@ -198,6 +227,7 @@ export default class NewDiary extends React.Component {
             <Text style={Common.darkActionTitle}>Begin workout</Text>
           </TouchableOpacity>
           </View>}
+
       </View>
     );
   }
@@ -234,6 +264,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: '#fff',
+  },
+  workoutsContainer: {
+    alignSelf: 'center',
+    flexDirection: 'row', 
+    position: 'absolute', 
+    width: Layout.window.width * 0.85, 
+    justifyContent: 'space-between',
+    marginHorizontal: 15
   },
   welcome: {
     fontSize: 20,

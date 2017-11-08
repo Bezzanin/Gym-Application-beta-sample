@@ -22,7 +22,8 @@ export default class SettingsScreen extends React.Component {
     this.loadingOFF = this.loadingOFF.bind(this);
     this.state = {
       own: false,
-      loading: true
+      loading: true,
+      weekNumber: moment().format("W")
     };
   }
   static route = {
@@ -44,11 +45,12 @@ export default class SettingsScreen extends React.Component {
         }
 
     }
-    loadingOFF() {
+    loadingOFF(weekNumber) {
       this.setState({
+        weekNumber,
       loading: false,
     })
-    }
+  }
     showText = () => {
       
     }
@@ -58,7 +60,7 @@ export default class SettingsScreen extends React.Component {
         style={Common.containerBasic}>
         <Profile />
         <View style={Common.container}>
-          <Text style={Common.darkTitleH1}>{I18n.t('inWeek')} {moment().format("W")} {I18n.t('Exercises')}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t('inWeek')} {this.state.weekNumber} {I18n.t('Exercises')}</Text>
         </View>
         <Stats loadingOFF={this.loadingOFF}/>
         {this.state.loading && <View style={Common.loading}>

@@ -13,17 +13,11 @@ I18n.translations = {fi, en, ru};
 export default class PromoCard extends Component {
     render() {
     return (
-      <View style={[Common.promotionCard,Common.shadowMedium]}>
+      <View style={[Common.promotionCard,Common.shadowMedium, {height: 'auto'}]}>
         <Image source={require('../assets/images/CTA2.png')} 
         style={[Common.centered, Common.imageCardCover, Common.shadowMedium]}>
-
-
-              <Text style={Common.lightTitleH2}>{I18n.t('DiaryPromoTitle')}</Text>
-           
+        <Text style={[Common.lightTitleH2, {textAlign: 'center'}]}>{I18n.t('DiaryPromoTitle')}</Text>
               <Text style={[Common.lightBodyText, Common.centeredText]}>{I18n.t('DiaryPromo')}</Text>
-
-              
-
               <TouchableOpacity onPress={ () => {
                 this.props.navigator.push('diary') } }
                 style={Common.lightButtonRounded}>
