@@ -80,7 +80,8 @@ class ProgramCard extends Component {
     this.props.navigator.push('programDashboard', {
       program: this.props.item,
       exercises: this.props.exercises,
-      uid: this.props.uid
+      uid: this.props.uid,
+      cameFromPrompt: this.props.cameFromPrompt,
     })
   }
 
@@ -108,11 +109,6 @@ class ProgramCard extends Component {
               <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>
-
-              {/* <Tag title={I18n.t('HowLong').toLowerCase()} content={this.props.item.totalDays / 5 + ' ' + I18n.t('weeks')} color='#fff'/>
-              <Tag title={I18n.t('PerWeek').toLowerCase()} content={this.props.item.days} color='#fff'/>
-              <Tag title={I18n.t('muscleGroup').toLowerCase()} content={this._getMuscles()} color='#fff'/>
-              <Tag title={I18n.t('Gender').toLowerCase()} content={I18n.t(this.props.item.gender)} color='#fff'/> */}
 
             </View>
           </View>

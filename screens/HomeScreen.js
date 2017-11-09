@@ -15,7 +15,6 @@ import {
 
 import { MonoText } from '../components/StyledText';
 import CTACard from '../components/CTACard';
-import ProgramsList from '../components/ProgramsList';
 import Colors from '../constants/Colors';
 import PromoCard from '../components/PromoCard';
 import PromoCard2 from '../components/PromoCard2';

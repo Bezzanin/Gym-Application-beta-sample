@@ -35,6 +35,7 @@ export default class ProgramBadge extends Component {
         }
     }
     componentDidMount() {
+        console.log('And badge from prompt? ' + this.props.cameFromPrompt)
         Database.getLastWorkoutDate( (date) => {
             this.setState({
                 lastWorkoutDate: date
@@ -224,6 +225,9 @@ _displayEnrollButton() {
         AsyncStorage.setItem('ownProgramKey', JSON.stringify(this.props.program._key));
         AsyncStorage.setItem('logs', JSON.stringify(emptyArr));
         this.props.handleClick(true);
+        if (this.props.cameFromPrompt) {
+            this.props.navigator.popToTop();
+        }
     }
     goToRoute = () => {
         this.props.navigator.push('editProgramDash', {

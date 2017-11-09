@@ -20,6 +20,7 @@ import MusclesScreen from '../screens/MusclesScreen';
 import NewDiary from '../screens/NewDiary';
 import customProgram from '../screens/customProgram';
 import customProgramMuscles from '../screens/customProgramMuscles';
+import ProgressPromptScreen from '../screens/ProgressPromptScreen';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -36,6 +37,7 @@ export default createRouter(() => ({
   questions: () => QuestionsScreen,
   replaceExercise: () => ReplaceExerciseScreen,
   finishWorkout: () => FinishWorkoutScreen,
+  progressPrompt: () => ProgressPromptScreen,
   XDayExercises: () => XDayExercisesScreen,
   musclesScreen: () => MusclesScreen,
   diary: () => NewDiary,

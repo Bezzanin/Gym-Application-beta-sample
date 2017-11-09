@@ -168,7 +168,8 @@ class Database {
             })
             firebase.database().ref(path).update({
                 currentExerciseIndex: 0,
-                currentWorkoutDay: 1
+                currentWorkoutDay: 1,
+                currentWeek: 1,
             })
     }
     static saveDaySequence(exercises, day) {
@@ -320,6 +321,14 @@ static getUserProgramName(callback) {
             callback(days);
         })
     }
+    static getCurrentWeeksNumber(callback) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = '/user/' + uid + '/ownProgram/exerciseSequence/';
+        firebase.database().ref(path).once('value', (snap) => {
+            let weeks = snap.val().currentWeek;
+            callback(weeks);
+        })
+    }
     static getLastWorkoutDate(callback) {
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/statistics/';
@@ -348,10 +357,10 @@ static getUserProgramName(callback) {
         console.log(weeks)
         let path = '/user/' + uid + '/ownProgram/exerciseSequence';
         let path2 = '/user/' + uid + '/ownProgram/';
-        firebase.database().ref(path2).on('value', (snap) => {
+        firebase.database().ref(path2).once('value').then((snap) => {
             days = snap.val().days;
         })
-        firebase.database().ref(path).on('value', (snap) => {
+        firebase.database().ref(path).once('value').then((snap) => {
             weeks = snap.val().currentWeek;
         })
         if (dayNumber === days) {

@@ -133,7 +133,7 @@ export default class SettingsScreen extends React.Component {
 <Text style = {[Common.darkBodyText, Common. centeredText]}>{I18n.t('ProgramsPromo')}</Text></View>
         <ScrollView horizontal style={styles.programsContainer}>
         {this.state.bestMatchFound &&
-        <View><ProgramCard item={this.state.bestProgram} uid={this.state.uid} exercises={this.state.exercises}/></View>}
+        <View><ProgramCard cameFromPrompt={this.props.route.params.cameFromPrompt} item={this.state.bestProgram} uid={this.state.uid} exercises={this.state.exercises}/></View>}
         <ListView
           horizontal
           initialListSize = {2}
@@ -155,7 +155,7 @@ export default class SettingsScreen extends React.Component {
   _renderItem(item) {
     let cher = '../assets/images/program_bg_' + '2.png'
     return (
-      <ProgramCard item={item} bgLink={cher} uid={this.state.uid} exercises={this.state.exercises}/>
+      <ProgramCard cameFromPrompt={this.props.route.params.cameFromPrompt} item={item} bgLink={cher} uid={this.state.uid} exercises={this.state.exercises}/>
     );
   }
 }

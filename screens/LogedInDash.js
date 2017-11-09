@@ -12,7 +12,6 @@ import {
 
 import { MonoText } from '../components/StyledText';
 import HeroCard from '../components/HeroCard';
-import ProgramsList from '../components/ProgramsList';
 import Colors from '../constants/Colors';
 import PromoCard from '../components/PromoCard';
 import ExThumbnail from '../components/ExThumbnail';

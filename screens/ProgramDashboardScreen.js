@@ -42,6 +42,7 @@ export default class ExerciseScreen extends React.Component {
   };
 
   componentDidMount() {
+    console.log('Am I from prompt?' + this.props.route.params.cameFromPrompt);
     this.setState({
         program: this.props.route.params.program,
         uid: this.props.route.params.uid,
@@ -127,6 +128,7 @@ getOwnExercises() {
       <ScrollView style={styles.container} scrollEnabled={this.state.scrollable}>
 
         <ProgramBadge 
+            cameFromPrompt={this.props.route.params.cameFromPrompt}
             days={this.state.program.days}
             program = {this.state.program}
             programName = {this.state.programName}

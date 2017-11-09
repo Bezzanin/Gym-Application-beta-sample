@@ -61,7 +61,7 @@ export default class FinishWorkoutScreen extends React.Component {
     })
   }
  async finishWorkout() {
-      
+    let weeks;
       await AsyncStorage.getItem("ownProgram").then((json) => {
         try {
             const ownProgram = JSON.parse(json);
@@ -70,9 +70,18 @@ export default class FinishWorkoutScreen extends React.Component {
             console.log(e)
         }
       })
-      //Database.finishWorkout();
-      console.log('navigator.pop triggered');
-      this.props.navigator.popToTop();
+      Database.getCurrentWeeksNumber((weeks) => {
+        if (weeks > 4) {
+          console.log('More than 4 weeks');
+          this.props.navigator.push('progressPrompt');
+        }
+        else {
+          //Database.finishWorkout();
+          console.log('navigator.pop triggered');
+          this.props.navigator.popToTop();
+        }
+      })
+      
   }
   calculateWorkoutTime(){
     let workoutTime = (this.props.route.params.workoutFinished - this.props.route.params.workoutStarted)/60/60;
