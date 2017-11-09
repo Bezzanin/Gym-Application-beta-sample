@@ -25,22 +25,11 @@ class ExerciseItem extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if((this.props.item) !== (nextProps.item)) // Check if new markers are different from old
-    {
-      var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
-      storageRef.getDownloadURL().then((url) => {
-        // console.log(this.state.uriLink)
-        this.setState({
-          uriLink: url,
-          
-        })
-      }, function(error) {
-        console.log(error);
-      });
-    }
-   
-} 
+  componentWillMount() {
+    console.log('******')
+    console.log(this.props.item);
+    console.log('******')
+  }
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
@@ -54,8 +43,6 @@ class ExerciseItem extends Component {
     });
   }
    componentWillReceiveProps(nextProps) {
-    console.log('Received new props')
-  //   console.log(nextProps);
     this.setState({loading: true})
     var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
@@ -83,11 +70,9 @@ class ExerciseItem extends Component {
   }
   
   render() {
-    let exerciseName = I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         {...this.props.sortHandlers}
-        underlayColor={'#920707'}
         onPress={this.props.onPress}
         style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
         <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
@@ -101,7 +86,7 @@ class ExerciseItem extends Component {
           </View>
           <View style={[Common.inlineContainer]}>
             <View style={Common.containerText}>
-              <Text style={Common.darkTitleH3}>{exerciseName || ''}</Text>
+              <Text style={Common.darkTitleH3}>{I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, '')) || ''}</Text>
               <Text style={Common.darkNameTag}>{I18n.t(this.props.item.muscles)}</Text>
               <Text style={Common.darkNameTag}>{I18n.t(this.props.item.type)}</Text>
             </View>
@@ -110,7 +95,7 @@ class ExerciseItem extends Component {
             </View>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }

@@ -35,6 +35,7 @@ export default class ReplaceExerciseScreen extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.route.params.item);
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);

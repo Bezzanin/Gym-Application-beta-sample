@@ -59,11 +59,13 @@ export default class RootNavigation extends React.Component {
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: '#fff',
+                borderBottomWidth: 0,
                 tintColor: '#000',
                 titleStyle: {
                   fontWeight: '600',
                 },
-                borderBottomWidth: 0
+                renderBackground: () => <View
+                  style={[{flex: 1}, Common.shadowSubtle]}/>
               }
             }}
             initialRoute="home" />
@@ -77,14 +79,16 @@ export default class RootNavigation extends React.Component {
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: '#fff',
+                borderBottomWidth: 0,
                 tintColor: '#000',
                 titleStyle: {
                   fontWeight: '600',
                 },
-                borderBottomWidth: 0
+                renderBackground: () => <View
+                  style={[{flex: 1}, Common.shadowSubtle]}/>
               }
             }}
-            initialRoute="exercises" />
+            initialRoute="musclesScreen" />
         </TabNavigationItem>
       
         <TabNavigationItem
@@ -95,12 +99,13 @@ export default class RootNavigation extends React.Component {
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: '#fff',
+                borderBottomWidth: 0,
                 tintColor: '#000',
                 titleStyle: {
                   fontWeight: '600',
                 },
-                borderBottomWidth: 1,
-                borderBottomColor: '#CDCDCD'
+                renderBackground: () => <View
+                  style={[{flex: 1}, Common.shadowSubtle]}/>
               }
             }}
             initialRoute="diary" />

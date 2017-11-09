@@ -41,6 +41,9 @@ export default class ExerciseScreen extends React.Component {
       videoLink: 'https://',
       videoRate: 1.0,
       exerciseName: '',
+      exerciseType: '',
+      exerciseMuscles: '',
+      exerciseID: '',
       loading: true,
       showDescriptions: false,
       _updateTracker: '123',
@@ -51,7 +54,7 @@ export default class ExerciseScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params){
-        return `${I18n.t(params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))}`
+        return `${I18n.t(params.title.replace(/[^A-Z0-9]+/ig, ''))}`
       }
     },
     styles: {
@@ -75,22 +78,6 @@ export default class ExerciseScreen extends React.Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if((this.props.item) !== (nextProps.item)) // Check if new markers are different from old
-    {
-      var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
-      storageRef.getDownloadURL().then((url) => {
-        // console.log(this.state.uriLink)
-        this.setState({
-          uriLink: url,
-          
-        })
-      }, function(error) {
-        console.log(error);
-      });
-    }
-   
-} 
 
   componentWillMount() {
     var storageRef = firebase.storage().ref(`videos/${this.props.route.params.exercise.video || 'id1'}.mp4`);
@@ -103,8 +90,6 @@ export default class ExerciseScreen extends React.Component {
     }, function(error) {
       console.log(error);
     });
-    console.log('MY OWN SEQUENCE');
-    console.log(this.props.route.params.sequence);
       imageRef.getDownloadURL().then((url) => {
         // console.log(this.state.uriLink)
         this.setState({
@@ -119,12 +104,9 @@ export default class ExerciseScreen extends React.Component {
   this.setState({
     _updateTracker: this.props.route.params.checker,
     exerciseName: this.props.route.params.exercise.name,
+    exerciseType: this.props.route.params.exercise.type,
+    exerciseMuscles: this.props.route.params.exercise.muscles
   })
-   setTimeout(() => {
-    this.props.navigator.updateCurrentRouteParams({
-            sequence: this.props.route.params.sequence
-          })
-    }, 1000);
   }
 
   setModalVisible(visible) {
@@ -152,7 +134,7 @@ export default class ExerciseScreen extends React.Component {
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
        let oldLog = this.props.route.params.logs
        oldLog.push({
-         id: this.props.route.params.exercise._key,
+         id: this.state.exerciseID,
          weight: weight,
          sets: sets,
          reps: reps,
@@ -178,6 +160,7 @@ export default class ExerciseScreen extends React.Component {
           this.props.navigator.push('exercise', {
             exercise: this.props.route.params.sequence[index+1],
             insideWorkout: true,
+            title: this.props.route.params.sequence[index+1].name,
             sequence: this.props.route.params.sequence,
             logs: oldLog,
             checker: this.props.route.params.checker,
@@ -249,23 +232,26 @@ export default class ExerciseScreen extends React.Component {
         )
       }
     }
-    goToReplace() {
-      console.log(this.props.route.params.sequence);
-      console.log(this.props.route.params.day);
-        this.props.navigator.push('replaceExercise', {
-          item: this.props.route.params.exercise,
-          sequence: this.props.route.params.sequence,
-          day: this.props.route.params.day,
-          checker: this.state._updateTracker,
-        })
+
+    handleReplace(exerciseName, exerciseID) {
+      console.log(exerciseName + ' came ' + exerciseID);
+      this.props.navigator.updateCurrentRouteParams({
+            title: exerciseName
+      })
+      this.setState({
+        exerciseName, exerciseID
+      })
     }
     displayReplace() {
       if (this.props.insideWorkout) {
         return(
           <View style={{flex: 1}}>
-            <AlternativeExercise sequence={this.props.route.params.sequence}/>
-            <Text>Don’t have right equipment?</Text>
-            <TouchableOpacity onPress={ () => {this.goToReplace()}}><Text>Find alternative</Text></TouchableOpacity>
+            <AlternativeExercise
+              exerciseType={this.state.exerciseType}
+              exerciseMuscles={this.state.exerciseMuscles}
+              exerciseName={this.state.exerciseName}
+              onReplace={this.handleReplace.bind(this)}
+              sequence={this.props.route.params.sequence}/>
             </View>
         )
       }
@@ -296,8 +282,6 @@ export default class ExerciseScreen extends React.Component {
     }
   render() {
 
-    let exerciseName = I18n.t(this.state.exerciseName.replace(/[^A-Z0-9]+/ig, ''))
-    
     return (
       <ScrollView>
          
@@ -305,15 +289,15 @@ export default class ExerciseScreen extends React.Component {
         {this.displayVideo()}
         <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 0, flexDirection: 'row'}]}>
         <View style={{flex: 2}}>
-          <Text style={Common.darkTitleH1}>{exerciseName}</Text>
+          <Text style={Common.darkTitleH1}>{I18n.t(this.state.exerciseName.replace(/[^A-Z0-9]+/ig, ''))}</Text>
           <View style = {Common.inlineContainer}>
             <Tag
               title={I18n.t('muscleGroup')}
-              content={I18n.t(this.props.route.params.exercise.muscles)}
+              content={this.props.route.params.exercise.muscles}
               color={'#000'}/>
             <Tag 
               title={I18n.t('Exercises')}
-              content={I18n.t(this.props.route.params.exercise.type)}
+              content={this.props.route.params.exercise.type}
               color={'#000'}/>
           </View>
           </View>
@@ -326,22 +310,7 @@ export default class ExerciseScreen extends React.Component {
               style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
             />
           </TouchableOpacity>
-          {/* {this.props.insideWorkout ? 
-          <TouchableOpacity onPress={this.goToRoute} style={{flex: 1}}>
-          <Image
-              source={{uri: this.state.uriLink}}
-              onLoadEnd={()=> { this.setState({ loading: false }) }}
-              style={[Common.imageStyle, {justifyContent: 'center'}]}>
-              <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
-              <Ionicons
-        name={this.state.showDescriptions ? 'md-pause' : 'md-play'}
-        size={30}
-        color={'#FFF'}
-        style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
-      />
-          </Image>
-          </TouchableOpacity>
-          : <Text></Text>} */}
+    
           </View>
         </View>
         {this.state.showDescriptions ?
@@ -359,10 +328,6 @@ export default class ExerciseScreen extends React.Component {
          : <View/>}
         {this.displayPicker()}
         {this.displayReplace()}
-        <TouchableOpacity onPress={this.onClick}>
-        <Text>Share</Text>
-        </TouchableOpacity>
-              
       </ScrollView>
     );
   }
