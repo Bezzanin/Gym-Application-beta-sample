@@ -80,12 +80,12 @@ export default class AlternativeExercise extends Component {
       <View>
         <View style={{height: 54}}/>
         <View style={Common.paddingLeft}>
-          <Text style={{color: '000',
+          <Text style={{color: '#000',
                         fontSize: 16,
                         lineHeight: 18,
                         fontWeight: 'bold',
                         backgroundColor: 'transparent'}}>No equipment?</Text>
-          <Text style={{color: '000',
+          <Text style={{color: '#000',
                         fontSize: 16,
                         lineHeight: 18,
                         fontWeight: 'bold',

@@ -40,7 +40,7 @@ export default class ExerciseScreen extends React.Component {
       reps: 5,
       videoLink: 'https://',
       videoRate: 1.0,
-      exerciseName: '',
+      exerciseName: 'l',
       exerciseType: '',
       exerciseMuscles: '',
       exerciseID: '',
@@ -104,6 +104,7 @@ export default class ExerciseScreen extends React.Component {
   this.setState({
     _updateTracker: this.props.route.params.checker,
     exerciseName: this.props.route.params.exercise.name,
+    exerciseID: this.props.route.params.exercise._key,
     exerciseType: this.props.route.params.exercise.type,
     exerciseMuscles: this.props.route.params.exercise.muscles
   })
