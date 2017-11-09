@@ -19,6 +19,7 @@ export default class AlternativeExercise extends Component {
     this.state = {
       exercises: '',
       exerciseName: '',
+      shouldDisplay: true,
       sequence: [{
         name: 'Placeholder',
         _key: 21,
@@ -44,6 +45,16 @@ export default class AlternativeExercise extends Component {
         console.log(json)
         try {
           const exercises = this.filterExercises(JSON.parse(json), this.props.exerciseMuscles, this.props.exerciseType, this.props.exerciseName);
+          if (exercises.length === 0) {
+            this.setState({
+              shouldDisplay: false
+            })
+          }
+          else {
+            this.setState({
+              shouldDisplay: true
+            })
+          }
           this.setState({exercises, allExercises:JSON.parse(json)});
         } catch(e) {
   
@@ -55,6 +66,16 @@ export default class AlternativeExercise extends Component {
       exerciseName: name
     }, () => {
       let updatedExercises = this.filterExercises(this.state.allExercises, this.props.exerciseMuscles, this.props.exerciseType, this.state.exerciseName);
+      if (updatedExercises.length = 0) {
+        this.setState({
+          shouldDisplay: false
+        })
+      }
+      else {
+        this.setState({
+          shouldDisplay: true
+        })
+      }
       this.setState({exercises: updatedExercises})
     })
   }
@@ -75,29 +96,34 @@ export default class AlternativeExercise extends Component {
   }
 
   render() {
-   
-    return (
-      <View>
-        <View style={{height: 54}}/>
-        <View style={Common.paddingLeft}>
-          <Text style={{color: '#000',
-                        fontSize: 16,
-                        lineHeight: 18,
-                        fontWeight: 'bold',
-                        backgroundColor: 'transparent'}}>No equipment?</Text>
-          <Text style={{color: '#000',
-                        fontSize: 16,
-                        lineHeight: 18,
-                        fontWeight: 'bold',
-                        backgroundColor: 'transparent'}}>Replace with alternative</Text>
-          </View>
-          <FlatList
-            horizontal
-            data={this.state.exercises}
-            renderItem={this._renderItem.bind(this)}
-          />
-      </View>
-    )
+    if (this.state.shouldDisplay) {
+      return (
+        <View>
+          <View style={{height: 54}}/>
+          <View style={Common.paddingLeft}>
+            <Text style={{color: '#000',
+                          fontSize: 16,
+                          lineHeight: 18,
+                          fontWeight: 'bold',
+                          backgroundColor: 'transparent'}}>No equipment?</Text>
+            <Text style={{color: '#000',
+                          fontSize: 16,
+                          lineHeight: 18,
+                          fontWeight: 'bold',
+                          backgroundColor: 'transparent'}}>Replace with alternative</Text>
+            </View>
+            <FlatList
+              horizontal
+              data={this.state.exercises}
+              renderItem={this._renderItem.bind(this)}
+            />
+        </View>
+      )
+    }
+    else {
+      return(<View/>)
+    }
+    
   }
 
 }

@@ -331,7 +331,7 @@ static getUserProgramName(callback) {
         
     }
     static finishWorkout(){
-        let dayNumber, days;
+        let dayNumber, days, weeks;
         let uid = firebase.auth().currentUser.uid;
         let path = '/user/' + uid + '/statistics';
         firebase.database().ref(path).update({
@@ -339,10 +339,34 @@ static getUserProgramName(callback) {
         });
         this.getCurrentWorkoutDay((day) => {dayNumber = day})
         this.getCurrentWorkoutDaysNumber((days) => {days})
-        this.emptyWorkout(dayNumber, days);
-        
+        this.emptyWorkout(dayNumber, days);    
     }
 
+    static emptyWorkout(dayNumber, place){
+        let uid = firebase.auth().currentUser.uid;
+        let days, weeks;
+        console.log(weeks)
+        let path = '/user/' + uid + '/ownProgram/exerciseSequence';
+        let path2 = '/user/' + uid + '/ownProgram/';
+        firebase.database().ref(path2).on('value', (snap) => {
+            days = snap.val().days;
+        })
+        firebase.database().ref(path).on('value', (snap) => {
+            weeks = snap.val().currentWeek;
+        })
+        if (dayNumber === days) {
+            firebase.database().ref(path).update({
+            currentExerciseIndex: 0,
+            currentWorkoutDay: 1,
+            currentWeek: weeks + 1
+        })}
+        else {
+            firebase.database().ref(path).update({
+            currentExerciseIndex: 0,
+            currentWorkoutDay: dayNumber + 1
+        })}
+        
+    }
     
     static pushWorkoutLog(log){
         let uid = firebase.auth().currentUser.uid;
@@ -382,26 +406,7 @@ static getUserProgramName(callback) {
 
     }
 
-    static emptyWorkout(dayNumber){
-        let uid = firebase.auth().currentUser.uid;
-        let days;
-        let path = '/user/' + uid + '/ownProgram/exerciseSequence';
-        let path2 = '/user/' + uid + '/ownProgram/';
-            firebase.database().ref(path2).on('value', (snap) => {
-                days = snap.val().days;
-            })
-        if (dayNumber === days) {
-            firebase.database().ref(path).update({
-            currentExerciseIndex: 0,
-            currentWorkoutDay: 1
-        })}
-        else {
-            firebase.database().ref(path).update({
-            currentExerciseIndex: 0,
-            currentWorkoutDay: dayNumber + 1
-        })}
-        
-    }
+    
 
     static setWorkoutDays(days) {
 let uid = firebase.auth().currentUser.uid
