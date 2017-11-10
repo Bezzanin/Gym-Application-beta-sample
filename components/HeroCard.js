@@ -112,7 +112,7 @@ class HeroCard extends Component {
       this.setState({
         program
       }, () => {
-        console.log('If you see this, some weirg stuff is going on')
+        console.log(this.state.program);
         this.props.navigator.push('programDashboard', {
           program: this.state.program,
           exercises: this.state.exercises,

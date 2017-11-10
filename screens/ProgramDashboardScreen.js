@@ -32,6 +32,7 @@ export default class ExerciseScreen extends React.Component {
           logs: [],
           scrollable: true,
           program: {},
+          isConnected: null,
       };
       
   }
@@ -41,8 +42,27 @@ export default class ExerciseScreen extends React.Component {
     },
   };
 
+    _handleFirstConnectivityChange = (reach) => {
+        console.log('First change: ' + reach);
+        this.setState({isConnected: reach});
+        NetInfo.removeEventListener(
+            'change',
+            this.handleFirstConnectivityChange
+        );
+    }
+
+    componentWillMount() {
+        NetInfo.fetch().then((reach) => {
+            console.log('Initial: ' + reach);
+            });
+            
+            NetInfo.addEventListener(
+            'change',
+            this.handleFirstConnectivityChange
+            );
+    }
+
   componentDidMount() {
-    console.log('Am I from prompt?' + this.props.route.params.cameFromPrompt);
     this.setState({
         program: this.props.route.params.program,
         uid: this.props.route.params.uid,
@@ -68,6 +88,7 @@ export default class ExerciseScreen extends React.Component {
           })
       })
   }
+
   rerenderListView = () => {
     
 
@@ -88,7 +109,7 @@ export default class ExerciseScreen extends React.Component {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(ownExercises),
             sequence2: ownExercises,
-        })
+        }, () => {console.log('Below is sequence2') ;console.log(this.state.sequence2)})
     })
 
 
@@ -108,9 +129,16 @@ getOwnExercises() {
 }
   async renderExercises() {
     let ownProgramKey = '';
-    await AsyncStorage.getItem('ownProgramKey').then( (key) => {
-        ownProgramKey = JSON.parse(key); 
-    })
+    //if (this.state.isConnected) {
+        await Database.getUserProgram((key) => {ownProgramKey = key})
+    //}
+    // else {
+    //     console.log('I AM OFFLINE');
+    //         await AsyncStorage.getItem('ownProgramKey').then( (key) => {
+    //      ownProgramKey = JSON.parse(key);
+    //      console.log(ownProgramKey)
+    //  })
+    // }    
     
     let currentProgramKey = await this.props.route.params.program._key;
     if (currentProgramKey === ownProgramKey || '') {
@@ -164,6 +192,7 @@ displayWorkoutDays() {
         }
         workoutExercises.push(
             <View>
+                <Text>{this.state.isConnected ? 'Online' : 'Offline'}</Text>
                 <WorkoutExercises 
                     key={i} 
                     dayNumber={i}
@@ -217,7 +246,9 @@ retrieveFilteredItems() {
     console.log('setState 3, sequnce2');
     this.setState({
         sequence2: exercisesSequence
-    })
+    }, () => {
+        console.log('Below is sequence2. From retrieveFilteredItems()');
+        console.log(this.state.sequence2)})
 }
 
 filterByNumber = (arrayToFilter, n) => {
