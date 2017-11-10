@@ -47,7 +47,7 @@ export default class ExerciseScreen extends React.Component {
         this.setState({isConnected: reach});
         NetInfo.removeEventListener(
             'change',
-            this.handleFirstConnectivityChange
+            this._handleFirstConnectivityChange
         );
     }
 
@@ -58,7 +58,7 @@ export default class ExerciseScreen extends React.Component {
             
             NetInfo.addEventListener(
             'change',
-            this.handleFirstConnectivityChange
+            this._handleFirstConnectivityChange
             );
     }
 
@@ -103,18 +103,12 @@ export default class ExerciseScreen extends React.Component {
             })
     
         });
-        
-        
     }).then( ()=> {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(ownExercises),
             sequence2: ownExercises,
         }, () => {console.log('Below is sequence2') ;console.log(this.state.sequence2)})
     })
-
-
-    
-
 }
 
 getOwnExercises() {
@@ -192,7 +186,6 @@ displayWorkoutDays() {
         }
         workoutExercises.push(
             <View>
-                <Text>{this.state.isConnected ? 'Online' : 'Offline'}</Text>
                 <WorkoutExercises 
                     key={i} 
                     dayNumber={i}
