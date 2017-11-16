@@ -46,7 +46,19 @@ getDayOrder() {
 
 _renderItem = ({item, index}) => {
     if (item instanceof Array) {
-        return (<Row><Text>This one was an array</Text></Row>)
+        return (<View style={{backgroundColor: '#CDCDCD'}}>
+            <Text>Superset</Text>
+        <Row id={item[0].id}>
+            <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item[0].name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
+        </Row>
+        <Row id={item[1].id}>
+            <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item[1].name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
+            <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
+        </Row>
+        </View>)
     }
     else {
 

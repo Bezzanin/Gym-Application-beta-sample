@@ -280,7 +280,7 @@ handleContinue() {
         day = 'day' + dayNumber
         this.props.navigator.push('exercise', {
             exercise: this.state.sequence2[day][index],
-            title: this.state.sequence2[day][index].name,
+            title: this.state.sequence2[day][index].name || "Superset",
             insideWorkout: true,
             sequence: this.state.sequence2[day],
             day,
