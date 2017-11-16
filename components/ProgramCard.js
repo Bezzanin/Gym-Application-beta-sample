@@ -64,8 +64,6 @@ class ProgramCard extends Component {
       
       this.setState({
         uriLink: url
-      }, () => {
-        console.log(this.state.uriLink)
       })
     }, function(error) {
       console.log(error);

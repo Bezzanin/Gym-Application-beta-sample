@@ -26,20 +26,15 @@ export default class ExerciseScreen extends React.Component {
       repsx: 10,
       sets: 0,
       reps: 5,
+      superReps: [],
+      superWeight: [],
       weight: '70',
-      sets2: 0,
-      reps2: 5,
-      weight2: '70',
       videoLink: 'https://',
       videoRate: 1.0,
       exerciseName: 'l',
       exerciseType: '',
       exerciseMuscles: '',
       exerciseID: '',
-      exerciseNameSecond: 'l',
-      exerciseTypeSecond: '',
-      exerciseMusclesSecond: '',
-      exerciseIDSecond: '',
       loading: true,
       showDescriptions: false,
       _updateTracker: '123',
@@ -76,17 +71,7 @@ export default class ExerciseScreen extends React.Component {
   }
   componentDidMount() {
     if (this.props.route.params.exercise instanceof Array) {
-      this.setState({
-        _updateTracker: this.props.route.params.checker,
-        exerciseName: this.props.route.params.exercise[0].name,
-        exerciseNameSecond: this.props.route.params.exercise[1].name,
-        exerciseID: this.props.route.params.exercise[0]._key,
-        exerciseIDSecond: this.props.route.params.exercise[1]._key,
-        exerciseType: this.props.route.params.exercise[0].type,
-        exerciseTypeSecond: this.props.route.params.exercise[1].type,        
-        exerciseMuscles: this.props.route.params.exercise[0].muscles,
-        exerciseMusclesSecond: this.props.route.params.exercise[1].muscles        
-      })
+     
     }
     else {
       this.setState({
@@ -100,7 +85,7 @@ export default class ExerciseScreen extends React.Component {
   }
    
   goToNext = (sets,reps,weight, order) => {
-        console.log('Going to next')
+      console.log('Going to next')
        this.setState({sets,reps,weight}, ()=>{
          console.log(this.state.sets);
          Database.showNextExercise(true);
@@ -108,7 +93,8 @@ export default class ExerciseScreen extends React.Component {
       
        let index = 0;
        Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
-       let oldLog = this.props.route.params.logs
+       let oldLog = this.props.route.params.logs;
+       console.log(oldLog)
        oldLog.push({
          id: this.state.exerciseID,
          weight: weight,
@@ -144,7 +130,62 @@ export default class ExerciseScreen extends React.Component {
           });
        }
      }
-   
+
+    onParentSetsUpdate(index, reps, weight) {
+      let allReps = this.state.superReps.slice();
+      let allWeight = this.state.superWeight.slice();
+      allReps[index] = reps;
+      allWeight[index] = weight;
+      this.setState({
+        superReps:allReps,
+        superWeight:allWeight}, () => {
+        console.log(this.state.superReps);
+        console.log(this.state.superWeight);
+      })
+    }
+
+    goToNextFromSuperset() {
+      Database.showNextExercise(true)
+      let index = 0;
+      Database.getCurrentExerciseIndex( (currentIndex) => {index = currentIndex});
+      let oldLog = this.props.route.params.logs;
+      let superLog = [];
+      for (let i = 0; i < this.props.route.params.exercise.length; i++) {
+        superLog.push({
+          id: this.props.route.params.exercise[i]._key,
+          weight: this.state.superWeight[i],
+          sets: this.state.superReps[i].length,
+          reps: this.state.superReps[i],
+          metric: this.state.metric
+        })
+      }
+      oldLog.push(superLog);
+      AsyncStorage.setItem('logs', JSON.stringify(oldLog));
+      
+      if (index >= this.props.route.params.sequence.length) {
+        let emptyArr = []
+        AsyncStorage.setItem('logs', JSON.stringify(emptyArr))
+        Database.pushWorkoutLog(oldLog);
+        Database.finishWorkout();
+        this.props.navigator.push('finishWorkout', {
+          logs: oldLog,
+          workoutStarted: this.props.route.params.workoutStarted,
+          workoutFinished: Date.now()
+        });
+      }
+      else {
+         this.props.navigator.push('exercise', {
+           exercise: this.props.route.params.sequence[index],
+           insideWorkout: true,
+           title: this.props.route.params.sequence[index].name || "Superset",
+           sequence: this.props.route.params.sequence,
+           logs: oldLog,
+           checker: this.props.route.params.checker,
+           workoutStarted: this.props.route.params.workoutStarted
+         });
+      }
+    }
+    
     displayPicker(shouldHideButton, index) {
       if (this.props.insideWorkout) {  
         return(
@@ -154,6 +195,11 @@ export default class ExerciseScreen extends React.Component {
               onSendData={(sets, reps, weight) => {
                 this.goToNext(sets, reps, weight)
               }}
+              onSendDataFromSuperset = {() => {
+                  this.goToNextFromSuperset()
+                }}
+              index={index}
+              updateParentNSets={(index, reps, weight) => {this.onParentSetsUpdate(index, reps, weight)}}
             />
            
             </View>
@@ -225,22 +271,30 @@ export default class ExerciseScreen extends React.Component {
     }
   render() {
     if (this.props.route.params.exercise instanceof Array) {
+      let exerciseInputs = []
+      for (let i = 0; i < this.props.route.params.exercise.length; i++) {
+        let key = i;
+        shouldHide = (key) => {
+          if (key === this.props.route.params.exercise.length-1) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        exerciseInputs.push((
+        <View>
+          <ExerciseInput
+            name={this.props.route.params.exercise[key].name.replace(/[^A-Z0-9]+/ig, '')}
+            muscles={this.props.route.params.exercise[key].muscles}
+            type={this.props.route.params.exercise[key].type}
+          />
+          {this.displayPicker(shouldHide(key), key)}
+          </View>))
+      }
       return (
       <ScrollView>
-        <TouchableOpacity onPress={() => {console.log(this.state.sets)}}><Text>This one is an array</Text></TouchableOpacity>
-        <ExerciseInput
-          name={this.state.exerciseName.replace(/[^A-Z0-9]+/ig, '')}
-          muscles={this.props.route.params.exercise[0].muscles}
-          type={this.props.route.params.exercise[0].type}
-        />
-        {this.displayPicker(true, 0)}
-        <ExerciseInput
-          name={this.state.exerciseNameSecond.replace(/[^A-Z0-9]+/ig, '')}
-          muscles={this.props.route.params.exercise[1].muscles}
-          type={this.props.route.params.exercise[1].type}
-        />
-        {this.displayPicker(false, 1)}
-
+        {exerciseInputs}
       </ScrollView>)
     }
     else {

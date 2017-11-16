@@ -19,23 +19,30 @@ export default class ActivityInput extends Component {
     }
 
     onSendData() {
-        if (this.state.touched) {
-            this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
+        if (this.props.index > -1) {
+            this.props.onSendDataFromSuperset();
         }
         else {
-            let oneRep = [];
-            let oneWeight = [];
-            oneRep[0] = this.state.lastReps;
-            oneWeight[0] = this.state.lastWeight;
-            this.props.onSendData(1, oneRep, oneWeight);
+            if (this.state.touched) {
+                this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
+            }
+            else {
+                let oneRep = [];
+                let oneWeight = [];
+                oneRep[0] = this.state.lastReps;
+                oneWeight[0] = this.state.lastWeight;
+                this.props.onSendData(1, oneRep, oneWeight);
+            }
         }
     }
     onAddSet() {
-        console.log('Adding set')
         let newAllReps   = this.state.allReps.concat(this.state.lastReps);
         let newAllWeight = this.state.allWeight.concat(this.state.lastWeight);
-        console.log(newAllReps + ' ' + newAllWeight);
-        this.setState({touched: true, allReps: newAllReps, allWeight: newAllWeight})
+        this.setState({touched: true, allReps: newAllReps, allWeight: newAllWeight}, () => {
+            if (this.props.index > -1) {
+                this.props.updateParentNSets(this.props.index, this.state.allReps, this.state.allWeight)
+            }
+        })
     }
 
     handleDelete = (index) => {
