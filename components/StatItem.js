@@ -25,6 +25,11 @@ class StatItem extends Component {
       hideLogs: true
     }
   }
+  // componentWillMount() {
+  //   console.log('Hi');
+  //   console.log(this.props.item);
+  //   console.log('Holla')
+  // }
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
@@ -65,7 +70,7 @@ class StatItem extends Component {
         </View>
       )
     }
-
+    if(this.props.item.name) {
     return (
         <View style={[Common.containerHorizontal, {paddingRight: Layout.gutter.l}]}>
           <View style={[this.state.hideLogs && !this.props.last && Common.sectionBorder, Common.paddingVerticalSmall]}>
@@ -96,6 +101,13 @@ class StatItem extends Component {
         </View>
         </View>
     );
+      
+} else {
+  return (
+    <View>
+      <Text>Loading...</Text>
+    </View>)
+}
   }
 }
 

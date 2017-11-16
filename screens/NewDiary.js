@@ -88,6 +88,7 @@ export default class NewDiary extends React.Component {
     };
     this.renderItem = this.renderItem.bind(this)
     this.renderWorkoutIcons = this.renderWorkoutIcons.bind(this)
+    this.quickAddWorkout = this.quickAddWorkout.bind(this)
   }
   static route = {
     navigationBar: {
@@ -96,6 +97,17 @@ export default class NewDiary extends React.Component {
     },
   };
 
+  quickAddWorkout() {
+              // var myArr = this.state.items
+          // Object.keys(myArr)
+          // .forEach(function eachKey(key) { 
+          //   console.log(key); // alerts key 
+          //   console.log(myArr[key]); // alerts value
+          // });
+          var arr = _.values(this.state.items);
+          var lastLog = _.last(arr);
+          // Database.pushWorkoutLog(_.flatten(lastLog));
+  }
   onDayChange = (date) => {
     let initialDate = new Date(date.year, date.month-1, date.day);
     let choosenDate = moment(new Date(initialDate)).format('YYYY-MM-DD')
@@ -182,7 +194,6 @@ export default class NewDiary extends React.Component {
         ...log[0],
         ...item,
       })
-      
     })
 
       return (
@@ -219,6 +230,12 @@ export default class NewDiary extends React.Component {
               <Text style={Common.darkTagTitle}>{I18n.t('DailyAdvice')}</Text>
                 <Text style={Common.darkTitleH3}>{I18n.t('RandomAdvice')}</Text>
                 
+          </View>
+          <View style={{paddingLeft: 0}}>
+            <View style={{height: 10}}/>
+          <TouchableOpacity style={Common.leftAttachedButton} onPress={() => {this.props.navigator.push('QuickWorkout')}}>
+            <Text style={Common.darkActionTitle}>Quick workout</Text>
+          </TouchableOpacity>
           </View>
           {this.state.hasWorkoutDay &&
           <View style={{paddingLeft: 0}}>

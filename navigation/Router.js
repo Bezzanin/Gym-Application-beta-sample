@@ -21,6 +21,7 @@ import NewDiary from '../screens/NewDiary';
 import customProgram from '../screens/customProgram';
 import customProgramMuscles from '../screens/customProgramMuscles';
 import ProgressPromptScreen from '../screens/ProgressPromptScreen';
+import QuickWorkout from '../screens/QuickWorkout';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -43,4 +44,5 @@ export default createRouter(() => ({
   diary: () => NewDiary,
   customProgram: () => customProgram,
   customProgramMuscles: () => customProgramMuscles,
+  QuickWorkout: () => QuickWorkout
 }));
