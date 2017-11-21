@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableOpacity } from "react-native";
 import I18n from 'ex-react-native-i18n';
 import Database from '../api/database';
 import Layout from '../constants/Layout';
 import Common from '../constants/common';
 import StatItem from '../components/StatItem';
 import _ from 'lodash';
-import SortableListView from 'react-native-sortable-listview';
 
 
 class QuickWorkout extends Component {
@@ -89,6 +88,14 @@ class QuickWorkout extends Component {
           (<StatItem last={index === newlog.length-1 ? true : false} own={item._key ? false : true} item={item} imageLink={item.photo}/>)
         }
     />
+
+          <View style={{flex: 3, justifyContent: 'flex-start'}}>
+                      <TouchableOpacity
+                        style={[Common.brightButtonRounded, Common.shadowMedium]}
+                        onPress={() => {this.quickAddWorkout()}}>
+                        <Text style={Common.lightActionTitle}>Add Workout</Text>
+                      </TouchableOpacity>
+          </View>
     </View>
     
   );

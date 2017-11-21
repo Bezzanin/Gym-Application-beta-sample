@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import * as firebase from 'firebase';
 import {withNavigation} from '@expo/ex-navigation';
 import Common from '../constants/common';
@@ -13,8 +13,6 @@ import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
-const { View, Text, Image, TouchableOpacity } = ReactNative;
-
 @withNavigation
 class StatItem extends Component {
   constructor(props) {
@@ -22,7 +20,8 @@ class StatItem extends Component {
     this.state = {
       uriLink: 'not empty string',
       videoLink: 'not empty string',
-      hideLogs: true
+      hideLogs: true,
+      isEditing: false
     }
   }
   // componentWillMount() {
@@ -58,15 +57,42 @@ class StatItem extends Component {
       let counter = i;
       logs.push(
         <View style={[Common.inlineLogContainer, Common.sectionBorder]}>
+          {this.state.isEditing ? 
+          <View style={{flexDirection: 'row'}}> 
+          <View style={{flex: 1}}>
+            <Text style={Common.darkTitleH4Bold}>{counter + 1}</Text>
+          </View>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <TextInput
+              style={{height: 16, width: 20}}
+              onChangeText={(text) => this.setState({newReps: text})}
+              value={this.state.text}
+              placeholder={this.props.item.reps[counter]}
+            /><Text style={Common.darkTitleH4Light}> reps</Text>
+          </View>
+          <View style={{flex: 1,  paddingRight: Layout.gutter.l,  flexDirection: 'row'}}>
+          <TextInput
+              style={{height: 16, width: 30}}
+              onChangeText={(text) => this.setState({newWeight: text})}
+              value={this.state.text}
+              placeholder={this.props.item.weight[counter]}
+            />
+            <Text style={Common.darkTitleH4Light}> kg</Text>
+          </View>
+          </View>
+          :
+          <View style={{flexDirection: 'row'}}> 
           <View style={{flex: 1}}>
             <Text style={Common.darkTitleH4Bold}>{counter + 1}</Text>
           </View>
           <View style={{flex: 1}}>
             <Text style={Common.darkTitleH4Light}>{this.props.item.reps[counter]} {I18n.t('Reps')}</Text>
           </View>
-          <View style={{flex: 1,  paddingRight: Layout.gutter.l*2}}>
+          <View style={{flex: 1,  paddingRight: Layout.gutter.l}}>
             <Text style={Common.darkTitleH4Light}>{this.props.item.weight[counter]} kg</Text>
           </View>
+          </View>
+          }
         </View>
       )
     }
@@ -86,7 +112,11 @@ class StatItem extends Component {
               <Text style={Common.darkTitleH4Light}>{this.props.item.sets} {I18n.t('Sets')}
                 
               </Text>
-              
+
+                  <TouchableOpacity onPress={() => {this.setState({isEditing: !this.state.isEditing})}}>
+                    <Text style={Common.actionTitleH4Light}>
+                    {this.state.isEditing ? 'Done' : 'Edit'}</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={() => {this.setState({hideLogs: !this.state.hideLogs})}}>
                     <Text style={Common.actionTitleH4Light}>
                     {this.state.hideLogs ? I18n.t('ShowMore') : I18n.t('Hide')}</Text>
