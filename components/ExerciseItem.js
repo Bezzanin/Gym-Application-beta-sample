@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactNative from 'react-native';
+import ReactNative, { TouchableWithoutFeedback } from 'react-native';
 import {StyleSheet} from 'react-native';
 import * as firebase from 'firebase';
 import {withNavigation} from '@expo/ex-navigation';
@@ -25,11 +25,6 @@ class ExerciseItem extends Component {
     }
   }
 
-  componentWillMount() {
-    console.log('******')
-    console.log(this.props.item);
-    console.log('******')
-  }
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
@@ -56,47 +51,83 @@ class ExerciseItem extends Component {
   }
   displayAlternativeButton = () => {
     if (this.props.item.own) {
-      return (
-      <TouchableOpacity onPress={this.props.onReplace}>
-
-          <Ionicons
-        name={'ios-repeat-outline'}
-        size={32}
-        color={'#B3B3B3'}
-      />
-
-      </TouchableOpacity>)
-    }
+        return (
+        <TouchableOpacity onPress={this.props.onReplace}>
+  
+            <Ionicons
+          name={'ios-repeat-outline'}
+          size={32}
+          color={'#B3B3B3'}
+        />
+  
+        </TouchableOpacity>)
+      }
   }
   
   render() {
-    return (
-      <TouchableOpacity
-        {...this.props.sortHandlers}
-        onPress={this.props.onPress}
-        style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
-        <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
-          <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
-            <Image
-              source={{uri: this.state.uriLink}}
-              onLoadEnd={()=> { this.setState({ loading: false }) }}
-              style={Common.imageStyle}>
-              <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
-              </Image>
-          </View>
-          <View style={[Common.inlineContainer]}>
-            <View style={Common.containerText}>
-              <Text style={Common.darkTitleH3}>{I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, '')) || ''}</Text>
-              <Text style={Common.darkNameTag}>{I18n.t(this.props.item.muscles)}</Text>
-              <Text style={Common.darkNameTag}>{I18n.t(this.props.item.type)}</Text>
+    if (this.props.item instanceof Array) {
+      let exerciseItems = []
+      for (let i = 0; i < this.props.item.length; i++) {
+        let key = i;
+        exerciseItems.push((<TouchableOpacity
+          {...this.props.sortHandlers}
+          onPress={this.props.onPress}
+          style={[Common.containerLeft, {backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
+          <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
+            <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
+              <Image
+                source={{uri: this.state.uriLink}}
+                onLoadEnd={()=> { this.setState({ loading: false }) }}
+                style={Common.imageStyle}>
+                <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
+                </Image>
             </View>
-            <View style={Common.buttonContainer}>
-              {this.displayAlternativeButton()}
+            <View style={[Common.inlineContainer]}>
+              <View style={Common.containerText}>
+                <Text style={Common.darkTitleH3}>{I18n.t(this.props.item[key].name.replace(/[^A-Z0-9]+/ig, '')) || ''}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item[key].muscles)}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item[key].type)}</Text>
+              </View>
             </View>
           </View>
+        </TouchableOpacity>))
+      }
+      return (<View>
+        <View style={[Common.containerLeft, {paddingTop: 24}]}>
+          <Text style={Common.darkTitleH2}>{I18n.t('Superset')}, {this.props.item.length} {I18n.t('Exercises').toLowerCase()}</Text>
         </View>
-      </TouchableOpacity>
-    );
+        {exerciseItems}
+      </View>)
+    }
+    else {
+      return (
+        <TouchableOpacity
+          {...this.props.sortHandlers}
+          onPress={this.props.onPress}
+          style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
+          <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
+            <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
+              <Image
+                source={{uri: this.state.uriLink}}
+                onLoadEnd={()=> { this.setState({ loading: false }) }}
+                style={Common.imageStyle}>
+                <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
+                </Image>
+            </View>
+            <View style={[Common.inlineContainer]}>
+              <View style={Common.containerText}>
+                <Text style={Common.darkTitleH3}>{I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, '')) || ''}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item.muscles)}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item.type)}</Text>
+              </View>
+              <View style={Common.buttonContainer}>
+                {this.displayAlternativeButton()}
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
   }
 }
 const styles = StyleSheet.create({

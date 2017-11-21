@@ -147,6 +147,7 @@ export default {
     DoneWorkoutToday: "You have finished workout today",
   
     //Exercises
+    Superset: "Superset",
     ExerciseName: "Exercise name",
  
     SeatedCableRow:	"Seated cable row",
