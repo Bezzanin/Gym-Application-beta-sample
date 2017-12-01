@@ -4,12 +4,9 @@ import {Grid, Col, Row} from "react-native-elements";
 import {withNavigation} from '@expo/ex-navigation';
 import Layout from '../constants/Layout';
 import Common from '../constants/common';
-import BigTag from '../components/BigTag';
 import Database from '../api/database';
-import DashboardExercisesList from '../components/DashboardExercisesList'
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
-import SortableListView from 'react-native-sortable-listview';
 import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
@@ -46,7 +43,20 @@ getDayOrder() {
 
 _renderItem = ({item, index}) => {
     if (item instanceof Array) {
-        return (<Row><Text>This one was an array</Text></Row>)
+        let exercises = []
+        for (let i = 0; i < item.length; i++) {
+            let key = i;
+            exercises.push((<Row id={item[key].id}>
+                <Col size={5}><View style={{paddingRight: 20}}><Text style={Common.darkBodyText2}>{I18n.t(item[key].name.replace(/[^A-Z0-9]+/ig, ''))}</Text></View></Col>
+                <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>3</Text></View></Col>
+                <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText2}>15</Text></View></Col>
+            </Row>))
+        } 
+        return (
+        <View style={{backgroundColor: '#F0F0F0', borderRadius: 8, paddingLeft: 8, paddingTop: 4}}>
+            <Text style={{opacity: 0.5, fontWeight: '700'}}>Superset</Text>
+            {exercises}
+        </View>)
     }
     else {
 
@@ -77,7 +87,6 @@ render() {
                         <Col size={2}><View style={{alignItems: 'flex-end'}}><Text style={Common.darkBodyText}>{I18n.t('Reps').toLowerCase()}</Text></View></Col>
                     </Row>
                 </Grid>
-
                 <Grid>
 
                     <FlatList
@@ -86,10 +95,7 @@ render() {
                     keyExtractor={this._keyExtractor}
                     />
                 </Grid>
-
             </View>
-            {/* <DashboardExercisesList
-                numberOfExercises={this.props.numberOfExercises}/> */}
         </View> 
     );
   }

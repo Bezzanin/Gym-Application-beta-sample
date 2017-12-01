@@ -642,7 +642,7 @@ const Common = {
     },
     inputBar: {
         paddingBottom: Layout.gutter.s,
-        paddingHorizontal: Layout.gutter.l,
+        paddingHorizontal: 16,
         flex: 1,
     }
 };

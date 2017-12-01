@@ -19,22 +19,30 @@ export default class ActivityInput extends Component {
     }
 
     onSendData() {
-        if (this.state.touched) {
-            this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
+        if (this.props.index > -1) {
+            this.props.onSendDataFromSuperset();
         }
         else {
-            let oneRep = [];
-            let oneWeight = [];
-            oneRep[0] = this.state.lastReps;
-            oneWeight[0] = this.state.lastWeight;
-            this.props.onSendData(1, oneRep, oneWeight);
+            if (this.state.touched) {
+                this.props.onSendData(this.state.allReps.length, this.state.allReps, this.state.allWeight)
+            }
+            else {
+                let oneRep = [];
+                let oneWeight = [];
+                oneRep[0] = this.state.lastReps;
+                oneWeight[0] = this.state.lastWeight;
+                this.props.onSendData(1, oneRep, oneWeight);
+            }
         }
     }
     onAddSet() {
         let newAllReps   = this.state.allReps.concat(this.state.lastReps);
         let newAllWeight = this.state.allWeight.concat(this.state.lastWeight);
-        console.log(newAllReps + ' ' + newAllWeight);
-        this.setState({touched: true, allReps: newAllReps, allWeight: newAllWeight})
+        this.setState({touched: true, allReps: newAllReps, allWeight: newAllWeight}, () => {
+            if (this.props.index > -1) {
+                this.props.updateParentNSets(this.props.index, this.state.allReps, this.state.allWeight)
+            }
+        })
     }
 
     handleDelete = (index) => {
@@ -44,15 +52,26 @@ export default class ActivityInput extends Component {
         newWeight.splice(index, 1)
         this.setState({allReps: newReps, allWeight: newWeight})
     }
-
+    displaySendSets() {
+        if (this.props.shouldHideButton) {
+            return (<View/>)
+        }
+        else {
+            return (
+            <View>
+                <View style={{flex: 1, minHeight: 100}}></View>
+                <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
+            </View>
+            ) 
+        }
+    }
     render() {
         let sets = [];
         for (let i = 0; (i<this.state.allReps.length); i++) {
             let counter = i;
             sets.push(
                 <View>
-                {/*<Text>{this.state.reps[counter]}</Text>
-                <Text>{this.state.weight[counter]}</Text>*/}
+               
                 <SetItem
                     key={counter}
                     number={counter + 1}
@@ -67,7 +86,6 @@ export default class ActivityInput extends Component {
     return (
       <View>
         <View style={[Common.sectionBorder, Common.inputBar]}>
-            {/* <TouchableOpacity onPress={() => {console.log(this.state)}}><Text>Check</Text></TouchableOpacity> */}
             <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between'}}>
                 <View>
                     <Text style={Common.darkTagTitle}>Reps used</Text>
@@ -149,8 +167,7 @@ export default class ActivityInput extends Component {
         </View>
        
         {sets}
-        <View style={{flex: 1, minHeight: 100}}></View>
-        <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
+        {this.displaySendSets()}
       </View>
     );
     

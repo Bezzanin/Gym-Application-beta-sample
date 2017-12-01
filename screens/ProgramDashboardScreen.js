@@ -228,11 +228,25 @@ retrieveFilteredItems() {
         let day = 'day' + i;
         let exercisesArray = [];
         this.props.route.params.program[dayNumberIDs].split(', ').forEach((id) => {
-            this.props.route.params.exercises.forEach((exercise) => {
-                if (exercise._key === id) {
-                    exercisesArray.push(exercise);
-                }
-            })
+            if (id.split('+').length > 1) {
+                let superset = [];
+                id.split('+').forEach((supersetId) => {
+                    this.props.route.params.exercises.forEach((exercise) => {
+                        if (exercise._key === supersetId) {
+                            superset.push(exercise);
+                        }
+                    })
+                })
+                console.log(superset);
+                exercisesArray.push(superset);
+            } 
+            else {
+                this.props.route.params.exercises.forEach((exercise) => {
+                    if (exercise._key === id) {
+                        exercisesArray.push(exercise);
+                    }
+                })
+            }
         })
         exercisesSequence[day] = exercisesArray;
     }
@@ -280,7 +294,7 @@ handleContinue() {
         day = 'day' + dayNumber
         this.props.navigator.push('exercise', {
             exercise: this.state.sequence2[day][index],
-            title: this.state.sequence2[day][index].name,
+            title: this.state.sequence2[day][index].name || "Superset",
             insideWorkout: true,
             sequence: this.state.sequence2[day],
             day,

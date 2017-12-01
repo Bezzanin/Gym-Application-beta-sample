@@ -16,7 +16,6 @@ import Swipeable from 'react-native-swipeable';
 
 const leftContent = <Text>Pull to activate</Text>;
 
-
 @withNavigation
 class StatItem extends Component {
   constructor(props) {

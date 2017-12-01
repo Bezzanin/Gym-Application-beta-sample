@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Share, TouchableOpacity } from "react-native";
 import {FormInput, FormLabel, FormValidationMessage} from 'react-native-elements';
 import Layout from '../constants/Layout';
+import Tag from './Tag';
+
+import Common from '../constants/common';
+import I18n from 'ex-react-native-i18n'
+import fi from '../constants/fi';
+import { Ionicons } from '@expo/vector-icons';
+import en from '../constants/en'; import ru from '../constants/ru';
+I18n.fallbacks = true;
+I18n.translations = {fi, en, ru};
+
 class ExerciseInput extends Component {
     constructor(props){
     super(props);
@@ -10,57 +20,53 @@ class ExerciseInput extends Component {
       reps: 10,
     }
   }
-  render() {
-      let Allreps = [];
-      let inputs = [];
 
-        for(var i=0; i<this.state.sets; i++){
-            let currSet = 'set' + i;
-        inputs.push(
-            (
-    <View style={styles.InputContainer}>
-        <View style={{width: 100}}>
-            <Text>{currSet}</Text>
-        </View>
-        <View style={{width: 100}}>
-            <FormInput
-            onChangeText={reps => Allreps.push([reps])}
-            placeholder={""}
-            />
-        </View>
-        <View style={{width: 100}}>
-            <FormInput
-            onChangeText={text => this.setState({ text })}
-            placeholder={"kg"}
-        />
-        </View>
-    </View>
-            )
-        );  
-    }
+  onClick() {
+    let exerciseName = I18n.t(this.props.name)
+    Share.share({
+      message: exerciseName,
+      url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
+      title: 'Wow, did you see that?'
+    }, {
+      // Android only:
+      dialogTitle: 'Share BAM goodness',
+      // iOS only:
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ]
+    })
+  }
+
+  render() {
     return (
-<View>
-    <View style={styles.InputContainer}>
-        <View style={{width: 100}}>
-        <FormLabel>Sets</FormLabel>
-            <FormInput
-             onChangeText={sets => this.setState({ sets })}
-             placeholder={""}
+        <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 0, flexDirection: 'row'}]}>
+        <View style={{flex: 2}}>
+          <Text style={Common.darkTitleH1}>{I18n.t(this.props.name)}</Text>
+          <View style = {Common.inlineContainer}>
+            <Tag
+              title={I18n.t('muscleGroup')}
+              content={this.props.muscles}
+              color={'#000'}/>
+            <Tag 
+              title={I18n.t('Exercises')}
+              content={this.props.type}
+              color={'#000'}/>
+          </View>
+          </View>
+          <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.onClick} style={{flex: 1, justifyContent: 'center'}}>
+          <Ionicons
+              name={'md-share'}
+              size={30}
+              color={'#CE0707'}
+              style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
             />
+          </TouchableOpacity>
+    
+          </View>
         </View>
-    </View>
-    {inputs}
-</View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  InputContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around"
-  },
-});
 
 export default ExerciseInput;
