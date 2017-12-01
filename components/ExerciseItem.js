@@ -25,7 +25,7 @@ class ExerciseItem extends Component {
     }
   }
 
-  componentWillMount() {
+  componentWillReceiveProps() {
     console.log('******')
     console.log(this.props.item);
     console.log('******')
@@ -36,7 +36,6 @@ class ExerciseItem extends Component {
       // console.log(this.state.uriLink)
       this.setState({
         uriLink: url,
-        
       })
     }, function(error) {
       console.log(error);
@@ -47,8 +46,7 @@ class ExerciseItem extends Component {
     var storageRef = firebase.storage().ref(`exercises/${nextProps.item.photo}.png`);
     storageRef.getDownloadURL().then((url) => {
       this.setState({
-        uriLink: url,
-        
+        uriLink: url
       })
     }, function(error) {
       console.log(error);
@@ -58,13 +56,11 @@ class ExerciseItem extends Component {
     if (this.props.item.own) {
       return (
       <TouchableOpacity onPress={this.props.onReplace}>
-
           <Ionicons
         name={'ios-repeat-outline'}
         size={32}
         color={'#B3B3B3'}
       />
-
       </TouchableOpacity>)
     }
   }

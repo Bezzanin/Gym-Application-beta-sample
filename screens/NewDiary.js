@@ -106,7 +106,7 @@ export default class NewDiary extends React.Component {
           // });
           var arr = _.values(this.state.items);
           var lastLog = _.last(arr);
-          // Database.pushWorkoutLog(_.flatten(lastLog));
+          Database.pushWorkoutLog(_.flatten(lastLog));
   }
   onDayChange = (date) => {
     let initialDate = new Date(date.year, date.month-1, date.day);
@@ -204,7 +204,12 @@ export default class NewDiary extends React.Component {
       <FlatList
           data={newlog}
           renderItem={({item, index}) => 
-            (<StatItem last={index === newlog.length-1 ? true : false} own={item._key ? false : true} item={item} imageLink={item.photo}/>)
+            (<StatItem 
+              key={index}
+              last={index === newlog.length-1 ? true : false} 
+              own={item._key ? false : true} 
+              item={item} 
+              imageLink={item.photo}/>)
           }
       />
       </View>
@@ -233,7 +238,10 @@ export default class NewDiary extends React.Component {
           </View>
           <View style={{paddingLeft: 0}}>
             <View style={{height: 10}}/>
-          <TouchableOpacity style={Common.leftAttachedButton} onPress={() => {this.props.navigator.push('QuickWorkout')}}>
+          <TouchableOpacity style={Common.leftAttachedButton} onPress={() => {
+            //this.quickAddWorkout();
+            this.props.navigator.push('QuickWorkout')
+            }}>
             <Text style={Common.darkActionTitle}>Quick workout</Text>
           </TouchableOpacity>
           </View>

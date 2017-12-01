@@ -130,8 +130,14 @@ export default class ExercisesScreen extends Component {
       exercise: item
     })
   }
+  if (this.props.quickWorkout) {
     return (
-      <ExerciseItem item={item} videoLink={item.video} onPress={goToRoute}/>
+      <ExerciseItem item={item} videoLink={item.video} onPress={() => console.log('Hei')}/>
     );
+  } else {
+  return (
+    <ExerciseItem item={item} videoLink={item.video} onPress={goToRoute}/>
+  );
+}
   }
 }

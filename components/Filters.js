@@ -12,14 +12,14 @@ class Filters extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.filters}>
-          <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
-            <Text style={[styles.filterText, filter ==="ALL" && styles.selectedText]}>{I18n.t('All')}</Text>
+        <TouchableOpacity style={[styles.filter, filter === "BASIC" && styles.selected]} onPress={() => this.props.onFilter("BASIC")}>
+            <Text style={[styles.filterText, filter === "BASIC" && styles.selectedText]}>{I18n.t('basic')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.filter, styles.filterMiddle, filter === "ISOLATION" && styles.selected]} onPress={() => this.props.onFilter("ISOLATION")}>
             <Text style={[styles.filterText, filter ==="ISOLATION" && styles.selectedText]}>{I18n.t('isolation')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.filter, filter === "BASIC" && styles.selected]} onPress={() => this.props.onFilter("BASIC")}>
-            <Text style={[styles.filterText, filter === "BASIC" && styles.selectedText]}>{I18n.t('basic')}</Text>
+          <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
+            <Text style={[styles.filterText, filter ==="ALL" && styles.selectedText]}>{I18n.t('All')}</Text>
           </TouchableOpacity>
         </View>
       </View>
