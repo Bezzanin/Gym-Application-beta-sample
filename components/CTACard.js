@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
  },
   title: {
     marginVertical: 30,
-    width: Layout.window.width,
+    width: Layout.window.width * 0.9,
     textAlign: 'center',
     backgroundColor: 'transparent',
     color: '#FFFFFF',

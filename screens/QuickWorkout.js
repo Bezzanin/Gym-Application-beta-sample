@@ -18,6 +18,7 @@ class QuickWorkout extends Component {
         this.quickAddWorkout = this.quickAddWorkout.bind(this)
         this.changeText = this.changeText.bind(this)
         this.sendIndex = this.sendIndex.bind(this)
+        this.addSet = this.addSet.bind(this)
       }
       static route = {
         navigationBar: {
@@ -26,6 +27,7 @@ class QuickWorkout extends Component {
       };
 
     componentWillMount() {
+      AsyncStorage.removeItem("quickAddId")
         AsyncStorage.getItem("exercises").then((json) => {
          try {
            const exercises = JSON.parse(json);
@@ -45,7 +47,6 @@ class QuickWorkout extends Component {
         }, () => {
           var arr = _.values(this.state.items);
           var lastLog = _.flatten(_.last(arr));
-          // Database.pushWorkoutLog(_.flatten(lastLog));
           this.setState({ lastLog: lastLog, myItems: lastLog })
         });
         })
@@ -77,38 +78,75 @@ class QuickWorkout extends Component {
           if (exercise.id === id) {
             if (dataType === 'reps') {exercise.reps[counter] = value}
             if (dataType === 'weight') {exercise.weight[counter] = value}
+            if (dataType === 'sets') {
+              exercise.sets = parseInt(exercise.sets)+1
+              exercise.reps.push("0")
+              exercise.weight.push("0")
+            }
           }
         })
         this.setState({ myItems: newLog})
         })      
     }
 
-    sendIndex(id) {
-      console.log(id)
+    sendIndex(id, actionType) {
+      console.log(actionType)
       Database.DiaryStats((log) => {
         var res = log
         var arr = _.values(res);
         if (this.state.myItems) {
           var newLog = this.state.myItems
         } else {  var newLog = _.flatten(_.last(arr)); }
+        //delete exercise
+        if (actionType === 'delete') {
         var editedExercise = newLog.filter((exercise) => {
           return (exercise.id !== id)
-        })
+        }) } 
+        //add exercise
+        else if (actionType === 'add') {
+          var newExerciseLog = {
+            "id": id,
+            "metric": "kg",
+            "reps": [
+              "5",
+            ],
+            "sets": 1,
+            "weight": [
+              "25",
+            ],
+          }
+          newLog.push(newExerciseLog);
+          var editedExercise = newLog;
+        } else {
+          newLog.map((exercise) => {
+            if (exercise.id === id) {
+              
+            }
+          })
+          var editedExercise = newLog
+        }
         this.setState({ myItems: editedExercise})
         })
     }
 
+    addSet(sets) {
+      console.log(sets)
+    }
+
     addNewExercise() {
-    //   this.props.navigator.push('exercises', {
-    //     filter: 'ALL',
-    //     quickWorkout: true
-    // })
-      this.props.navigator.push('XDayExercises', {
-          // dayNumber: this.props.dayNumber,
-          exercises: this.props.exercises,
-          // program: this.props.program,
-          // day: this.props.day
-      })
+      this.props.navigator.push('exercises', {
+        filter: 'ALL',
+        quickWorkout: true
+    })
+  }
+
+  componentWillReceiveProps() {
+    AsyncStorage.getItem("quickAddId").then((id) => {
+      if (typeof(id) === 'string') {
+        this.sendIndex(id, 'add')
+      } else { console.log("Else")}
+      
+  })
   }
 
   render() {
@@ -130,7 +168,6 @@ class QuickWorkout extends Component {
       ...log[0],
       ...item,
     })
-    console.log(newlog)
   })
 
 
@@ -145,12 +182,13 @@ class QuickWorkout extends Component {
         data={newlog}
         renderItem={({item, index}) => 
           (<StatItem 
-            key={index}
+            key={item.id}
             last={index === newlog.length-1 ? true : false} 
             own={item._key ? false : true} item={item} 
             imageLink={item.photo} 
             changeText={this.changeText} 
             sendIndex={this.sendIndex}
+            addSet={this.addSet}
             swipable={true}/>)
         }
     />

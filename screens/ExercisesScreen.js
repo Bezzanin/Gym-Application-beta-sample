@@ -44,7 +44,7 @@ return exercises.filter((item) => {
   if (filter === 'shoulders') return item.muscles === 'shoulders';
   if (filter === 'calves') return item.type === 'calves';
   if (filter === 'back') return item.muscles === 'back';
-  if (filter === 'BASIC') {console.log(item); return item.type === 'basic';}
+  if (filter === 'BASIC') { return item.type === 'basic';}
   if (filter === 'ISOLATION') return item.type === 'isolation';
 })
 }
@@ -79,7 +79,6 @@ export default class ExercisesScreen extends Component {
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
-        console.log(exercises)
         this.setSource(exercises, exercises);
         this.setState({exercises: filterExercises(this.props.route.params.filter, exercises)})
         this.setSource(this.state.exercises, filterExercises(this.props.route.params.filter, exercises), { })
@@ -130,9 +129,14 @@ export default class ExercisesScreen extends Component {
       exercise: item
     })
   }
+
+    returnExerciseId = () => {
+      AsyncStorage.setItem('quickAddId', item._key);
+      this.props.navigator.pop();
+    }
   if (this.props.quickWorkout) {
     return (
-      <ExerciseItem item={item} videoLink={item.video} onPress={() => console.log('Hei')}/>
+      <ExerciseItem item={item} videoLink={item.video} onPress={returnExerciseId}/>
     );
   } else {
   return (

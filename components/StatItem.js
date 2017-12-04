@@ -28,12 +28,13 @@ class StatItem extends Component {
     }
     
   }
+
   componentWillMount() {
     if (this.props.swipable) {
       var rightButtons = [
         <TouchableOpacity 
         style={{backgroundColor: '#CE0707',flex: 1,justifyContent: 'center', paddingLeft: 20}}
-        onPress={() => {this.props.sendIndex(this.props.item.id)}}
+        onPress={() => {this.props.sendIndex(this.props.item.id, 'delete')}}
         >
           <Text style={{color: 'white'}}>Delete</Text>
         </TouchableOpacity>,
@@ -82,7 +83,7 @@ class StatItem extends Component {
     for (let i = 0; i<this.props.item.sets; i++) {
       let counter = i;
       logs.push(
-        <View style={[Common.inlineLogContainer, Common.sectionBorder]} key={this.props.item.id}>
+        <View key={counter} style={[Common.inlineLogContainer, Common.sectionBorder]}>
           {this.state.isEditing ? 
           <View style={{flexDirection: 'row'}}> 
           <View style={{flex: 1}}>
@@ -107,7 +108,7 @@ class StatItem extends Component {
           </View>
           </View>
           :
-          <View style={{flexDirection: 'row'}} key={this.props.item.id}> 
+          <View style={{flexDirection: 'row'}} key={counter}> 
           <View style={{flex: 1}}>
             <Text style={Common.darkTitleH4Bold}>{counter + 1}</Text>
           </View>
@@ -140,7 +141,10 @@ class StatItem extends Component {
               <Text style={Common.darkTitleH4Light}>{this.props.item.sets} {I18n.t('Sets')}
                 
               </Text>
-
+              <TouchableOpacity onPress={() => {this.props.changeText('0', '0', this.props.item.id, 'sets')}}>
+                    {this.props.swipable ? <Text style={Common.actionTitleH4Light}>
+                    {this.state.isEditing ? 'Add Set' : ' '}</Text> : <Text /> }
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={() => {this.setState({isEditing: !this.state.isEditing})}}>
                     {this.props.swipable ? <Text style={Common.actionTitleH4Light}>
                     {this.state.isEditing ? 'Done' : 'Edit'}</Text> : <Text /> }

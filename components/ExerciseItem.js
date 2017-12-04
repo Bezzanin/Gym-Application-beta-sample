@@ -61,7 +61,8 @@ class ExerciseItem extends Component {
         size={32}
         color={'#B3B3B3'}
       />
-      </TouchableOpacity>)
+      </TouchableOpacity>
+    )
     }
   }
   
