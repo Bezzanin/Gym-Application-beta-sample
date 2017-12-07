@@ -9,6 +9,7 @@ import Colors from '../constants/Colors';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import en from '../constants/en'; import ru from '../constants/ru';
+import Swipeable from 'react-native-swipeable';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
@@ -25,10 +26,22 @@ class ExerciseItem extends Component {
     }
   }
 
-  componentWillReceiveProps() {
-    console.log('******')
-    console.log(this.props.item);
-    console.log('******')
+  componentWillMount() {
+    var rightButtons = [
+      <TouchableOpacity 
+      style={{backgroundColor: '#CE0707',flex: 1,justifyContent: 'center', paddingLeft: 20}}
+      onPress={() => {this.props.sendIndex(this.props.item._key, 'delete')}}
+      >
+        <Text style={{color: 'white'}}>Delete</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity 
+      style={{backgroundColor: 'green',flex: 1, justifyContent: 'center', paddingLeft: 20}}
+      onPress={() => {this.goToRoute()}}
+      >
+        <Text style={{color: 'white'}}>Replace</Text>
+      </TouchableOpacity>
+    ]
+    this.setState({rightButtons})
   }
   componentDidMount() {
     var storageRef = firebase.storage().ref(`exercises/${this.props.item.photo}.png`);
@@ -103,6 +116,8 @@ class ExerciseItem extends Component {
     }
     else {
       return (
+        <Swipeable
+        rightButtons={this.state.rightButtons}>
         <TouchableOpacity
           {...this.props.sortHandlers}
           onPress={this.props.onPress}
@@ -128,6 +143,7 @@ class ExerciseItem extends Component {
             </View>
           </View>
         </TouchableOpacity>
+        </Swipeable>
       );
     }
   }

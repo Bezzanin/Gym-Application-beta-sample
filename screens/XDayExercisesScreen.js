@@ -40,6 +40,7 @@ export default class XDAYExercisesScreen extends Component {
           }),
     }
     this.handleToggle = this.handleToggle.bind(this);
+    this.sendIndex = this.sendIndex.bind(this)
   }
   static route = {
     navigationBar: {
@@ -54,8 +55,18 @@ export default class XDAYExercisesScreen extends Component {
       editModeOn: !this.state.editModeOn
     })
   }
+
+  sendIndex(id, actionType) {
+    if (this.state.newData) { var newLog = this.state.newData} 
+    else { var newLog = this.props.route.params.exercises.slice();}
+    if (actionType === 'delete') {
+      var editedExercise = newLog.filter((exercise) => {
+        return (exercise._key !== id)
+      }) } 
+    this.setState({ newData: editedExercise })
+  }
   componentWillMount() {
-    data = this.props.route.params.exercises.slice();
+    this.setState({ data: this.props.route.params.exercises.slice()}) 
     order =  Object.keys(this.props.route.params.exercises.slice());
     editModeOn = false;
     this.setState({loaded: !this.state.loaded})
@@ -63,6 +74,10 @@ export default class XDAYExercisesScreen extends Component {
 
   render() {
     if (this.state.loaded) {
+    if (this.state.newData) {
+      data = this.state.newData
+      order = Object.keys(this.state.newData.slice())
+    } else { data = this.state.data }
       return (
         <SortableListView
         style={{ flex: 1 }}
@@ -74,13 +89,17 @@ export default class XDAYExercisesScreen extends Component {
                                 order={order}
                                 editModeOn={false}/>
                             </View>}
-        data={this.props.route.params.exercises.slice()}
+        data={data}
         order={order}
         onRowMoved={e => {
           order.splice(e.to, 0, order.splice(e.from, 1)[0])
           this.forceUpdate();
         }}
-        renderRow={row => <ExerciseItem
+        renderRow={(row) => {
+          if (typeof row != 'undefined') {
+            console.log(row)
+        return(<ExerciseItem
+        sendIndex={this.sendIndex}
         item={row}
         editModeOn={this.state.editModeOn}
         imageLink={row.photo}
@@ -91,17 +110,17 @@ export default class XDAYExercisesScreen extends Component {
         }}
         onReplace={
           () => {
-            console.log('ITEM IS ITEM IS')
-            console.log(row);
-            console.log('XDAYEXERCISES SEQUENCE')
-            console.log(this.props.route.params.exercises);
+            // console.log('ITEM IS ITEM IS')
+            // console.log(row);
+            // console.log('XDAYEXERCISES SEQUENCE')
+            // console.log(this.props.route.params.exercises);
             this.props.navigator.push('replaceExercise', {
               item: row,
               sequence: this.props.route.params.exercises,
               day: this.props.route.params.day
             })
           }
-        }/>}
+        }/>)} else { return( <View /> ) }}}
     />
       )
     }

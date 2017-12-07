@@ -41,6 +41,10 @@ getDayOrder() {
     }
 }
 
+componentWillMount() {
+    this.props.exercises
+}
+
 _renderItem = ({item, index}) => {
     if (item instanceof Array) {
         let exercises = []

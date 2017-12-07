@@ -24,9 +24,9 @@ I18n.translations = {fi, en, ru};
 
 import {LocaleConfig} from 'react-native-calendars';
 LocaleConfig.locales['fi'] = {
-    monthNames: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Tuokokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
-  monthNamesShort: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Tuokokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
-  dayNames: ['Sunnuntai',,'Maanantai','Tiistai','Keskivikko','Torstai','Perjantai','Lauantai'],
+    monthNames: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Toukokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
+  monthNamesShort: ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Toukokuu','Kesäkuu','Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'],
+  dayNames: ['Sunnuntai',,'Maanantai','Tiistai','Keskiviikko','Torstai','Perjantai','Lauantai'],
   dayNamesShort: ['Su','Ma','Ti','Ke','To','Pe','La']
 }
 LocaleConfig.defaultLocale = 'fi';
