@@ -43,9 +43,9 @@ class EditModeButton extends Component {
     if (this.state.editModeOn) {
       return (
         <View>
-           {/* <TouchableOpacity
+           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
-            onPress={() => {this.addNewExercise()}}><Text style={[Common.textButton, {fontSize: 18}]}>AddExercise</Text></TouchableOpacity> */}
+            onPress={() => {this.addNewExercise()}}><Text style={[Common.textButton, {fontSize: 18}]}>AddExercise</Text></TouchableOpacity>
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {
@@ -64,11 +64,11 @@ class EditModeButton extends Component {
     else {
       return (
         <View>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {
               this.addNewExercise()
-              }}><Text style={[Common.textButton, {fontSize: 18}]}>Add Exercise</Text></TouchableOpacity> */}
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>Add Exercise</Text></TouchableOpacity>
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {

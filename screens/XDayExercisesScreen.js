@@ -68,8 +68,13 @@ export default class XDAYExercisesScreen extends Component {
         return (exercise._key === id[0]._key)
       })
       if(isInsideWorkout.length > 0) {
-        newLog.push(id[0])
-      } else { console.log('Same Exercise Exists')}
+        console.log('Same Exercise Exists');
+        console.log(isInsideWorkout)
+        var editedExercise = newLog
+      } else { 
+        newLog.push(id[0]); 
+        console.log(isInsideWorkout);
+        var editedExercise = newLog}
     } 
     this.setState({ newData: editedExercise })
   }
