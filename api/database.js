@@ -8,8 +8,6 @@ class Database {
         let ref = firebase.database().ref().child('exercises');
         let exercises = [];
         ref.on('value', (snap) => {
-            // get children as an array
-            //var exercises = [];
             snap.forEach((child) => {
                 exercises.push({
                 name: child.val().name,
@@ -523,11 +521,32 @@ let uid = firebase.auth().currentUser.uid
         });
     }
 
-    static getUID(callback) {
+    static getUIDasync(callback) {
             firebase.auth().onAuthStateChanged((user) => {
-                callback(user);
+                callback(user.uid);
             })
     }
+
+    static enrollIntoProgram(passedProgram) {
+        let uid = firebase.auth().currentUser.uid;
+        let path = "/user/" + uid + "/ownProgram";
+       
+        firebase.database().ref(path).update({
+            programName: passedProgram._key,
+            programRealName: passedProgram.name,
+            gender: passedProgram.gender,
+            days: passedProgram.days,
+            day1: passedProgram.day1 || '',
+            day2: passedProgram.day2 || '',
+            day3: passedProgram.day3 || '',
+            day4: passedProgram.day4 || '',
+            day5: passedProgram.day5 || '',
+            day6: passedProgram.day6 || '',
+            hasProgram: true,
+
+        })
+    }
+
 
     static addPushToken(uid, token) {
         let path = "/user/" + uid + "/details";

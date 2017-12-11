@@ -145,7 +145,7 @@ export default class SettingsScreen extends React.Component {
       </ScrollView>
       <View style={{paddingBottom: 10, marginTop: -5}}>
         <TouchableOpacity style={Common.centered} onPress={()=>this.props.navigator.push('customProgram')}>
-          <Text style={[Common.centeredText, Common.darkBodyText]}>or create your own</Text>
+          <Text style={[Common.centeredText, {fontSize: 16, color: 'rgba(0,0,0,0.5)', marginBttom: 8}]}>or create your own</Text>
           </TouchableOpacity>
       </View>
      </View>
