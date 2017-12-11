@@ -62,14 +62,47 @@ export default class XDAYExercisesScreen extends Component {
     if (actionType === 'delete') {
       var editedExercise = newLog.filter((exercise) => {
         return (exercise._key !== id)
-      }) } 
+      }) }
+    else if (actionType === 'add') {
+      var isInsideWorkout = newLog.filter((exercise) => {
+        return (exercise._key === id[0]._key)
+      })
+      if(isInsideWorkout.length > 0) {
+        newLog.push(id[0])
+      } else { console.log('Same Exercise Exists')}
+    } 
     this.setState({ newData: editedExercise })
   }
   componentWillMount() {
+    AsyncStorage.getItem("exercises").then((json) => {
+      try {
+        const exercises = JSON.parse(json);
+        this.setState({
+          allExercises: exercises
+        });
+      } catch(e) {
+        console.log(e);
+      }
+  })
+
     this.setState({ data: this.props.route.params.exercises.slice()}) 
     order =  Object.keys(this.props.route.params.exercises.slice());
     editModeOn = false;
     this.setState({loaded: !this.state.loaded})
+  }
+
+  componentWillReceiveProps() {
+    if(this.state.allExercises) {
+    AsyncStorage.getItem('quickAddId').then((id) => {
+      if (typeof(id) === 'string') {
+        var addedExercises = this.state.allExercises.filter((exercise) => {
+          return (exercise._key === id)
+        })
+        console.log()
+        this.sendIndex(addedExercises, 'add')
+      } else { console.log('noAsync')}
+      
+  })} else {console.log('No All Exercises')}
   }
 
   render() {
@@ -97,7 +130,6 @@ export default class XDAYExercisesScreen extends Component {
         }}
         renderRow={(row) => {
           if (typeof row != 'undefined') {
-            console.log(row)
         return(<ExerciseItem
         sendIndex={this.sendIndex}
         item={row}

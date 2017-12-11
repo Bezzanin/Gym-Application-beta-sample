@@ -34,12 +34,12 @@ class ExerciseItem extends Component {
       >
         <Text style={{color: 'white'}}>Delete</Text>
       </TouchableOpacity>,
-      <TouchableOpacity 
-      style={{backgroundColor: 'green',flex: 1, justifyContent: 'center', paddingLeft: 20}}
-      onPress={() => {this.goToRoute()}}
-      >
-        <Text style={{color: 'white'}}>Replace</Text>
-      </TouchableOpacity>
+      // <TouchableOpacity 
+      // style={{backgroundColor: 'green',flex: 1, justifyContent: 'center', paddingLeft: 20}}
+      // onPress={() => {this.goToRoute()}}
+      // >
+      //   <Text style={{color: 'white'}}>Replace</Text>
+      // </TouchableOpacity>
     ]
     this.setState({rightButtons})
   }

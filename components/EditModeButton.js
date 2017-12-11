@@ -30,17 +30,28 @@ class EditModeButton extends Component {
       editModeOn: !this.state.editModeOn
     })
   }
+
+  addNewExercise() {
+    this.props.navigator.push('exercises', {
+      filter: 'ALL',
+      quickWorkout: true
+  })
+  }
+
   render() {
     const {handleToggle} = this.props;
     if (this.state.editModeOn) {
       return (
         <View>
+           {/* <TouchableOpacity
+            style={[Common.container, Common.sectionBorder]}
+            onPress={() => {this.addNewExercise()}}><Text style={[Common.textButton, {fontSize: 18}]}>AddExercise</Text></TouchableOpacity> */}
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {
               this.toggleMode();
               this.props.handleToggle();
-              }}><Text style={[Common.textButton, {fontSize: 18}]}>Done</Text></TouchableOpacity>
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>Save Order</Text></TouchableOpacity>
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => { Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
@@ -53,14 +64,18 @@ class EditModeButton extends Component {
     else {
       return (
         <View>
+          {/* <TouchableOpacity
+            style={[Common.container, Common.sectionBorder]}
+            onPress={() => {
+              this.addNewExercise()
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>Add Exercise</Text></TouchableOpacity> */}
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {
               this.toggleMode();
               this.props.handleToggle();
               }}><Text style={[Common.textButton, {fontSize: 18}]}>Change order</Text></TouchableOpacity>
-
-<TouchableOpacity
+          <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => { Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
               this.props.navigator.pop();
