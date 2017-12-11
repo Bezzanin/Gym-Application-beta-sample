@@ -129,6 +129,7 @@ export default class ExercisesScreen extends Component {
       exercise: item
     })
   }
+    
 
     returnExerciseId = () => {
       AsyncStorage.setItem('quickAddId', item._key);
