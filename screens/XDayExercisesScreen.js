@@ -136,6 +136,7 @@ export default class XDAYExercisesScreen extends Component {
         renderRow={(row) => {
           if (typeof row != 'undefined') {
         return(<ExerciseItem
+        quickWorkout={true}
         sendIndex={this.sendIndex}
         item={row}
         editModeOn={this.state.editModeOn}
