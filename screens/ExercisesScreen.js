@@ -137,7 +137,7 @@ export default class ExercisesScreen extends Component {
     }
   if (this.props.quickWorkout) {
     return (
-      <ExerciseItem item={item} videoLink={item.video} onPress={returnExerciseId}/>
+      <ExerciseItem quickWorkout={true} item={item} videoLink={item.video} onPress={returnExerciseId}/>
     );
   } else {
   return (

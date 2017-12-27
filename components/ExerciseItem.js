@@ -114,7 +114,7 @@ class ExerciseItem extends Component {
         {exerciseItems}
       </View>)
     }
-    else {
+    else if (this.props.quickWorkout) {
       return (
         <Swipeable
         rightButtons={this.state.rightButtons}>
@@ -144,6 +144,37 @@ class ExerciseItem extends Component {
           </View>
         </TouchableOpacity>
         </Swipeable>
+      );
+    } else {
+      return (
+        <View
+        rightButtons={this.state.rightButtons}>
+        <TouchableOpacity
+          {...this.props.sortHandlers}
+          onPress={this.props.onPress}
+          style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
+          <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
+            <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
+              <Image
+                source={{uri: this.state.uriLink}}
+                onLoadEnd={()=> { this.setState({ loading: false }) }}
+                style={Common.imageStyle}>
+                <ActivityIndicator animating={ this.state.loading } style = {Common.activityIndicator}/>
+                </Image>
+            </View>
+            <View style={[Common.inlineContainer]}>
+              <View style={Common.containerText}>
+                <Text style={Common.darkTitleH3}>{I18n.t(this.props.item.name.replace(/[^A-Z0-9]+/ig, '')) || ''}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item.muscles)}</Text>
+                <Text style={Common.darkNameTag}>{I18n.t(this.props.item.type)}</Text>
+              </View>
+              <View style={Common.buttonContainer}>
+                {this.displayAlternativeButton()}
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+        </View>
       );
     }
   }
