@@ -181,10 +181,12 @@ nextWeek = () => {
                               totalWeight.push(parseInt(weight))
                           })} else {totalWeight.push(parseInt(exercise.weight))}
                           })
-                        } else {
+                        } else if (Array.isArray(item.weight)) {
                           item.weight.map((weight) =>{
                             totalWeight.push(parseInt(weight))
-                          })
+                          });
+                        } else {
+                          totalWeight.push(parseInt(item.weight))
                         }
                       return(_.sum(totalWeight))
                     });

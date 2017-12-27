@@ -79,24 +79,34 @@ constructor(props) {
     
     buildSequence(program) {
         let exercisesSequence = {day1: {id: 0}};
-        console.log('Program is program');
-        console.log(program)
-        let newArr = this.state.exercises.sort(this.compare('muscles'));
+        let newArr = this.state.exercises;
+
         for ( i=1; i <=this.state.value; i++ ) {
             let day = 'day' + i;
+            let dayNumber = i;
             let ref = program[day];
-            console.log('REF IS')
-            console.log(ref);
             let filteredByDay = this.state.exercises.filter((item) => {
                 return ref.split(', ').includes(item.muscles);
             })
-    
-            let filteredByNumber = this.filterByNumber(filteredByDay, 4);
-            exercisesSequence[day] = filteredByNumber;
+            let filteredByNumber = this.filterByNumber(filteredByDay, 2);
+            let filteredByMuscles = this.sortByMuscles(filteredByNumber, dayNumber-1);
+            exercisesSequence[day] = filteredByMuscles;
         }
         this.setState({
                 sequence: exercisesSequence
             })
+    }
+
+    sortByMuscles = (a, day) => {
+        let result = []
+        for (var i = 0; i <= this.state.previewText[day].length-1; i++) {
+          a.map((item) => {       
+            if (item.muscles === this.state.previewText[day].split(',')[i]) {
+              result.push(item)
+            }
+          })
+        }
+        return result;
     }
 
     filterByNumber = (arrayToFilter, n) => {
@@ -160,8 +170,11 @@ constructor(props) {
         Database.saveExerciseSequence(this.state.sequence); 
         let timeout1 = setTimeout(() => {   
             Database.saveExerciseSequence(this.state.sequence);
+            
         }, 1000)
         let timeout2 = setTimeout(() => {
+            console.log("-------Built sequence-------")
+                console.log(this.state.sequence)
             this.props.navigator.push('programDashboard', {
                 program,
                 exercises: this.state.sequence
