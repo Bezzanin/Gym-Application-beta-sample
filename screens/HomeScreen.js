@@ -31,6 +31,14 @@ I18n.translations = {fi, en, ru};
 import moment from "moment"
 
 export default class HomeScreen extends Component {
+
+  static route = {
+    navigationBar: {
+      visible: true,
+      title: I18n.t('Home'),
+    },
+  };
+  
   constructor(props) {
     super(props);
     this.loadingOFF = this.loadingOFF.bind(this);
@@ -43,12 +51,6 @@ export default class HomeScreen extends Component {
       weekNumber: moment().format("W")
     }
   }
-  static route = {
-    navigationBar: {
-      visible: true,
-      title: I18n.t('Home'),
-    },
-  };
   loadingOFF(weekNumber) {
       this.setState({
         weekNumber,
@@ -78,6 +80,7 @@ componentDidMount() {
           _key: child.key.slice(2),
         });
       });
+      console.log(exercises);
       AsyncStorage.setItem('exercises', JSON.stringify(exercises));
     });
     

@@ -43,7 +43,12 @@ export default class ExerciseScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params){
-        return `${I18n.t(params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))}`
+        if (typeof params.exercise.name === 'string') {
+          return `${I18n.t(params.exercise.name.replace(/[^A-Z0-9]+/ig, ''))}`
+        }
+        else {
+          return 'Superset'
+        }
       }
     }
   };
