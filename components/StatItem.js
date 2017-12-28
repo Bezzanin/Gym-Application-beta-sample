@@ -40,7 +40,7 @@ class StatItem extends Component {
         </TouchableOpacity>,
         <TouchableOpacity 
         style={{backgroundColor: 'green',flex: 1, justifyContent: 'center', paddingLeft: 20}}
-        onPress={() => {this.goToRoute()}}
+        onPress={() => {this.props.sendIndex(this.props.item.id, 'replace')}}
         >
           <Text style={{color: 'white'}}>Replace</Text>
         </TouchableOpacity>

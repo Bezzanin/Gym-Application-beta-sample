@@ -35,7 +35,6 @@ export default class ReplaceExerciseScreen extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.route.params.item);
     AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
@@ -87,21 +86,34 @@ export default class ReplaceExerciseScreen extends Component {
   
   _renderItem(item) {
     replaceExerciseWithAlternative =  (replaceId, itemToReplaceWith) => {
-        let day = this.props.route.params.day;
-        console.log('THIS IS SEQUENCE');
-        console.log(this.props.route.params.sequence);
-        let replacePosition = this.props.route.params.sequence.map( (e) => { return e._key; }).indexOf(replaceId);
-        this.props.route.params.sequence[replacePosition] = itemToReplaceWith;
-        let uid = firebase.auth().currentUser.uid;
+        // let day = this.props.route.params.day;
+        // console.log('THIS IS SEQUENCE');
+        // console.log(this.props.route.params.sequence);
+        // let replacePosition = this.props.route.params.sequence.map( (e) => { return e._key; }).indexOf(replaceId);
+        // this.props.route.params.sequence[replacePosition] = itemToReplaceWith;
+        // let uid = firebase.auth().currentUser.uid;
         
-        firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence/').child('exercises').update({
-            [day]: this.props.route.params.sequence
-        });
-        
+        // firebase.database().ref('/user/' + uid + '/ownProgram/exerciseSequence/').child('exercises').update({
+        //     [day]: this.props.route.params.sequence
+        // });
+        AsyncStorage.setItem('quickReplaceThis', replaceId);
+        AsyncStorage.setItem('quickReplaceWith', JSON.stringify(itemToReplaceWith));
         this.props.navigator.pop(1);
     }
+
+    replaceExercise = (replaceThis, replaceWith) => {
+      AsyncStorage.setItem('quickReplaceThis', replaceThis);
+      AsyncStorage.setItem('quickReplaceWith', replaceWith._key);
+      this.props.navigator.pop();
+    }
+    if (this.props.route.params.quickWorkout) {
+      return (
+        <ExerciseItem item={item} imageLink={item.photo} videoLink={item.video} onPress={ () => {replaceExercise(this.props.route.params.item._key, item)} }/>
+      );
+    } else {
     return (
       <ExerciseItem item={item} imageLink={item.photo} videoLink={item.video} onPress={ () => {replaceExerciseWithAlternative(this.props.route.params.item._key, item)} }/>
     );
+  }
   }
 }

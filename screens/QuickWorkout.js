@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableOpacity, ScrollView } from "react-native";
 import I18n from 'ex-react-native-i18n';
 import Database from '../api/database';
 import Layout from '../constants/Layout';
@@ -27,7 +27,9 @@ class QuickWorkout extends Component {
       };
 
     componentWillMount() {
-      AsyncStorage.removeItem("quickAddId")
+      AsyncStorage.removeItem("quickAddId");
+      AsyncStorage.removeItem("quickReplaceThis");
+      AsyncStorage.removeItem("quickReplaceWith");
         AsyncStorage.getItem("exercises").then((json) => {
          try {
            const exercises = JSON.parse(json);
@@ -53,17 +55,6 @@ class QuickWorkout extends Component {
     }
 
     quickAddWorkout() {
-        // var myArr = this.state.items
-    // Object.keys(myArr)
-    // .forEach(function eachKey(key) { 
-    //   console.log(key); // alerts key 
-    //   console.log(myArr[key]); // alerts value
-    // });
-    // var arr = _.values(this.state.items);
-    // var lastLog = _.flatten(_.last(arr));
-    // // Database.pushWorkoutLog(_.flatten(lastLog));
-    // this.setState({ lastLog })
-    // console.log(this.state.myItems)
     Database.pushWorkoutLog(this.state.myItems);
     this.props.navigator.popToTop()
 }
@@ -90,7 +81,6 @@ class QuickWorkout extends Component {
     }
 
     sendIndex(id, actionType) {
-      console.log(actionType)
       Database.DiaryStats((log) => {
         var res = log
         var arr = _.values(res);
@@ -101,7 +91,28 @@ class QuickWorkout extends Component {
         if (actionType === 'delete') {
         var editedExercise = newLog.filter((exercise) => {
           return (exercise.id !== id)
-        }) } 
+        }) }
+        // Replace Exercise
+        else if (actionType === 'replace') {
+          var replacableExercise = this.state.exercises.filter((exercise) => {
+            return (exercise._key === id)
+          })
+          this.props.navigator.push('replaceExercise', {
+            item: replacableExercise[0],
+            quickWorkout: true
+        })
+        var editedExercise = newLog;
+        }
+        else if (actionType === 'replaceReturn') {
+          console.log(newLog)
+          var editedExercise = newLog.map((exercise) => {
+            if (exercise.id === id[0]) {
+              exercise['id'] = id[1]
+              return (exercise)
+            } else { console.log('Else'); return(exercise);}
+          })
+          console.log(editedExercise)
+        } 
         //add exercise
         else if (actionType === 'add') {
           var newExerciseLog = {
@@ -144,11 +155,24 @@ class QuickWorkout extends Component {
     AsyncStorage.getItem("quickAddId").then((id) => {
       if (typeof(id) === 'string') {
         this.sendIndex(id, 'add')
-      } else { console.log("Else")}
-      
+      } else { console.log("No Exercise to Add")} 
+    }).then((res) => { AsyncStorage.removeItem("quickAddId") })
+    
+    AsyncStorage.getItem("quickReplaceThis").then((replaceThis) => {
+      return(replaceThis);
+    }).then((replaceThis) => {
+      AsyncStorage.getItem("quickReplaceWith").then((id) => {
+        return ([replaceThis, id]);
+      }).then((res) => {
+        if (typeof(res[0]) === 'string') {
+          this.sendIndex(res, 'replaceReturn')
+        } else { console.log("No Exercise to Replace")} 
+      }).then((res) => { 
+        AsyncStorage.removeItem("quickReplaceThis");
+        AsyncStorage.removeItem("quickReplaceWith");
+      })
   })
-  }
-
+}
   render() {
     if(this.state.lastLog) {
     let log = "";
@@ -174,7 +198,7 @@ class QuickWorkout extends Component {
     
 
     return (
-    <View style={[styles.item, Common.shadowLight]}>
+    <ScrollView style={[styles.item, Common.shadowLight]}>
       
       <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Edit the exercises</Text>
       
@@ -205,16 +229,16 @@ class QuickWorkout extends Component {
               <Text style={Common.lightActionTitle}>Add Workout</Text>
       </TouchableOpacity>
           </View>
-    </View>
+    </ScrollView>
     
   );
 } else {
     let newlog = iterateLog;
     return (
-    <View style={[styles.item, Common.shadowLight]}>
+    <ScrollView style={[styles.item, Common.shadowLight]}>
       <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>{I18n.t('CustomExercises')}</Text>
     <StatItem last={true} own={newlog._key ? false : true} item={newlog} imageLink={newlog.photo} swipable={true}/>
-    </View>
+    </ScrollView>
   );
   }
   

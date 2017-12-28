@@ -75,7 +75,18 @@ export default class XDAYExercisesScreen extends Component {
         newLog.push(id[0]); 
         console.log(isInsideWorkout);
         var editedExercise = newLog}
-    } 
+    }
+    else if (actionType === 'replace') {
+      console.log('New LOGGG', newLog)
+      console.log(id)
+      var editedExercise = newLog.map((exercise) => {
+        if (exercise._key === id[0]) {
+          exercise = JSON.parse(id[1])
+          return (exercise)
+        } else { console.log('Else'); return(exercise);}
+      })
+      console.log(editedExercise)
+    }  
     this.setState({ newData: editedExercise })
   }
   componentWillMount() {
@@ -107,7 +118,24 @@ export default class XDAYExercisesScreen extends Component {
         this.sendIndex(addedExercises, 'add')
       } else { console.log('noAsync')}
       
-  })} else {console.log('No All Exercises')}
+    })
+
+    AsyncStorage.getItem("quickReplaceThis").then((replaceThis) => {
+      return(replaceThis);
+    }).then((replaceThis) => {
+      AsyncStorage.getItem("quickReplaceWith").then((id) => {
+        return ([replaceThis, id]);
+      }).then((res) => {
+        if (typeof(res[0]) === 'string') {
+          this.sendIndex(res, 'replace')
+        } else { console.log("No Exercise to Replace")} 
+      }).then((res) => { 
+        AsyncStorage.removeItem("quickReplaceThis");
+        AsyncStorage.removeItem("quickReplaceWith");
+      })
+  })
+
+    } else {console.log('No All Exercises')}
   }
 
   render() {
@@ -148,10 +176,6 @@ export default class XDAYExercisesScreen extends Component {
         }}
         onReplace={
           () => {
-            // console.log('ITEM IS ITEM IS')
-            // console.log(row);
-            // console.log('XDAYEXERCISES SEQUENCE')
-            // console.log(this.props.route.params.exercises);
             this.props.navigator.push('replaceExercise', {
               item: row,
               sequence: this.props.route.params.exercises,

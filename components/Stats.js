@@ -129,7 +129,7 @@ nextWeek = () => {
               color={'#000'}
               />
               <BigTag
-              title={I18n.t('CustomExercises')+"et"}
+              title={I18n.t('CustomExercises')}
               content={this.state.customExercise}
               color={'#000'}/>
               <BigTag
@@ -174,6 +174,7 @@ nextWeek = () => {
                     y={(d) => {
                       var dailyWeight = _.dropRight(d).map((item) => {
                         let totalWeight = []
+                        
                         if (Array.isArray(item)) {
                           item.map((exercise) =>{
                           if(Array.isArray(exercise.weight)){
@@ -182,9 +183,12 @@ nextWeek = () => {
                           })} else {totalWeight.push(parseInt(exercise.weight))}
                           })
                         } else {
+                          if (Array.isArray(item.weight)) {
                           item.weight.map((weight) =>{
                             totalWeight.push(parseInt(weight))
-                          })
+                          });} else {
+                            console.log('Unknown Stats', item)
+                          }
                         }
                       return(_.sum(totalWeight))
                     });
