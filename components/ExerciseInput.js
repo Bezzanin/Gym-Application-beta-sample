@@ -25,12 +25,12 @@ class ExerciseInput extends Component {
   onClick() {
     let exerciseName = I18n.t(this.props.name)
     Share.share({
-      message: 'Check the '+exerciseName+' in Rational Gym app. Available on iOS and Android',
+      message: 'Check the ' + exerciseName + ' in Rational Gym app. Available on iOS and Android',
       url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
-      title: 'Rational Gym '+exerciseName
+      title: 'Rational Gym ' + exerciseName
     }, {
       // Android only:
-      dialogTitle: 'Rational Gym '+exerciseName,
+      dialogTitle: 'Rational Gym ' + exerciseName,
       // iOS only:
       excludedActivityTypes: [
         'com.apple.UIKit.activity.PostToTwitter'

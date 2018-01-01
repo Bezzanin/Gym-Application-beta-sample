@@ -87,11 +87,11 @@ render() {
     const {dayNumber, exercises, program, numberOfExercises, muscles, onMoveUp} = this.props;
     return (
         <View style={[Common.container, Common.sectionBorder]}>
+            <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
+            <Text style={[Common.darkTitleH2, {marginBottom: 8}]}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
+            <Text style={[Common.darkBodyText, {marginBottom: 8}]}>Manage exercises by changing their order, adding new ones or combining them into exercise sets</Text>
             <TouchableOpacity onPress={() => {this.goToAllExercises()}}>
-                <View>
-                    <Text style={Common.darkBodyText}>{this.getDayOrder()} {I18n.t('Day')}</Text>
-                    <Text style={[Common.darkTitleH2, Common.textButton]}>{this.props.muscles.split(', ').map((word) => {console.log(word);return translate(word)}).join(', ').capitalize()}</Text>
-                </View>
+                <Text style={[Common.textButton, {marginBottom: 4}]}>MANAGE EXERCISES</Text>
             </TouchableOpacity>
 
             <View>
