@@ -35,6 +35,31 @@ LocaleConfig.defaultLocale = 'fi';
 export default class NewDiary extends React.Component {
 
     componentWillMount() {
+
+      Database.getWorkoutDays((days) => {
+        if (days !== null) {
+          console.log('IF', days)
+        this.setState({
+            workoutDays: days
+          }, () => {this.renderWorkoutIcons()}) 
+        } else {
+          AsyncStorage.getItem('workoutDays').then((val) => {
+            var days = JSON.parse(val)
+            console.log('Workout Days', JSON.parse(val));
+            Database.setWorkoutDays(days);
+            this.setState({
+              workoutDays: days
+            }, () => {
+              this.renderWorkoutIcons();
+              AsyncStorage.removeItem("workoutDays");
+            })
+          })
+        }
+      })
+
+      
+
+
      AsyncStorage.getItem("exercises").then((json) => {
       try {
         const exercises = JSON.parse(json);
@@ -48,14 +73,6 @@ export default class NewDiary extends React.Component {
       }
   })
 
-
-    Database.getWorkoutDays((days) => {
-      if (days !== null) {
-      this.setState({
-          workoutDays: days
-        }, () => {this.renderWorkoutIcons()}) 
-      } else { console.log("ELSE")}
-    })
 
     Database.DiaryStats((log) => {
         this.setState({

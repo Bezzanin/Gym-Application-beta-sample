@@ -46,6 +46,8 @@ class Stats extends Component {
           totalExercises: weekTotalExercises,
           loading: false,
           customExercise
+      }, () => {
+        console.log('Week Logs', this.state.weekLogs)
       });
       this.props.loadingOFF(this.state.currWeek);
     });
