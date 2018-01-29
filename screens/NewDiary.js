@@ -44,14 +44,15 @@ export default class NewDiary extends React.Component {
         } else {
           AsyncStorage.getItem('workoutDays').then((val) => {
             var days = JSON.parse(val)
-            console.log('Workout Days', JSON.parse(val));
             Database.setWorkoutDays(days);
+            if (days !== null) {
             this.setState({
               workoutDays: days
             }, () => {
               this.renderWorkoutIcons();
               AsyncStorage.removeItem("workoutDays");
             })
+          } else { console.log('No Workout days')}
           })
         }
       })
