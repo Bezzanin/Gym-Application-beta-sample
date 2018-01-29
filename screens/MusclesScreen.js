@@ -120,7 +120,7 @@ export default class ExercisesScreen extends Component {
                             <View style={{flex: 1, padding: 0}}>
                             <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('shoulders')}}>
                                 <Image
-                                    source={require('../assets/images/muscle_groups/back.png')}
+                                    source={require('../assets/images/muscle_groups/shoulders.png')}
                                     resizeMode={Image.resizeMode.cover}
                                     style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
                                     >                   
@@ -134,7 +134,7 @@ export default class ExercisesScreen extends Component {
                             <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('legs')}}>
                                 
                                 <Image
-                                    source={require('../assets/images/muscle_groups/chest.png')}
+                                    source={require('../assets/images/muscle_groups/legs.png')}
                                     resizeMode={Image.resizeMode.cover}
                                     style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
                                     > 
@@ -197,7 +197,7 @@ export default class ExercisesScreen extends Component {
                             <View style={{flex: 1, padding: 0}}>
                             <TouchableOpacity style={[{flex: 1}]}onPress={() => {this.goToExercises('ALL')}}>
                                 <Image
-                                    source={require('../assets/images/muscles.png')}
+                                    source={require('../assets/images/muscle_groups/all.png')}
                                     resizeMode={Image.resizeMode.cover}
                                     style={[{flex: 1, width: null, height: null}, Common.textPadding, Common.coloredView]}
                                     > 

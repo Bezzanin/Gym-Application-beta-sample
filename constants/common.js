@@ -38,7 +38,7 @@ const Common = {
         marginBottom: Layout.gutter.s,
         fontSize: 20,
         lineHeight: 22,
-        fontWeight: 'bold',
+        fontWeight: '400',
         backgroundColor: 'transparent'
     },
     darkTitleH2lowMargin: {
@@ -498,7 +498,8 @@ const Common = {
     },
     textButton: {
         color: Colors.tintColor,
-        fontWeight: '500',
+        fontSize: 16,
+        fontWeight: '400',
     },
     brightButtonRounded: {
         borderRadius: 100,
