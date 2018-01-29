@@ -38,7 +38,6 @@ export default class NewDiary extends React.Component {
 
       Database.getWorkoutDays((days) => {
         if (days !== null) {
-          console.log('IF', days)
         this.setState({
             workoutDays: days
           }, () => {this.renderWorkoutIcons()}) 

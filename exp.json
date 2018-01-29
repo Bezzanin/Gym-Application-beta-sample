@@ -4,7 +4,7 @@
   "slug": "rational-app",
   "privacy": "public",
   "sdkVersion": "20.0.0",
-  "version": "1.0.19",
+  "version": "2.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app-icon.png",
@@ -24,6 +24,7 @@
     "bundleIdentifier": "com.rationalgym.gymapp"
   },
   "android": {
-    "package": "fi.gymtest.tech"
+    "package": "fi.gymtest.tech",
+    "versionCode": "2"
   }
 }

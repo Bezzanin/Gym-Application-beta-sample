@@ -6,6 +6,7 @@ const ActionButton = require('../components/ActionButton');
 import CommonStyle from "../constants/common";
 import Stats from '../components/Stats';
 import Profile from '../components/Profile';
+import CreditCard from '../components/CreditCard'
 import Expo from 'expo';
 import Common from '../constants/common';
 import I18n from 'ex-react-native-i18n'
@@ -13,7 +14,8 @@ import fi from '../constants/fi';
 import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
-import moment from "moment"
+import moment from "moment";
+
 
 export default class SettingsScreen extends React.Component {
   
@@ -31,7 +33,7 @@ export default class SettingsScreen extends React.Component {
       title: I18n.t('Profile'),
     },
   };
-  
+
   async logout() {
 
         try {
@@ -70,6 +72,7 @@ export default class SettingsScreen extends React.Component {
             />
         </View>}
         <View>
+          <CreditCard />
           <ActionButton onPress={this.logout} title={I18n.t('Logout')} />
         </View>
       </ScrollView>
