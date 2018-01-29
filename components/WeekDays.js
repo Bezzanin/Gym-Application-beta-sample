@@ -39,23 +39,26 @@ export default class WeekDays extends Component {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('showWeekDays').then((val) => {
-      console.log(val);
-      this.setState({
-        shouldRender: val
-      })
+    AsyncStorage.getItem('workoutDays').then((val) => {
+      if (val === null) {
+        this.setState({ shouldRender: 'true'})
+      } else {
+        this.setState({ shouldRender: 'false'})
+      }
     })
+
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.showOrHide) {
+      this.setState({ shouldRender: 'true'})
+    } else {  this.setState({ shouldRender: 'false'}) }
   }
   onSendData(days) {
     this.setState({
       shouldRender: 'maybe'
     })
-    setTimeout(() => {
-      Database.setWorkoutDays(days);
-      AsyncStorage.setItem('showWeekDays', 'false');
-      this.props.navigator.popToTop();
-    }, 2000)
-    
+    AsyncStorage.setItem('workoutDays', JSON.stringify(days))
   }
 
     _renderText(option) {

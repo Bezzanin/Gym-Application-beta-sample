@@ -5,6 +5,7 @@ import Common from '../constants/common';
 import BigTag from '../components/BigTag';
 import Layout from '../constants/Layout';
 import Database from '../api/database';
+import WeekDays from '../components/WeekDays';
 var _ = require('lodash');
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
@@ -22,7 +23,8 @@ class Profile extends Component {
     totalExercises: "",
     programName: "Not enrolled",
     hasProgram: false,
-    totalWeight: 0
+    totalWeight: 0,
+    showOrHide: true
   }
 }
 
@@ -54,6 +56,11 @@ componentDidMount() {
           })
     })
   }
+
+  showWeekDays(condition) {
+    this.setState({ showOrHide: !condition})
+  }
+
 _displayLeaveButton() {
     leaveProgram = () => {
         Alert.alert(
@@ -143,6 +150,16 @@ _displayLeaveButton() {
                 />
                 </Row>
                 <Row>{this._displayLeaveButton()}</Row>
+                <Row>
+                <View style={{marginTop: 8}}>
+                    <TouchableOpacity onPress={() => {this.showWeekDays(this.state.showOrHide)}}><Text style={Common.textButton}>Change Workout Days</Text></TouchableOpacity>
+                </View>
+                </Row>
+                <Row>
+                <View style={{marginTop: 8}}>
+                    <WeekDays amountOfDays={3} showOrHide={this.state.showOrHide}/>
+                </View>
+                </Row>
             </Col>
         </Grid>       
       </View>

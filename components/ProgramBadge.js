@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, AsyncStorage, Alert } from "react-native";
 import { Button } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import { withNavigation } from '@expo/ex-navigation';
 import Layout from '../constants/Layout';
 import ExerciseItem from '../components/ExerciseItem';
@@ -26,6 +27,7 @@ export default class ProgramBadge extends Component {
             lastWorkoutDate: '',
             sequence: []
         }
+        this.shareIt = this.shareIt.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.isLeaving !== nextProps.isLeaving) {
@@ -47,6 +49,9 @@ export default class ProgramBadge extends Component {
                 sequence
             })
         })
+    }
+    shareIt() {
+        console.log('SHARE')
     }
     async loadProps() {
         let sequence = await this.props.sequence;
@@ -76,6 +81,14 @@ export default class ProgramBadge extends Component {
                         <BigTag title={I18n.t('PerWeek')} content={this.props.days}/>
                         <View style={{width: 50}}/>
                         <BigTag title={I18n.t('HowLong')} content={'30'} label={' ' + I18n.t('days')}/>
+                        <TouchableOpacity onPress={this.shareIt} style={{flex: 1, justifyContent: 'center'}}>
+                            <Ionicons
+                                name={'md-share'}
+                                size={30}
+                                color={'#CE0707'}
+                                style={{position: 'absolute', alignSelf: 'center', backgroundColor: 'transparent'}}
+                             />
+                        </TouchableOpacity>
                     </View>
                     
                     {this._displayEnrollButton()}

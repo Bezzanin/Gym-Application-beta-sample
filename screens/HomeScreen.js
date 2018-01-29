@@ -62,7 +62,7 @@ componentDidMount() {
     this.retrieveUserId();
     this.listenForExercises();
 
-    AsyncStorage.setItem('showWeekDays', 'true');
+
 }
 
   listenForExercises() {
