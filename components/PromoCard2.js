@@ -25,7 +25,7 @@ export default class PromoCard2 extends Component {
               
 
               <TouchableOpacity onPress={ () => {
-                this.props.navigator.push('exercises') } }
+                this.props.navigator.push('musclesScreen') } }
                 style={Common.lightButtonRounded}>
                 <Text style={Common.lightActionTitle}>{I18n.t('CheckOut')}</Text>
               </TouchableOpacity>
