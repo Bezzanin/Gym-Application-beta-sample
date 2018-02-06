@@ -18,7 +18,7 @@ import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
-export default class ExercisesScreen extends Component {
+export default class MusclesScreen extends Component {
 
   constructor(props) {
     super(props);
