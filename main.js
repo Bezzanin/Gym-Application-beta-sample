@@ -70,7 +70,19 @@ class AppContainer extends React.Component {
       await cacheAssetsAsync({
         images: [require('./assets/images/expo-wordmark.png'),
                  require('./assets/images/login_background.png'),
-                 require('./assets/images/CTA.png')],
+                 require('./assets/images/CTA.png'),
+                 require('./assets/images/CTA2.png'),
+                 require('./assets/images/muscle_groups/abs.png'),
+                 require('./assets/images/muscle_groups/all.png'),
+                 require('./assets/images/muscle_groups/back.png'),
+                 require('./assets/images/muscle_groups/biceps.png'),
+                 require('./assets/images/muscle_groups/calves.png'),
+                 require('./assets/images/muscle_groups/chest.png'),
+                 require('./assets/images/muscle_groups/glutes.png'),
+                 require('./assets/images/muscle_groups/legs.png'),
+                 require('./assets/images/muscle_groups/shoulders.png'),
+                 require('./assets/images/muscle_groups/triceps.png')
+                ],
         fonts: [
           FontAwesome.font,
           { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
