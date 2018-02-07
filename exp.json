@@ -24,7 +24,6 @@
     "bundleIdentifier": "com.rationalgym.gymapp"
   },
   "android": {
-    "package": "fi.gymtest.tech",
-    "versionCode": "2"
+    "package": "fi.gymtest.tech"
   }
 }

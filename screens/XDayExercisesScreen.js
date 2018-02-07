@@ -33,13 +33,12 @@ export default class XDAYExercisesScreen extends Component {
       exercises: [],
       ownProgram: '',
       loaded: false,
-      editModeOn: false,
+      editModeOn: true,
       data: this.props.route.params.exercises.slice(),
       dataSource: new ListView.DataSource({
               rowHasChanged: (r1, r2) => r1 !== r2
           }),
     }
-    this.handleToggle = this.handleToggle.bind(this);
     this.sendIndex = this.sendIndex.bind(this)
   }
   static route = {
@@ -48,13 +47,9 @@ export default class XDAYExercisesScreen extends Component {
       title(params){ 
         return ` ${params.dayNumber} ${I18n.t('Day')}`
       },
+      renderRight: ({params}, props) => <Text>{params.day}</Text>
     }
   };
-  handleToggle = () => {
-    this.setState({
-      editModeOn: !this.state.editModeOn
-    })
-  }
 
   sendIndex(id, actionType) {
     if (this.state.newData) { var newLog = this.state.newData} 
@@ -148,13 +143,12 @@ export default class XDAYExercisesScreen extends Component {
         <SortableListView
         style={{ flex: 1 }}
         disableSorting={!this.state.editModeOn}
-        renderHeader={() => <View>
+        renderFooter={() => 
                               <EditModeButton
-                                handleToggle={this.handleToggle}
                                 exercises ={data}
                                 order={order}
                                 editModeOn={false}/>
-                            </View>}
+                            }
         data={data}
         order={order}
         onRowMoved={e => {
