@@ -3,6 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import {Slider, CheckBox, Grid, Col} from 'react-native-elements';
 import Database from '../api/database';
 import Common from '../constants/common';
+import I18n from 'ex-react-native-i18n'
+import fi from '../constants/fi';
+import en from '../constants/en'; import ru from '../constants/ru';
+I18n.fallbacks = true;
+I18n.translations = {fi, en, ru};
 
 class MusclesForDay extends Component {
     constructor(props) {
@@ -48,7 +53,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Chest'
+        title={I18n.t('chest')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -63,7 +68,7 @@ class MusclesForDay extends Component {
         <CheckBox
         left
         containerStyle={[!this.state.checked ? {marginRight: -2} : {marginRight: 0}, {width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}]}
-        title='Shoulders'
+        title={I18n.t('shoulders')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -78,7 +83,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Back '
+        title={I18n.t('back')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -93,7 +98,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Biceps'
+        title={I18n.t('biceps')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -105,10 +110,10 @@ class MusclesForDay extends Component {
           });
         }}
       />
-            <CheckBox
+      <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Calves'
+        title={I18n.t('calves')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -125,7 +130,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Legs '
+        title={I18n.t('legs')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -140,7 +145,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Triceps'
+        title={I18n.t('triceps')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -155,7 +160,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Abs'
+        title={I18n.t('abs')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'
@@ -170,7 +175,7 @@ class MusclesForDay extends Component {
       <CheckBox
         left
         containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Glutes'
+        title={I18n.t('glutes')}
         iconLeft
         checkedIcon='check-square-o'
         uncheckedIcon='square-o'

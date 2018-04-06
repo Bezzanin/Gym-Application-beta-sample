@@ -4,7 +4,7 @@
   "slug": "rational-app",
   "privacy": "public",
   "sdkVersion": "20.0.0",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app-icon.png",

@@ -214,22 +214,22 @@ export default class ExerciseScreen extends React.Component {
         return(
         <View style={[Common.container, Common.sectionBorder, {backgroundColor: 'white', zIndex: 5, marginBottom: 15}]}>
           <Tag
-              content={'Instructions'}
+              content={I18n.t('Instructions')}
               color={'#000'}/>
           <Text style={Common.darkBodyTextRead}>
-          Lay down on the bench. Then, using your thighs to help raise the dumbbells up.
+          {I18n.t('Instruction'+this.props.route.params.exercise.photo)}
           </Text>
           <Tag
-              content={'Caution'}
+              content={I18n.t('Cautions')}
               color={'#000'}/>
           <Text style={Common.darkBodyTextRead}>
-          When you are done, do not drop the dumbbells next to you as this is dangerous to your rotator cuff in your shoulders and others working out around you.
+          {I18n.t('Caution'+this.props.route.params.exercise.photo)}
           </Text>
           <Tag
-              content={'Variations'}
+              content={I18n.t('Variations')}
               color={'#000'}/>
           <Text style={Common.darkBodyTextRead}>
-          Another variation of this exercise is to perform it with the palms of the hands facing each other.
+          {I18n.t('Variation'+this.props.route.params.exercise.photo)}
           </Text>
         </View>
         )
