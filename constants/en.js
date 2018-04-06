@@ -184,5 +184,9 @@ export default {
     others: 'others',
     all: 'all',
     ShowMore: "Show more",
-    Hide: "Hide"
+    Hide: "Hide",
+    CreateYourOwn: 'Create your own',
+
+    ManageExercises: 'MANAGE EXERCISES',
+    ManageExercisesPromo: 'Manage exercises by changing their order, adding new ones or combining them into exercise sets',
   };

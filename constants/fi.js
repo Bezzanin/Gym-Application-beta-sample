@@ -213,5 +213,9 @@ export default {
   others: 'muuta',
   all: 'Kaikki',
   ShowMore: "näytä lisää",
-  Hide: "piilottaa"
+  Hide: "piilottaa",
+  CreateYourOwn: 'Luo oma ohjelma',
+
+  ManageExercises: 'MANAGE EXERCISES',
+  ManageExercisesPromo: 'Manage exercises promo',
 };

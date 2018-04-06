@@ -115,7 +115,7 @@ constructor(props) {
         let filtered = [];
         arrayToFilter.forEach((item) => {
           if ((item.muscles !== muscleToCompareWith)) {
-            counter = 1;
+            item.muscles === 'legs' ? counter = -1 : counter = 1;
             muscleToCompareWith = item.muscles;
             filtered.push(item);
           }

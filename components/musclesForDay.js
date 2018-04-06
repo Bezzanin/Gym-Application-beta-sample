@@ -16,6 +16,7 @@ class MusclesForDay extends Component {
             legs: false,
             abs: false,
             glutes: false,
+            calves: false,
             allMuscles: []
         };
   }
@@ -46,7 +47,7 @@ class MusclesForDay extends Component {
     <Col>
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Chest'
         iconLeft
         checkedIcon='check-square-o'
@@ -61,7 +62,7 @@ class MusclesForDay extends Component {
       />
         <CheckBox
         left
-        containerStyle={[!this.state.checked ? {marginRight: -2} : {marginRight: 0}, {width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}]}
+        containerStyle={[!this.state.checked ? {marginRight: -2} : {marginRight: 0}, {width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}]}
         title='Shoulders'
         iconLeft
         checkedIcon='check-square-o'
@@ -76,7 +77,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Back '
         iconLeft
         checkedIcon='check-square-o'
@@ -91,7 +92,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Biceps'
         iconLeft
         checkedIcon='check-square-o'
@@ -104,11 +105,26 @@ class MusclesForDay extends Component {
           });
         }}
       />
+            <CheckBox
+        left
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        title='Calves'
+        iconLeft
+        checkedIcon='check-square-o'
+        uncheckedIcon='square-o'
+        checkedColor='#B2B2B2'
+        checked={this.state.calves}
+        onPress={() => {
+          this.setState({calves: !this.state.calves}, ()=>{
+            this.allMusclesForDay("calves", this.state.calves)
+          });
+        }}
+      />
     </Col>
     <Col>
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Legs '
         iconLeft
         checkedIcon='check-square-o'
@@ -123,7 +139,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Triceps'
         iconLeft
         checkedIcon='check-square-o'
@@ -138,7 +154,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Abs'
         iconLeft
         checkedIcon='check-square-o'
@@ -153,7 +169,7 @@ class MusclesForDay extends Component {
       />
       <CheckBox
         left
-        containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
+        containerStyle={{width: 135, paddingVertical: 5, margin: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
         title='Glutes'
         iconLeft
         checkedIcon='check-square-o'
@@ -166,6 +182,7 @@ class MusclesForDay extends Component {
           });
         }}
       />
+
     </Col>
     </Grid>
         
