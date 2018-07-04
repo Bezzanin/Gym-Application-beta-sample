@@ -2,7 +2,7 @@
   "name": "rational-app",
   "version": "0.0.0",
   "description": "Hello Expo!",
-  "author": null,
+  "author": "Fit Technology Oy",
   "main": "main.js",
   "scripts": {
     "test": "node node_modules/jest/bin/jest.js"
@@ -15,20 +15,20 @@
     "@expo/samples": "~1.0.3",
     "@expo/vector-icons": "^5.0.0",
     "ex-react-native-i18n": "0.0.3",
-    "expo": "^20.0.0",
+    "expo": "^21.0.0",
     "firebase": "^3.7.1",
+    "ft-react-native-multiple-choice": "git+https://github.com/Bezzanin/react-native-multiple-choice.git",
     "react": "16.0.0-alpha.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-20.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",
     "react-native-calendar-strip": "^0.1.4",
     "react-native-calendars": "^1.4.0",
-    "react-native-credit-card-input": "^0.4.1",
+    "react-native-credit-card-input": "^0.3.3",
     "react-native-elements": "^0.17.0",
     "react-native-extended-stylesheet": "^0.4.0",
     "react-native-fbsdk": "^0.5.0",
     "react-native-flexi-radio-button": "^0.1.10",
     "react-native-i18n": "^1.0.0",
     "react-native-modal-dropdown": "^0.4.4",
-    "react-native-multiple-choice": "0.0.8",
     "react-native-sortable-listview": "^0.2.5",
     "react-native-swipeable": "^0.6.0",
     "react-native-swipeable-flat-list": "0.0.5",
@@ -41,6 +41,6 @@
     "victory-native": "^0.9.0"
   },
   "devDependencies": {
-    "jest-expo": "~20.0.0"
+    "jest-expo": "^21.0.0"
   }
 }

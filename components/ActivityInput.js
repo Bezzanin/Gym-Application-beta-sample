@@ -60,7 +60,7 @@ export default class ActivityInput extends Component {
             return (
             <View>
                 <View style={{flex: 1, minHeight: 100}}></View>
-                <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>Save sets</Text></TouchableOpacity>
+                <TouchableOpacity style={[Common.brightButtonRounded, {position: 'absolute', bottom: 0}]} onPress={() => {this.onSendData()}}><Text style={Common.lightActionTitle}>{I18n.t('Save')} {I18n.t('Sets')}</Text></TouchableOpacity>
             </View>
             ) 
         }
@@ -88,7 +88,7 @@ export default class ActivityInput extends Component {
         <View style={[Common.sectionBorder, Common.inputBar]}>
             <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between'}}>
                 <View>
-                    <Text style={Common.darkTagTitle}>Reps used</Text>
+                    <Text style={Common.darkTagTitle}>{I18n.t('Reps')}</Text>
                     <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
 
                         <View style={Common.input}>
@@ -125,7 +125,7 @@ export default class ActivityInput extends Component {
                 </View>
                   
                 <View>
-                <Text style={Common.darkTagTitle}>Weight used</Text>
+                <Text style={Common.darkTagTitle}>{I18n.t('Weight')}</Text>
                 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                      <View style={Common.input}>
@@ -161,7 +161,7 @@ export default class ActivityInput extends Component {
                 </View>
                 </View>
                 <TouchableOpacity onPress={() => {this.onAddSet()}}>
-                    <Text style={Common.inputSubmit}>ADD</Text>
+                    <Text style={Common.inputSubmit}>{I18n.t('Add')}</Text>
                 </TouchableOpacity>
             </View>
         </View>

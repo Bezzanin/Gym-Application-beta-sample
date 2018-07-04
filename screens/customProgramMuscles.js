@@ -186,21 +186,21 @@ constructor(props) {
         if (this.state.previewText.length === 0) {
            return (
                <View style={{height: 140, justifyContent: 'center', alignItems: 'center'}}>
-                   <Text style={[Common.darkTitleH1, Common.centeredText]}>What do you want to train?</Text>
-                <Text style={[Common.darkBodyText, Common.centeredText]}>Use the slider below to check muscles you would like to focus on each day. The order is important</Text>
+                   <Text style={[Common.darkTitleH1, Common.centeredText]}>{I18n.t('WhatDoYouWantToTrain')}</Text>
+                <Text style={[Common.darkBodyText, Common.centeredText]}>{I18n.t('UseTheSlider')}</Text>
                </View>
            )
         }
         else {
             return (
                 <View>
-                    <Text style={[Common.darkTitleH1, Common.centeredText, styles.title]}>What do you want to train?</Text>
+                    <Text style={[Common.darkTitleH1, Common.centeredText, styles.title]}>{I18n.t('WhatDoYouWantToTrain')}</Text>
                     <ListView
                         
                         style={[Common.paddingLeft, Common.sectionBorder, {minHeight: 100}]}
                         dataSource={this.state.musclesSource}
                         enableEmptySections
-                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>Day {parseInt(rowID) + 1} – <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
+                        renderRow={(rowData, sectionID, rowID) => <View><Text style={Common.darkBodyText2}>{I18n.t('Day')} {parseInt(rowID) + 1} – <Text style={Common.darkBodyText}>{rowData.split(',').join(', ')}</Text></Text></View>}
                     />
                 </View>
             )
@@ -249,7 +249,7 @@ constructor(props) {
                 Common.shadowBright,
                 Common.marginVerticalSmall
         ]}>
-            <Text style={Common.lightActionTitle} >Done</Text>
+            <Text style={Common.lightActionTitle} >{I18n.t('Done')}</Text>
         </TouchableOpacity>
       </ScrollView>
     );

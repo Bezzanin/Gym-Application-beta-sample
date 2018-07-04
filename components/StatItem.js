@@ -36,13 +36,13 @@ class StatItem extends Component {
         style={{backgroundColor: '#CE0707',flex: 1,justifyContent: 'center', paddingLeft: 20}}
         onPress={() => {this.props.sendIndex(this.props.item.id, 'delete')}}
         >
-          <Text style={{color: 'white'}}>Delete</Text>
+          <Text style={{color: 'white'}}>{I18n.t('Delete')}</Text>
         </TouchableOpacity>,
         <TouchableOpacity 
         style={{backgroundColor: 'green',flex: 1, justifyContent: 'center', paddingLeft: 20}}
         onPress={() => {this.props.sendIndex(this.props.item.id, 'replace')}}
         >
-          <Text style={{color: 'white'}}>Replace</Text>
+          <Text style={{color: 'white'}}>{I18n.t('Replace')}</Text>
         </TouchableOpacity>
       ]
       this.setState({rightButtons})
@@ -95,7 +95,7 @@ class StatItem extends Component {
               onChangeText={(text) => this.props.changeText(counter, text, this.props.item.id, 'reps')}
               value={this.state.text}
               placeholder={this.props.item.reps[counter]}
-            /><Text style={Common.darkTitleH4Light}> reps</Text>
+            /><Text style={Common.darkTitleH4Light}>{I18n.t('Reps')}</Text>
           </View>
           <View style={{flex: 1,  paddingRight: Layout.gutter.l,  flexDirection: 'row'}}>
           <TextInput

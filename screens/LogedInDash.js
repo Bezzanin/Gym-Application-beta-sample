@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
      <ScrollView style={styles.container}>
        <HeroCard />
        <ExThumbnail />
-       <Text style={styles.title}>Your Progress</Text>
+       <Text style={styles.title}>{I18n.t('YourProgress')}</Text>
        <Stats />
        <PromoCard style={styles.PromoCard} onPress={this.goToSomewhere}/>
       </ScrollView>

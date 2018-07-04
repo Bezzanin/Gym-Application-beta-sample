@@ -60,7 +60,7 @@ export default class ProgramBadge extends Component {
   render() {
       if (this.state.isLoading) {
           return (
-              <View><Text>Is loading...</Text>
+              <View><Text>{I18n.t('Loading')}</Text>
               </View>
           )
       }
@@ -132,7 +132,7 @@ export default class ProgramBadge extends Component {
                 <View>
                     <TouchableOpacity 
                     onPress={() => {this.goToAllPrograms()}}>
-                        <Text style={Common.lightActionTitle}>ALL PROGRAMS</Text>
+                        <Text style={Common.lightActionTitle}>{I18n.t('AllPrograms')}</Text>
                     </TouchableOpacity>
             </View>
             )
@@ -143,7 +143,7 @@ export default class ProgramBadge extends Component {
     let today = moment().format('MM-DD-YY');
     if (this.state.isLoading) {
           return (
-              <View><Text>Is loading...</Text>
+              <View><Text>{I18n.t('Loading')}</Text>
               </View>
           )
       }
@@ -233,7 +233,7 @@ _displayEnrollButton() {
     enrollProgram = () => {
         let emptyArr = [];
         Database.enrollIntoProgram(this.props.program);
-        console.log(this.props.sequence);
+        // console.log(this.props.sequence);
         Database.saveExerciseSequence(this.props.sequence);
         AsyncStorage.setItem('ownProgramKey', JSON.stringify(this.props.program._key));
         AsyncStorage.setItem('logs', JSON.stringify(emptyArr));

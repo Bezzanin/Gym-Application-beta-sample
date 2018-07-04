@@ -44,8 +44,8 @@ static route = {
     return (
       <View style={Common.containerBasic}>
         <View style={[Common.centered, Common.paddingVertical, {paddingTop: 16}]}>
-          <Text style={[Common.darkTitleH1, Common.centeredText]}>Make your own program</Text>
-          <Text style={[Common.centeredText, Common.darkBodyText]}>Fill in basic information about your program. Later on you can arrange muscles in correct order of days </Text>
+          <Text style={[Common.darkTitleH1, Common.centeredText]}>{I18n.t('MakeOwnProgram')}</Text>
+          <Text style={[Common.centeredText, Common.darkBodyText]}>{I18n.t('OwnProgramInstruction')}</Text>
         </View>
         <View style={[Common.container, {backgroundColor: 'white'}]}>
       
@@ -61,7 +61,7 @@ static route = {
                 </View>
             </View>
             
-            <Text style={Common.darkTitleH3}>Days per Week {this.state.value}</Text>
+            <Text style={Common.darkTitleH3}>{I18n.t('days')} {I18n.t('PerWeek')} {this.state.value}</Text>
             
             <Slider
                 
@@ -84,7 +84,7 @@ static route = {
                     Common.shadowBright,
                     Common.marginVerticalSmall
                 ]}>
-                <Text style={Common.lightActionTitle}>Next</Text></TouchableOpacity>
+                <Text style={Common.lightActionTitle}>{I18n.t('Next')}</Text></TouchableOpacity>
             </View>
       </View>
     );

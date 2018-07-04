@@ -80,7 +80,6 @@ componentDidMount() {
           _key: child.key.slice(2),
         });
       });
-      console.log(exercises);
       AsyncStorage.setItem('exercises', JSON.stringify(exercises));
     });
     

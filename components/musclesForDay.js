@@ -46,7 +46,7 @@ class MusclesForDay extends Component {
   render() {
     return (
     <View style={Common.container}>
-    <Text style={Common.darkTitleH3}>Day {this.props.dayNumber} muscles</Text>
+    <Text style={Common.darkTitleH3}>{I18n.t('Day')} {this.props.dayNumber} {I18n.t('muscles')}</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
     <Grid>
     <Col>

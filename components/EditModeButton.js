@@ -39,12 +39,12 @@ class EditModeButton extends Component {
         <View>
            <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
-            onPress={() => {this.addNewExercise()}}><Text style={[Common.textButton, {fontSize: 18}]}>AddExercise</Text></TouchableOpacity>
+            onPress={() => {this.addNewExercise()}}><Text style={[Common.textButton, {fontSize: 18}]}>{I18n.t('Add')} {I18n.t('Exercise')}</Text></TouchableOpacity>
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => { Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
               this.props.navigator.pop();
-              }}><Text style={[Common.textButton, {fontSize: 18}]}>Save and return</Text></TouchableOpacity>
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>{I18n.t('SaveAndReturn')}</Text></TouchableOpacity>
           
         </View>
       )
@@ -56,12 +56,12 @@ class EditModeButton extends Component {
             style={[Common.container, Common.sectionBorder]}
             onPress={() => {
               this.addNewExercise()
-              }}><Text style={[Common.textButton, {fontSize: 18}]}>Add Exercise</Text></TouchableOpacity>
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>{I18n.t('Add')} {I18n.t('Exercise')}</Text></TouchableOpacity>
           <TouchableOpacity
             style={[Common.container, Common.sectionBorder]}
             onPress={() => { Database.saveDaySequence(this.sortExercises(this.props.exercises, this.props.order), 'day1');
               this.props.navigator.pop();
-              }}><Text style={[Common.textButton, {fontSize: 18}]}>Save and return</Text></TouchableOpacity>
+              }}><Text style={[Common.textButton, {fontSize: 18}]}>{I18n.t('SaveAndReturn')}</Text></TouchableOpacity>
         </View>
       )
     }

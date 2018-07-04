@@ -30,6 +30,7 @@ import LogInForm from '../components/LogInForm';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
 import en from '../constants/en'; import ru from '../constants/ru';
+import { ACTION_TETHER_PROVISIONING_UI } from "expo/src/IntentLauncherAndroid";
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
@@ -48,23 +49,34 @@ export default class LoginScreen extends Component {
     }
 
     async loginWithFacebook() {
-        const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-            '1767868336864920',
-            { permissions: ['public_profile', 'email'] }
-        );
-    if (type === 'success') {
-        // Build Firebase credential with the Facebook access token.
-        const credential = firebase.auth.FacebookAuthProvider.credential(token);
-        // Sign in with credential from the Facebook user.
-        firebase.auth().signInWithCredential(credential).then(() => {
-            setTimeout(() => {
-                    this.props.navigator.push('home');
-                }, 1000);
-        }).catch((error) => {
-        // Handle Errors here.
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1872123986166631', {
+            permissions: ['email', 'user_gender'],
         });
+        if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+            `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,gender`)
+            .then((response) => response.json())
+			.then((responseJson) =>{
+                console.log(responseJson)
+                firebase.auth().signInWithEmailAndPassword(responseJson.email, 'random')
+                .catch(error => {
+                  console.log(error.code)
+                  if(error.code === 'auth/wrong-password') {
+                    this.refs.login.facebookReg(responseJson);
+                  } else {
+                    this.refs.registration.facebookReg(responseJson);
+                  }
+                })
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+        
         }
+    // 
     }
+
     
     changeLanguage(lang) {
         I18n.locale = lang;
@@ -94,8 +106,8 @@ export default class LoginScreen extends Component {
                     </View>
                     
                     <View style={styles.form}>
-                        <QuestionsScreen/>
-                        <LogInForm/>
+                        <QuestionsScreen ref="registration"/>
+                        <LogInForm ref="login" />
                     </View>
                     <SocialIcon
                         title={I18n.t('LogInWithFacebook')}
@@ -117,8 +129,15 @@ export default class LoginScreen extends Component {
                         <Text style={[Common.lightBodyText]}>RU</Text>
                     </TouchableOpacity>
                     </View>
+                    
                 </View>
+                    <View style={styles.sponsorContainer}>
+                        <Image style={{flex: 1, marginHorizontal: 16}} resizeMode='contain' source={require('../assets/images/flag_yellow_low.jpg')}/>
+                        <Image style={{flex: 2, marginRight: 16}} resizeMode='contain' source={require('../assets/images/LogoEly.png')}/>
+                        <Image style={{flex: 1, marginRight: 16}} resizeMode='contain' source={require('../assets/images/VipuvoimaaEU.png')}/>
+                    </View>
             </Image>
+            
         </View>
         );
     }
@@ -174,5 +193,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#fff',
         color: '#fff'
-    }
+    },
+    sponsorContainer: {
+        flex: 1,
+        flexDirection: 'row',  
+        marginHorizontal: 8, 
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 56,
+        maxHeight: 100,
+    },
 });

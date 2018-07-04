@@ -41,7 +41,7 @@ export default class ExerciseScreen extends React.Component {
 let rows=[];
     for (i=1; i<= this.props.route.params.program.days; i++) {
         let day = 'day' + i;
-        rows.push(<TouchableOpacity onPress={this.goToRoute.bind(day)}><Text>Edit {i} day exercises</Text></TouchableOpacity>)
+        rows.push(<TouchableOpacity onPress={this.goToRoute.bind(day)}><Text>{I18n.t('Edit')} {i} {I18n.t('Day')} {I18n.t('Exercises')}</Text></TouchableOpacity>)
     }
     return(
             <View>

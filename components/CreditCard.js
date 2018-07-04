@@ -1,23 +1,26 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, Modal, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Modal, TouchableOpacity, ActivityIndicator, Image, Alert } from "react-native";
 import ActionButton from '../components/ActionButton';
 import Common from '../constants/common';
 import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 import I18n from 'ex-react-native-i18n';
 import fi from '../constants/fi';
 import en from '../constants/en'; import ru from '../constants/ru';
+
 import { Button } from "react-native-elements";
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 var stripe = require('stripe-client')('pk_test_MTvVsXpCuzLp1wXhkQckVI6G');
 
-class componentName extends Component {
+class CreditCard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
         modalVisible: false,
-        card: null
+        card: null,
+        loading: false,
+        contactInfo: false,
         };
         this.setModalVisible = this.setModalVisible.bind(this);
         this.getToken = this.getToken.bind(this);
@@ -25,7 +28,7 @@ class componentName extends Component {
         this.showCorrectButton = this.showCorrectButton.bind(this);
         this.buyPremium = this.buyPremium.bind(this)
         this.onPayment = this.onPayment.bind(this)
-  }
+    }
 
     setModalVisible(visible) {
         this.setState({ modalVisible: visible });
@@ -37,7 +40,22 @@ class componentName extends Component {
         console.log(this.state.card)
     }
 
+    displayLeaveButton() {
+      leaveProgram = () => {
+          Alert.alert(
+              I18n.t('LeaveProgram'),
+              I18n.t('LeaveProgramAlert'),
+              [   { text: 'Cancel', onPress: () => {console.log('Cancelled')}, style: 'cancel' },
+                  { text: I18n.t('LeaveProgram'), onPress: () => {
+                      console.log('Left')
+                  } }
+              ]
+          );
+      }
+    }
+
     async onPayment() {
+      this.setState({ loading: true})
         var values = this.state.card.values
         var information = {
           card: {
@@ -48,7 +66,6 @@ class componentName extends Component {
             name: values.name
           }
         }
-        console.log(information);
         var card = await stripe.createToken(information);
         var token = card.id;
         
@@ -58,10 +75,10 @@ class componentName extends Component {
 
       buyPremium() {
        var paymentDetails = {
-         "amount": '2000',
+         "amount": '500',
          "currency": 'eur',
          "source": this.state.token,
-         "description": 'Charge for zoey.smith@example.com'
+         "description": I18n.t('ChargeSubscription')
        };
        var formBody = [];
        for (var property in paymentDetails) {
@@ -81,7 +98,18 @@ class componentName extends Component {
          }
        })
        .then((response) => response.json())
-       .then((res) => console.log(res))
+       .then((res) => {
+         console.log(res)
+          if(res.error) {
+            this.setState({ paymentResponse: res.error.message }, () => {
+              this.setState({loading: false, contactInfo: I18n.t('ContactInfo')})
+            })
+          } else {
+          this.setState({ paymentResponse: res.outcome.seller_message }, () => {
+            this.setState({loading: false}); this.displayLeaveButton()
+          })
+        }
+        })
      }
       
     showCorrectButton() {
@@ -90,61 +118,69 @@ class componentName extends Component {
             if (card.cvc == "valid" && card.expiry == "valid" && card.number == "valid") {
                 return (
                 <View style={{marginTop: 32}}>
-                <ActionButton 
-                onPress={this.onPayment} 
-                title={'Pay'} />
+                <TouchableOpacity
+                  disabled={this.state.loading}
+                  onPress={this.onPayment} 
+                  style={[Common.brightButtonRounded,Common.shadowBright,Common.marginVerticalSmall]}>
+                    {this.state.loading ? <ActivityIndicator size="small" color="#fff" /> :
+                    <Text style={Common.lightActionTitle} >{I18n.t('Pay')}</Text>}
+                </TouchableOpacity>
                 </View>
+                
                 )
             } else {
                 return (
-                    <Button
-                    style={{marginTop: 32}}
-                    onPress={this.getToken}
-                    title="Pay"
-                />
+                <TouchableOpacity style={[Common.greyButtonRounded, {marginTop: 32}]} onPress={this.getToken}>
+                  <Text style={Common.darkActionTitle}>{I18n.t('Pay')}</Text>
+                </TouchableOpacity>
                 )
             }
         } else { 
             return (
-                <Button
-                style={{marginTop: 32}}
-                onPress={this.getToken}
-                title="Pay"
-            />
+              <TouchableOpacity style={[Common.greyButtonRounded, {marginTop: 32}]} onPress={this.getToken}>
+                <Text style={Common.darkActionTitle}>{I18n.t('Pay')}</Text>
+              </TouchableOpacity>
             )
         }
-        
-        
     }
+
       // will print
 
     render() {
+      var customPlaceholders = {
+        name: "Full Name",
+        number: "1234 5678 1234 5678",
+        expiry: "MM/YY",
+        cvc: "CVC",
+        postalCode: "34567",
+      };
+      var customLabels = {
+        name: "CARDHOLDER'S NAME",
+        number: "CARD NUMBER",
+        expiry: "EXPIRY",
+        cvc: "CVC/CCV",
+        postalCode: "POSTAL CODE",
+      };
         return (
             <View>
-              <StatusBar
-              barStyle={ this.state.modalVisible ? 'dark-content' : 'dark-content'}
-              />
-              <ActionButton onPress={() => {this.setModalVisible(true)}} title={'Pay With Card'} />
-              <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.state.modalVisible}
-              >
-              <View style={Common.pseudoNavigation}>
-              <TouchableOpacity
-                onPress={() => {this.setModalVisible(!this.state.modalVisible)}}
-              >
-                <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
-              </TouchableOpacity>
-              </View>
                 <View>
-                <CreditCardInput onChange={this._onChange} requiresName={true}/>
-                {this.showCorrectButton()}
+                <View style={[Common.centered, {paddingTop:16}]}>
+                <Text style={Common.darkTitleH1}>{I18n.t('PayWithCard')}</Text>
                 </View>
-              </Modal>
+                <LiteCreditCardInput 
+                onChange={this._onChange} 
+                labels={customLabels}
+                placeholders={customPlaceholders}
+                />
+                {this.showCorrectButton()}
+                <View style={[Common.centered, {paddingVertical:16}]}>
+                  <Text style={[Common.darkBodyText, Common.centeredText]}>{this.state.paymentResponse}</Text>
+                  <Text style={[Common.darkBodyText, Common.centeredText]}>{this.state.contactInfo}</Text>
+                </View>
+                </View>
             </View>
         );
       }
     }
 
-export default componentName;
+export default CreditCard;

@@ -15,6 +15,7 @@ import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 import moment from "moment";
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 
 export default class SettingsScreen extends React.Component {
@@ -72,8 +73,18 @@ export default class SettingsScreen extends React.Component {
             />
         </View>}
         <View>
-          <CreditCard />
-          <ActionButton onPress={this.logout} title={I18n.t('Logout')} />
+        <TouchableOpacity
+                onPress={() => {this.props.navigator.push('GetPremiumScreen')}} 
+                style={[
+                        Common.brightButtonRounded,
+                        Common.shadowBright,
+                        Common.marginVerticalSmall
+                        ]}>
+                <Text style={Common.lightActionTitle} >{I18n.t('GoPremium')}</Text>
+              </TouchableOpacity>
+          <TouchableOpacity style={Common.greyButtonRounded} onPress={this.logout}>
+            <Text style={Common.darkActionTitle}>{I18n.t('Logout')}</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
