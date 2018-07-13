@@ -29,6 +29,7 @@ import Common from '../constants/common';
 import LogInForm from '../components/LogInForm';
 import I18n from 'ex-react-native-i18n'
 import fi from '../constants/fi';
+import Layout from '../constants/Layout'
 import en from '../constants/en'; import ru from '../constants/ru';
 import { ACTION_TETHER_PROVISIONING_UI } from "expo/src/IntentLauncherAndroid";
 I18n.fallbacks = true;
@@ -124,10 +125,10 @@ export default class LoginScreen extends Component {
                     <TouchableOpacity onPress={() => {this.changeLanguage("en")}}>
                         <Text style={[Common.lightBodyText]}>EN</Text>
                     </TouchableOpacity>
-                    <Text style={[Common.lightBodyText]}> | </Text>
-                    <TouchableOpacity onPress={() => {this.changeLanguage("ru")}}>
+                    {/* <Text style={[Common.lightBodyText]}> | </Text> */}
+                    {/* <TouchableOpacity onPress={() => {this.changeLanguage("ru")}}>
                         <Text style={[Common.lightBodyText]}>RU</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     </View>
                     
                 </View>
@@ -146,7 +147,8 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
-        zIndex: -1
+        zIndex: -1,
+        width: Layout.window.width
     },
     language: {
         flexDirection: "row",

@@ -147,7 +147,7 @@ class ExerciseItem extends Component {
           {...this.props.sortHandlers}
           onPress={this.props.onPress}
           style={[{backgroundColor: 'white'},this.props.editModeOn && Common.shadowLight]}>
-          <View style={[Common.inlineContainer, Common.paddingVertical, Common.sectionBorder]}>
+          <View style={[Common.inlineContainer, Common.paddingVertical]}>
             <View style={[Common.exerciseThumbnail, Common.shadowMedium]}>
               <Image
                 source={{uri: this.state.uriLink}}

@@ -3,6 +3,11 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import SetItem from './SetItem';
 import Common from '../constants/common';
 import Layout from '../constants/Layout';
+import I18n from 'ex-react-native-i18n'
+import fi from '../constants/fi';
+import en from '../constants/en'; import ru from '../constants/ru';
+I18n.fallbacks = true;
+I18n.translations = {fi, en, ru};
 
 export default class ActivityInput extends Component {
     constructor(props){

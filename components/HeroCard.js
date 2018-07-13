@@ -18,7 +18,6 @@ class HeroCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      programName: '',
       program: '',
       totalExercises: 0,
       totalWorkouts: 0
@@ -44,10 +43,17 @@ class HeroCard extends Component {
     });
   }
   retrieveUserProgram() {
-    Database.getUserProgramName( (name) => {
+    Database.getUserProgramName((name, custom) => {
+      if (custom) {
+        this.setState({
+          custom: true,
+          programName: name
+        })
+      } else {
       this.setState({
         programName: name
       })
+    }
     })
   }
   render() {
@@ -55,14 +61,18 @@ class HeroCard extends Component {
 
           <Image
             source={require('../assets/images/CTA.png')} 
-            style={Common.imageCover}>
+            style={[Common.imageCover, {width: Layout.window.width}]}>
             <View style={[Common.container, Common.paddingVertical]}>
             <Grid>
               <Row size={1}>
                
                     <View>
                       <Text style={[Common.lightTitleH4, Common.removeMarginBetweenTitles]}>{I18n.t('YourProgram')}</Text>
-                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles, {width: 300}]}>{this.state.programName} 
+                      <Text style={[Common.lightTitleH1, Common.removeMarginBetweenTitles, {width: 300}]}>
+                      {this.state.programName ? 
+                      this.state.custom ? this.state.programName :
+                      I18n.t('P'+this.state.programName.replace(/[^A-Z0-9]+/ig, ''))
+                      : null }
                       </Text>
                     </View>
               </Row>

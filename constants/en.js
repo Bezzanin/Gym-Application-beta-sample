@@ -225,6 +225,14 @@ export default {
   BeginWorkout: 'Begin Workout',
   MoreThan4Weeks: 'You have been training more than 4 weeks, well done',
 
+  //Programs
+  P1JakoinenTaso1: 'One Day split: Level 1',
+  P1JakoinenTaso2: 'One Day split: Level 2',
+  P1JakoinenTaso3: 'One Day split: Level 3',
+  P2JakoinenTaso1: 'Two Days split: Level 1',
+  P1JakoinenTaso2: 'Two Days split: Level 2',
+  P3JakoinenTaso1: 'Three Days split: Level 1',
+  P4JakoinenTaso1: 'Four Day split: Level 1',
 
 
 

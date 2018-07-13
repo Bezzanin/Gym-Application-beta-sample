@@ -223,9 +223,15 @@ static getUserProgramName(callback) {
                 firebase.database().ref(path).on('value', (snap) => {
                     let programName = "";
                     if (snap.val()) {
+                        if (snap.val().programName === 'custom') {
+                            programName = snap.val().programRealName
+                            callback(programName, true);
+                        } else {
                         programName = snap.val().programRealName
+                        callback(programName);
+                        }
                     }
-                    callback(programName);
+                    
             })
         })();
         

@@ -103,8 +103,8 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              {this.props.item.isBestMatch && <Text style={Common.lightTitleH4}>{I18n.t('Loading')}</Text>}
-              <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
+              {this.props.item.isBestMatch && <Text style={Common.lightTitleH4}>{I18n.t('BestMatchProgram')}</Text>}
+              <Text style={Common.lightTitleH2}>{I18n.t('P'+this.props.item.name.replace(/[^A-Z0-9]+/ig, ''))}</Text>
             </View>
             <View style={styles.infoContainer}>
 

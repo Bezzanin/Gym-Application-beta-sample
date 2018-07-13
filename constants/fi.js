@@ -255,6 +255,15 @@ export default {
   UseTheSlider: 'Nuolella voit liikkua päivien välillä ja järjestää harjoitukset lihasryhmittäin.',
 
 
+    //Programs
+    P1JakoinenTaso1: '1-Jakoinen Taso 1',
+    P1JakoinenTaso2: '1-Jakoinen Taso 2',
+    P1JakoinenTaso3: '1-Jakoinen Taso 3',
+    P2JakoinenTaso1: '2-Jakoinen Taso 1',
+    P1JakoinenTaso2: '2-Jakoinen Taso 2',
+    P3JakoinenTaso1: '3-Jakoinen Taso 1',
+    P4JakoinenTaso1: '4-Jakoinen Taso 1',
+
 
 
 

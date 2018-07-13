@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, AsyncStorage, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, AsyncStorage, Alert, Share } from "react-native";
 import { Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { withNavigation } from '@expo/ex-navigation';
@@ -51,7 +51,19 @@ export default class ProgramBadge extends Component {
         })
     }
     shareIt() {
-        console.log('SHARE')
+        let exerciseName = I18n.t(this.props.program.programRealName)
+        Share.share({
+          message: 'Check the ' + exerciseName + 'training program in Rational Gym app. Available on iOS and Android',
+          url: 'https://itunes.apple.com/us/genre/ios-sports/id6004?mt=8',
+          title: 'Rational Gym ' + exerciseName
+        }, {
+          // Android only:
+          dialogTitle: 'Rational Gym ' + exerciseName,
+          // iOS only:
+          excludedActivityTypes: [
+            'com.apple.UIKit.activity.PostToTwitter'
+          ]
+        })
     }
     async loadProps() {
         let sequence = await this.props.sequence;
