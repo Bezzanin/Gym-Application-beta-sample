@@ -73,15 +73,6 @@ export default class SettingsScreen extends React.Component {
             />
         </View>}
         <View>
-        {/* <TouchableOpacity
-                onPress={() => {this.props.navigator.push('GetPremiumScreen')}} 
-                style={[
-                        Common.brightButtonRounded,
-                        Common.shadowBright,
-                        Common.marginVerticalSmall
-                        ]}>
-                <Text style={Common.lightActionTitle} >{I18n.t('GoPremium')}</Text>
-              </TouchableOpacity> */}
           <TouchableOpacity style={Common.greyButtonRounded} onPress={this.logout}>
             <Text style={Common.darkActionTitle}>{I18n.t('Logout')}</Text>
           </TouchableOpacity>

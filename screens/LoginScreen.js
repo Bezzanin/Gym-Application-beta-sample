@@ -125,10 +125,6 @@ export default class LoginScreen extends Component {
                     <TouchableOpacity onPress={() => {this.changeLanguage("en")}}>
                         <Text style={[Common.lightBodyText]}>EN</Text>
                     </TouchableOpacity>
-                    {/* <Text style={[Common.lightBodyText]}> | </Text> */}
-                    {/* <TouchableOpacity onPress={() => {this.changeLanguage("ru")}}>
-                        <Text style={[Common.lightBodyText]}>RU</Text>
-                    </TouchableOpacity> */}
                     </View>
                     
                 </View>
