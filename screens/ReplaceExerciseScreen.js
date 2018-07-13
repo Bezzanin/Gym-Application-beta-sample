@@ -65,13 +65,13 @@ export default class ReplaceExerciseScreen extends Component {
     return (
       <ScrollView>
       <View style={[Common.container, Common.sectionBorder]}>
-      <Text style={Common.darkTitleH1}>Replace exercise</Text>
+      <Text style={Common.darkTitleH1}>{I18n.t('Replace')} {I18n.t('Exercise')}</Text>
           <ExerciseItem
             item = {this.props.route.params.item}
           />
       </View>
       <View style={Common.container}>
-      <Text style={Common.darkTitleH1}>With one from below</Text>
+      <Text style={Common.darkTitleH1}>{I18n.t('WithOneFromBelow')}</Text>
         <ListView
           dataSource={this.state.dataSource}
           initialListSize = {4}

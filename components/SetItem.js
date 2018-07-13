@@ -51,7 +51,7 @@ export default class SetItem extends React.Component {
           </View>
           <View style={styles.col3}>
            
-            <Text style={Common.darkTextH3}>{this.props.reps} reps, {this.props.weight} kg</Text>
+            <Text style={Common.darkTextH3}>{this.props.reps} {I18n.t('Reps')}, {this.props.weight} kg</Text>
             
         </View>
           <View style={styles.col1}>

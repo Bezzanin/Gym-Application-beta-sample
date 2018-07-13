@@ -21,17 +21,20 @@ class QuestionsScreen extends Component {
           modalVisible: false,
             level: 1,
             DaysPerWeek: 3,
-            email: I18n.t('Email'),
+            email: null,
             password: I18n.t('Password'),
             gender: 'none',
             height: 0,
             weight: 0,
-            name: 'none',
+            name: null,
             response: "",
-            pagination: 'none'
+            pagination: 'none',
+            loading: true,
         };
         this.signup = this.signup.bind(this);
+        this.facebookReg = this.facebookReg.bind(this)
   }
+
 
     async signup() {
 
@@ -57,13 +60,25 @@ class QuestionsScreen extends Component {
 
 setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+    
+  }
+
+  facebookReg(val) {
+    this.setState({
+      showGender: false, 
+      name: val.name,
+      email: val.email,
+      gender: val.gender
+    }, () => {this.setState({ modalVisible: true })
+  });
+    console.log('got it', val)
   }
 
   render() {
     return (
         <View>
           <StatusBar
-          barStyle={ this.state.modalVisible ? 'dark-content' : 'light-content'}
+          barStyle={ this.state.modalVisible ? 'light-content' : 'dark-content'}
           />
           <Button
             buttonStyle={styles.loginButton}
@@ -89,9 +104,8 @@ setModalVisible(visible) {
             <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
           </TouchableOpacity>
           </View>
-
-
             <Swiper
+              ref={'swiper'}
               style={styles.wrapper}
               showsButtons
               scrollEnabled={false}
@@ -114,7 +128,7 @@ setModalVisible(visible) {
               buttonWrapperStyle={styles.nextButton}
               loop={false}
             >
-              <View style={styles.slide}>
+            <View style={styles.slide}>
                 <Text style={styles.staticText}>
                   {I18n.t('WePrepared')}
                 </Text>
@@ -127,20 +141,20 @@ setModalVisible(visible) {
                     thickness={2}
                     color="#B2B2B2"
                     onSelect={(index, value) => this.setState({ gender: value })}
-                    selectedIndex={0}
                   >
-                    <RadioButton value={"male"} color="#B2B2B2">
-                      <Text style={styles.labelText}>{I18n.t('Male')}</Text>
-                    </RadioButton>
 
                     <RadioButton value={"female"} color="#B2B2B2">
                       <Text style={styles.labelText}>{I18n.t('Female')}</Text>
                     </RadioButton>
+                    <RadioButton value={"male"} color="#B2B2B2">
+                      <Text style={styles.labelText}>{I18n.t('Male')}</Text>
+                    </RadioButton>
+
                   </RadioGroup>
                   
                 </View>
                 
-              </View>
+            </View>
 
               <View style={styles.slide}>
                 <Text style={styles.staticText}>
@@ -183,16 +197,21 @@ setModalVisible(visible) {
                     <FormInput
                       onChangeText={height => this.setState({ height })}
                       placeholder={"cm"}
-                      keyboardType={'numeric'}
+                      keyboardType={'number-pad'}
                       onFocus={() => console.log("Focused")}
+                      enablesReturnKeyAutomatically={true}
+                      returnKeyType="done"
                     />
                   </View>
+                  
                   <View>
                     <FormLabel>{I18n.t('Weight')}</FormLabel>
                     <FormInput
                       onChangeText={weight => this.setState({ weight })}
                       placeholder={"kg"}
-                      keyboardType={'numeric'}
+                      keyboardType={'number-pad'}
+                      enablesReturnKeyAutomatically={true}
+                      returnKeyType={'done'}
                     />
                   </View>
                 </View>
@@ -200,6 +219,7 @@ setModalVisible(visible) {
               </View>
 
               <View style={styles.slide}>
+              
                 <Text style={styles.staticText}>
                   {I18n.t('WePrepared')}
                 </Text>
@@ -219,20 +239,28 @@ setModalVisible(visible) {
                     onChangeText={name => this.setState({ name })}
                     placeholder={I18n.t('EnterName')}
                     autoCorrect={false}
+                    value={this.state.name}
+                    enablesReturnKeyAutomatically={true}
+                    returnKeyType={'next'}
                   />
                   <FormLabel>{I18n.t('Email')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ email: text })}
                     placeholder={I18n.t('EnterYourEmail')}
-                    keyboardType="email-address"
+                    value={this.state.email}
+                    keyboardType={"email-address"}
                     autoCapitalize={'none'}
                     autoCorrect={false}
+                    enablesReturnKeyAutomatically={true}
+                    returnKeyType={'next'}
                   />
                   <FormLabel>{I18n.t('Password')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ password: text })}
                     placeholder={I18n.t('EnterPassword')}
                     secureTextEntry={true}
+                    enablesReturnKeyAutomatically={true}
+                    returnKeyType={'next'}
                   />
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>
@@ -364,6 +392,16 @@ loginButton: {
 heightWeight: {
   flexDirection: "column",
   justifyContent: "flex-start"
+},
+loading: {
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "#FFF",
 }
 });
 

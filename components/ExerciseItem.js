@@ -32,7 +32,7 @@ class ExerciseItem extends Component {
       style={{backgroundColor: '#CE0707',flex: 1,justifyContent: 'center', paddingLeft: 20}}
       onPress={() => {this.props.sendIndex(this.props.item._key, 'delete')}}
       >
-        <Text style={{color: 'white'}}>Delete</Text>
+        <Text style={{color: 'white'}}>{I18n.t('Delete')}</Text>
       </TouchableOpacity>
     ]
     this.setState({rightButtons})

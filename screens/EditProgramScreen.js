@@ -78,11 +78,11 @@ updateProgram = () => {
 <Text>{this.props.route.params.program.gender}</Text>
 <Text>{this.props.route.params.program.day1}</Text>
 <Text>{this.props.route.params.program.days}</Text>
-      <Text>Muscles in first day</Text>
+      <Text>{I18n.t('First')} {I18n.t('Day')} {I18n.t('Muscles')}</Text>
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Chest'
+        title={I18n.t('Chest')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -93,7 +93,7 @@ updateProgram = () => {
         <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Shoulders'
+        title={I18n.t('Shoulders')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -104,7 +104,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-end', borderColor: 'transparent'}}
-        title='Back '
+        title={I18n.t('Back')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -115,7 +115,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Biceps'
+        title={I18n.t('Biceps')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -126,7 +126,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Legs '
+        title={I18n.t('Legs')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -137,7 +137,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Triceps'
+        title={I18n.t('Triceps')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -148,7 +148,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Abs  '
+        title={I18n.t('Abs')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
@@ -159,7 +159,7 @@ updateProgram = () => {
       <CheckBox
         left
         containerStyle={{width: 135, backgroundColor: 'transparent', alignSelf: 'flex-start', borderColor: 'transparent'}}
-        title='Glutes'
+        title={I18n.t('Glutes')}
         iconLeft
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'

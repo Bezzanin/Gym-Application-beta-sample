@@ -200,7 +200,7 @@ class QuickWorkout extends Component {
     return (
     <ScrollView style={[styles.item, Common.shadowLight]}>
       
-      <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>Edit the exercises</Text>
+      <Text style={[{paddingLeft: Layout.gutter.l, paddingTop: Layout.gutter.m},Common.darkTitleH3]}>{I18n.t('Edit')} {I18n.t('Exercises')}</Text>
       
     <FlatList
         data={newlog}
@@ -221,12 +221,12 @@ class QuickWorkout extends Component {
           <TouchableOpacity
               style={[Common.brightButtonRounded, Common.shadowMedium]}
               onPress={() => {this.addNewExercise()}}>
-              <Text style={Common.lightActionTitle}>Add Exercise</Text>
+              <Text style={Common.lightActionTitle}>{I18n.t('Add')} {I18n.t('Exercise')}</Text>
       </TouchableOpacity>
       <TouchableOpacity
               style={[Common.brightButtonRounded, Common.shadowMedium]}
               onPress={() => {this.quickAddWorkout()}}>
-              <Text style={Common.lightActionTitle}>Add Workout</Text>
+              <Text style={Common.lightActionTitle}>{I18n.t('Addworkout')}</Text>
       </TouchableOpacity>
           </View>
     </ScrollView>
@@ -245,7 +245,7 @@ class QuickWorkout extends Component {
 } else {
   return (
     <View>
-      <Text>Loading...</Text>
+      <Text>{I18n.t('Loading')}</Text>
     </View>)
 }
   }

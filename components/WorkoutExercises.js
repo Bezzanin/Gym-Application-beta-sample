@@ -63,7 +63,6 @@ _renderItem = ({item, index}) => {
         </View>)
     }
     else {
-        console.log(item.name);
         if (item.name) {
             return (
                 <Row id={item.id}>

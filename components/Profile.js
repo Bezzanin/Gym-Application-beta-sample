@@ -152,7 +152,7 @@ _displayLeaveButton() {
                 <Row>{this._displayLeaveButton()}</Row>
                 <Row>
                 <View style={{marginTop: 8}}>
-                    <TouchableOpacity onPress={() => {this.showWeekDays(this.state.showOrHide)}}><Text style={Common.textButton}>Change Workout Days</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => {this.showWeekDays(this.state.showOrHide)}}><Text style={Common.textButton}>{I18n.t('ChangeWorkoutDays')}</Text></TouchableOpacity>
                 </View>
                 </Row>
                 <Row>

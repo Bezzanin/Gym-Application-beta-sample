@@ -38,7 +38,7 @@ export default class ActivityPicker extends React.Component {
   }
     sendData(newRep, index) {
 
-        console.log(newRep)
+        // console.log(newRep)
 
         this.setState({newRep, index}, () => {
             this.props.onSendInitialReps(this.state.sets, this.state.newRep);
@@ -47,7 +47,7 @@ export default class ActivityPicker extends React.Component {
     }
     
     sendFBData(id, sets, reps, weight) {
-        console.log(id, sets, reps, weight)
+        // console.log(id, sets, reps, weight)
         Database.addExerciseStats(id, sets, reps, weight);
     }
     sendWorkoutData() {
@@ -131,14 +131,14 @@ renderItem = ({item, index}) => {
                     flexDirection: "row",
                 }]}
                 >
-                    <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>Lisaa set</Text>
+                    <Text style={[Common.darkTitleH2, {marginTop: Layout.gutter.s}]}>{I18n.t('Add')} {I18n.t('Set')}</Text>
                     <TouchableOpacity
                         style={[Common.darkButton, Common.shadowLight]}
                         onPress={() => {
                         addSet(this.state.sets, this.state.reps, this.state.weight);
                         }}
                     >
-                        <Text style={Common.lightActionTitle}>Add set</Text>
+                        <Text style={Common.lightActionTitle}>{I18n.t('Add')} {I18n.t('Set')}</Text>
                     </TouchableOpacity>
                 </View>
                 <LoadPicker

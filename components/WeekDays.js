@@ -21,7 +21,7 @@ I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 
 import { withNavigation } from '@expo/ex-navigation';
-import MultipleChoice from 'react-native-multiple-choice';
+import MultipleChoice from 'ft-react-native-multiple-choice';
 
 
 @withNavigation
@@ -102,7 +102,7 @@ _renderIndicator(option) {
                   renderIndicator={(option)=>this._renderIndicator(option)}
                   onSelection={this.allWeekDays}
               />
-              <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text style={[Common.textButton, {fontSize: 18}]}>Save days</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => {this.onSendData(this.state.days)}}><Text style={[Common.textButton, {fontSize: 18}]}>{I18n.t('Save')} {I18n.t('days')}</Text></TouchableOpacity>
             </View>
           );
         }
@@ -114,7 +114,7 @@ _renderIndicator(option) {
         else {
           return (
           <View>
-            <Text>The schedule is saved. You can change the days later in the settings</Text>
+            <Text>{I18n.t('ScheduleSaved')}</Text>
           </View>
           )
         }

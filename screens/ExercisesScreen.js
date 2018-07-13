@@ -42,7 +42,7 @@ return exercises.filter((item) => {
   if (filter === 'legs') return item.muscles === 'legs';
   if (filter === 'glutes') return item.muscles === 'glutes';
   if (filter === 'shoulders') return item.muscles === 'shoulders';
-  if (filter === 'calves') return item.type === 'calves';
+  if (filter === 'calves') return item.muscles === 'calves';
   if (filter === 'back') return item.muscles === 'back';
   if (filter === 'BASIC') { return item.type === 'basic';}
   if (filter === 'ISOLATION') return item.type === 'isolation';

@@ -19,11 +19,12 @@ class LogInForm extends Component {
         super(props);
         this.state = {
         modalVisible: false,
-        email: I18n.t('Email'),
+        email: null,
         password: I18n.t('Password'),
         };
         this.login = this.login.bind(this);
   }
+
 
     async login() {
 
@@ -43,6 +44,14 @@ class LogInForm extends Component {
 
 setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  }
+
+  facebookReg(val) {
+    this.setState({
+      email: val.email
+    }, () => {this.setState({ modalVisible: true })
+  });
+    console.log('got it', val)
   }
  
   render() {
@@ -91,12 +100,9 @@ setModalVisible(visible) {
               loop={false}
             >
               <View style={styles.slide}>
-                <Text style={styles.staticText}>
-                  {I18n.t('WePrepared')}
-                </Text>
                 <View style={styles.divider} />
                 <Text style={styles.text}>
-                  {I18n.t('FillBasic')}
+                {I18n.t('LogIn')}
                 </Text>
                 <View
                   style={{
@@ -112,12 +118,17 @@ setModalVisible(visible) {
                     keyboardType="email-address"
                     autoCapitalize={'none'}
                     autoCorrect={false}
+                    value={this.state.email}
+                    enablesReturnKeyAutomatically={true}
+                    returnKeyType={'next'}
                   />
                   <FormLabel>{I18n.t('Password')}</FormLabel>
                   <FormInput
                     onChangeText={text => this.setState({ password: text })}
                     placeholder={I18n.t('EnterPassword')}
                     secureTextEntry={true}
+                    enablesReturnKeyAutomatically={true}
+                    returnKeyType={'next'}
                   />
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>
                 </View>

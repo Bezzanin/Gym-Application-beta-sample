@@ -42,7 +42,6 @@ export default class AlternativeExercise extends Component {
       exerciseName: this.props.exerciseName
     })
     AsyncStorage.getItem("exercises").then((json) => {
-        console.log(json)
         try {
           const exercises = this.filterExercises(JSON.parse(json), this.props.exerciseMuscles, this.props.exerciseType, this.props.exerciseName);
           if (exercises.length === 0) {
@@ -105,12 +104,12 @@ export default class AlternativeExercise extends Component {
                           fontSize: 16,
                           lineHeight: 18,
                           fontWeight: 'bold',
-                          backgroundColor: 'transparent'}}>No equipment?</Text>
+                          backgroundColor: 'transparent'}}>{I18n.t('NoEquipment')}</Text>
             <Text style={{color: '#000',
                           fontSize: 16,
                           lineHeight: 18,
                           fontWeight: 'bold',
-                          backgroundColor: 'transparent'}}>Replace with alternative</Text>
+                          backgroundColor: 'transparent'}}>{I18n.t('ReplaceWithAlternative')}</Text>
             </View>
             <FlatList
               horizontal

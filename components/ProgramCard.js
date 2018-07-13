@@ -103,7 +103,7 @@ class ProgramCard extends Component {
         >
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              {this.props.item.isBestMatch && <Text style={Common.lightTitleH4}>Best Match Program</Text>}
+              {this.props.item.isBestMatch && <Text style={Common.lightTitleH4}>{I18n.t('Loading')}</Text>}
               <Text style={Common.lightTitleH2}>{this.props.item.name}</Text>
             </View>
             <View style={styles.infoContainer}>

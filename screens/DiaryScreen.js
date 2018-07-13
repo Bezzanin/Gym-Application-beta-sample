@@ -199,7 +199,7 @@ export default class LinksScreen extends React.Component {
     const emptyList = (
       <ScrollView>
         <TouchableOpacity onPress={() => {this.goToProgram()}}>
-                  <Text style={Common.lightTitleH3}>NewDiary</Text>
+                  <Text style={Common.lightTitleH3}>{I18n.t('Diary')}</Text>
                 </TouchableOpacity>
                 <LogItem
                     titleText={I18n.t('TotalExercises')}
@@ -246,7 +246,7 @@ export default class LinksScreen extends React.Component {
             />
         </View>}
         <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10}}>
-                  <Text style = {Common.darkTitleH2}>Lisaa first set</Text>
+                  <Text style = {Common.darkTitleH2}>{I18n.t('Add')} {I18n.t('First')} {I18n.t('Set')}</Text>
                   <AddActivity/>
                 </View>
               {emptyList}

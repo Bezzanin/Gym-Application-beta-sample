@@ -259,14 +259,14 @@ export default class NewDiary extends React.Component {
             //this.quickAddWorkout();
             this.props.navigator.push('QuickWorkout')
             }}>
-            <Text style={Common.darkActionTitle}>Quick workout</Text>
+            <Text style={Common.darkActionTitle}>{I18n.t('QuickWorkout')}</Text>
           </TouchableOpacity>
           </View>
           {this.state.hasWorkoutDay &&
           <View style={{paddingLeft: 0}}>
             <View style={{height: 10}}/>
           <TouchableOpacity style={Common.leftAttachedButton} onPress={() => {this.goToProgram()}}>
-            <Text style={Common.darkActionTitle}>Begin workout</Text>
+            <Text style={Common.darkActionTitle}>{I18n.t('BeginWorkout')}</Text>
           </TouchableOpacity>
           </View>}
 
