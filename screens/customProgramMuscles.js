@@ -7,7 +7,6 @@ import Layout from '../constants/Layout';
 import Database from '../api/database';
 import { Slider, FormInput, FormLabel } from 'react-native-elements';
 import Common from '../constants/common';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Swiper from 'react-native-swiper';
 import _ from "lodash"
 import en from '../constants/en'; import ru from '../constants/ru';

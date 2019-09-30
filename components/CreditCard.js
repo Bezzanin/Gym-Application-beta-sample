@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, Modal, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Modal, TouchableOpacity, ActivityIndicator, Image, Alert } from "react-native";
 import ActionButton from '../components/ActionButton';
 import Common from '../constants/common';
 import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
@@ -38,6 +38,20 @@ class CreditCard extends Component {
 
     getToken() {
         console.log(this.state.card)
+    }
+
+    displayLeaveButton() {
+      leaveProgram = () => {
+          Alert.alert(
+              I18n.t('LeaveProgram'),
+              I18n.t('LeaveProgramAlert'),
+              [   { text: 'Cancel', onPress: () => {console.log('Cancelled')}, style: 'cancel' },
+                  { text: I18n.t('LeaveProgram'), onPress: () => {
+                      console.log('Left')
+                  } }
+              ]
+          );
+      }
     }
 
     async onPayment() {
@@ -92,7 +106,7 @@ class CreditCard extends Component {
             })
           } else {
           this.setState({ paymentResponse: res.outcome.seller_message }, () => {
-            this.setModalVisible(!this.state.modalVisible)
+            this.setState({loading: false}); this.displayLeaveButton()
           })
         }
         })
@@ -149,41 +163,14 @@ class CreditCard extends Component {
       };
         return (
             <View>
-              <StatusBar
-              barStyle={ this.state.modalVisible ? 'dark-content' : 'dark-content'}
-              />
-              <TouchableOpacity
-                onPress={() => {this.setModalVisible(true)}} 
-                style={[
-                        Common.brightButtonRounded,
-                        Common.shadowBright,
-                        Common.marginVerticalSmall
-                        ]}>
-                <Text style={Common.lightActionTitle} >{I18n.t('GoPremium')}</Text>
-              </TouchableOpacity>
-              <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.state.modalVisible}
-              >
-              <View style={Common.pseudoNavigation}>
-              <TouchableOpacity
-                onPress={() => {this.setModalVisible(!this.state.modalVisible)}}
-              >
-                <Text style={Common.brightActionTitle}>{I18n.t('Cancel')}</Text>
-              </TouchableOpacity>
-              </View>
                 <View>
                 <View style={[Common.centered, {paddingTop:16}]}>
                 <Text style={Common.darkTitleH1}>{I18n.t('PayWithCard')}</Text>
                 </View>
-                <CreditCardInput 
+                <LiteCreditCardInput 
                 onChange={this._onChange} 
-                requiresName={true}
                 labels={customLabels}
                 placeholders={customPlaceholders}
-                cardImageFront={require("../assets/images/rg-card-front.png")}
-                cardImageBack={require("../assets/images/rg-card-back.png")}
                 />
                 {this.showCorrectButton()}
                 <View style={[Common.centered, {paddingVertical:16}]}>
@@ -191,7 +178,6 @@ class CreditCard extends Component {
                   <Text style={[Common.darkBodyText, Common.centeredText]}>{this.state.contactInfo}</Text>
                 </View>
                 </View>
-              </Modal>
             </View>
         );
       }

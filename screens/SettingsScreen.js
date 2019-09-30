@@ -15,6 +15,7 @@ import en from '../constants/en'; import ru from '../constants/ru';
 I18n.fallbacks = true;
 I18n.translations = {fi, en, ru};
 import moment from "moment";
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 
 export default class SettingsScreen extends React.Component {

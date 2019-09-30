@@ -240,7 +240,6 @@ setModalVisible(visible) {
                     placeholder={I18n.t('EnterName')}
                     autoCorrect={false}
                     value={this.state.name}
-                    enablesReturnKeyAutomatically={true}
                     returnKeyType={'next'}
                   />
                   <FormLabel>{I18n.t('Email')}</FormLabel>
@@ -251,7 +250,6 @@ setModalVisible(visible) {
                     keyboardType={"email-address"}
                     autoCapitalize={'none'}
                     autoCorrect={false}
-                    enablesReturnKeyAutomatically={true}
                     returnKeyType={'next'}
                   />
                   <FormLabel>{I18n.t('Password')}</FormLabel>
@@ -259,7 +257,6 @@ setModalVisible(visible) {
                     onChangeText={text => this.setState({ password: text })}
                     placeholder={I18n.t('EnterPassword')}
                     secureTextEntry={true}
-                    enablesReturnKeyAutomatically={true}
                     returnKeyType={'next'}
                   />
                   <FormValidationMessage>{this.state.response}</FormValidationMessage>

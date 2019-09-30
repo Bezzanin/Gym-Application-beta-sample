@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   header: {
-    resizeMode: 'cover'
+    resizeMode: 'cover',
+    width: Layout.window.width
   },
   ActionButton: {
       width: 200,

@@ -38,10 +38,17 @@ componentDidMount() {
             maxWeight
         });
     });
-    Database.getUserProgramName( (programName) => {
+    Database.getUserProgramName((name, custom) => {
+        if (custom) {
           this.setState({
-              programName
+            custom: true,
+            programName: name
           })
+        } else {
+        this.setState({
+          programName: name
+        })
+      }
       })
     Database.getUserProgram( (hasProgram) => {
           this.setState({
@@ -145,7 +152,10 @@ _displayLeaveButton() {
                 <Row>
                     <BigTag
                     title={I18n.t('currentProgram')}
-                    content={this.state.programName}
+                    content={this.state.programName ? 
+                        this.state.custom ? this.state.programName :
+                        I18n.t('P'+this.state.programName.replace(/[^A-Z0-9]+/ig, ''))
+                        : null }
                     color={'#000'}
                 />
                 </Row>
