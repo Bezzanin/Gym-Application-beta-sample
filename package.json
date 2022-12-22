@@ -16,7 +16,7 @@
     "@expo/vector-icons": "^5.0.0",
     "ex-react-native-i18n": "0.0.3",
     "expo": "^22.0.0",
-    "firebase": "^3.7.1",
+    "firebase": "^9.15.0",
     "ft-react-native-multiple-choice": "git+https://github.com/Bezzanin/react-native-multiple-choice.git",
     "react": "16.0.0-beta.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
